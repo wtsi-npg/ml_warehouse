@@ -1,0 +1,11 @@
+lib/ml_warehouse/Schema.pm
+lib/ml_warehouse/Schema/Result/FlgenPlate.pm
+lib/ml_warehouse/Schema/Result/IseqFlowcell.pm
+lib/ml_warehouse/Schema/Result/IseqProductMetric.pm
+lib/ml_warehouse/Schema/Result/IseqRunLaneMetric.pm
+lib/ml_warehouse/Schema/Result/IseqRunStatus.pm
+lib/ml_warehouse/Schema/Result/IseqRunStatusDict.pm
+lib/ml_warehouse/Schema/Result/Sample.pm
+lib/ml_warehouse/Schema/Result/Study.pm
+lib/ml_warehouse/Schema/Result/StudyUser.pm
+scripts/make_schema.pl
