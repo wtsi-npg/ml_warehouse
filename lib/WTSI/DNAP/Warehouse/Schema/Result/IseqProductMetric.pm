@@ -1,12 +1,12 @@
 use utf8;
-package ml_warehouse::Schema::Result::IseqProductMetric;
+package WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-ml_warehouse::Schema::Result::IseqProductMetric
+WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric
 
 =cut
 
@@ -262,45 +262,25 @@ Tag sequence
   extra: {unsigned => 1}
   is_nullable: 1
 
-=head2 bam_percent_mapped_target
+=head2 bam_percent_mapped
 
   data_type: 'float'
   is_nullable: 1
   size: [5,2]
 
-=head2 bam_percent_duplicate_target
+=head2 bam_percent_duplicate
 
   data_type: 'float'
   is_nullable: 1
   size: [5,2]
 
-=head2 bam_percent_mapped_human
+=head2 bam_human_percent_mapped
 
   data_type: 'float'
   is_nullable: 1
   size: [5,2]
 
-=head2 bam_percent_duplicate_human
-
-  data_type: 'float'
-  is_nullable: 1
-  size: [5,2]
-
-=head2 human_split_type
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 5
-
-Allowed values: all, y, xa
-
-=head2 bam_percent_mapped_spike
-
-  data_type: 'float'
-  is_nullable: 1
-  size: [5,2]
-
-=head2 bam_percent_duplicate_spike
+=head2 bam_human_percent_duplicate
 
   data_type: 'float'
   is_nullable: 1
@@ -487,19 +467,13 @@ __PACKAGE__->add_columns(
   { data_type => "integer", extra => { unsigned => 1 }, is_nullable => 1 },
   "bam_num_reads",
   { data_type => "bigint", extra => { unsigned => 1 }, is_nullable => 1 },
-  "bam_percent_mapped_target",
+  "bam_percent_mapped",
   { data_type => "float", is_nullable => 1, size => [5, 2] },
-  "bam_percent_duplicate_target",
+  "bam_percent_duplicate",
   { data_type => "float", is_nullable => 1, size => [5, 2] },
-  "bam_percent_mapped_human",
+  "bam_human_percent_mapped",
   { data_type => "float", is_nullable => 1, size => [5, 2] },
-  "bam_percent_duplicate_human",
-  { data_type => "float", is_nullable => 1, size => [5, 2] },
-  "human_split_type",
-  { data_type => "varchar", is_nullable => 1, size => 5 },
-  "bam_percent_mapped_spike",
-  { data_type => "float", is_nullable => 1, size => [5, 2] },
-  "bam_percent_duplicate_spike",
+  "bam_human_percent_duplicate",
   { data_type => "float", is_nullable => 1, size => [5, 2] },
   "genotype_sample_name_match",
   { data_type => "varchar", is_nullable => 1, size => 8 },
@@ -557,13 +531,13 @@ __PACKAGE__->set_primary_key("id_iseq_pr_metrics_tmp");
 
 Type: belongs_to
 
-Related object: L<ml_warehouse::Schema::Result::IseqFlowcell>
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell>
 
 =cut
 
 __PACKAGE__->belongs_to(
   "id_iseq_flowcell_tmp",
-  "ml_warehouse::Schema::Result::IseqFlowcell",
+  "WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell",
   { id_iseq_flowcell_tmp => "id_iseq_flowcell_tmp" },
   {
     is_deferrable => 1,
@@ -577,20 +551,20 @@ __PACKAGE__->belongs_to(
 
 Type: belongs_to
 
-Related object: L<ml_warehouse::Schema::Result::IseqRunLaneMetric>
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric>
 
 =cut
 
 __PACKAGE__->belongs_to(
   "id_iseq_lane_metrics_tmp",
-  "ml_warehouse::Schema::Result::IseqRunLaneMetric",
+  "WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric",
   { id_iseq_lane_metrics_tmp => "id_iseq_lane_metrics_tmp" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "NO ACTION" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-09-10 16:38:05
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aTIzKFY3FK5LxtamTOJG3w
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 14:51:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:YPKPKfeZoP5pK3EgPtjSZQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

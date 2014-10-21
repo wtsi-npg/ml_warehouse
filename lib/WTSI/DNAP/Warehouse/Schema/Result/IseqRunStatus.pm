@@ -1,12 +1,12 @@
 use utf8;
-package ml_warehouse::Schema::Result::IseqRunStatus;
+package WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatus;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-ml_warehouse::Schema::Result::IseqRunStatus
+WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatus
 
 =cut
 
@@ -128,20 +128,20 @@ __PACKAGE__->set_primary_key("id_run_status");
 
 Type: belongs_to
 
-Related object: L<ml_warehouse::Schema::Result::IseqRunStatusDict>
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatusDict>
 
 =cut
 
 __PACKAGE__->belongs_to(
   "id_run_status_dict",
-  "ml_warehouse::Schema::Result::IseqRunStatusDict",
+  "WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatusDict",
   { id_run_status_dict => "id_run_status_dict" },
   { is_deferrable => 1, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-09-10 16:38:05
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Z9YihdKi28+O6qI3aggg8Q
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 14:51:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MPbVh6leazW3aSsjNd/eTw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

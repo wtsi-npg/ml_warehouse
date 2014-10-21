@@ -37,27 +37,26 @@ EOF
 
 my $builder = $class->new(
 
-  'module_name' => 'npg_ml_warehouse',
-  'dist_author' => 'WTSI, NPG',
-  'dist_version' => $class->git_tag(),
+  'module_name'   => 'npg_ml_warehouse',
+  'dist_author'   => 'WTSI, NPG',
+  'dist_version'  => $class->git_tag(),
   'dist_abstract' => 'DBIx binding for a milti-LIMs warehouse',
 
   'build_requires' => {
     'Module::Build'         => 0,
     'Test::More'            => 0,
-    'MooseX::MarkAsMethods' => 0,
-    'Config::Auto'          => 0,
-    'Readonly'              => 0,
-    'Carp'                  => 0,
   },
 
   'requires' => {
+    'Carp'                  => 0,
+    'Config::Auto'          => 0,
     'DBIx::Class::Core'     => 0,
     'DBIx::Class::InflateColumn::DateTime' => 0,
     'DBIx::Class::Schema'   => 0,
     'Moose'                 => 0,
     'MooseX::MarkAsMethods' => 0,
     'MooseX::NonMoose'      => 0,
+    'Readonly'              => 0,
     'strict'                => 0,
     'utf8'                  => 0,
     'warnings'              => 0,

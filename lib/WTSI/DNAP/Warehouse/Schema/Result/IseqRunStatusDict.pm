@@ -1,12 +1,12 @@
 use utf8;
-package ml_warehouse::Schema::Result::IseqRunStatusDict;
+package WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatusDict;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-ml_warehouse::Schema::Result::IseqRunStatusDict
+WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatusDict
 
 =cut
 
@@ -93,20 +93,20 @@ __PACKAGE__->set_primary_key("id_run_status_dict");
 
 Type: has_many
 
-Related object: L<ml_warehouse::Schema::Result::IseqRunStatus>
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatus>
 
 =cut
 
 __PACKAGE__->has_many(
   "iseq_run_statuses",
-  "ml_warehouse::Schema::Result::IseqRunStatus",
+  "WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatus",
   { "foreign.id_run_status_dict" => "self.id_run_status_dict" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-09-10 16:38:05
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:DXD/56JLVgEUG03+sQMQ6g
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 14:51:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:z/5QRTnUe3GJhDQry8GOcg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

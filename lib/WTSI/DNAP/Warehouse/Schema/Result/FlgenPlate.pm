@@ -1,12 +1,12 @@
 use utf8;
-package ml_warehouse::Schema::Result::FlgenPlate;
+package WTSI::DNAP::Warehouse::Schema::Result::FlgenPlate;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-ml_warehouse::Schema::Result::FlgenPlate
+WTSI::DNAP::Warehouse::Schema::Result::FlgenPlate
 
 =cut
 
@@ -89,6 +89,14 @@ LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE
 
 Timestamp of last update
 
+=head2 recorded_at
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 0
+
+Timestamp of warehouse update
+
 =head2 plate_barcode
 
   data_type: 'integer'
@@ -113,7 +121,7 @@ LIMs-specific plate barcode
 
 LIMs-specific plate uuid
 
-=head2 plate_id_lims
+=head2 id_flgen_plate_lims
 
   data_type: 'varchar'
   is_nullable: 0
@@ -192,13 +200,19 @@ __PACKAGE__->add_columns(
     datetime_undef_if_invalid => 1,
     is_nullable => 0,
   },
+  "recorded_at",
+  {
+    data_type => "datetime",
+    datetime_undef_if_invalid => 1,
+    is_nullable => 0,
+  },
   "plate_barcode",
   { data_type => "integer", extra => { unsigned => 1 }, is_nullable => 0 },
   "plate_barcode_lims",
   { data_type => "integer", extra => { unsigned => 1 }, is_nullable => 0 },
   "plate_uuid_lims",
   { data_type => "varchar", is_nullable => 1, size => 36 },
-  "plate_id_lims",
+  "id_flgen_plate_lims",
   { data_type => "varchar", is_nullable => 0, size => 20 },
   "plate_size",
   { data_type => "smallint", is_nullable => 1 },
@@ -230,13 +244,13 @@ __PACKAGE__->set_primary_key("id_flgen_plate_tmp");
 
 Type: belongs_to
 
-Related object: L<ml_warehouse::Schema::Result::Sample>
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::Sample>
 
 =cut
 
 __PACKAGE__->belongs_to(
   "id_sample_tmp",
-  "ml_warehouse::Schema::Result::Sample",
+  "WTSI::DNAP::Warehouse::Schema::Result::Sample",
   { id_sample_tmp => "id_sample_tmp" },
   { is_deferrable => 1, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
@@ -245,20 +259,20 @@ __PACKAGE__->belongs_to(
 
 Type: belongs_to
 
-Related object: L<ml_warehouse::Schema::Result::Study>
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::Study>
 
 =cut
 
 __PACKAGE__->belongs_to(
   "id_study_tmp",
-  "ml_warehouse::Schema::Result::Study",
+  "WTSI::DNAP::Warehouse::Schema::Result::Study",
   { id_study_tmp => "id_study_tmp" },
   { is_deferrable => 1, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-09-10 16:38:05
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:yv7+XihkOUKG8Gd0ZymioA
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 14:51:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0Th9HKYL4eJqhVZJKVOT3A
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

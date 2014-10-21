@@ -1,12 +1,12 @@
 use utf8;
-package ml_warehouse::Schema::Result::IseqRunLaneMetric;
+package WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-ml_warehouse::Schema::Result::IseqRunLaneMetric
+WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric
 
 =cut
 
@@ -250,7 +250,7 @@ Timestamp of qc complete status
   data_type: 'float'
   extra: {unsigned => 1}
   is_nullable: 1
-  size: [6,2]
+  size: [5,2]
 
 =head2 adapters_percent_forward_read
 
@@ -449,7 +449,7 @@ __PACKAGE__->add_columns(
     data_type => "float",
     extra => { unsigned => 1 },
     is_nullable => 1,
-    size => [6, 2],
+    size => [5, 2],
   },
   "adapters_percent_forward_read",
   {
@@ -562,13 +562,13 @@ __PACKAGE__->add_unique_constraint("iseq_rlm_run_position_index", ["id_run", "po
 
 Type: belongs_to
 
-Related object: L<ml_warehouse::Schema::Result::IseqFlowcell>
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell>
 
 =cut
 
 __PACKAGE__->belongs_to(
   "id_iseq_flowcell_tmp",
-  "ml_warehouse::Schema::Result::IseqFlowcell",
+  "WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell",
   { id_iseq_flowcell_tmp => "id_iseq_flowcell_tmp" },
   {
     is_deferrable => 1,
@@ -582,13 +582,13 @@ __PACKAGE__->belongs_to(
 
 Type: has_many
 
-Related object: L<ml_warehouse::Schema::Result::IseqProductMetric>
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric>
 
 =cut
 
 __PACKAGE__->has_many(
   "iseq_product_metrics",
-  "ml_warehouse::Schema::Result::IseqProductMetric",
+  "WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric",
   {
     "foreign.id_iseq_lane_metrics_tmp" => "self.id_iseq_lane_metrics_tmp",
   },
@@ -596,8 +596,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-09-10 16:38:05
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:HBYYXZkNdZMchaasSVLKeQ
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 14:51:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:fE0L8bIqzu7XBvq3xlV3uw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

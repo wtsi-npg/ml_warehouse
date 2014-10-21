@@ -1,12 +1,12 @@
 use utf8;
-package ml_warehouse::Schema::Result::Study;
+package WTSI::DNAP::Warehouse::Schema::Result::Sample;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-ml_warehouse::Schema::Result::Study
+WTSI::DNAP::Warehouse::Schema::Result::Sample
 
 =cut
 
@@ -30,15 +30,15 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components("InflateColumn::DateTime");
 
-=head1 TABLE: C<study>
+=head1 TABLE: C<sample>
 
 =cut
 
-__PACKAGE__->table("study");
+__PACKAGE__->table("sample");
 
 =head1 ACCESSORS
 
-=head2 id_study_tmp
+=head2 id_sample_tmp
 
   data_type: 'integer'
   extra: {unsigned => 1}
@@ -53,23 +53,23 @@ Internal to this database id, value can change
   is_nullable: 0
   size: 10
 
-LIM system identifier, e.g. GCLP-CLARITY, SEQSCAPE
+LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE
 
-=head2 uuid_study_lims
+=head2 uuid_sample_lims
 
   data_type: 'varchar'
   is_nullable: 1
   size: 36
 
-LIMS-specific study uuid
+LIMS-specific sample uuid
 
-=head2 id_study_lims
+=head2 id_sample_lims
 
   data_type: 'varchar'
   is_nullable: 0
   size: 20
 
-LIMS-specific study identifier
+LIMS-specific sample identifier
 
 =head2 last_updated
 
@@ -78,6 +78,30 @@ LIMS-specific study identifier
   is_nullable: 0
 
 Timestamp of last update
+
+=head2 recorded_at
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 0
+
+Timestamp of warehouse update
+
+=head2 deleted_at
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 1
+
+Timestamp of sample deletion
+
+=head2 created
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 1
+
+Timestamp of sample creation
 
 =head2 name
 
@@ -91,35 +115,7 @@ Timestamp of last update
   is_nullable: 1
   size: 255
 
-=head2 ethically_approved
-
-  data_type: 'tinyint'
-  is_nullable: 1
-
-=head2 faculty_sponsor
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-=head2 state
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 50
-
-=head2 study_type
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 50
-
-=head2 abstract
-
-  data_type: 'text'
-  is_nullable: 1
-
-=head2 abbreviation
+=head2 organism
 
   data_type: 'varchar'
   is_nullable: 1
@@ -131,108 +127,113 @@ Timestamp of last update
   is_nullable: 1
   size: 50
 
+=head2 common_name
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
 =head2 description
 
   data_type: 'text'
   is_nullable: 1
 
-=head2 contains_human_dna
+=head2 taxon_id
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+=head2 father
 
   data_type: 'varchar'
   is_nullable: 1
   size: 255
 
-=head2 contaminated_human_dna
+=head2 mother
 
   data_type: 'varchar'
   is_nullable: 1
   size: 255
 
-=head2 data_release_strategy
+=head2 replicate
 
   data_type: 'varchar'
   is_nullable: 1
   size: 255
 
-=head2 data_release_sort_of_study
+=head2 ethnicity
 
   data_type: 'varchar'
   is_nullable: 1
   size: 255
 
-=head2 ena_project_id
+=head2 gender
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 20
+
+=head2 cohort
 
   data_type: 'varchar'
   is_nullable: 1
   size: 255
 
-=head2 study_title
+=head2 country_of_origin
 
   data_type: 'varchar'
   is_nullable: 1
   size: 255
 
-=head2 study_visibility
+=head2 geographical_region
 
   data_type: 'varchar'
   is_nullable: 1
   size: 255
 
-=head2 ega_dac_accession_number
+=head2 sanger_sample_id
 
   data_type: 'varchar'
   is_nullable: 1
   size: 255
 
-=head2 array_express_accession_number
+=head2 control
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+=head2 supplier_name
 
   data_type: 'varchar'
   is_nullable: 1
   size: 255
 
-=head2 ega_policy_accession_number
+=head2 public_name
 
   data_type: 'varchar'
   is_nullable: 1
   size: 255
 
-=head2 data_release_timing
+=head2 sample_visibility
 
   data_type: 'varchar'
   is_nullable: 1
   size: 255
 
-=head2 data_release_delay_period
+=head2 strain
 
   data_type: 'varchar'
   is_nullable: 1
   size: 255
 
-=head2 data_release_delay_reason
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-=head2 remove_x_and_autosomes
+=head2 consent_withdrawn
 
   data_type: 'tinyint'
   default_value: 0
   is_nullable: 0
 
-=head2 alignments_in_bam
-
-  data_type: 'tinyint'
-  default_value: 1
-  is_nullable: 0
-
-=head2 separate_y_chromosome_data
-
-  data_type: 'tinyint'
-  default_value: 0
-  is_nullable: 0
-
-=head2 data_access_group
+=head2 donor_id
 
   data_type: 'varchar'
   is_nullable: 1
@@ -241,7 +242,7 @@ Timestamp of last update
 =cut
 
 __PACKAGE__->add_columns(
-  "id_study_tmp",
+  "id_sample_tmp",
   {
     data_type => "integer",
     extra => { unsigned => 1 },
@@ -250,9 +251,9 @@ __PACKAGE__->add_columns(
   },
   "id_lims",
   { data_type => "varchar", is_nullable => 0, size => 10 },
-  "uuid_study_lims",
+  "uuid_sample_lims",
   { data_type => "varchar", is_nullable => 1, size => 36 },
-  "id_study_lims",
+  "id_sample_lims",
   { data_type => "varchar", is_nullable => 0, size => 20 },
   "last_updated",
   {
@@ -260,59 +261,69 @@ __PACKAGE__->add_columns(
     datetime_undef_if_invalid => 1,
     is_nullable => 0,
   },
+  "recorded_at",
+  {
+    data_type => "datetime",
+    datetime_undef_if_invalid => 1,
+    is_nullable => 0,
+  },
+  "deleted_at",
+  {
+    data_type => "datetime",
+    datetime_undef_if_invalid => 1,
+    is_nullable => 1,
+  },
+  "created",
+  {
+    data_type => "datetime",
+    datetime_undef_if_invalid => 1,
+    is_nullable => 1,
+  },
   "name",
   { data_type => "varchar", is_nullable => 1, size => 255 },
   "reference_genome",
   { data_type => "varchar", is_nullable => 1, size => 255 },
-  "ethically_approved",
-  { data_type => "tinyint", is_nullable => 1 },
-  "faculty_sponsor",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "state",
-  { data_type => "varchar", is_nullable => 1, size => 50 },
-  "study_type",
-  { data_type => "varchar", is_nullable => 1, size => 50 },
-  "abstract",
-  { data_type => "text", is_nullable => 1 },
-  "abbreviation",
+  "organism",
   { data_type => "varchar", is_nullable => 1, size => 255 },
   "accession_number",
   { data_type => "varchar", is_nullable => 1, size => 50 },
+  "common_name",
+  { data_type => "varchar", is_nullable => 1, size => 255 },
   "description",
   { data_type => "text", is_nullable => 1 },
-  "contains_human_dna",
+  "taxon_id",
+  { data_type => "integer", extra => { unsigned => 1 }, is_nullable => 1 },
+  "father",
   { data_type => "varchar", is_nullable => 1, size => 255 },
-  "contaminated_human_dna",
+  "mother",
   { data_type => "varchar", is_nullable => 1, size => 255 },
-  "data_release_strategy",
+  "replicate",
   { data_type => "varchar", is_nullable => 1, size => 255 },
-  "data_release_sort_of_study",
+  "ethnicity",
   { data_type => "varchar", is_nullable => 1, size => 255 },
-  "ena_project_id",
+  "gender",
+  { data_type => "varchar", is_nullable => 1, size => 20 },
+  "cohort",
   { data_type => "varchar", is_nullable => 1, size => 255 },
-  "study_title",
+  "country_of_origin",
   { data_type => "varchar", is_nullable => 1, size => 255 },
-  "study_visibility",
+  "geographical_region",
   { data_type => "varchar", is_nullable => 1, size => 255 },
-  "ega_dac_accession_number",
+  "sanger_sample_id",
   { data_type => "varchar", is_nullable => 1, size => 255 },
-  "array_express_accession_number",
+  "control",
+  { data_type => "tinyint", is_nullable => 1 },
+  "supplier_name",
   { data_type => "varchar", is_nullable => 1, size => 255 },
-  "ega_policy_accession_number",
+  "public_name",
   { data_type => "varchar", is_nullable => 1, size => 255 },
-  "data_release_timing",
+  "sample_visibility",
   { data_type => "varchar", is_nullable => 1, size => 255 },
-  "data_release_delay_period",
+  "strain",
   { data_type => "varchar", is_nullable => 1, size => 255 },
-  "data_release_delay_reason",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "remove_x_and_autosomes",
+  "consent_withdrawn",
   { data_type => "tinyint", default_value => 0, is_nullable => 0 },
-  "alignments_in_bam",
-  { data_type => "tinyint", default_value => 1, is_nullable => 0 },
-  "separate_y_chromosome_data",
-  { data_type => "tinyint", default_value => 0, is_nullable => 0 },
-  "data_access_group",
+  "donor_id",
   { data_type => "varchar", is_nullable => 1, size => 255 },
 );
 
@@ -320,27 +331,32 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</id_study_tmp>
+=item * L</id_sample_tmp>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("id_study_tmp");
+__PACKAGE__->set_primary_key("id_sample_tmp");
 
 =head1 UNIQUE CONSTRAINTS
 
-=head2 C<study_id_study_lims_index>
+=head2 C<sample_id_lims_id_sample_lims_index>
 
 =over 4
 
-=item * L</id_study_lims>
+=item * L</id_lims>
+
+=item * L</id_sample_lims>
 
 =back
 
 =cut
 
-__PACKAGE__->add_unique_constraint("study_id_study_lims_index", ["id_study_lims"]);
+__PACKAGE__->add_unique_constraint(
+  "sample_id_lims_id_sample_lims_index",
+  ["id_lims", "id_sample_lims"],
+);
 
 =head1 RELATIONS
 
@@ -348,14 +364,14 @@ __PACKAGE__->add_unique_constraint("study_id_study_lims_index", ["id_study_lims"
 
 Type: has_many
 
-Related object: L<ml_warehouse::Schema::Result::FlgenPlate>
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::FlgenPlate>
 
 =cut
 
 __PACKAGE__->has_many(
   "flgen_plates",
-  "ml_warehouse::Schema::Result::FlgenPlate",
-  { "foreign.id_study_tmp" => "self.id_study_tmp" },
+  "WTSI::DNAP::Warehouse::Schema::Result::FlgenPlate",
+  { "foreign.id_sample_tmp" => "self.id_sample_tmp" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -363,35 +379,20 @@ __PACKAGE__->has_many(
 
 Type: has_many
 
-Related object: L<ml_warehouse::Schema::Result::IseqFlowcell>
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell>
 
 =cut
 
 __PACKAGE__->has_many(
   "iseq_flowcells",
-  "ml_warehouse::Schema::Result::IseqFlowcell",
-  { "foreign.id_study_tmp" => "self.id_study_tmp" },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
-=head2 study_users
-
-Type: has_many
-
-Related object: L<ml_warehouse::Schema::Result::StudyUser>
-
-=cut
-
-__PACKAGE__->has_many(
-  "study_users",
-  "ml_warehouse::Schema::Result::StudyUser",
-  { "foreign.id_study_tmp" => "self.id_study_tmp" },
+  "WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell",
+  { "foreign.id_sample_tmp" => "self.id_sample_tmp" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-09-10 16:38:05
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hgzxz0vxInfab622jmBdLw
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 14:51:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:sJhsyDV1U388DHEosxbsEg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

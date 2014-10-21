@@ -1,12 +1,12 @@
 use utf8;
-package ml_warehouse::Schema::Result::IseqFlowcell;
+package WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-ml_warehouse::Schema::Result::IseqFlowcell
+WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell
 
 =cut
 
@@ -55,12 +55,20 @@ Internal to this database id, value can change
 
 Timestamp of last update
 
+=head2 recorded_at
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 0
+
+Timestamp of warehouse update
+
 =head2 id_sample_tmp
 
   data_type: 'integer'
   extra: {unsigned => 1}
   is_foreign_key: 1
-  is_nullable: 0
+  is_nullable: 1
 
 Sample id, see "sample.id_sample_tmp"
 
@@ -69,14 +77,14 @@ Sample id, see "sample.id_sample_tmp"
   data_type: 'integer'
   extra: {unsigned => 1}
   is_foreign_key: 1
-  is_nullable: 0
+  is_nullable: 1
 
 Study id, see "study.id_study_tmp"
 
 =head2 cost_code
 
   data_type: 'varchar'
-  is_nullable: 0
+  is_nullable: 1
   size: 20
 
 Valid WTSI cost code
@@ -85,7 +93,7 @@ Valid WTSI cost code
 
   data_type: 'tinyint'
   default_value: 0
-  is_nullable: 0
+  is_nullable: 1
 
 A boolean flag derived from cost code, flags RandD
 
@@ -128,7 +136,7 @@ Defaults to manual qc value; can be changed by the user later
 
 Manufacturer flowcell barcode or other identifier
 
-=head2 flowcell_id
+=head2 id_flowcell_lims
 
   data_type: 'varchar'
   is_nullable: 0
@@ -272,24 +280,30 @@ __PACKAGE__->add_columns(
     datetime_undef_if_invalid => 1,
     is_nullable => 0,
   },
+  "recorded_at",
+  {
+    data_type => "datetime",
+    datetime_undef_if_invalid => 1,
+    is_nullable => 0,
+  },
   "id_sample_tmp",
   {
     data_type => "integer",
     extra => { unsigned => 1 },
     is_foreign_key => 1,
-    is_nullable => 0,
+    is_nullable => 1,
   },
   "id_study_tmp",
   {
     data_type => "integer",
     extra => { unsigned => 1 },
     is_foreign_key => 1,
-    is_nullable => 0,
+    is_nullable => 1,
   },
   "cost_code",
-  { data_type => "varchar", is_nullable => 0, size => 20 },
+  { data_type => "varchar", is_nullable => 1, size => 20 },
   "is_r_and_d",
-  { data_type => "tinyint", default_value => 0, is_nullable => 0 },
+  { data_type => "tinyint", default_value => 0, is_nullable => 1 },
   "id_lims",
   { data_type => "varchar", is_nullable => 0, size => 10 },
   "priority",
@@ -305,7 +319,7 @@ __PACKAGE__->add_columns(
   { data_type => "tinyint", is_nullable => 1 },
   "flowcell_barcode",
   { data_type => "varchar", is_nullable => 1, size => 15 },
-  "flowcell_id",
+  "id_flowcell_lims",
   { data_type => "varchar", is_nullable => 0, size => 20 },
   "position",
   { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 0 },
@@ -357,43 +371,53 @@ __PACKAGE__->set_primary_key("id_iseq_flowcell_tmp");
 
 Type: belongs_to
 
-Related object: L<ml_warehouse::Schema::Result::Sample>
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::Sample>
 
 =cut
 
 __PACKAGE__->belongs_to(
   "id_sample_tmp",
-  "ml_warehouse::Schema::Result::Sample",
+  "WTSI::DNAP::Warehouse::Schema::Result::Sample",
   { id_sample_tmp => "id_sample_tmp" },
-  { is_deferrable => 1, on_delete => "NO ACTION", on_update => "NO ACTION" },
+  {
+    is_deferrable => 1,
+    join_type     => "LEFT",
+    on_delete     => "NO ACTION",
+    on_update     => "NO ACTION",
+  },
 );
 
 =head2 id_study_tmp
 
 Type: belongs_to
 
-Related object: L<ml_warehouse::Schema::Result::Study>
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::Study>
 
 =cut
 
 __PACKAGE__->belongs_to(
   "id_study_tmp",
-  "ml_warehouse::Schema::Result::Study",
+  "WTSI::DNAP::Warehouse::Schema::Result::Study",
   { id_study_tmp => "id_study_tmp" },
-  { is_deferrable => 1, on_delete => "NO ACTION", on_update => "NO ACTION" },
+  {
+    is_deferrable => 1,
+    join_type     => "LEFT",
+    on_delete     => "NO ACTION",
+    on_update     => "NO ACTION",
+  },
 );
 
 =head2 iseq_product_metrics
 
 Type: has_many
 
-Related object: L<ml_warehouse::Schema::Result::IseqProductMetric>
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric>
 
 =cut
 
 __PACKAGE__->has_many(
   "iseq_product_metrics",
-  "ml_warehouse::Schema::Result::IseqProductMetric",
+  "WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric",
   { "foreign.id_iseq_flowcell_tmp" => "self.id_iseq_flowcell_tmp" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
@@ -402,20 +426,20 @@ __PACKAGE__->has_many(
 
 Type: has_many
 
-Related object: L<ml_warehouse::Schema::Result::IseqRunLaneMetric>
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric>
 
 =cut
 
 __PACKAGE__->has_many(
   "iseq_run_lane_metrics",
-  "ml_warehouse::Schema::Result::IseqRunLaneMetric",
+  "WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric",
   { "foreign.id_iseq_flowcell_tmp" => "self.id_iseq_flowcell_tmp" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-09-10 16:38:05
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BCUAznczNdJ98flVQI/Uaw
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 14:51:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:434OV3SZJuvxCkoJeAFVmA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

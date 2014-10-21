@@ -8,10 +8,10 @@ use Readonly;
 use DBIx::Class::Schema::Loader qw(make_schema_at);
 
 Readonly::Scalar our $NPG_CONF_DIR   => q[.npg];
-Readonly::Scalar our $CONF_FILE_NAME => q[ml_warehouse-Schema];
+Readonly::Scalar our $CONF_FILE_NAME => q[WTSI-DNAP-Warehouse-Schema];
 
 my $domain = $ENV{dev} || q[live];
-my $schema_class_name = q[ml_warehouse::Schema];
+my $schema_class_name = q[WTSI::DNAP::Warehouse::Schema];
 
 carp qq[SCHEMA CLASS NAME $schema_class_name, DOMAIN $domain];
 

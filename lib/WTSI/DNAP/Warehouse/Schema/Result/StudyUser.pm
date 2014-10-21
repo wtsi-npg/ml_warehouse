@@ -1,12 +1,12 @@
 use utf8;
-package ml_warehouse::Schema::Result::StudyUser;
+package WTSI::DNAP::Warehouse::Schema::Result::StudyUser;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-ml_warehouse::Schema::Result::StudyUser
+WTSI::DNAP::Warehouse::Schema::Result::StudyUser
 
 =cut
 
@@ -139,20 +139,20 @@ __PACKAGE__->set_primary_key("id_study_users_tmp");
 
 Type: belongs_to
 
-Related object: L<ml_warehouse::Schema::Result::Study>
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::Study>
 
 =cut
 
 __PACKAGE__->belongs_to(
   "id_study_tmp",
-  "ml_warehouse::Schema::Result::Study",
+  "WTSI::DNAP::Warehouse::Schema::Result::Study",
   { id_study_tmp => "id_study_tmp" },
   { is_deferrable => 1, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-09-10 16:38:05
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:c69UknY1aQomZI6u3jDmVg
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 14:51:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GkSc/2SfO6CoIzWbav7Jbg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
