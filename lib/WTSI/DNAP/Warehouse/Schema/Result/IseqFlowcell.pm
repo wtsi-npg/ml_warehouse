@@ -166,7 +166,7 @@ Lane type: library, pool, library_control, library_indexed, library_indexed_spik
   is_nullable: 0
   size: 20
 
-Most specific, LIMs identifier associated with this lane or plex or spike
+Most specific LIMs identifier associated with this lane or plex or spike
 
 =head2 num_target_components
 
@@ -438,8 +438,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 14:51:15
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:434OV3SZJuvxCkoJeAFVmA
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 17:57:37
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FGxuA1uloD76/IR37Wg0bA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

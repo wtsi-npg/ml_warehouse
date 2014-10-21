@@ -89,13 +89,13 @@ Flowcell lane number
 
 Tag index, NULL if lane is not a pool
 
-=head2 tag_sequence
+=head2 tag_sequence4deplexing
 
   data_type: 'varchar'
   is_nullable: 1
   size: 30
 
-Tag sequence
+Tag sequence used for deplexing the lane, common suffix might have been truncated
 
 =head2 tag_decode_percent
 
@@ -169,32 +169,6 @@ Tag sequence
   extra: {unsigned => 1}
   is_nullable: 1
   size: [5,2]
-
-=head2 contaminants_scan_hit1_name
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 50
-
-=head2 contaminants_scan_hit1_score
-
-  data_type: 'float'
-  extra: {unsigned => 1}
-  is_nullable: 1
-  size: [6,2]
-
-=head2 contaminants_scan_hit2_name
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 50
-
-=head2 contaminants_scan_hit2_score
-
-  data_type: 'float'
-  extra: {unsigned => 1}
-  is_nullable: 1
-  size: [6,2]
 
 =head2 ref_match1_name
 
@@ -368,7 +342,7 @@ __PACKAGE__->add_columns(
   { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 0 },
   "tag_index",
   { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 1 },
-  "tag_sequence",
+  "tag_sequence4deplexing",
   { data_type => "varchar", is_nullable => 1, size => 30 },
   "tag_decode_percent",
   {
@@ -426,24 +400,6 @@ __PACKAGE__->add_columns(
     extra => { unsigned => 1 },
     is_nullable => 1,
     size => [5, 2],
-  },
-  "contaminants_scan_hit1_name",
-  { data_type => "varchar", is_nullable => 1, size => 50 },
-  "contaminants_scan_hit1_score",
-  {
-    data_type => "float",
-    extra => { unsigned => 1 },
-    is_nullable => 1,
-    size => [6, 2],
-  },
-  "contaminants_scan_hit2_name",
-  { data_type => "varchar", is_nullable => 1, size => 50 },
-  "contaminants_scan_hit2_score",
-  {
-    data_type => "float",
-    extra => { unsigned => 1 },
-    is_nullable => 1,
-    size => [6, 2],
   },
   "ref_match1_name",
   { data_type => "varchar", is_nullable => 1, size => 100 },
@@ -563,8 +519,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 14:51:15
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:YPKPKfeZoP5pK3EgPtjSZQ
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 17:57:37
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:m1NYQwJLb4AXNztpiSkMkw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
