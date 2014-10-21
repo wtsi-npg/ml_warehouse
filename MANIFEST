@@ -1,0 +1,15 @@
+Build.PL
+Changes
+lib/WTSI/DNAP/Warehouse/Schema.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/FlgenPlate.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/IseqFlowcell.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/IseqProductMetric.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunLaneMetric.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunStatus.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunStatusDict.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/Sample.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/Study.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/StudyUser.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/SchemaMigration.pm
+scripts/make_schema.pl
+t/10-Schema.t
