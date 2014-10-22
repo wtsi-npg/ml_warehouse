@@ -97,6 +97,30 @@ Tag index, NULL if lane is not a pool
 
 Tag sequence used for deplexing the lane, common suffix might have been truncated
 
+=head2 actual_forward_read_length
+
+  data_type: 'smallint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Actual forward read length, bp
+
+=head2 actual_reverse_read_length
+
+  data_type: 'smallint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Actual reverse read length, bp
+
+=head2 indexing_read_length
+
+  data_type: 'smallint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Indexing read length, bp
+
 =head2 tag_decode_percent
 
   data_type: 'float'
@@ -344,6 +368,12 @@ __PACKAGE__->add_columns(
   { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 1 },
   "tag_sequence4deplexing",
   { data_type => "varchar", is_nullable => 1, size => 30 },
+  "actual_forward_read_length",
+  { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 1 },
+  "actual_reverse_read_length",
+  { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 1 },
+  "indexing_read_length",
+  { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 1 },
   "tag_decode_percent",
   {
     data_type => "float",
@@ -519,8 +549,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 17:57:37
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:m1NYQwJLb4AXNztpiSkMkw
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-22 17:33:12
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aLl6v26L/GbEWj4iii7GKA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

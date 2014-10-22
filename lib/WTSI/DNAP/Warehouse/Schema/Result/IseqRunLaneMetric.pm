@@ -99,30 +99,6 @@ Flowcell lane number
   extra: {unsigned => 1}
   is_nullable: 0
 
-=head2 forward_read_length
-
-  data_type: 'smallint'
-  extra: {unsigned => 1}
-  is_nullable: 1
-
-Actual forward read length, bp
-
-=head2 reverse_read_length
-
-  data_type: 'smallint'
-  extra: {unsigned => 1}
-  is_nullable: 1
-
-Actual reverse read length, bp
-
-=head2 indexing_read_length
-
-  data_type: 'smallint'
-  extra: {unsigned => 1}
-  is_nullable: 1
-
-Actual reverse read length, bp
-
 =head2 indexed_run
 
   data_type: 'tinyint'
@@ -370,12 +346,6 @@ __PACKAGE__->add_columns(
     extra => { unsigned => 1 },
     is_nullable => 0,
   },
-  "forward_read_length",
-  { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 1 },
-  "reverse_read_length",
-  { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 1 },
-  "indexing_read_length",
-  { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 1 },
   "indexed_run",
   { data_type => "tinyint", extra => { unsigned => 1 }, is_nullable => 0 },
   "cycles",
@@ -596,8 +566,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 14:51:15
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:fE0L8bIqzu7XBvq3xlV3uw
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-22 17:33:12
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:wKhfC63sTm3nar8ffP6jKw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
