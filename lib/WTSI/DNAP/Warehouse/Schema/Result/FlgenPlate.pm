@@ -149,7 +149,7 @@ Number of occupied wells on a plate
   is_nullable: 0
   size: 10
 
-Manufactuer well identifierwithin a plate, S001-S192
+Manufactuer well identifier within a plate, S001-S192
 
 =head2 well_uuid_lims
 
@@ -271,8 +271,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 14:51:15
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0Th9HKYL4eJqhVZJKVOT3A
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 17:57:37
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:giYLjczh9+BiFoVFWAijoQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

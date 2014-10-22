@@ -40,7 +40,7 @@ my $builder = $class->new(
   'module_name'   => 'npg_ml_warehouse',
   'dist_author'   => 'WTSI, NPG',
   'dist_version'  => $class->git_tag(),
-  'dist_abstract' => 'DBIx binding for a milti-LIMs warehouse',
+  'dist_abstract' => 'DBIx binding for a multi-LIMs warehouse',
 
   'build_requires' => {
     'Module::Build'         => 0,
