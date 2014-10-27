@@ -47,15 +47,6 @@ __PACKAGE__->table("iseq_product_metrics");
 
 Internal to this database id, value can change
 
-=head2 id_iseq_lane_metrics_tmp
-
-  data_type: 'integer'
-  extra: {unsigned => 1}
-  is_foreign_key: 1
-  is_nullable: 0
-
-Lane metrics id, see "iseq_run_lane_metrics.id_iseq_lane_metrics_tmp"
-
 =head2 id_iseq_flowcell_tmp
 
   data_type: 'integer'
@@ -69,6 +60,7 @@ Flowcell id, see "iseq_flowcell.id_iseq_flowcell_tmp"
 
   data_type: 'integer'
   extra: {unsigned => 1}
+  is_foreign_key: 1
   is_nullable: 0
 
 NPG run identifier
@@ -77,6 +69,7 @@ NPG run identifier
 
   data_type: 'smallint'
   extra: {unsigned => 1}
+  is_foreign_key: 1
   is_nullable: 0
 
 Flowcell lane number
@@ -346,13 +339,6 @@ __PACKAGE__->add_columns(
     is_auto_increment => 1,
     is_nullable => 0,
   },
-  "id_iseq_lane_metrics_tmp",
-  {
-    data_type => "integer",
-    extra => { unsigned => 1 },
-    is_foreign_key => 1,
-    is_nullable => 0,
-  },
   "id_iseq_flowcell_tmp",
   {
     data_type => "integer",
@@ -361,9 +347,19 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
   },
   "id_run",
-  { data_type => "integer", extra => { unsigned => 1 }, is_nullable => 0 },
+  {
+    data_type => "integer",
+    extra => { unsigned => 1 },
+    is_foreign_key => 1,
+    is_nullable => 0,
+  },
   "position",
-  { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 0 },
+  {
+    data_type => "smallint",
+    extra => { unsigned => 1 },
+    is_foreign_key => 1,
+    is_nullable => 0,
+  },
   "tag_index",
   { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 1 },
   "tag_sequence4deplexing",
@@ -533,7 +529,7 @@ __PACKAGE__->belongs_to(
   },
 );
 
-=head2 id_iseq_lane_metrics_tmp
+=head2 iseq_run_lane_metric
 
 Type: belongs_to
 
@@ -542,15 +538,15 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric>
 =cut
 
 __PACKAGE__->belongs_to(
-  "id_iseq_lane_metrics_tmp",
+  "iseq_run_lane_metric",
   "WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric",
-  { id_iseq_lane_metrics_tmp => "id_iseq_lane_metrics_tmp" },
+  { id_run => "id_run", position => "position" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "NO ACTION" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-22 17:33:12
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aLl6v26L/GbEWj4iii7GKA
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-27 14:28:36
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:YB/gWdLDumiySGPNW6iGGA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

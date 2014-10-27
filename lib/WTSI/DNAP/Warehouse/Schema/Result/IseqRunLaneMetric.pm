@@ -99,14 +99,6 @@ Flowcell lane number
   extra: {unsigned => 1}
   is_nullable: 0
 
-=head2 indexed_run
-
-  data_type: 'tinyint'
-  extra: {unsigned => 1}
-  is_nullable: 0
-
-Boolen flag to indicate whether indexing read was done
-
 =head2 cycles
 
   data_type: 'integer'
@@ -346,8 +338,6 @@ __PACKAGE__->add_columns(
     extra => { unsigned => 1 },
     is_nullable => 0,
   },
-  "indexed_run",
-  { data_type => "tinyint", extra => { unsigned => 1 }, is_nullable => 0 },
   "cycles",
   { data_type => "integer", extra => { unsigned => 1 }, is_nullable => 0 },
   "cancelled",
@@ -493,25 +483,6 @@ __PACKAGE__->set_primary_key("id_iseq_lane_metrics_tmp");
 
 =head1 UNIQUE CONSTRAINTS
 
-=head2 C<iseq_rlm_fcid_run_pos>
-
-=over 4
-
-=item * L</id_iseq_flowcell_tmp>
-
-=item * L</id_run>
-
-=item * L</position>
-
-=back
-
-=cut
-
-__PACKAGE__->add_unique_constraint(
-  "iseq_rlm_fcid_run_pos",
-  ["id_iseq_flowcell_tmp", "id_run", "position"],
-);
-
 =head2 C<iseq_rlm_run_position_index>
 
 =over 4
@@ -560,16 +531,17 @@ __PACKAGE__->has_many(
   "iseq_product_metrics",
   "WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric",
   {
-    "foreign.id_iseq_lane_metrics_tmp" => "self.id_iseq_lane_metrics_tmp",
+    "foreign.id_run"   => "self.id_run",
+    "foreign.position" => "self.position",
   },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-22 17:33:12
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:wKhfC63sTm3nar8ffP6jKw
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-27 15:41:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:oEX9aoNf4JHPXD0V02XD+g
 
+with 'npg_qc::autoqc::role::rpt_key' if eval "require npg_qc::autoqc::role::rpt_key";
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
 __PACKAGE__->meta->make_immutable;
 1;
