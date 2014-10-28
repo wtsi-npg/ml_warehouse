@@ -44,8 +44,11 @@ my $builder = $class->new(
 
   'build_requires' => {
     'English'               => 0,
+    'File::Temp'            => 0,
+    'File::Spec::Functions' => 0,
     'Module::Build'         => 0,
     'Test::Distribution'    => 0,
+    'Test::Exception'       => 0,
     'Test::More'            => 0,
     'Test::Perl::Critic'    => 0,
     'Test::Pod'             => 0,
