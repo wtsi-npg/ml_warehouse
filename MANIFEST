@@ -15,4 +15,6 @@ lib/WTSI/DNAP/Warehouse/Schema/Result/SchemaMigration.pm
 scripts/make_schema.pl
 t/perlcriticrc
 t/00-critic.t
+t/00-distribution.t
+t/00-pod.t
 t/10-Schema.t
