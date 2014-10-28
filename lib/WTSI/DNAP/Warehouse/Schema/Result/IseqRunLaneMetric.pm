@@ -499,7 +499,7 @@ __PACKAGE__->add_unique_constraint("iseq_rlm_run_position_index", ["id_run", "po
 
 =head1 RELATIONS
 
-=head2 id_iseq_flowcell_tmp
+=head2 iseq_flowcell
 
 Type: belongs_to
 
@@ -508,7 +508,7 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell>
 =cut
 
 __PACKAGE__->belongs_to(
-  "id_iseq_flowcell_tmp",
+  "iseq_flowcell",
   "WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell",
   { id_iseq_flowcell_tmp => "id_iseq_flowcell_tmp" },
   {
@@ -538,8 +538,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-27 15:41:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:oEX9aoNf4JHPXD0V02XD+g
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:02:58
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:C/1wQrrvsKp0ihKTA4Aoyg
 
 with 'npg_qc::autoqc::role::rpt_key' if eval "require npg_qc::autoqc::role::rpt_key";
 

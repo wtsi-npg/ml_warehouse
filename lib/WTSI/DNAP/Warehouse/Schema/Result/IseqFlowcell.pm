@@ -367,46 +367,6 @@ __PACKAGE__->set_primary_key("id_iseq_flowcell_tmp");
 
 =head1 RELATIONS
 
-=head2 id_sample_tmp
-
-Type: belongs_to
-
-Related object: L<WTSI::DNAP::Warehouse::Schema::Result::Sample>
-
-=cut
-
-__PACKAGE__->belongs_to(
-  "id_sample_tmp",
-  "WTSI::DNAP::Warehouse::Schema::Result::Sample",
-  { id_sample_tmp => "id_sample_tmp" },
-  {
-    is_deferrable => 1,
-    join_type     => "LEFT",
-    on_delete     => "NO ACTION",
-    on_update     => "NO ACTION",
-  },
-);
-
-=head2 id_study_tmp
-
-Type: belongs_to
-
-Related object: L<WTSI::DNAP::Warehouse::Schema::Result::Study>
-
-=cut
-
-__PACKAGE__->belongs_to(
-  "id_study_tmp",
-  "WTSI::DNAP::Warehouse::Schema::Result::Study",
-  { id_study_tmp => "id_study_tmp" },
-  {
-    is_deferrable => 1,
-    join_type     => "LEFT",
-    on_delete     => "NO ACTION",
-    on_update     => "NO ACTION",
-  },
-);
-
 =head2 iseq_product_metrics
 
 Type: has_many
@@ -437,9 +397,49 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 sample
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 17:57:37
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FGxuA1uloD76/IR37Wg0bA
+Type: belongs_to
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::Sample>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "sample",
+  "WTSI::DNAP::Warehouse::Schema::Result::Sample",
+  { id_sample_tmp => "id_sample_tmp" },
+  {
+    is_deferrable => 1,
+    join_type     => "LEFT",
+    on_delete     => "NO ACTION",
+    on_update     => "NO ACTION",
+  },
+);
+
+=head2 study
+
+Type: belongs_to
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::Study>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "study",
+  "WTSI::DNAP::Warehouse::Schema::Result::Study",
+  { id_study_tmp => "id_study_tmp" },
+  {
+    is_deferrable => 1,
+    join_type     => "LEFT",
+    on_delete     => "NO ACTION",
+    on_update     => "NO ACTION",
+  },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:02:58
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+pUOe2KXYyAnhgHUipDWSA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

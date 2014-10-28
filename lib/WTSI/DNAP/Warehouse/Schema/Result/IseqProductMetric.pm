@@ -509,7 +509,7 @@ __PACKAGE__->set_primary_key("id_iseq_pr_metrics_tmp");
 
 =head1 RELATIONS
 
-=head2 id_iseq_flowcell_tmp
+=head2 iseq_flowcell
 
 Type: belongs_to
 
@@ -518,7 +518,7 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell>
 =cut
 
 __PACKAGE__->belongs_to(
-  "id_iseq_flowcell_tmp",
+  "iseq_flowcell",
   "WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell",
   { id_iseq_flowcell_tmp => "id_iseq_flowcell_tmp" },
   {
@@ -545,8 +545,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-27 14:28:36
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:YB/gWdLDumiySGPNW6iGGA
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:02:58
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ehkLDelLnu2KRWwQW77bTw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

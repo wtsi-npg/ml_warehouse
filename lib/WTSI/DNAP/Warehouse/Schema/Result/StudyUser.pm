@@ -135,7 +135,7 @@ __PACKAGE__->set_primary_key("id_study_users_tmp");
 
 =head1 RELATIONS
 
-=head2 id_study_tmp
+=head2 study
 
 Type: belongs_to
 
@@ -144,15 +144,15 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::Study>
 =cut
 
 __PACKAGE__->belongs_to(
-  "id_study_tmp",
+  "study",
   "WTSI::DNAP::Warehouse::Schema::Result::Study",
   { id_study_tmp => "id_study_tmp" },
   { is_deferrable => 1, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 14:51:15
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GkSc/2SfO6CoIzWbav7Jbg
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:02:58
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:owBWGTT+C48DLRqdx1vO4Q
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

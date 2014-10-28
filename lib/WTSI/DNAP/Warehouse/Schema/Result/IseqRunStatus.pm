@@ -124,7 +124,7 @@ __PACKAGE__->set_primary_key("id_run_status");
 
 =head1 RELATIONS
 
-=head2 id_run_status_dict
+=head2 run_status_dict
 
 Type: belongs_to
 
@@ -133,15 +133,15 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatusDict>
 =cut
 
 __PACKAGE__->belongs_to(
-  "id_run_status_dict",
+  "run_status_dict",
   "WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatusDict",
   { id_run_status_dict => "id_run_status_dict" },
   { is_deferrable => 1, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 14:51:15
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MPbVh6leazW3aSsjNd/eTw
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:02:58
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0FX6tXhfEmdtMCp2G6L0OQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
