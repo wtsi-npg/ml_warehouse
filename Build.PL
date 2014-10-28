@@ -37,14 +37,16 @@ EOF
 
 my $builder = $class->new(
 
-  'module_name'   => 'npg_ml_warehouse',
-  'dist_author'   => 'WTSI, NPG',
+  'module_name'   => 'ml_warehouse',
+  'dist_author'   => 'npg <npg@sanger.ac.uk>',
   'dist_version'  => $class->git_tag(),
   'dist_abstract' => 'DBIx binding for a multi-LIMs warehouse',
 
   'build_requires' => {
+    'English'               => 0,
     'Module::Build'         => 0,
     'Test::More'            => 0,
+    'Test::Perl::Critic'    => 0,
   },
 
   'requires' => {
@@ -58,7 +60,6 @@ my $builder = $class->new(
     'MooseX::NonMoose'      => 0,
     'Readonly'              => 0,
     'strict'                => 0,
-    'utf8'                  => 0,
     'warnings'              => 0,
   },
 

@@ -1,4 +1,4 @@
-use utf8;
+
 package WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell;
 
 # Created by DBIx::Class::Schema::Loader
@@ -28,13 +28,13 @@ extends 'DBIx::Class::Core';
 
 =cut
 
-__PACKAGE__->load_components("InflateColumn::DateTime");
+__PACKAGE__->load_components('InflateColumn::DateTime');
 
 =head1 TABLE: C<iseq_flowcell>
 
 =cut
 
-__PACKAGE__->table("iseq_flowcell");
+__PACKAGE__->table('iseq_flowcell');
 
 =head1 ACCESSORS
 
@@ -70,7 +70,7 @@ Timestamp of warehouse update
   is_foreign_key: 1
   is_nullable: 1
 
-Sample id, see "sample.id_sample_tmp"
+Sample id, see 'sample.id_sample_tmp'
 
 =head2 id_study_tmp
 
@@ -79,7 +79,7 @@ Sample id, see "sample.id_sample_tmp"
   is_foreign_key: 1
   is_nullable: 1
 
-Study id, see "study.id_study_tmp"
+Study id, see 'study.id_study_tmp'
 
 =head2 cost_code
 
@@ -267,90 +267,90 @@ Requested reverse read length, bp
 =cut
 
 __PACKAGE__->add_columns(
-  "id_iseq_flowcell_tmp",
+  'id_iseq_flowcell_tmp',
   {
-    data_type => "integer",
+    data_type => 'integer',
     extra => { unsigned => 1 },
     is_auto_increment => 1,
     is_nullable => 0,
   },
-  "last_updated",
+  'last_updated',
   {
-    data_type => "datetime",
+    data_type => 'datetime',
     datetime_undef_if_invalid => 1,
     is_nullable => 0,
   },
-  "recorded_at",
+  'recorded_at',
   {
-    data_type => "datetime",
+    data_type => 'datetime',
     datetime_undef_if_invalid => 1,
     is_nullable => 0,
   },
-  "id_sample_tmp",
+  'id_sample_tmp',
   {
-    data_type => "integer",
+    data_type => 'integer',
     extra => { unsigned => 1 },
     is_foreign_key => 1,
     is_nullable => 1,
   },
-  "id_study_tmp",
+  'id_study_tmp',
   {
-    data_type => "integer",
+    data_type => 'integer',
     extra => { unsigned => 1 },
     is_foreign_key => 1,
     is_nullable => 1,
   },
-  "cost_code",
-  { data_type => "varchar", is_nullable => 1, size => 20 },
-  "is_r_and_d",
-  { data_type => "tinyint", default_value => 0, is_nullable => 1 },
-  "id_lims",
-  { data_type => "varchar", is_nullable => 0, size => 10 },
-  "priority",
+  'cost_code',
+  { data_type => 'varchar', is_nullable => 1, size => 20 },
+  'is_r_and_d',
+  { data_type => 'tinyint', default_value => 0, is_nullable => 1 },
+  'id_lims',
+  { data_type => 'varchar', is_nullable => 0, size => 10 },
+  'priority',
   {
-    data_type => "smallint",
+    data_type => 'smallint',
     default_value => 1,
     extra => { unsigned => 1 },
     is_nullable => 1,
   },
-  "manual_qc",
-  { data_type => "tinyint", is_nullable => 1 },
-  "external_release",
-  { data_type => "tinyint", is_nullable => 1 },
-  "flowcell_barcode",
-  { data_type => "varchar", is_nullable => 1, size => 15 },
-  "id_flowcell_lims",
-  { data_type => "varchar", is_nullable => 0, size => 20 },
-  "position",
-  { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 0 },
-  "entity_type",
-  { data_type => "varchar", is_nullable => 0, size => 30 },
-  "entity_id_lims",
-  { data_type => "varchar", is_nullable => 0, size => 20 },
-  "num_target_components",
-  { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 0 },
-  "tag_index",
-  { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 1 },
-  "tag_sequence",
-  { data_type => "varchar", is_nullable => 1, size => 30 },
-  "tag_set_id_lims",
-  { data_type => "varchar", is_nullable => 1, size => 20 },
-  "tag_set_name",
-  { data_type => "varchar", is_nullable => 1, size => 50 },
-  "is_spiked",
-  { data_type => "tinyint", default_value => 0, is_nullable => 0 },
-  "pipeline_id_lims",
-  { data_type => "varchar", is_nullable => 0, size => 50 },
-  "bait_name",
-  { data_type => "varchar", is_nullable => 1, size => 50 },
-  "requested_insert_size_from",
-  { data_type => "integer", extra => { unsigned => 1 }, is_nullable => 1 },
-  "requested_insert_size_to",
-  { data_type => "integer", extra => { unsigned => 1 }, is_nullable => 1 },
-  "forward_read_length",
-  { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 1 },
-  "reverse_read_length",
-  { data_type => "smallint", extra => { unsigned => 1 }, is_nullable => 1 },
+  'manual_qc',
+  { data_type => 'tinyint', is_nullable => 1 },
+  'external_release',
+  { data_type => 'tinyint', is_nullable => 1 },
+  'flowcell_barcode',
+  { data_type => 'varchar', is_nullable => 1, size => 15 },
+  'id_flowcell_lims',
+  { data_type => 'varchar', is_nullable => 0, size => 20 },
+  'position',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 0 },
+  'entity_type',
+  { data_type => 'varchar', is_nullable => 0, size => 30 },
+  'entity_id_lims',
+  { data_type => 'varchar', is_nullable => 0, size => 20 },
+  'num_target_components',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 0 },
+  'tag_index',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'tag_sequence',
+  { data_type => 'varchar', is_nullable => 1, size => 30 },
+  'tag_set_id_lims',
+  { data_type => 'varchar', is_nullable => 1, size => 20 },
+  'tag_set_name',
+  { data_type => 'varchar', is_nullable => 1, size => 50 },
+  'is_spiked',
+  { data_type => 'tinyint', default_value => 0, is_nullable => 0 },
+  'pipeline_id_lims',
+  { data_type => 'varchar', is_nullable => 0, size => 50 },
+  'bait_name',
+  { data_type => 'varchar', is_nullable => 1, size => 50 },
+  'requested_insert_size_from',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'requested_insert_size_to',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'forward_read_length',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'reverse_read_length',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -363,7 +363,7 @@ __PACKAGE__->add_columns(
 
 =cut
 
-__PACKAGE__->set_primary_key("id_iseq_flowcell_tmp");
+__PACKAGE__->set_primary_key('id_iseq_flowcell_tmp');
 
 =head1 RELATIONS
 
@@ -376,9 +376,9 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric>
 =cut
 
 __PACKAGE__->has_many(
-  "iseq_product_metrics",
-  "WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric",
-  { "foreign.id_iseq_flowcell_tmp" => "self.id_iseq_flowcell_tmp" },
+  'iseq_product_metrics',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric',
+  { 'foreign.id_iseq_flowcell_tmp' => 'self.id_iseq_flowcell_tmp' },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -391,9 +391,9 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric>
 =cut
 
 __PACKAGE__->has_many(
-  "iseq_run_lane_metrics",
-  "WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric",
-  { "foreign.id_iseq_flowcell_tmp" => "self.id_iseq_flowcell_tmp" },
+  'iseq_run_lane_metrics',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric',
+  { 'foreign.id_iseq_flowcell_tmp' => 'self.id_iseq_flowcell_tmp' },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -406,14 +406,14 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::Sample>
 =cut
 
 __PACKAGE__->belongs_to(
-  "sample",
-  "WTSI::DNAP::Warehouse::Schema::Result::Sample",
-  { id_sample_tmp => "id_sample_tmp" },
+  'sample',
+  'WTSI::DNAP::Warehouse::Schema::Result::Sample',
+  { id_sample_tmp => 'id_sample_tmp' },
   {
     is_deferrable => 1,
-    join_type     => "LEFT",
-    on_delete     => "NO ACTION",
-    on_update     => "NO ACTION",
+    join_type     => 'LEFT',
+    on_delete     => 'NO ACTION',
+    on_update     => 'NO ACTION',
   },
 );
 
@@ -426,22 +426,86 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::Study>
 =cut
 
 __PACKAGE__->belongs_to(
-  "study",
-  "WTSI::DNAP::Warehouse::Schema::Result::Study",
-  { id_study_tmp => "id_study_tmp" },
+  'study',
+  'WTSI::DNAP::Warehouse::Schema::Result::Study',
+  { id_study_tmp => 'id_study_tmp' },
   {
     is_deferrable => 1,
-    join_type     => "LEFT",
-    on_delete     => "NO ACTION",
-    on_update     => "NO ACTION",
+    join_type     => 'LEFT',
+    on_delete     => 'NO ACTION',
+    on_update     => 'NO ACTION',
   },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:02:58
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+pUOe2KXYyAnhgHUipDWSA
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:26:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Gj9f0nxqXEcWYrTI38UVWA
 
+our $VERSION = '0';
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
 __PACKAGE__->meta->make_immutable;
+
 1;
+__END__
+
+=head1 SYNOPSIS
+
+=head1 DESCRIPTION
+
+Result class definition in DBIx binding for the multi-lims warehouse database.
+
+=head1 DIAGNOSTICS
+
+=head1 CONFIGURATION AND ENVIRONMENT
+
+=head1 SUBROUTINES/METHODS
+
+=head1 DEPENDENCIES
+
+=over
+
+=item strict
+
+=item warnings
+
+=item Moose
+
+=item MooseX::NonMoose
+
+=item MooseX::MarkAsMethods
+
+=item DBIx::Class::Core
+
+=item DBIx::Class::InflateColumn::DateTime
+
+=back
+
+=head1 INCOMPATIBILITIES
+
+=head1 BUGS AND LIMITATIONS
+
+=head1 AUTHOR
+
+Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2014 Genome Research Limited
+
+This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
+
+NPG is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+=cut
+

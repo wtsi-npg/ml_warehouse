@@ -30,8 +30,21 @@ make_schema_at(
     components         => [qw(InflateColumn::DateTime)],
     skip_load_external => 1,
     use_moose          => 1,
-    rel_name_map       =>
-    sub {my %h=%{shift@_}; my $name=$h{'name'}; $name=~s/^id_//; $name=~s/_tmp$//; return $name;}
+    rel_name_map       => sub {
+          my %h=%{shift@_};
+          my $name=$h{'name'};
+          $name=~s/^id_//;
+          $name=~s/_tmp$//;
+          return $name;
+    },
+    filter_generated_code => sub {
+          my ($type, $class, $code) = @_;
+          $code =~ s/use\ utf8;//;
+          if ($type eq 'result') {
+            $code =~ tr/"/'/;
+          }
+          return $code;
+    },
   }, 
   [$config->{'dsn'}, $config->{'dbuser'}, $config->{'dbpass'}]
               );
