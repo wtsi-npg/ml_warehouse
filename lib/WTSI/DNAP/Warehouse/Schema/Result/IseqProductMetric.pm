@@ -548,7 +548,7 @@ __PACKAGE__->belongs_to(
 # Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:02:58
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ehkLDelLnu2KRWwQW77bTw
 
+with 'npg_qc::autoqc::role::rpt_key' if eval "require npg_qc::autoqc::role::rpt_key";
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
 __PACKAGE__->meta->make_immutable;
 1;
