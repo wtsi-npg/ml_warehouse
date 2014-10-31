@@ -22,16 +22,31 @@ if (defined $config->{$domain}) {
 }
 
 make_schema_at(
-          $schema_class_name, 
-          { 
-            debug           => 0, 
-            dump_directory  => q[lib], 
-            naming          => q[current],
-            components      => [qw(InflateColumn::DateTime)],
-            skip_load_external => 1,
-            use_moose       => 1,
-          }, 
-          [ $config->{'dsn'}, $config->{'dbuser'}, $config->{'dbpass'}]
+  $schema_class_name,
+  {
+    debug              => 0, 
+    dump_directory     => q[lib], 
+    naming             => q[current],
+    components         => [qw(InflateColumn::DateTime)],
+    skip_load_external => 1,
+    use_moose          => 1,
+    rel_name_map       => sub {
+          my %h=%{shift@_};
+          my $name=$h{'name'};
+          $name=~s/^id_//;
+          $name=~s/_tmp$//;
+          return $name;
+    },
+    filter_generated_code => sub {
+          my ($type, $class, $code) = @_;
+          $code =~ s/use\ utf8;//;
+          if ($type eq 'result') {
+            $code =~ tr/"/'/;
+          }
+          return $code;
+    },
+  }, 
+  [$config->{'dsn'}, $config->{'dbuser'}, $config->{'dbpass'}]
               );
 
 1;

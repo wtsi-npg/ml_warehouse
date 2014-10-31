@@ -1,4 +1,4 @@
-use utf8;
+
 package WTSI::DNAP::Warehouse::Schema::Result::Sample;
 
 # Created by DBIx::Class::Schema::Loader
@@ -28,13 +28,13 @@ extends 'DBIx::Class::Core';
 
 =cut
 
-__PACKAGE__->load_components("InflateColumn::DateTime");
+__PACKAGE__->load_components('InflateColumn::DateTime');
 
 =head1 TABLE: C<sample>
 
 =cut
 
-__PACKAGE__->table("sample");
+__PACKAGE__->table('sample');
 
 =head1 ACCESSORS
 
@@ -242,89 +242,89 @@ Timestamp of sample creation
 =cut
 
 __PACKAGE__->add_columns(
-  "id_sample_tmp",
+  'id_sample_tmp',
   {
-    data_type => "integer",
+    data_type => 'integer',
     extra => { unsigned => 1 },
     is_auto_increment => 1,
     is_nullable => 0,
   },
-  "id_lims",
-  { data_type => "varchar", is_nullable => 0, size => 10 },
-  "uuid_sample_lims",
-  { data_type => "varchar", is_nullable => 1, size => 36 },
-  "id_sample_lims",
-  { data_type => "varchar", is_nullable => 0, size => 20 },
-  "last_updated",
+  'id_lims',
+  { data_type => 'varchar', is_nullable => 0, size => 10 },
+  'uuid_sample_lims',
+  { data_type => 'varchar', is_nullable => 1, size => 36 },
+  'id_sample_lims',
+  { data_type => 'varchar', is_nullable => 0, size => 20 },
+  'last_updated',
   {
-    data_type => "datetime",
+    data_type => 'datetime',
     datetime_undef_if_invalid => 1,
     is_nullable => 0,
   },
-  "recorded_at",
+  'recorded_at',
   {
-    data_type => "datetime",
+    data_type => 'datetime',
     datetime_undef_if_invalid => 1,
     is_nullable => 0,
   },
-  "deleted_at",
+  'deleted_at',
   {
-    data_type => "datetime",
+    data_type => 'datetime',
     datetime_undef_if_invalid => 1,
     is_nullable => 1,
   },
-  "created",
+  'created',
   {
-    data_type => "datetime",
+    data_type => 'datetime',
     datetime_undef_if_invalid => 1,
     is_nullable => 1,
   },
-  "name",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "reference_genome",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "organism",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "accession_number",
-  { data_type => "varchar", is_nullable => 1, size => 50 },
-  "common_name",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "description",
-  { data_type => "text", is_nullable => 1 },
-  "taxon_id",
-  { data_type => "integer", extra => { unsigned => 1 }, is_nullable => 1 },
-  "father",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "mother",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "replicate",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "ethnicity",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "gender",
-  { data_type => "varchar", is_nullable => 1, size => 20 },
-  "cohort",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "country_of_origin",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "geographical_region",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "sanger_sample_id",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "control",
-  { data_type => "tinyint", is_nullable => 1 },
-  "supplier_name",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "public_name",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "sample_visibility",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "strain",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
-  "consent_withdrawn",
-  { data_type => "tinyint", default_value => 0, is_nullable => 0 },
-  "donor_id",
-  { data_type => "varchar", is_nullable => 1, size => 255 },
+  'name',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'reference_genome',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'organism',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'accession_number',
+  { data_type => 'varchar', is_nullable => 1, size => 50 },
+  'common_name',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'description',
+  { data_type => 'text', is_nullable => 1 },
+  'taxon_id',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'father',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'mother',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'replicate',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'ethnicity',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'gender',
+  { data_type => 'varchar', is_nullable => 1, size => 20 },
+  'cohort',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'country_of_origin',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'geographical_region',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'sanger_sample_id',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'control',
+  { data_type => 'tinyint', is_nullable => 1 },
+  'supplier_name',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'public_name',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'sample_visibility',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'strain',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'consent_withdrawn',
+  { data_type => 'tinyint', default_value => 0, is_nullable => 0 },
+  'donor_id',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -337,7 +337,7 @@ __PACKAGE__->add_columns(
 
 =cut
 
-__PACKAGE__->set_primary_key("id_sample_tmp");
+__PACKAGE__->set_primary_key('id_sample_tmp');
 
 =head1 UNIQUE CONSTRAINTS
 
@@ -354,8 +354,8 @@ __PACKAGE__->set_primary_key("id_sample_tmp");
 =cut
 
 __PACKAGE__->add_unique_constraint(
-  "sample_id_lims_id_sample_lims_index",
-  ["id_lims", "id_sample_lims"],
+  'sample_id_lims_id_sample_lims_index',
+  ['id_lims', 'id_sample_lims'],
 );
 
 =head1 RELATIONS
@@ -369,9 +369,9 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::FlgenPlate>
 =cut
 
 __PACKAGE__->has_many(
-  "flgen_plates",
-  "WTSI::DNAP::Warehouse::Schema::Result::FlgenPlate",
-  { "foreign.id_sample_tmp" => "self.id_sample_tmp" },
+  'flgen_plates',
+  'WTSI::DNAP::Warehouse::Schema::Result::FlgenPlate',
+  { 'foreign.id_sample_tmp' => 'self.id_sample_tmp' },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -384,17 +384,80 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell>
 =cut
 
 __PACKAGE__->has_many(
-  "iseq_flowcells",
-  "WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell",
-  { "foreign.id_sample_tmp" => "self.id_sample_tmp" },
+  'iseq_flowcells',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell',
+  { 'foreign.id_sample_tmp' => 'self.id_sample_tmp' },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-21 14:51:15
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:sJhsyDV1U388DHEosxbsEg
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:26:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:TJ3HroFJpgiJaMQjHtqTng
 
+our $VERSION = '0';
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
 __PACKAGE__->meta->make_immutable;
+
 1;
+__END__
+
+=head1 SYNOPSIS
+
+=head1 DESCRIPTION
+
+Result class definition in DBIx binding for the multi-lims warehouse database.
+
+=head1 DIAGNOSTICS
+
+=head1 CONFIGURATION AND ENVIRONMENT
+
+=head1 SUBROUTINES/METHODS
+
+=head1 DEPENDENCIES
+
+=over
+
+=item strict
+
+=item warnings
+
+=item Moose
+
+=item MooseX::NonMoose
+
+=item MooseX::MarkAsMethods
+
+=item DBIx::Class::Core
+
+=item DBIx::Class::InflateColumn::DateTime
+
+=back
+
+=head1 INCOMPATIBILITIES
+
+=head1 BUGS AND LIMITATIONS
+
+=head1 AUTHOR
+
+Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2014 Genome Research Limited
+
+This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
+
+NPG is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+=cut

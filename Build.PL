@@ -37,29 +37,42 @@ EOF
 
 my $builder = $class->new(
 
-  'module_name'   => 'npg_ml_warehouse',
-  'dist_author'   => 'WTSI, NPG',
+  'module_name'   => 'ml_warehouse',
+  'dist_author'   => 'npg <npg@sanger.ac.uk>',
   'dist_version'  => $class->git_tag(),
   'dist_abstract' => 'DBIx binding for a multi-LIMs warehouse',
 
   'build_requires' => {
+    'English'               => 0,
+    'File::Temp'            => 0,
+    'File::Spec::Functions' => 0,
     'Module::Build'         => 0,
+    'Test::Distribution'    => 0,
+    'Test::Exception'       => 0,
     'Test::More'            => 0,
+    'Test::Perl::Critic'    => 0,
+    'Test::Pod'             => 0,
   },
 
   'requires' => {
-    'Carp'                  => 0,
-    'Config::Auto'          => 0,
     'DBIx::Class::Core'     => 0,
     'DBIx::Class::InflateColumn::DateTime' => 0,
     'DBIx::Class::Schema'   => 0,
     'Moose'                 => 0,
     'MooseX::MarkAsMethods' => 0,
     'MooseX::NonMoose'      => 0,
-    'Readonly'              => 0,
     'strict'                => 0,
-    'utf8'                  => 0,
     'warnings'              => 0,
+  },
+
+  'recommends' => {
+    'Carp'                        => 0,
+    'Config::Auto'                => 0,
+    'DBIx::Class::Schema::Loader' => 0,
+    'Readonly'                    => 0,
+
+    'npg_tracking::util::db_connect' => 0,
+    'npg_qc::autoqc::role::rpt_key'  => 0,
   },
 
   'dist' => { COMPRESS => 'gzip', SUFFIX => 'gz', },
