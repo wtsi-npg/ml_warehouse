@@ -247,31 +247,31 @@ Indexing read length, bp
   extra: {unsigned => 1}
   is_nullable: 1
 
-=head2 bam_num_reads
+=head2 num_reads
 
   data_type: 'bigint'
   extra: {unsigned => 1}
   is_nullable: 1
 
-=head2 bam_percent_mapped
+=head2 percent_mapped
 
   data_type: 'float'
   is_nullable: 1
   size: [5,2]
 
-=head2 bam_percent_duplicate
+=head2 percent_duplicate
 
   data_type: 'float'
   is_nullable: 1
   size: [5,2]
 
-=head2 bam_human_percent_mapped
+=head2 human_percent_mapped
 
   data_type: 'float'
   is_nullable: 1
   size: [5,2]
 
-=head2 bam_human_percent_duplicate
+=head2 human_percent_duplicate
 
   data_type: 'float'
   is_nullable: 1
@@ -447,15 +447,15 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
   'q40_yield_kb_reverse_read',
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
-  'bam_num_reads',
+  'num_reads',
   { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
-  'bam_percent_mapped',
+  'percent_mapped',
   { data_type => 'float', is_nullable => 1, size => [5, 2] },
-  'bam_percent_duplicate',
+  'percent_duplicate',
   { data_type => 'float', is_nullable => 1, size => [5, 2] },
-  'bam_human_percent_mapped',
+  'human_percent_mapped',
   { data_type => 'float', is_nullable => 1, size => [5, 2] },
-  'bam_human_percent_duplicate',
+  'human_percent_duplicate',
   { data_type => 'float', is_nullable => 1, size => [5, 2] },
   'genotype_sample_name_match',
   { data_type => 'varchar', is_nullable => 1, size => 8 },
@@ -545,8 +545,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:26:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:/eeRatjwnU8PZ8zuzWxlXg
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-11-04 17:20:25
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lD6EfdPhQsqxHXuLzAViRA
 
 our $VERSION = '0';
 
