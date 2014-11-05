@@ -69,14 +69,6 @@ Status timestamp
 
 Status identifier, see iseq_run_status_dict.id_run_status_dict
 
-=head2 id_user
-
-  data_type: 'integer'
-  extra: {unsigned => 1}
-  is_nullable: 0
-
-Operator usename
-
 =head2 iscurrent
 
   data_type: 'tinyint'
@@ -104,8 +96,6 @@ __PACKAGE__->add_columns(
     is_foreign_key => 1,
     is_nullable => 0,
   },
-  'id_user',
-  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 0 },
   'iscurrent',
   { data_type => 'tinyint', is_nullable => 0 },
 );
@@ -140,8 +130,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:26:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:qlGrUJ0M3ve13vAnTd2iJA
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-29 11:55:17
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:V+5Wt0FmO7gsFYyZ6NKKOQ
 
 our $VERSION = '0';
 

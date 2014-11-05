@@ -244,7 +244,7 @@ Timestamp of study creation
   default_value: 0
   is_nullable: 0
 
-=head2 alignments_in_bam
+=head2 aligned
 
   data_type: 'tinyint'
   default_value: 1
@@ -350,7 +350,7 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'remove_x_and_autosomes',
   { data_type => 'tinyint', default_value => 0, is_nullable => 0 },
-  'alignments_in_bam',
+  'aligned',
   { data_type => 'tinyint', default_value => 1, is_nullable => 0 },
   'separate_y_chromosome_data',
   { data_type => 'tinyint', default_value => 0, is_nullable => 0 },
@@ -437,8 +437,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:26:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5UHw1bzVwVci+AfpzPfsrg
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-11-04 17:20:25
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ISIx6Sbmt7SEWBXDqHykIw
 
 our $VERSION = '0';
 
