@@ -550,6 +550,22 @@ __PACKAGE__->belongs_to(
 
 our $VERSION = '0';
 
+=head2 iseq_run_lane_metric
+
+Type: belongs_to
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  'iseq_run_lane_metric_right',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric',
+  { id_run => 'id_run', position => 'position' },
+  { is_deferrable => 1, join_type => 'RIGHT', on_delete => 'CASCADE', on_update => 'NO ACTION' },
+);
+
+
 ##no critic (ProhibitStringyEval ProhibitPostfixControls ProhibitInterpolationOfLiterals)
 with 'npg_qc::autoqc::role::rpt_key' if eval "require npg_qc::autoqc::role::rpt_key";
 ##use critic
