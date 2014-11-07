@@ -543,6 +543,26 @@ __PACKAGE__->has_many(
 
 our $VERSION = '0';
 
+=head2 iseq_product_metrics_inner
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric>
+
+An inner join is performed
+
+=cut
+
+__PACKAGE__->has_many(
+  'iseq_product_metrics_inner',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric',
+  {
+    'foreign.id_run'   => 'self.id_run',
+    'foreign.position' => 'self.position',
+  },
+  { join_type => 'INNER',cascade_copy => 0, cascade_delete => 0 },
+);
+
 ##no critic (ProhibitStringyEval ProhibitPostfixControls ProhibitInterpolationOfLiterals)
 with 'npg_qc::autoqc::role::rpt_key' if eval "require npg_qc::autoqc::role::rpt_key";
 ##use critic
