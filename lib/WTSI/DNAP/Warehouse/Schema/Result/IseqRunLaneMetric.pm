@@ -38,15 +38,6 @@ __PACKAGE__->table('iseq_run_lane_metrics');
 
 =head1 ACCESSORS
 
-=head2 id_iseq_lane_metrics_tmp
-
-  data_type: 'integer'
-  extra: {unsigned => 1}
-  is_auto_increment: 1
-  is_nullable: 0
-
-Internal to this database id, value can change
-
 =head2 id_iseq_flowcell_tmp
 
   data_type: 'integer'
@@ -218,7 +209,7 @@ Timestamp of qc complete status
   data_type: 'float'
   extra: {unsigned => 1}
   is_nullable: 1
-  size: [5,2]
+  size: [6,2]
 
 =head2 adapters_percent_forward_read
 
@@ -307,13 +298,6 @@ Timestamp of qc complete status
 =cut
 
 __PACKAGE__->add_columns(
-  'id_iseq_lane_metrics_tmp',
-  {
-    data_type => 'integer',
-    extra => { unsigned => 1 },
-    is_auto_increment => 1,
-    is_nullable => 0,
-  },
   'id_iseq_flowcell_tmp',
   {
     data_type => 'integer',
@@ -409,7 +393,7 @@ __PACKAGE__->add_columns(
     data_type => 'float',
     extra => { unsigned => 1 },
     is_nullable => 1,
-    size => [5, 2],
+    size => [6, 2],
   },
   'adapters_percent_forward_read',
   {
@@ -473,20 +457,6 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</id_iseq_lane_metrics_tmp>
-
-=back
-
-=cut
-
-__PACKAGE__->set_primary_key('id_iseq_lane_metrics_tmp');
-
-=head1 UNIQUE CONSTRAINTS
-
-=head2 C<iseq_rlm_run_position_index>
-
-=over 4
-
 =item * L</id_run>
 
 =item * L</position>
@@ -495,7 +465,7 @@ __PACKAGE__->set_primary_key('id_iseq_lane_metrics_tmp');
 
 =cut
 
-__PACKAGE__->add_unique_constraint('iseq_rlm_run_position_index', ['id_run', 'position']);
+__PACKAGE__->set_primary_key('id_run', 'position');
 
 =head1 RELATIONS
 
@@ -538,8 +508,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:26:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9xW/5qnB/RlnGJIKObC9cg
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-11-10 09:28:00
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WC6sCtvv/OANtYl16pBUig
 
 our $VERSION = '0';
 
