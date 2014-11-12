@@ -1,0 +1,14 @@
+ml_warehouse
+============
+
+Perl DBIx binding to a warehouse housing data from multiple LIM systems
+
+lib:
+  DBIX binding - WTSI::DNAP::Warehouse::Schema namespace
+
+scripts:
+    make_schema.pl - script to generate the binding from the database
+
+t:
+    tests
+  
