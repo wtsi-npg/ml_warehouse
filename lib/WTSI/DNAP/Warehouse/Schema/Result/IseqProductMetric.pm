@@ -145,6 +145,19 @@ Indexing read length, bp
   extra: {unsigned => 1}
   is_nullable: 1
 
+=head2 insert_size_num_modes
+
+  data_type: 'smallint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+=head2 insert_size_normal_fit_confidence
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+  size: [3,2]
+
 =head2 gc_percent_forward_read
 
   data_type: 'float'
@@ -329,6 +342,12 @@ Indexing read length, bp
   is_nullable: 1
   size: [7,6]
 
+=head2 verify_bam_id_snp_count
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -385,6 +404,15 @@ __PACKAGE__->add_columns(
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
   'insert_size_median',
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'insert_size_num_modes',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'insert_size_normal_fit_confidence',
+  {
+    data_type => 'float',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+    size => [3, 2],
+  },
   'gc_percent_forward_read',
   {
     data_type => 'float',
@@ -493,6 +521,8 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => [7, 6],
   },
+  'verify_bam_id_snp_count',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -545,8 +575,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-11-04 17:20:25
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lD6EfdPhQsqxHXuLzAViRA
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-11-20 09:54:29
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:wJOQPdVzxhcp37y/XW/emQ
 
 our $VERSION = '0';
 
