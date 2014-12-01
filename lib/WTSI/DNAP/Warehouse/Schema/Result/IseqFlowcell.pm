@@ -204,7 +204,7 @@ LIMs-specific identifier of the tag set
 
   data_type: 'varchar'
   is_nullable: 1
-  size: 50
+  size: 100
 
 WTSI-wide tag set name
 
@@ -220,7 +220,7 @@ Boolean flag indicating presence of a spike
 
   data_type: 'varchar'
   is_nullable: 1
-  size: 30
+  size: 60
 
 LIMs-specific pipeline identifier that unambiguously defines library type
 
@@ -344,11 +344,11 @@ __PACKAGE__->add_columns(
   'tag_set_id_lims',
   { data_type => 'varchar', is_nullable => 1, size => 20 },
   'tag_set_name',
-  { data_type => 'varchar', is_nullable => 1, size => 50 },
+  { data_type => 'varchar', is_nullable => 1, size => 100 },
   'is_spiked',
   { data_type => 'tinyint', default_value => 0, is_nullable => 0 },
   'pipeline_id_lims',
-  { data_type => 'varchar', is_nullable => 1, size => 30 },
+  { data_type => 'varchar', is_nullable => 1, size => 60 },
   'bait_name',
   { data_type => 'varchar', is_nullable => 1, size => 50 },
   'requested_insert_size_from',
@@ -433,8 +433,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-11-20 09:54:29
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:rByavXJludm4px6By3hkgg
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-12-01 13:45:42
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:cybNSv1iBQb5TY/fK2bHsQ
 
 our $VERSION = '0';
 
