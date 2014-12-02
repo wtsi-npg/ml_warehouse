@@ -331,16 +331,17 @@ Indexing read length, bp
 
 =head2 verify_bam_id_average_depth
 
-  data_type: 'smallint'
+  data_type: 'float'
   extra: {unsigned => 1}
   is_nullable: 1
+  size: [11,2]
 
 =head2 verify_bam_id_score
 
   data_type: 'float'
   extra: {unsigned => 1}
   is_nullable: 1
-  size: [7,6]
+  size: [6,5]
 
 =head2 verify_bam_id_snp_count
 
@@ -513,13 +514,18 @@ __PACKAGE__->add_columns(
     size => [5, 2],
   },
   'verify_bam_id_average_depth',
-  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  {
+    data_type => 'float',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+    size => [11, 2],
+  },
   'verify_bam_id_score',
   {
     data_type => 'float',
     extra => { unsigned => 1 },
     is_nullable => 1,
-    size => [7, 6],
+    size => [6, 5],
   },
   'verify_bam_id_snp_count',
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
@@ -575,8 +581,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-11-20 09:54:29
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:wJOQPdVzxhcp37y/XW/emQ
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-12-02 12:11:18
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:6m1T2SrRa8dEfSN8LxwocQ
 
 our $VERSION = '0';
 

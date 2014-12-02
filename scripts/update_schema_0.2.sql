@@ -25,5 +25,9 @@ alter table iseq_product_metrics \
   float(3,2) unsigned DEFAULT NULL after insert_size_num_modes;
 
 alter table iseq_product_metrics \
+  modify column verify_bam_id_average_depth float(11,2) unsigned DEFAULT NULL, \
+  modify column verify_bam_id_score float(6,5) unsigned DEFAULT NULL;
+
+alter table iseq_product_metrics \
   add column verify_bam_id_snp_count int(10) unsigned DEFAULT NULL \
   after verify_bam_id_score;
