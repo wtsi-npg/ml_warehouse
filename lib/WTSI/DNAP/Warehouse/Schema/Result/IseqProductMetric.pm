@@ -145,6 +145,19 @@ Indexing read length, bp
   extra: {unsigned => 1}
   is_nullable: 1
 
+=head2 insert_size_num_modes
+
+  data_type: 'smallint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+=head2 insert_size_normal_fit_confidence
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+  size: [3,2]
+
 =head2 gc_percent_forward_read
 
   data_type: 'float'
@@ -318,16 +331,23 @@ Indexing read length, bp
 
 =head2 verify_bam_id_average_depth
 
-  data_type: 'smallint'
+  data_type: 'float'
   extra: {unsigned => 1}
   is_nullable: 1
+  size: [11,2]
 
 =head2 verify_bam_id_score
 
   data_type: 'float'
   extra: {unsigned => 1}
   is_nullable: 1
-  size: [7,6]
+  size: [6,5]
+
+=head2 verify_bam_id_snp_count
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
 
 =cut
 
@@ -385,6 +405,15 @@ __PACKAGE__->add_columns(
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
   'insert_size_median',
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'insert_size_num_modes',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'insert_size_normal_fit_confidence',
+  {
+    data_type => 'float',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+    size => [3, 2],
+  },
   'gc_percent_forward_read',
   {
     data_type => 'float',
@@ -485,14 +514,21 @@ __PACKAGE__->add_columns(
     size => [5, 2],
   },
   'verify_bam_id_average_depth',
-  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  {
+    data_type => 'float',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+    size => [11, 2],
+  },
   'verify_bam_id_score',
   {
     data_type => 'float',
     extra => { unsigned => 1 },
     is_nullable => 1,
-    size => [7, 6],
+    size => [6, 5],
   },
+  'verify_bam_id_snp_count',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -545,8 +581,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-11-04 17:20:25
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lD6EfdPhQsqxHXuLzAViRA
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-12-02 12:11:18
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:6m1T2SrRa8dEfSN8LxwocQ
 
 our $VERSION = '0';
 

@@ -204,7 +204,7 @@ LIMs-specific identifier of the tag set
 
   data_type: 'varchar'
   is_nullable: 1
-  size: 50
+  size: 100
 
 WTSI-wide tag set name
 
@@ -219,8 +219,8 @@ Boolean flag indicating presence of a spike
 =head2 pipeline_id_lims
 
   data_type: 'varchar'
-  is_nullable: 0
-  size: 50
+  is_nullable: 1
+  size: 60
 
 LIMs-specific pipeline identifier that unambiguously defines library type
 
@@ -263,6 +263,14 @@ Requested forward read length, bp
   is_nullable: 1
 
 Requested reverse read length, bp
+
+=head2 id_pool_lims
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 20
+
+Most specific LIMs identifier associated with the pool
 
 =cut
 
@@ -336,11 +344,11 @@ __PACKAGE__->add_columns(
   'tag_set_id_lims',
   { data_type => 'varchar', is_nullable => 1, size => 20 },
   'tag_set_name',
-  { data_type => 'varchar', is_nullable => 1, size => 50 },
+  { data_type => 'varchar', is_nullable => 1, size => 100 },
   'is_spiked',
   { data_type => 'tinyint', default_value => 0, is_nullable => 0 },
   'pipeline_id_lims',
-  { data_type => 'varchar', is_nullable => 0, size => 50 },
+  { data_type => 'varchar', is_nullable => 1, size => 60 },
   'bait_name',
   { data_type => 'varchar', is_nullable => 1, size => 50 },
   'requested_insert_size_from',
@@ -351,6 +359,8 @@ __PACKAGE__->add_columns(
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
   'reverse_read_length',
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'id_pool_lims',
+  { data_type => 'varchar', is_nullable => 0, size => 20 },
 );
 
 =head1 PRIMARY KEY
@@ -378,21 +388,6 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric>
 __PACKAGE__->has_many(
   'iseq_product_metrics',
   'WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric',
-  { 'foreign.id_iseq_flowcell_tmp' => 'self.id_iseq_flowcell_tmp' },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
-=head2 iseq_run_lane_metrics
-
-Type: has_many
-
-Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric>
-
-=cut
-
-__PACKAGE__->has_many(
-  'iseq_run_lane_metrics',
-  'WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric',
   { 'foreign.id_iseq_flowcell_tmp' => 'self.id_iseq_flowcell_tmp' },
   { cascade_copy => 0, cascade_delete => 0 },
 );
@@ -438,8 +433,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:26:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Gj9f0nxqXEcWYrTI38UVWA
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-12-01 13:45:42
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:cybNSv1iBQb5TY/fK2bHsQ
 
 our $VERSION = '0';
 

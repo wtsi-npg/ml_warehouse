@@ -38,15 +38,6 @@ __PACKAGE__->table('iseq_run_lane_metrics');
 
 =head1 ACCESSORS
 
-=head2 id_iseq_flowcell_tmp
-
-  data_type: 'integer'
-  extra: {unsigned => 1}
-  is_foreign_key: 1
-  is_nullable: 1
-
-Flowcell id, see 'iseq_flowcell.id_iseq_flowcell_tmp'
-
 =head2 flowcell_barcode
 
   data_type: 'varchar'
@@ -211,100 +202,9 @@ Timestamp of qc complete status
   is_nullable: 1
   size: [6,2]
 
-=head2 adapters_percent_forward_read
-
-  data_type: 'float'
-  extra: {unsigned => 1}
-  is_nullable: 1
-  size: [5,2]
-
-=head2 adapters_percent_reverse_read
-
-  data_type: 'float'
-  extra: {unsigned => 1}
-  is_nullable: 1
-  size: [5,2]
-
-=head2 insert_size_quartile1
-
-  data_type: 'smallint'
-  extra: {unsigned => 1}
-  is_nullable: 1
-
-=head2 insert_size_quartile3
-
-  data_type: 'smallint'
-  extra: {unsigned => 1}
-  is_nullable: 1
-
-=head2 insert_size_median
-
-  data_type: 'smallint'
-  extra: {unsigned => 1}
-  is_nullable: 1
-
-=head2 ref_match1_name
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 100
-
-=head2 ref_match1_percent
-
-  data_type: 'float'
-  is_nullable: 1
-  size: [5,2]
-
-=head2 ref_match2_name
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 100
-
-=head2 ref_match2_percent
-
-  data_type: 'float'
-  is_nullable: 1
-  size: [5,2]
-
-=head2 gc_percent_forward_read
-
-  data_type: 'float'
-  extra: {unsigned => 1}
-  is_nullable: 1
-  size: [5,2]
-
-=head2 gc_percent_reverse_read
-
-  data_type: 'float'
-  extra: {unsigned => 1}
-  is_nullable: 1
-  size: [5,2]
-
-=head2 sequence_mismatch_percent_forward_read
-
-  data_type: 'float'
-  extra: {unsigned => 1}
-  is_nullable: 1
-  size: [4,2]
-
-=head2 sequence_mismatch_percent_reverse_read
-
-  data_type: 'float'
-  extra: {unsigned => 1}
-  is_nullable: 1
-  size: [4,2]
-
 =cut
 
 __PACKAGE__->add_columns(
-  'id_iseq_flowcell_tmp',
-  {
-    data_type => 'integer',
-    extra => { unsigned => 1 },
-    is_foreign_key => 1,
-    is_nullable => 1,
-  },
   'flowcell_barcode',
   { data_type => 'varchar', is_nullable => 1, size => 15 },
   'id_run',
@@ -395,62 +295,6 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => [6, 2],
   },
-  'adapters_percent_forward_read',
-  {
-    data_type => 'float',
-    extra => { unsigned => 1 },
-    is_nullable => 1,
-    size => [5, 2],
-  },
-  'adapters_percent_reverse_read',
-  {
-    data_type => 'float',
-    extra => { unsigned => 1 },
-    is_nullable => 1,
-    size => [5, 2],
-  },
-  'insert_size_quartile1',
-  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
-  'insert_size_quartile3',
-  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
-  'insert_size_median',
-  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
-  'ref_match1_name',
-  { data_type => 'varchar', is_nullable => 1, size => 100 },
-  'ref_match1_percent',
-  { data_type => 'float', is_nullable => 1, size => [5, 2] },
-  'ref_match2_name',
-  { data_type => 'varchar', is_nullable => 1, size => 100 },
-  'ref_match2_percent',
-  { data_type => 'float', is_nullable => 1, size => [5, 2] },
-  'gc_percent_forward_read',
-  {
-    data_type => 'float',
-    extra => { unsigned => 1 },
-    is_nullable => 1,
-    size => [5, 2],
-  },
-  'gc_percent_reverse_read',
-  {
-    data_type => 'float',
-    extra => { unsigned => 1 },
-    is_nullable => 1,
-    size => [5, 2],
-  },
-  'sequence_mismatch_percent_forward_read',
-  {
-    data_type => 'float',
-    extra => { unsigned => 1 },
-    is_nullable => 1,
-    size => [4, 2],
-  },
-  'sequence_mismatch_percent_reverse_read',
-  {
-    data_type => 'float',
-    extra => { unsigned => 1 },
-    is_nullable => 1,
-    size => [4, 2],
-  },
 );
 
 =head1 PRIMARY KEY
@@ -468,26 +312,6 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key('id_run', 'position');
 
 =head1 RELATIONS
-
-=head2 iseq_flowcell
-
-Type: belongs_to
-
-Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell>
-
-=cut
-
-__PACKAGE__->belongs_to(
-  'iseq_flowcell',
-  'WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell',
-  { id_iseq_flowcell_tmp => 'id_iseq_flowcell_tmp' },
-  {
-    is_deferrable => 1,
-    join_type     => 'LEFT',
-    on_delete     => 'SET NULL',
-    on_update     => 'NO ACTION',
-  },
-);
 
 =head2 iseq_product_metrics
 
@@ -508,8 +332,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-11-10 09:28:00
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WC6sCtvv/OANtYl16pBUig
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-11-20 09:54:29
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:rEb5hLgAPxeFBbl+RGM/fw
 
 our $VERSION = '0';
 

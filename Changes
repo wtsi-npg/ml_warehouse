@@ -1,2 +1,11 @@
 LIST OF CHANGES
 ---------------
+
+release 0.2
+ - foreign key into the flowcell table dropped from the run lane metrics table
+ - a few autoqc results columns dropped from the run lane metrics table
+ - extra column for verify_bam_id results added to the product metrics table
+ - columns for modality of the insert size results added to the product metrics table
+
+release 0.1
+ - initial release
