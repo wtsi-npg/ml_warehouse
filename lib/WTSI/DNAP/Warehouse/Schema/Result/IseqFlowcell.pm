@@ -436,7 +436,102 @@ __PACKAGE__->belongs_to(
 # Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-12-01 13:45:42
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:cybNSv1iBQb5TY/fK2bHsQ
 
+use MooseX::Aliases;
+use Readonly;
+
 our $VERSION = '0';
+
+Readonly my %DELEGATION_TO_SAMPLE => {
+    'sample_id'                => 'id_sample_lims',
+    'sample_name'              => 'name',
+    'sample_reference_genome'  => 'reference_genome',
+    'organism'                 => 'organism',
+    'sample_accession_number'  => 'accession_number',
+    'sample_common_name'       => 'common_name',
+    'sample_description'       => 'description',
+    'organism_taxon_id'        => 'taxon_id',
+    'sample_public_name'       => 'public_name',
+    'sample_consent_withdrawn' => 'consent_withdrawn',
+};
+
+Readonly my %DELEGATION_TO_STUDY => {
+    'study_id'                            => 'id_study_lims',
+    'study_name'                          => 'name',
+    'study_reference_genome'              => 'reference_genome',
+    'study_accession_number'              => 'accession_number',
+    'study_description'                   => 'description',
+    'study_contains_nonconsented_human'   => 'contaminated_human_dna',
+    'study_title'                         => 'study_title',
+    'study_contains_nonconsented_xahuman' => 'remove_x_and_autosomes',
+    'study_alignments_in_bam'             => 'aligned',
+    'study_separate_y_chromosome_data'    => 'separate_y_chromosome_data',
+};
+
+alias project_cost_code    => 'cost_code';
+alias default_library_type => 'pipeline_id_lims';
+alias library_id           => 'id_pool_lims';
+alias qc_state             => 'manual_qc';
+alias lane_priority        => 'priority';
+alias default_tag_sequence => 'tag_sequence';
+alias library_name         => 'id_pool_lims';
+
+has '_sample_row' => ( isa        => 'WTSI::DNAP::Warehouse::Schema::Result::Sample',
+                       is         => 'ro',
+                       weak_ref   => 1,
+                       lazy_build => 1,
+                       handles    => \%DELEGATION_TO_SAMPLE,
+);
+sub _build__sample_row {
+  my $self = shift;
+  return $self->sample();
+}
+
+has '_study_row' => ( isa        => 'WTSI::DNAP::Warehouse::Schema::Result::Study',
+                      is         => 'ro',
+                      weak_ref   => 1,
+                      lazy_build => 1,
+                      handles    => \%DELEGATION_TO_STUDY,
+);
+sub _build__study_row {
+  my $self = shift;
+  return $self->study();
+}
+
+has 'is_control' => ( isa        => 'Bool',
+                      is         => 'ro',
+                      lazy_build => 1,
+);
+sub _build_is_control {
+  my $self = shift;
+  return $self->entity_type =~ /\Alibrary_control|library_indexed_spike\Z/xms;
+}
+
+
+has 'required_insert_size_range' => (
+                      isa        => 'Maybe[Str]',
+                      is         => 'ro',
+                      lazy_build => 1,
+);
+sub _build_required_insert_size_range {
+  my $self = shift;
+  my $min = $self->requested_insert_size_from;
+  my $max = $self->requested_insert_size_to;
+  my $range;
+  if ($min || $max) {
+    if (!defined $min) {
+      $min = $max;
+    }
+    if (!defined $max) {
+      $max = $min;
+    }
+    $range = join q[:], $min, $max;
+  }
+  return $range;
+}
+
+sub is_pool {
+  return;
+}
 
 __PACKAGE__->meta->make_immutable;
 
@@ -448,6 +543,10 @@ __END__
 =head1 DESCRIPTION
 
 Result class definition in DBIx binding for the multi-lims warehouse database.
+
+Defines some helper methods (readers) to access sample and study attributes.
+The values returned by these helper methods are likely to be cached, ie will not
+change if the underlying values in the database change
 
 =head1 DIAGNOSTICS
 
