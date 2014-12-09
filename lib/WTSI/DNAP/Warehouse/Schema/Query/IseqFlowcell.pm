@@ -54,10 +54,11 @@ Readonly::Scalar my $FLOWCELL_LIMS_TABLE_NAME => q[IseqFlowcell];
 
 =cut
 
-has 'query_resultset'  => ( isa       => 'DBIx::Class::ResultSet',
-                            is        => 'ro',
-                            required  => 0,
-                            clearer   => 'free_query_resultset',
+has 'query_resultset'  => ( isa        => 'DBIx::Class::ResultSet',
+                            is         => 'ro',
+                            required   => 0,
+                            lazy_build => 1,
+                            clearer    => 'free_query_resultset',
 );
 sub _build_query_resultset {
   my $self = shift;
