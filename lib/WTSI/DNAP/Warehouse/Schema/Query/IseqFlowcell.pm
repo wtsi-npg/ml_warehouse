@@ -4,7 +4,11 @@ use Moose::Role;
 use Carp;
 use Readonly;
 
-requires 'iseq_flowcell';
+requires qw/
+      iseq_flowcell
+      flowcell_barcode
+      flowcell_id
+           /;
 
 our $VERSION = '0';
 
@@ -25,27 +29,15 @@ A Moose role for retrieving flowcell rows.
 
 =head1 SUBROUTINES/METHODS
 
-=head2 id_flowcell_lims
+=head2 flowcell_id
 
 LIMs specific flowcell id
 
-=cut
-
-has 'id_flowcell_lims'           => ( isa       => 'Maybe[Num]',
-                                      is        => 'ro',
-                                      required  => 0,
-);
-
-=head2 id_flowcell_manufacturer
+=head2 flowcell_barcode
 
 Manufacturer flowcell id
 
 =cut
-
-has 'id_flowcell_manufacturer'  => ( isa        => 'Maybe[Str]',
-                                     is         => 'ro',
-                                     required   => 0,
-);
 
 =head2 query_resultset
 
@@ -63,17 +55,20 @@ has 'query_resultset'  => ( isa        => 'DBIx::Class::ResultSet',
 sub _build_query_resultset {
   my $self = shift;
 
-  if (!$self->id_flowcell_lims && !$self->id_flowcell_manufacturer) {
+  if (!$self->flowcell_id && !$self->flowcell_barcode) {
     croak q[Either id_flowcell_lim or flowcell_barcode should be defined];
   }
 
-  my $query = $self->id_flowcell_lims ?
-    {'id_flowcell_lims' => $self->id_flowcell_lims} :
-    {'flowcell_barcode' => $self->id_flowcell_manufacturer};
+  my $query = $self->flowcell_id ?
+    {'id_flowcell_lims' => $self->flowcell_id} :
+    {'flowcell_barcode' => $self->flowcell_barcode};
 
   if ($self->can('position') && $self->position) {
     $query->{'position'} = $self->position;
   }
+
+  my $rs = $self->iseq_flowcell->search(
+    $query, {'order_by' => [qw(position tag_index)]});
 
   return $self->iseq_flowcell->search(
     $query, {'order_by' => [qw(position tag_index)]});

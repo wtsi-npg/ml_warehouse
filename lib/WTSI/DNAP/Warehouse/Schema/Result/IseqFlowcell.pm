@@ -441,6 +441,8 @@ use Readonly;
 
 our $VERSION = '0';
 
+Readonly my @USER_ROLES = qw/manager follower owner/;
+
 Readonly my %DELEGATION_TO_SAMPLE => {
     'sample_id'                => 'id_sample_lims',
     'sample_name'              => 'name',
@@ -486,7 +488,7 @@ sub _build__sample_row {
   return $self->sample();
 }
 
-has '_study_row' => ( isa        => 'WTSI::DNAP::Warehouse::Schema::Result::Study',
+has '_study_row' => ( isa        => 'Maybe[WTSI::DNAP::Warehouse::Schema::Result::Study]',
                       is         => 'ro',
                       weak_ref   => 1,
                       lazy_build => 1,
@@ -497,18 +499,24 @@ sub _build__study_row {
   return $self->study();
 }
 
+foreach my $method (keys %DELEGATION_TO_STUDY) {
+  around $method => sub {
+    my ($orig, $self) = @_;
+    return $self->_study_row ? $self->$orig() : undef;
+  };
+}
+
 has 'is_control' => ( isa        => 'Bool',
                       is         => 'ro',
                       lazy_build => 1,
 );
 sub _build_is_control {
   my $self = shift;
-  return $self->entity_type =~ /\Alibrary_control|library_indexed_spike\Z/xms;
+  return $self->entity_type =~ /\Alibrary_control|library_indexed_spike\Z/xms ? 1 : 0;
 }
 
-
 has 'required_insert_size_range' => (
-                      isa        => 'Maybe[Str]',
+                      isa        => 'Maybe[HashRef]',
                       is         => 'ro',
                       lazy_build => 1,
 );
@@ -524,13 +532,48 @@ sub _build_required_insert_size_range {
     if (!defined $max) {
       $max = $min;
     }
-    $range = join q[:], $min, $max;
+    $range = { 'from' => $min, 'to' => $max };
   }
   return $range;
 }
 
-sub is_pool {
-  return;
+has '_study_users' => ( isa        => 'HashRef',
+                        is         => 'ro',
+                        lazy_build => 1,
+);
+sub _build__study_users {
+  my $self = shift;
+  my $rs =  $self->study()->study_users();
+  my $su = {};
+  while (my $row = $rs->next) {
+    push @{$su->{$row->role}}, $row->email;
+  }
+  return $su;
+}
+
+sub email_addresses {
+  my $self = shift;
+  my @emails = ();
+  foreach my $user_type (@USER_ROLES) {
+    if (exists $self->_study_users->{$user_type}) {
+      push @emails, map { $_ => 1 } @{$self->_study_users->{$user_type}};
+    }
+  }
+  my %hashed = @emails;
+  @emails = sort keys %hashed;
+  return \@emails;
+}
+
+foreach my $user_type (@USER_ROLES) {
+  my $method = 'email_addresses_of_' . $user_type . 's';
+  __PACKAGE__->meta->add_method($method, sub {
+    my $self = shift;
+    my @emails = ();
+    if (exists $self->_study_users->{$user_type}) {
+      @emails = sort values @{$self->_study_users->{$user_type}};
+    }
+    return \@emails; 
+  });
 }
 
 __PACKAGE__->meta->make_immutable;
