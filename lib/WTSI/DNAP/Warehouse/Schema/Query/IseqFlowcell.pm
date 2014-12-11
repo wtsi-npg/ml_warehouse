@@ -7,7 +7,7 @@ use Readonly;
 requires qw/
       iseq_flowcell
       flowcell_barcode
-      flowcell_id
+      id_flowcell_lims
            /;
 
 our $VERSION = '0';
@@ -29,16 +29,6 @@ A Moose role for retrieving flowcell rows.
 
 =head1 SUBROUTINES/METHODS
 
-=head2 flowcell_id
-
-LIMs specific flowcell id
-
-=head2 flowcell_barcode
-
-Manufacturer flowcell id
-
-=cut
-
 =head2 query_resultset
 
 DBIx resultset returned by the query
@@ -55,20 +45,17 @@ has 'query_resultset'  => ( isa        => 'DBIx::Class::ResultSet',
 sub _build_query_resultset {
   my $self = shift;
 
-  if (!$self->flowcell_id && !$self->flowcell_barcode) {
-    croak q[Either id_flowcell_lim or flowcell_barcode should be defined];
+  if (!$self->id_flowcell_lims && !$self->flowcell_barcode) {
+    croak q[Either id_flowcell_lims or flowcell_barcode should be defined];
   }
 
-  my $query = $self->flowcell_id ?
-    {'id_flowcell_lims' => $self->flowcell_id} :
+  my $query = $self->id_flowcell_lims ?
+    {'id_flowcell_lims' => $self->id_flowcell_lims} :
     {'flowcell_barcode' => $self->flowcell_barcode};
 
   if ($self->can('position') && $self->position) {
     $query->{'position'} = $self->position;
   }
-
-  my $rs = $self->iseq_flowcell->search(
-    $query, {'order_by' => [qw(position tag_index)]});
 
   return $self->iseq_flowcell->search(
     $query, {'order_by' => [qw(position tag_index)]});
