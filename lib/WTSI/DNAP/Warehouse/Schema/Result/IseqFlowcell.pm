@@ -572,7 +572,7 @@ foreach my $user_type (@USER_ROLES) {
     if (exists $self->_study_users->{$user_type}) {
       @emails = sort values @{$self->_study_users->{$user_type}};
     }
-    return \@emails; 
+    return \@emails;
   });
 }
 
@@ -597,6 +597,72 @@ change if the underlying values in the database change
 
 =head1 SUBROUTINES/METHODS
 
+=head2 project_cost_code
+
+=head2 default_library_type
+
+=head2 library_id
+
+=head2 qc_state
+
+=head2 lane_priority
+
+=head2 default_tag_sequence
+
+=head2 library_name
+
+=head2 is_control
+
+=head2 required_insert_size_range
+
+=head2 email_addresses
+
+=head2 email_addresses_of_owners
+
+=head2 email_addresses_of_followers
+
+=head2 email_addresses_of_managers
+
+=head2 sample_id
+
+=head2 sample_name
+
+=head2 sample_reference_genome
+
+=head2 organism
+
+=head2 sample_accession_number
+
+=head2 sample_common_name
+
+=head2 sample_description
+
+=head2 organism_taxon_id
+
+=head2 sample_public_name
+
+=head2 sample_consent_withdrawn
+
+=head2 study_id
+
+=head2 study_name
+
+=head2 study_reference_genome
+
+=head2 study_accession_number
+
+=head2 study_description
+
+=head2 study_contains_nonconsented_human
+
+=head2 study_title
+
+=head2 study_contains_nonconsented_xahuman
+
+=head2 study_alignments_in_bam
+
+=head2 study_separate_y_chromosome_data
+
 =head1 DEPENDENCIES
 
 =over
@@ -611,9 +677,13 @@ change if the underlying values in the database change
 
 =item MooseX::MarkAsMethods
 
+=item MooseX::Aliases
+
 =item DBIx::Class::Core
 
 =item DBIx::Class::InflateColumn::DateTime
+
+=item Readonly
 
 =back
 
