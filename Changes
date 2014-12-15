@@ -4,7 +4,7 @@ LIST OF CHANGES
 release 0.3
  - added WTSI::DNAP::Warehouse::Schema::Query::IseqFlowcell - a role for querying
    the flowcell table knowing one of flowcell identifies
- - DBIx obgect for flowcell row: fields neccessary for NPG lims interface
+ - DBIx object for flowcell row: fields neccessary for NPG lims interface
    added
 
 release 0.2
