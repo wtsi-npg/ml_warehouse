@@ -17,13 +17,6 @@ if($EVAL_ERROR) {
 } else {
   Test::Perl::Critic->import(
                -severity => 1,
-               -exclude  => [
-                             'tidy',
-                             'Documentation::RequirePodAtEnd',
-                             'Documentation::RequirePodLinksIncludeText',
-                             'Documentation::PodSpelling',
-                             'ValuesAndExpressions::ProhibitMagicNumbers',
-                            ],
                -profile => 't/perlcriticrc',
                -verbose => "%m at %f line %l, policy %p\n",
 			    );
