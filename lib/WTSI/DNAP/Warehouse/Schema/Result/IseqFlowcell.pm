@@ -436,7 +436,138 @@ __PACKAGE__->belongs_to(
 # Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-12-01 13:45:42
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:cybNSv1iBQb5TY/fK2bHsQ
 
+use MooseX::Aliases;
+use Readonly;
+
 our $VERSION = '0';
+
+Readonly my @USER_ROLES = qw/manager follower owner/;
+
+Readonly my %DELEGATION_TO_SAMPLE => {
+    'sample_id'                => 'id_sample_lims',
+    'sample_name'              => 'name',
+    'sample_reference_genome'  => 'reference_genome',
+    'organism'                 => 'organism',
+    'sample_accession_number'  => 'accession_number',
+    'sample_common_name'       => 'common_name',
+    'sample_description'       => 'description',
+    'organism_taxon_id'        => 'taxon_id',
+    'sample_public_name'       => 'public_name',
+    'sample_consent_withdrawn' => 'consent_withdrawn',
+};
+
+Readonly my %DELEGATION_TO_STUDY => {
+    'study_id'                            => 'id_study_lims',
+    'study_name'                          => 'name',
+    'study_reference_genome'              => 'reference_genome',
+    'study_accession_number'              => 'accession_number',
+    'study_description'                   => 'description',
+    'study_contains_nonconsented_human'   => 'contaminated_human_dna',
+    'study_title'                         => 'study_title',
+    'study_contains_nonconsented_xahuman' => 'remove_x_and_autosomes',
+    'study_alignments_in_bam'             => 'aligned',
+    'study_separate_y_chromosome_data'    => 'separate_y_chromosome_data',
+};
+
+alias project_cost_code    => 'cost_code';
+alias default_library_type => 'pipeline_id_lims';
+alias library_id           => 'id_pool_lims';
+alias qc_state             => 'manual_qc';
+alias lane_priority        => 'priority';
+alias default_tag_sequence => 'tag_sequence';
+alias library_name         => 'id_pool_lims';
+
+foreach my $rel (qw(sample study)) {
+
+  my $attr = q[_] . $rel . q[_row];
+  my $del  = $rel eq 'sample' ? \%DELEGATION_TO_SAMPLE : \%DELEGATION_TO_STUDY;
+
+  has $attr => ( isa        => 'Maybe[WTSI::DNAP::Warehouse::Schema::Result::' . ucfirst $rel . ']',
+                 is         => 'ro',
+                 weak_ref   => 1,
+                 lazy_build => 1,
+                 handles    => $del,
+  );
+
+  __PACKAGE__->meta->add_method('_build_' . $attr, sub {my $r = shift; return $r->$rel;} );
+
+  foreach my $method ( keys %{$del} ) {
+    around $method => sub {
+      my ($orig, $self) = @_;
+      return $self->$attr ? $self->$orig() : undef;
+    };
+  }
+}
+
+has 'is_control' => ( isa        => 'Bool',
+                      is         => 'ro',
+                      lazy_build => 1,
+);
+sub _build_is_control {
+  my $self = shift;
+  return ( $self->entity_type && $self->entity_type =~ /\Alibrary_control|library_indexed_spike\Z/xms ) ? 1 : 0;
+}
+
+has 'required_insert_size_range' => (
+                      isa        => 'Maybe[HashRef]',
+                      is         => 'ro',
+                      lazy_build => 1,
+);
+sub _build_required_insert_size_range {
+  my $self = shift;
+  my $min = $self->requested_insert_size_from;
+  my $max = $self->requested_insert_size_to;
+  my $range;
+  if ($min || $max) {
+    if (!defined $min) {
+      $min = $max;
+    }
+    if (!defined $max) {
+      $max = $min;
+    }
+    $range = { 'from' => $min, 'to' => $max };
+  }
+  return $range;
+}
+
+has '_study_users' => ( isa        => 'HashRef',
+                        is         => 'ro',
+                        lazy_build => 1,
+);
+sub _build__study_users {
+  my $self = shift;
+  my $rs =  $self->study()->study_users();
+  my $su = {};
+  while (my $row = $rs->next) {
+    push @{$su->{$row->role}}, $row->email;
+  }
+  return $su;
+}
+
+sub email_addresses {
+  my $self = shift;
+  my @emails = ();
+  foreach my $user_type (@USER_ROLES) {
+    if (exists $self->_study_users->{$user_type}) {
+      push @emails, map { $_ => 1 } @{$self->_study_users->{$user_type}};
+    }
+  }
+  my %hashed = @emails;
+  @emails = sort keys %hashed;
+  return \@emails;
+}
+
+foreach my $user_type (@USER_ROLES) {
+  my $method = 'email_addresses_of_' . $user_type . 's';
+  __PACKAGE__->meta->add_method($method, sub {
+    my $self = shift;
+    my @emails = ();
+    if (exists $self->_study_users->{$user_type}) {
+      @emails = sort values @{$self->_study_users->{$user_type}};
+    }
+    return \@emails;
+  });
+}
 
 __PACKAGE__->meta->make_immutable;
 
@@ -449,11 +580,81 @@ __END__
 
 Result class definition in DBIx binding for the multi-lims warehouse database.
 
+Defines some helper methods (readers) to access sample and study attributes.
+The values returned by these helper methods are likely to be cached, ie will not
+change if the underlying values in the database change
+
 =head1 DIAGNOSTICS
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
 =head1 SUBROUTINES/METHODS
+
+=head2 project_cost_code
+
+=head2 default_library_type
+
+=head2 library_id
+
+=head2 qc_state
+
+=head2 lane_priority
+
+=head2 default_tag_sequence
+
+=head2 library_name
+
+=head2 is_control
+
+=head2 required_insert_size_range
+
+=head2 email_addresses
+
+=head2 email_addresses_of_owners
+
+=head2 email_addresses_of_followers
+
+=head2 email_addresses_of_managers
+
+=head2 sample_id
+
+=head2 sample_name
+
+=head2 sample_reference_genome
+
+=head2 organism
+
+=head2 sample_accession_number
+
+=head2 sample_common_name
+
+=head2 sample_description
+
+=head2 organism_taxon_id
+
+=head2 sample_public_name
+
+=head2 sample_consent_withdrawn
+
+=head2 study_id
+
+=head2 study_name
+
+=head2 study_reference_genome
+
+=head2 study_accession_number
+
+=head2 study_description
+
+=head2 study_contains_nonconsented_human
+
+=head2 study_title
+
+=head2 study_contains_nonconsented_xahuman
+
+=head2 study_alignments_in_bam
+
+=head2 study_separate_y_chromosome_data
 
 =head1 DEPENDENCIES
 
@@ -469,9 +670,13 @@ Result class definition in DBIx binding for the multi-lims warehouse database.
 
 =item MooseX::MarkAsMethods
 
+=item MooseX::Aliases
+
 =item DBIx::Class::Core
 
 =item DBIx::Class::InflateColumn::DateTime
+
+=item Readonly
 
 =back
 

@@ -1,3 +1,13 @@
+[-Documentation::RequirePodAtEnd]
+[-Documentation::PodSpelling]
+[-Documentation::RequirePodLinksIncludeText]
+[-CodeLayout::RequireTidyCode]
+
 [Documentation::RequirePodSections]
 lib_sections    = NAME | SYNOPSIS | DESCRIPTION | SUBROUTINES/METHODS | BUGS AND LIMITATIONS | DEPENDENCIES | CONFIGURATION AND ENVIRONMENT | INCOMPATIBILITIES | AUTHOR | LICENSE AND COPYRIGHT
 
+[Subroutines::ProhibitUnusedPrivateSubroutines]
+private_name_regex = _(?!build_)\w+
+
+[ValuesAndExpressions::ProhibitMagicNumbers]
+allowed_values = 1..15
