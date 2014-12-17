@@ -477,33 +477,26 @@ alias lane_priority        => 'priority';
 alias default_tag_sequence => 'tag_sequence';
 alias library_name         => 'id_pool_lims';
 
-has '_sample_row' => ( isa        => 'WTSI::DNAP::Warehouse::Schema::Result::Sample',
-                       is         => 'ro',
-                       weak_ref   => 1,
-                       lazy_build => 1,
-                       handles    => \%DELEGATION_TO_SAMPLE,
-);
-sub _build__sample_row {
-  my $self = shift;
-  return $self->sample();
-}
+foreach my $rel (qw(sample study)) {
 
-has '_study_row' => ( isa        => 'Maybe[WTSI::DNAP::Warehouse::Schema::Result::Study]',
-                      is         => 'ro',
-                      weak_ref   => 1,
-                      lazy_build => 1,
-                      handles    => \%DELEGATION_TO_STUDY,
-);
-sub _build__study_row {
-  my $self = shift;
-  return $self->study();
-}
+  my $attr = q[_] . $rel . q[_row];
+  my $del  = $rel eq 'sample' ? \%DELEGATION_TO_SAMPLE : \%DELEGATION_TO_STUDY;
 
-foreach my $method (keys %DELEGATION_TO_STUDY) {
-  around $method => sub {
-    my ($orig, $self) = @_;
-    return $self->_study_row ? $self->$orig() : undef;
-  };
+  has $attr => ( isa        => 'Maybe[WTSI::DNAP::Warehouse::Schema::Result::' . ucfirst $rel . ']',
+                 is         => 'ro',
+                 weak_ref   => 1,
+                 lazy_build => 1,
+                 handles    => $del,
+  );
+
+  __PACKAGE__->meta->add_method('_build_' . $attr, sub {my $r = shift; return $r->$rel;} );
+
+  foreach my $method ( keys %{$del} ) {
+    around $method => sub {
+      my ($orig, $self) = @_;
+      return $self->$attr ? $self->$orig() : undef;
+    };
+  }
 }
 
 has 'is_control' => ( isa        => 'Bool',
@@ -512,7 +505,7 @@ has 'is_control' => ( isa        => 'Bool',
 );
 sub _build_is_control {
   my $self = shift;
-  return $self->entity_type =~ /\Alibrary_control|library_indexed_spike\Z/xms ? 1 : 0;
+  return ( $self->entity_type && $self->entity_type =~ /\Alibrary_control|library_indexed_spike\Z/xms ) ? 1 : 0;
 }
 
 has 'required_insert_size_range' => (
