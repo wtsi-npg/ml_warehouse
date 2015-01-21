@@ -60,6 +60,7 @@ my $builder = $class->new(
     'DBIx::Class::InflateColumn::DateTime' => 0,
     'DBIx::Class::Schema'   => 0,
     'Moose'                 => 0,
+    'Moose::Role'           => 0,
     'MooseX::Aliases'       => 0,
     'MooseX::MarkAsMethods' => 0,
     'MooseX::NonMoose'      => 0,

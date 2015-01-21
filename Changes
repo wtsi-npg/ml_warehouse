@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - following db schema shanges, update the DBIx binding
+
 release 0.3
  - added WTSI::DNAP::Warehouse::Schema::Query::IseqFlowcell - a role for querying
    the flowcell table knowing one of flowcell identifies
