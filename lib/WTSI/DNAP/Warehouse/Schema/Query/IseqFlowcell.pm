@@ -31,8 +31,7 @@ A Moose role for retrieving flowcell rows.
 
 =head2 query_resultset
 
-DBIx resultset returned by the query
-Readonly::Scalar my $FLOWCELL_LIMS_TABLE_NAME => q[IseqFlowcell];
+DBIx resultset returned by the query.
 
 =cut
 
@@ -79,7 +78,7 @@ __END__
 
 =item Readonly
 
-=item Moose
+=item Moose::Role
 
 =back
 

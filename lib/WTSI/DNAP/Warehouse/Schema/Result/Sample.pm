@@ -358,6 +358,18 @@ __PACKAGE__->add_unique_constraint(
   ['id_lims', 'id_sample_lims'],
 );
 
+=head2 C<sample_uuid_sample_lims_index>
+
+=over 4
+
+=item * L</uuid_sample_lims>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint('sample_uuid_sample_lims_index', ['uuid_sample_lims']);
+
 =head1 RELATIONS
 
 =head2 flgen_plates
@@ -391,8 +403,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:26:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:TJ3HroFJpgiJaMQjHtqTng
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-01-19 16:35:18
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:37TviPcogvi5EUB+Oe6V3w
 
 our $VERSION = '0';
 

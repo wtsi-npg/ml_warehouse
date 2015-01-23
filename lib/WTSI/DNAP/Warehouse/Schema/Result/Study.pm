@@ -389,6 +389,18 @@ __PACKAGE__->add_unique_constraint(
   ['id_lims', 'id_study_lims'],
 );
 
+=head2 C<study_uuid_study_lims_index>
+
+=over 4
+
+=item * L</uuid_study_lims>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint('study_uuid_study_lims_index', ['uuid_study_lims']);
+
 =head1 RELATIONS
 
 =head2 flgen_plates
@@ -437,8 +449,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-11-04 17:20:25
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ISIx6Sbmt7SEWBXDqHykIw
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-01-19 16:35:18
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+1dGza0LHwnfC8vMaat5XQ
 
 our $VERSION = '0';
 
