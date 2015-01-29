@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+ - query for aggregatio information about libraries
+
+release 0.4
  - following db schema shanges, update the DBIx binding
 
 release 0.3
