@@ -11,3 +11,6 @@ private_name_regex = _(?!build_)\w+
 
 [ValuesAndExpressions::ProhibitMagicNumbers]
 allowed_values = 1..15
+
+[ValuesAndExpressions::ProhibitLongChainsOfMethodCalls]
+max_chain_length = 5

@@ -1,13 +1,15 @@
 package WTSI::DNAP::Warehouse::Schema::Query::LibraryDigest;
 
-use Moose::Role;
+use Moose;
 use Carp;
 use Readonly;
+use MooseX::StrictConstructor;
+use List::MoreUtils qw/none/;
 
 our $VERSION = '0';
 
 Readonly::Hash  my %QUALITY_FILTERS => (
-                              'seqqc'      => 'manual_qc',
+                              'mqc'        => 'manual_qc',
                               'extrelease' => 'external_release',
                                        );
 
@@ -76,6 +78,17 @@ has 'completed_after' => ( isa           => 'Maybe[DateTime]',
                            required      => 0,
 );
 
+=head2 completed_within
+
+Qc complete date range as an array ref of DateTime objects - an optional attribute.
+
+=cut
+has 'completed_within' => ( isa           => 'ArrayRef[DateTime]',
+                            is            => 'ro',
+                            required      => 0,
+                            default       => sub {return [];},
+);
+
 =head2 iseq_product_metrics
 
 DBIx result set for the iseq_product_metrics table.
@@ -85,7 +98,7 @@ DBIx result set for the iseq_product_metrics table.
 has 'iseq_product_metrics' =>  ( isa        => 'DBIx::Class::ResultSet',
                                  is         => 'ro',
                                  required   => 1,
-                                 trigger    => &_validate_rs,
+                                 trigger    => \&_validate_rs,
 );
 sub _validate_rs {
   my ($self, $rs) = @_;
@@ -111,30 +124,51 @@ Results of one type are bundled together into an array.
 sub create {
   my $self = shift;
 
-  my $quality_field = $QUALITY_FILTERS{$self->filter};
+  my $digest = {};
+  my $flowcell_keys = [];;
+  $self->_find_libs($digest, $flowcell_keys);
+  $self->_expand_libs($digest, $flowcell_keys);
+
+  return $digest;
+}
+
+sub _time_interval_query {
+  my $self = shift;
 
   my $where = {};
+  my $dtf = $self->iseq_product_metrics->result_source->storage->datetime_parser;
+  my $expression;
   if ($self->completed_after) {
-    my $dtf = $self->iseq_product_metrics->result_source->storage->datetime_parser;
-    $where->{'iseq_run_lane_metric.run_complete'} = {q[>=], $dtf->format_datetime($self->completed_after)};
+    my $operator = $self->completed_after ? q[>=] : q[-between];
+    $expression = {q[>=], $dtf->format_datetime($self->completed_after)};
     # also include that the date is defined?
+  } elsif (@{$self->completed_within}) {
+    my @between = map { $dtf->format_datetime($_) } @{$self->completed_within};
+    $expression = {q[-between], \@between};
   }
-  my $rs = $self->_get_product_rs($where);
+  if ($expression) {
+    $where->{'iseq_run_lane_metric.run_complete'} = $expression;
+  }
 
-  my $digest = {};
+  return $where;
+}
+
+sub _find_libs {
+  my ($self, $digest, $flowcell_keys) = @_;
+
+  my $quality_field = $self->filter ? $QUALITY_FILTERS{$self->filter} : q[];
+  my $rs = $self->_get_product_rs($self->_time_interval_query());
 
   while (my $prow = $rs->next()) {
 
     my $fc_row = $prow->iseq_flowcell;
     if ($fc_row) {
 
-      if ($self->filter) {
-        my $column = $self->filter;
-        if (!$fc_row->$column) { # if no qc result or failed
+      if ($quality_field) {
+        if (!$fc_row->$quality_field) { # if no qc result or failed
           next;
         }
       }
-
       if (!$self->include_rad && $fc_row->is_r_and_d) {
         next;
       }
@@ -142,42 +176,35 @@ sub create {
         next;
       }
 
-      my $entity = _create_entity($fc_row);
-
-      my $passed = 1;
-      foreach my $key ( qw/ library sample study / ) {
-        if ( $self->can($key) && $self->$key && $self->$key ne $entity->{$key}) {
-          $passed = 0;
-          last;
-	}
-      }
-
-      if ($passed) {
-        _add_entity($digest, $prow, $entity);
-      }
-    }
-  }
-
-  $self->_expand_libs($digest);
-
-  return $digest;
-}
-
-sub _expand_libs {
-  my ($self, $digest) = shift;
-
-  my @libraries = keys %{$digest};
-  if (@libraries) {
-    my $with_status = 1;
-    my $where = {'iseq_flowcell.entity_id_lims' => {'--in', \@libraries}};
-    my $rs = $self->_get_product_rs($where);
-    while (my $prow = $rs->next) {
-      my $entity = _create_entity($prow->iseq_lowcell);
-      _add_entity($digest, $prow, $entity, $with_status);
+      my $entity = _create_entity($fc_row, $flowcell_keys);
+      _add_entity($digest, $prow, $entity);
     }
   }
 
   return;
+}
+
+sub _expand_libs {
+  my ($self, $digest, $flowcell_keys) = @_;
+
+  my $count = 0;
+  my @libraries = keys %{$digest};
+  if (@libraries) {
+    my $with_status = 1;
+    my $where = {
+      'iseq_flowcell.id_iseq_flowcell_tmp' => {'-not_in', $flowcell_keys} ,
+      'iseq_flowcell.entity_id_lims'       => {'-in',    \@libraries}
+    };
+    my $rs = $self->_get_product_rs($where);
+    $count = $rs->count;
+
+    while (my $prow = $rs->next) {
+      my $entity = _create_entity($prow->iseq_flowcell);
+      _add_entity($digest, $prow, $entity, $with_status);
+    }
+  }
+
+  return $count;
 }
 
 sub _add_entity {
@@ -190,7 +217,7 @@ sub _add_entity {
     $prow->can('rpt_key') ? $prow->rpt_key() : _get_rpt_key($prow);
   my $library = $entity->{'library'};
   delete $entity->{'library'};
-  _entity_add_rpt_key($prow, $entity);
+  $entity->{'rpt_key'} = $prow->can('rpt_key') ? $prow->rpt_key : _get_rpt_key($prow);
   if ($with_status) {
     $entity->{'status'} = _get_run_status($prow);
   }
@@ -222,19 +249,19 @@ sub _get_product_rs {
 }
 
 sub _create_entity {
-  my $fc_row = shift;
+  my ($fc_row, $fc_keys) = @_;
 
   my $entity = {
     'sample'  => $fc_row->sample->id_sample_lims,
     'study'   => $fc_row->study->id_study_lims,
     'library' => $fc_row->entity_id_lims,
     'id_lims' => $fc_row->id_lims,
-    'legacy_library_id' => $fc_row->legacy_library_id,
   };
+
+  push @{$fc_keys}, $fc_row->id_iseq_flowcell_tmp;
 
   return $entity;
 }
-
 
 sub _get_run_status {
   my ($product_row) = @_;
@@ -279,6 +306,10 @@ __END__
 =item Readonly
 
 =item Moose
+
+=item MooseX::StrictConstructor
+
+=item List::MoreUtils
 
 =back
 
