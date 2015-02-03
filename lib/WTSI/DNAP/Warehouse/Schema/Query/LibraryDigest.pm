@@ -193,7 +193,7 @@ sub _expand_libs {
     my $with_status = 1;
     my $where = {
       'iseq_flowcell.id_iseq_flowcell_tmp' => {'-not_in', $flowcell_keys} ,
-      'iseq_flowcell.entity_id_lims'       => {'-in',    \@libraries}
+      'iseq_flowcell.id_library_lims'      => {'-in',    \@libraries}
     };
     my $rs = $self->_get_product_rs($where);
     $count = $rs->count;
@@ -254,7 +254,7 @@ sub _create_entity {
   my $entity = {
     'sample'  => $fc_row->sample->id_sample_lims,
     'study'   => $fc_row->study->id_study_lims,
-    'library' => $fc_row->entity_id_lims,
+    'library' => $fc_row->id_library_lims,
     'id_lims' => $fc_row->id_lims,
   };
 
