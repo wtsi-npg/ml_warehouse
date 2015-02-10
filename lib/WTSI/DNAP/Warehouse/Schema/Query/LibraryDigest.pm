@@ -375,13 +375,14 @@ sub _create_entity {
   my ($fc_row, $fc_keys) = @_;
 
   my $entity = {
-    'sample'      => $fc_row->sample_id,
-    'sample_name' => $fc_row->sample_name,
-    'study'       => $fc_row->study_id,
-    'library'     => $fc_row->id_library_lims,
-    'id_lims'     => $fc_row->id_lims,
+    'sample'            => $fc_row->sample_id,
+    'sample_name'       => $fc_row->sample_name,
+    'study'             => $fc_row->study_id,
+    'library'           => $fc_row->id_library_lims,
+    'id_lims'           => $fc_row->id_lims,
+    'legacy_library_id' => $fc_row->legacy_library_id,
   };
-  my $ref = $fc_row->sample_reference_genome || $fc_row->study_reference_genome;
+  my $ref = _get_reference($fc_row);
   if ($ref) {
     $entity->{'reference_genome'} = $ref;
   }
@@ -389,6 +390,15 @@ sub _create_entity {
   push @{$fc_keys}, $fc_row->id_iseq_flowcell_tmp;
 
   return $entity;
+}
+
+sub _get_reference {
+  my $fc_row = shift;
+  my $ref = $fc_row->sample_reference_genome;
+  $ref =~ s/^\s+//xms;
+  $ref ||= $fc_row->study_reference_genome;
+  $ref =~ s/^\s+//xms;
+  return $ref;
 }
 
 sub _get_run_status {
