@@ -294,7 +294,7 @@ sub _expand_libs {
     my $with_status = 1;
     my $where = {
       'iseq_flowcell.id_iseq_flowcell_tmp' => {'-not_in', $flowcell_keys} ,
-      'iseq_flowcell.id_library_lims'      => {'-in',    \@libraries}
+      'iseq_flowcell.legacy_library_id'    => {'-in',    \@libraries}
     };
     my $rs = $self->_get_product_rs($where);
     $count = $rs->count;
@@ -378,13 +378,18 @@ sub _create_entity {
     'sample'            => $fc_row->sample_id,
     'sample_name'       => $fc_row->sample_name,
     'study'             => $fc_row->study_id,
-    'library'           => $fc_row->id_library_lims,
+    'library'           => $fc_row->legacy_library_id,
     'id_lims'           => $fc_row->id_lims,
-    'legacy_library_id' => $fc_row->legacy_library_id,
+    'new_library_id'    => $fc_row->id_library_lims,
   };
   my $ref = _get_reference($fc_row);
   if ($ref) {
     $entity->{'reference_genome'} = $ref;
+  } else {
+    my $taxon_id = $fc_row->organism_taxon_id;
+    if ($taxon_id) {
+      $entity->{'taxon_id'} = $taxon_id;
+    }
   }
 
   push @{$fc_keys}, $fc_row->id_iseq_flowcell_tmp;
