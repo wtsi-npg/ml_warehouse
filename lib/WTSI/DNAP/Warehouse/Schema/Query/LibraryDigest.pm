@@ -4,14 +4,22 @@ use Moose;
 use Carp;
 use Readonly;
 use MooseX::StrictConstructor;
-use List::MoreUtils qw/ none /;
+use List::MoreUtils qw/ none uniq /;
 
 our $VERSION = '0';
 
-Readonly::Hash  my %QUALITY_FILTERS => (
+Readonly::Hash   my %QUALITY_FILTERS => (
                               'mqc'        => 'manual_qc',
                               'extrelease' => 'external_release',
-                                       );
+                                        );
+
+Readonly::Array  my @AGGREGATYON_LEVEL => qw/
+                                        library
+                                        sample
+                                            /;
+
+Readonly::Scalar my $GROUP_KEY_NAME => 'group_key';
+
 
 =head1 NAME
 
@@ -19,15 +27,78 @@ WTSI::DNAP::Warehouse::Schema::Query::LibraryDigest
 
 =head1 SYNOPSIS
 
+  use DateTime;
+  use WTSI::DNAP::Warehouse::Schema;
+  use WTSI::DNAP::Warehouse::Schema::Query::LibraryDigest;
+
+  my $s=WTSI::DNAP::Warehouse::Schema->connect();
+  my $p=$s->resultset("IseqProductMetric");
+
+  my $d=WTSI::DNAP::Warehouse::Schema::Query::LibraryDigest->new(
+    iseq_product_metrics => $p,
+    completed_after => DateTime->new(year=>2015,month=>01,day=>30),
+    filter => "mqc",
+    accept_undefined => 1,
+    earliest_run_status => "qc review pending"
+  );
+
+  my $digest = $d->create();
+  foreach my $library ( keys %{$digest} ) {
+    foreach my instrument_type ( keys %{$digest->{$library}} ) {
+      foreach my $run_type () {keys %{$digest->{$library}->{$instrument_type}}
+        my @entities = @{$digest->{$library}->{$instrument_type}->{}->{'entities'}};
+
+        #######################################################
+        # Single entity example
+        # {
+        #   'flowcell_barcode' => 'C5DW3ANXX',
+        #   'status'           => 'qc complete',
+        #   'id_lims'          => 'SQSCP',
+        #   'new_library_id'   => 'DN384378S:E12',
+        #   'rpt_key'          => '15349:5:93',
+        #   'sample_name'      => '3425STDY6021702',
+        #   'sample'           => '2192336',
+        #   'study'            => '3425',
+        #   'reference_genome' => 'Mus_musculus (CGP_NCBIm37)'
+        # }
+        #
+        # If reference_gemone is undefine, might contain
+        # 'taxon_id' entry instead 
+        ######################################################
+      }
+    }
+  }
+
 =head1 DESCRIPTION
 
 Retrieval and aggregation of information about libraries.
 
 =head1 SUBROUTINES/METHODS
 
+=head2 group_by
+
+Type of entity (library, sample) to group the entries by. Defaults to library.
+
+=cut
+
+has 'group_by'  => ( isa        => 'Str',
+                     is         => 'ro',
+                     required   => 0,
+                     default    => sub { return $AGGREGATYON_LEVEL[0]; },
+                     trigger    => \&_validate_grouping,
+);
+sub _validate_grouping {
+  my ($self, $group) = @_;
+  if (none {$_ eq $group } @AGGREGATYON_LEVEL) {
+    croak "Cannot group by $group, known aggregation leveles " .
+      join q[,], @AGGREGATYON_LEVEL;
+  }
+  return 1;
+}
+
 =head2 filter
 
-If set, the libraries should have pass quality control. "seqqc" quality control filter
+If set, the libraries should have passed quality control. "seqqc" quality control filter
 is used by default. "extrelease" filter can also be used.
 
 =cut
@@ -84,7 +155,7 @@ has 'include_control' => ( isa           => 'Bool',
 
 =head2 completed_after
 
-The earliest qc complete date as DateTime object or
+The earliest QC complete date as DateTime object or
 the earliest date for required status, an optional attribute.
 
 =cut
@@ -95,7 +166,7 @@ has 'completed_after' => ( isa           => 'Maybe[DateTime]',
 
 =head2 completed_within
 
-Qc complete date range as an array ref of DateTime objects or
+QC complete date range as an array ref of DateTime objects or
 a valid time interval for required status, an optional attribute.
 
 =cut
@@ -223,9 +294,21 @@ sub create {
   my $self = shift;
 
   my $digest = {};
-  my $flowcell_keys = [];
-  $self->_find_libs($digest, $flowcell_keys);
-  $self->_expand_libs($digest, $flowcell_keys);
+  my $flowcell_keys = $self->_find_libs($digest);
+
+  if (scalar keys %{$digest}) {
+    if ( !@{$flowcell_keys} ) {
+      croak 'flowcell_keys array is empty';
+    }
+    $self->_expand_libs($digest, $flowcell_keys);
+
+    foreach my $key (keys %{$digest}) {
+      delete $digest->{$key}->{$GROUP_KEY_NAME};
+    }
+
+  } else {
+    warn "Digest is empty\n";
+  }
 
   return $digest;
 }
@@ -247,7 +330,9 @@ sub _time_interval_query {
 }
 
 sub _find_libs {
-  my ($self, $digest, $flowcell_keys) = @_;
+  my ($self, $digest) = @_;
+
+  my @flowcell_keys = ();
 
   my $where = {};
   my $with_status = 0;
@@ -277,39 +362,62 @@ sub _find_libs {
         next;
       }
 
-      my $entity = _create_entity($fc_row, $flowcell_keys);
+      my $entity = $self->_create_entity($fc_row);
+      if (!$entity->{'flowcell_key_value'}) {
+        croak 'No flowcell key value';
+      }
+      push @flowcell_keys, $entity->{'flowcell_key_value'};
       $self->_add_entity($digest, $prow, $entity, $with_status);
     }
   }
 
-  return;
+  return \@flowcell_keys;
 }
 
 sub _expand_libs {
   my ($self, $digest, $flowcell_keys) = @_;
 
   my $count = 0;
-  my @libraries = keys %{$digest};
-  if (@libraries) {
-    my $with_status = 1;
-    my $where = {
-      'iseq_flowcell.id_iseq_flowcell_tmp' => {'-not_in', $flowcell_keys} ,
-      'iseq_flowcell.legacy_library_id'    => {'-in',    \@libraries}
-    };
-    my $rs = $self->_get_product_rs($where);
-    $count = $rs->count;
 
-    while (my $prow = $rs->next) {
-      my $entity = _create_entity($prow->iseq_flowcell);
-      $self->_add_entity($digest, $prow, $entity, $with_status);
-    }
+  my @search_keys = map {
+    $digest->{$_}->{$GROUP_KEY_NAME} ?
+      $digest->{$_}->{$GROUP_KEY_NAME} : croak 'Group key is not defined';
+                        } keys %{$digest};
+
+  my @keys = uniq map { keys %{$_} } @search_keys;
+
+  if (!@keys) {
+    croak 'No keys';
+  }
+  if (scalar @keys > 1) {
+    croak 'Too many keys';
+  }
+  my $field = $keys[0]; # expect 'legacy_library_id' or 'id_sample_tmp'
+
+  @keys = map { $_->{$field} } @search_keys;
+
+  my $where = {
+    'iseq_flowcell.id_iseq_flowcell_tmp' => {'-not_in', $flowcell_keys} ,
+    'iseq_flowcell.' . $field            => {'-in',    \@keys},
+  };
+  my $rs = $self->_get_product_rs($where);
+  $count = $rs->count;
+
+  my $with_status = 1;
+  while (my $prow = $rs->next) {
+    $self->_add_entity($digest,
+                       $prow,
+                       $self->_create_entity($prow->iseq_flowcell),
+                       $with_status);
   }
 
   return $count;
 }
 
 sub _add_entity {
-  my ($self, $digest, $prow, $entity, $with_status) = @_;
+  my ($self, $digest, $prow, $combined_entity, $with_status) = @_;
+
+  my $entity = $combined_entity->{'entity'};
 
   if ($with_status) {
     my $status = _get_run_status($prow);
@@ -331,11 +439,18 @@ sub _add_entity {
   $entity->{'flowcell_barcode'}  = $flowcell_barcode;
   $entity->{'rpt_key'} =
     $prow->can('rpt_key') ? $prow->rpt_key() : _get_rpt_key($prow);
-  my $library = $entity->{'library'};
-  delete $entity->{'library'};
-  $entity->{'rpt_key'} = $prow->can('rpt_key') ? $prow->rpt_key : _get_rpt_key($prow);
 
-  push @{$digest->{$library}->{$instrument_model}->{$paired_flag}->{'entities'}},
+  my $key = $entity->{$self->group_by};
+  if (!$key) {
+    croak $self->group_by . ' is not defined for the entity';
+  }
+
+  $entity->{'rpt_key'}   = $prow->can('rpt_key') ? $prow->rpt_key : _get_rpt_key($prow);
+  if (!exists $digest->{$key}->{$GROUP_KEY_NAME}) {
+    $digest->{$key}->{$GROUP_KEY_NAME} = $combined_entity->{'entity_key'};
+  }
+
+  push @{$digest->{$key}->{$instrument_model}->{$paired_flag}->{'entities'}},
       $entity;
 
   return;
@@ -343,6 +458,7 @@ sub _add_entity {
 
 sub _accept {
   my ($self, $fc_row) = @_;
+
   my $quality_field = $self->filter ? $QUALITY_FILTERS{$self->filter} : q[];
   if ( $quality_field ) {
     my $value = $fc_row->$quality_field;
@@ -372,16 +488,16 @@ sub _get_product_rs {
 }
 
 sub _create_entity {
-  my ($fc_row, $fc_keys) = @_;
+  my ($self, $fc_row) = @_;
 
   my $entity = {
+    'new_library_id'    => $fc_row->id_library_lims,
     'sample'            => $fc_row->sample_id,
     'sample_name'       => $fc_row->sample_name,
-    'study'             => $fc_row->study_id,
-    'library'           => $fc_row->legacy_library_id,
     'id_lims'           => $fc_row->id_lims,
-    'new_library_id'    => $fc_row->id_library_lims,
   };
+  $entity->{'study'}    = $fc_row->study_id; # safer, since study might be undefined
+
   my $ref = _get_reference($fc_row);
   if ($ref) {
     $entity->{'reference_genome'} = $ref;
@@ -392,9 +508,17 @@ sub _create_entity {
     }
   }
 
-  push @{$fc_keys}, $fc_row->id_iseq_flowcell_tmp;
+  my $library_field = 'legacy_library_id';
+  $entity->{'library'} = $fc_row->$library_field;
+  my $key = $self->group_by eq 'library' ? $library_field : 'id_sample_tmp';
+  my $key_hash = {$key => $fc_row->$key};
 
-  return $entity;
+  my $combined_entity = {};
+  $combined_entity->{'entity'}             = $entity;
+  $combined_entity->{'flowcell_key_value'} = $fc_row->id_iseq_flowcell_tmp;
+  $combined_entity->{'entity_key'}         = $key_hash;
+
+  return $combined_entity;
 }
 
 sub _get_reference {

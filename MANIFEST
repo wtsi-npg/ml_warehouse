@@ -20,3 +20,4 @@ t/00-critic.t
 t/00-distribution.t
 t/00-pod.t
 t/10-Schema.t
+t/20-Schema-Query-LibraryDigest.t

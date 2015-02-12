@@ -1,7 +1,8 @@
 LIST OF CHANGES
 ---------------
 
- - new module - library digest - getting aggregated information about libraries
+ - new module - library digest - retrieves information about libraries,
+     groups it either by library or by sample
 
 release 0.4
  - following db schema shanges, update the DBIx binding
