@@ -68,7 +68,7 @@ Timestamp of warehouse update
   data_type: 'integer'
   extra: {unsigned => 1}
   is_foreign_key: 1
-  is_nullable: 1
+  is_nullable: 0
 
 Sample id, see 'sample.id_sample_tmp'
 
@@ -168,14 +168,6 @@ Lane type: library, pool, library_control, library_indexed, library_indexed_spik
 
 Most specific LIMs identifier associated with this lane or plex or spike
 
-=head2 num_target_components
-
-  data_type: 'smallint'
-  extra: {unsigned => 1}
-  is_nullable: 0
-
-Expected number of targets, one for a non-pool and number of target tags for a pool
-
 =head2 tag_index
 
   data_type: 'smallint'
@@ -272,6 +264,21 @@ Requested reverse read length, bp
 
 Most specific LIMs identifier associated with the pool
 
+=head2 legacy_library_id
+
+  data_type: 'integer'
+  is_nullable: 1
+
+Legacy library_id for backwards compatibility.
+
+=head2 id_library_lims
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Earliest LIMs identifier associated with library creation
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -299,7 +306,7 @@ __PACKAGE__->add_columns(
     data_type => 'integer',
     extra => { unsigned => 1 },
     is_foreign_key => 1,
-    is_nullable => 1,
+    is_nullable => 0,
   },
   'id_study_tmp',
   {
@@ -335,8 +342,6 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 0, size => 30 },
   'entity_id_lims',
   { data_type => 'varchar', is_nullable => 0, size => 20 },
-  'num_target_components',
-  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 0 },
   'tag_index',
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
   'tag_sequence',
@@ -361,6 +366,10 @@ __PACKAGE__->add_columns(
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
   'id_pool_lims',
   { data_type => 'varchar', is_nullable => 0, size => 20 },
+  'legacy_library_id',
+  { data_type => 'integer', is_nullable => 1 },
+  'id_library_lims',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -404,12 +413,7 @@ __PACKAGE__->belongs_to(
   'sample',
   'WTSI::DNAP::Warehouse::Schema::Result::Sample',
   { id_sample_tmp => 'id_sample_tmp' },
-  {
-    is_deferrable => 1,
-    join_type     => 'LEFT',
-    on_delete     => 'NO ACTION',
-    on_update     => 'NO ACTION',
-  },
+  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
 );
 
 =head2 study
@@ -433,8 +437,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-12-01 13:45:42
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:cybNSv1iBQb5TY/fK2bHsQ
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-01-19 16:35:18
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:t0uoThc2jOH+I+BNhftTtA
 
 use MooseX::Aliases;
 use Readonly;

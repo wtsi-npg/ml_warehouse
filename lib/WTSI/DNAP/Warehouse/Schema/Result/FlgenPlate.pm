@@ -107,9 +107,9 @@ Manufacturer (Fluidigm) chip barcode
 
 =head2 plate_barcode_lims
 
-  data_type: 'integer'
-  extra: {unsigned => 1}
-  is_nullable: 0
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 128
 
 LIMs-specific plate barcode
 
@@ -209,7 +209,7 @@ __PACKAGE__->add_columns(
   'plate_barcode',
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 0 },
   'plate_barcode_lims',
-  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 0 },
+  { data_type => 'varchar', is_nullable => 1, size => 128 },
   'plate_uuid_lims',
   { data_type => 'varchar', is_nullable => 1, size => 36 },
   'id_flgen_plate_lims',
@@ -271,8 +271,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:26:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:yov/+LxbwMbP7imqFT4ijg
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-01-19 16:35:18
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Df/CLIOB+DW9/6zUgYLM6A
 
 our $VERSION = '0';
 
