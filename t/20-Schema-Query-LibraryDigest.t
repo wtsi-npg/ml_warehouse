@@ -1,10 +1,11 @@
 use strict;
 use warnings;
-use Test::More tests => 29;
+use Test::More tests => 35;
 use Test::Exception;
 use Test::Warn;
 use YAML qw/ LoadFile /;
 use DateTime;
+use DateTime::Duration;
 
 use_ok('WTSI::DNAP::Warehouse::Schema');
 use_ok('WTSI::DNAP::Warehouse::Schema::Query::LibraryDigest');
@@ -127,6 +128,82 @@ my $ldclass = 'WTSI::DNAP::Warehouse::Schema::Query::LibraryDigest';
   my $h;
   warning_like { $h = $d->create() } qr/Digest is empty/, 'warning about an empty digest';
   is( scalar keys %{$h}, 0, 'digest is empty');
+}
+
+my $date = DateTime->now();
+
+my $rs = $schema->resultset('IseqRunStatus')->search(
+  {iscurrent => 1}, {'order_by' => 'id_run'});
+while (my $row = $rs->next) {
+  if ($row->id_run == 15440) {
+    $date->subtract_duration(DateTime::Duration->new(days => 2));
+    $row->update({'date' => $date});
+  } elsif ($row->id_run == 15454) {
+    $date->subtract_duration(DateTime::Duration->new(days => 3));
+    $row->update({'date' => $date});
+  }
+}
+
+{
+  my $adate = DateTime->now();
+  $adate->subtract_duration(DateTime::Duration->new(days => 3));
+
+  my $d = $ldclass->new(
+        iseq_product_metrics => $products,
+        earliest_run_status  => 'qc complete',
+        completed_after      => $adate,
+                       );
+  is( join(q[:], @{$d->id_run}), 15440, 'runs completed within three days' );
+
+  $adate->subtract_duration(DateTime::Duration->new(days => 3));
+  $d = $ldclass->new(
+        iseq_product_metrics => $products,
+        earliest_run_status  => 'qc complete',
+        completed_after      => $adate,
+                     );
+  is( join(q[:], @{$d->id_run}), 15440, 'runs completed within six days' );
+  $d = $ldclass->new(
+        iseq_product_metrics => $products,
+        earliest_run_status  => 'qc review pending',
+        completed_after      => $adate,
+                     );
+  is( join(q[:], sort {$a <=> $b} @{$d->id_run}), '15440:15454',
+    'runs reached at least qc review within six days' );
+  my $results = $d->create();
+  is (join(q[:], sort {$a <=> $b} keys %{$results}),
+  '12789790:12789802:12789814:12789826:12977046:12977047:12977048:12977049:12977050:12977051:12977052:12977053:12977054:12977055',
+  'library keys');
+
+  $d = $ldclass->new(
+        iseq_product_metrics => $products,
+        earliest_run_status  => 'qc review pending',
+        completed_after      => $adate,
+        group_by             => 'sample'
+                    );
+  $results = $d->create();
+  is (join(q[:], sort {$a <=> $b} keys %{$results}),
+  '1877285:1877289:1877292:1877306:2227349:2227350:2227351:2227352:2227353:2227354:2227355:2227356:2227357:2227358',
+  'sample keys');
+
+  my $e1 = {
+    'flowcell_barcode' => 'HBF2DADXX',
+    'status'           => 'qc complete',
+    'library'          => 12789826,
+    'id_lims'          => 'SQSCP',
+    'new_library_id'   => 'DN384378S:D11',
+    'rpt_key'          => '15440:1:84',
+    'sample_name'      => undef,
+    'sample'           => '1877306',
+    'study'            => '2967',
+    'reference_genome' => 'Homo_sapiens (1000Genomes_hs37d5)',
+  };
+
+  my %e2 = %{$e1};
+  $e2{'rpt_key'} = '15440:2:84';
+  my $expected = {};
+  $expected->{'HiSeq'}->{'paired'}->{'entities'} = [$e1, \%e2];
+
+  is_deeply( $results->{'1877306'}, $expected, 'set of results for one of the samples');
 }
 
 1;

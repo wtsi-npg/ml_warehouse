@@ -88,7 +88,7 @@
   id_run: 15454
   id_run_status: 206464
   id_run_status_dict: 19
-  iscurrent: 0
+  iscurrent: 1
 - date: 2015-02-06 08:34:35
   id_run: 15440
   id_run_status: 206467
@@ -113,7 +113,7 @@
   id_run: 15454
   id_run_status: 206476
   id_run_status_dict: 20
-  iscurrent: 1
+  iscurrent: 0
 - date: 2015-02-08 15:36:50
   id_run: 15440
   id_run_status: 206705
