@@ -90,8 +90,8 @@ has 'group_by'  => ( isa        => 'Str',
 sub _validate_grouping {
   my ($self, $group) = @_;
   if (none {$_ eq $group } @AGGREGATYON_LEVEL) {
-    croak "Cannot group by $group, known aggregation leveles " .
-      join q[,], @AGGREGATYON_LEVEL;
+    croak "Cannot group by $group, known aggregation leveles: " .
+      join q[, ], @AGGREGATYON_LEVEL;
   }
   return 1;
 }
@@ -112,7 +112,7 @@ sub _validate_filter {
   my ($self, $filter) = @_;
   my @filters = sort keys %QUALITY_FILTERS;
   if ( none { $_ eq $filter } @filters ) {
-    croak "Cannot filter by $filter, known filteres: " . join q[,], @filters;
+    croak "Cannot filter by $filter, known filteres: " . join q[, ], @filters;
   }
   return 1;
 }
@@ -190,8 +190,9 @@ has 'iseq_product_metrics' =>  ( isa        => 'DBIx::Class::ResultSet',
 sub _validate_rs {
   my ($self, $rs) = @_;
   my $table = $rs->result_class;
-  if ($table !~ /IseqProductMetric/smx) {
-    croak "Got $table, expected result set for iseq_product_metrics";
+  my $expected = 'IseqProductMetric';
+  if ($table !~ /$expected/smx) {
+    croak "Got $table, expected result set for $expected";
   }
   return 1;
 }
@@ -255,15 +256,16 @@ has '_valid_run_statuses' =>  ( isa        => 'ArrayRef[Str]',
 sub _build__valid_run_statuses {
   my $self = shift;
 
-  if (!$self->earliest_run_status) {
+  my $run_status = $self->earliest_run_status;
+  if (!$run_status) {
     return [];
   }
 
   my $schema = $self->iseq_product_metrics->result_source->schema;
   my $temporal_index_row = $schema->resultset('IseqRunStatusDict')->search(
-    {'iscurrent' => 1, 'description' => $self->earliest_run_status})->next;
+    {'iscurrent' => 1, 'description' => $run_status})->next;
   if (!$temporal_index_row) {
-    croak 'Invalid status: ' . $self->earliest_run_status;
+    croak "Invalid run status: '$run_status'";
   }
   my $temporal_index = $temporal_index_row->temporal_index;
 
