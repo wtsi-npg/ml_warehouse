@@ -475,11 +475,11 @@ Readonly my %DELEGATION_TO_STUDY => {
 
 alias project_cost_code    => 'cost_code';
 alias default_library_type => 'pipeline_id_lims';
-alias library_id           => 'id_pool_lims';
 alias qc_state             => 'manual_qc';
 alias lane_priority        => 'priority';
+alias lane_id              => 'entity_id_lims';
 alias default_tag_sequence => 'tag_sequence';
-alias library_name         => 'id_pool_lims';
+alias library_name         => 'library_id';
 
 foreach my $rel (qw(sample study)) {
 
@@ -540,12 +540,20 @@ has '_study_users' => ( isa        => 'HashRef',
 );
 sub _build__study_users {
   my $self = shift;
-  my $rs =  $self->study()->study_users();
   my $su = {};
-  while (my $row = $rs->next) {
-    push @{$su->{$row->role}}, $row->email;
+  my $study = $self->study();
+  if ($study) {
+    my $rs =  $study->study_users();
+    while (my $row = $rs->next) {
+      push @{$su->{$row->role}}, $row->email;
+    }
   }
   return $su;
+}
+
+sub library_id {
+  my $self = shift;
+  return $self->legacy_library_id || $self->id_library_lims;
 }
 
 sub email_addresses {
