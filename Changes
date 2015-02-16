@@ -1,6 +1,10 @@
 LIST OF CHANGES
 ---------------
 
+ - update mapping of library_id lims field to database fields
+ - ensure missing study link does not lead to code failure when accessing e-mails of followers, etc.
+ - add mapping for lane_id
+
 release 0.4
  - following db schema shanges, update the DBIx binding
 
