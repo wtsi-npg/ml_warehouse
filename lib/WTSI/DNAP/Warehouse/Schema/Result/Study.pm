@@ -454,6 +454,25 @@ __PACKAGE__->has_many(
 
 our $VERSION = '0';
 
+foreach my $col (qw(contains_human_dna contaminated_human_dna)) {
+    __PACKAGE__->inflate_column( $col, {
+       inflate => sub {
+         my $data = shift;
+         my $result;
+         if (defined $data) {
+           $result = $data !~ m{No|0}simx;
+         }
+         return $result;
+       },
+       deflate => sub {
+         my $data = shift;
+         $data ? 'Yes' : 'No';
+       },
+    });
+}
+
+
+
 __PACKAGE__->meta->make_immutable;
 
 1;
