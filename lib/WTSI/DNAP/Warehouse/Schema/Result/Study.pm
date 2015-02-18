@@ -13,6 +13,7 @@ WTSI::DNAP::Warehouse::Schema::Result::Study
 use strict;
 use warnings;
 
+use Carp;
 use Moose;
 use MooseX::NonMoose;
 use MooseX::MarkAsMethods autoclean => 1;
@@ -454,7 +455,11 @@ __PACKAGE__->has_many(
 
 our $VERSION = '0';
 
+# ensure contains_human_dna and contaminated_human_dna behave in a boolean manner
+# even whilst they are derived from columns contains strings "Yes" and "No"
 foreach my $col (qw(contains_human_dna contaminated_human_dna)) {
+  my $datatype  = __PACKAGE__->column_info($col)->{'data_type'} or croak "cannot determine datatype for column '$col'";
+  if ('varchar' eq $datatype){
     __PACKAGE__->inflate_column( $col, {
        inflate => sub {
          my $data = shift;
@@ -469,8 +474,10 @@ foreach my $col (qw(contains_human_dna contaminated_human_dna)) {
          $data ? 'Yes' : 'No';
        },
     });
+  }else{
+    carp "Column $col has had its dataype changed from varchar to $datatype: inflator and deflator can be removed";
+  }
 }
-
 
 
 __PACKAGE__->meta->make_immutable;
