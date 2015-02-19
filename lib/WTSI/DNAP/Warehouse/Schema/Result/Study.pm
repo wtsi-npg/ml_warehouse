@@ -13,7 +13,6 @@ WTSI::DNAP::Warehouse::Schema::Result::Study
 use strict;
 use warnings;
 
-use Carp;
 use Moose;
 use MooseX::NonMoose;
 use MooseX::MarkAsMethods autoclean => 1;
@@ -453,6 +452,7 @@ __PACKAGE__->has_many(
 # Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-01-19 16:35:18
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+1dGza0LHwnfC8vMaat5XQ
 
+use Carp;
 our $VERSION = '0';
 
 # ensure contains_human_dna and contaminated_human_dna behave in a boolean manner
