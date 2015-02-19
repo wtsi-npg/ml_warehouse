@@ -13,7 +13,7 @@ Readonly::Hash   my %QUALITY_FILTERS => (
                               'extrelease' => 'external_release',
                                         );
 
-Readonly::Array  my @AGGREGATYON_LEVEL => qw/
+Readonly::Array  my @AGGREGATION_LEVEL => qw/
                                         library
                                         sample
                                             /;
@@ -84,14 +84,14 @@ Type of entity (library, sample) to group the entries by. Defaults to library.
 has 'group_by'  => ( isa        => 'Str',
                      is         => 'ro',
                      required   => 0,
-                     default    => sub { return $AGGREGATYON_LEVEL[0]; },
+                     default    => sub { return $AGGREGATION_LEVEL[0]; },
                      trigger    => \&_validate_grouping,
 );
 sub _validate_grouping {
   my ($self, $group) = @_;
-  if (none {$_ eq $group } @AGGREGATYON_LEVEL) {
+  if (none {$_ eq $group } @AGGREGATION_LEVEL) {
     croak "Cannot group by $group, known aggregation leveles: " .
-      join q[, ], @AGGREGATYON_LEVEL;
+      join q[, ], @AGGREGATION_LEVEL;
   }
   return 1;
 }
