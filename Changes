@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+ - ensure contains_human_dna and contaminated_human_dna behave in a boolean manner
  - update mapping of library_id lims field to database fields
  - ensure missing study link does not lead to code failure when accessing e-mails of followers, etc.
  - add mapping for lane_id
