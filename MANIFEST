@@ -13,6 +13,7 @@ lib/WTSI/DNAP/Warehouse/Schema/Result/Study.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/StudyUser.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/SchemaMigration.pm
 lib/WTSI/DNAP/Warehouse/Schema/Query/IseqFlowcell.pm
+lib/WTSI/DNAP/Warehouse/Schema/Query/LimsFlags.pm
 scripts/make_schema.pl
 t/perlcriticrc
 t/00-critic.t
