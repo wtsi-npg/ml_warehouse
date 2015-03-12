@@ -408,6 +408,8 @@ __PACKAGE__->has_many(
 
 our $VERSION = '0';
 
+with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
+
 __PACKAGE__->meta->make_immutable;
 
 1;
