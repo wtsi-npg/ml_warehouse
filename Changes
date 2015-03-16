@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+release 0.6
+ - added a role providing methods to determine what LIMs system the record originated from
+
 release 0.5
  - ensure contains_human_dna and contaminated_human_dna behave in a boolean manner
  - update mapping of library_id lims field to database fields
@@ -8,7 +11,7 @@ release 0.5
  - add mapping for lane_id
 
 release 0.4
- - following db schema shanges, update the DBIx binding
+ - following db schema changes, update the DBIx binding
 
 release 0.3
  - added WTSI::DNAP::Warehouse::Schema::Query::IseqFlowcell - a role for querying

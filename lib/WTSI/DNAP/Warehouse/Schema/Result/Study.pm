@@ -453,6 +453,9 @@ __PACKAGE__->has_many(
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+1dGza0LHwnfC8vMaat5XQ
 
 use Carp;
+
+with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
+
 our $VERSION = '0';
 
 # ensure contains_human_dna and contaminated_human_dna behave in a boolean manner
