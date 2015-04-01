@@ -112,7 +112,7 @@ sub _validate_filter {
   my ($self, $filter) = @_;
   my @filters = sort keys %QUALITY_FILTERS;
   if ( none { $_ eq $filter } @filters ) {
-    croak "Cannot filter by $filter, known filteres: " . join q[, ], @filters;
+    croak "Cannot filter by $filter, known filtres: " . join q[, ], @filters;
   }
   return 1;
 }
@@ -144,7 +144,7 @@ has 'include_rad' => ( isa           => 'Bool',
 
 =head2 include_control
 
-Boolen flag, false by default, ie control/spiled in libraries are not included.
+Boolen flag, false by default, ie control/spiked in libraries are not included.
 
 =cut
 has 'include_control' => ( isa           => 'Bool',
@@ -285,7 +285,7 @@ sub _build__valid_run_statuses {
 Creates a digest in a form of a hash reference where the results
 are categorised by the library id, sequencing instrument model and paired|single flag.
 
-Individual results are presented as a hash refenence where the rpt_key (run-position-tag)
+Individual results are presented as a hash reference where the rpt_key (run-position-tag)
 key describes the product and other keys define metadata.
 
 Results of one type are bundled together into an array. 

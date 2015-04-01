@@ -67,7 +67,7 @@ my $ldclass = 'WTSI::DNAP::Warehouse::Schema::Query::LibraryDigest';
   throws_ok {$ldclass->new(
         iseq_product_metrics => $products,
         filter => 'library',
-  ) } qr/Cannot filter by library, known filteres: extrelease, mqc/,
+  ) } qr/Cannot filter by library, known filtres: extrelease, mqc/,
   'error for invalid filter value';
 }
 
