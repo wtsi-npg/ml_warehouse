@@ -452,7 +452,36 @@ __PACKAGE__->has_many(
 # Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-01-19 16:35:18
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+1dGza0LHwnfC8vMaat5XQ
 
+use Carp;
+
+with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
+
 our $VERSION = '0';
+
+# ensure contains_human_dna and contaminated_human_dna behave in a boolean manner
+# even whilst they are derived from columns contains strings "Yes" and "No"
+foreach my $col (qw(contains_human_dna contaminated_human_dna)) {
+  my $datatype  = __PACKAGE__->column_info($col)->{'data_type'} or croak "cannot determine datatype for column '$col'";
+  if ('varchar' eq $datatype){
+    __PACKAGE__->inflate_column( $col, {
+       inflate => sub {
+         my $data = shift;
+         my $result;
+         if (defined $data) {
+           $result = $data !~ m{No|0}simx;
+         }
+         return $result;
+       },
+       deflate => sub {
+         my $data = shift;
+         $data ? 'Yes' : 'No';
+       },
+    });
+  }else{
+    carp "Column $col has had its dataype changed from varchar to $datatype: inflator and deflator can be removed";
+  }
+}
+
 
 __PACKAGE__->meta->make_immutable;
 
