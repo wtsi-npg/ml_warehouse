@@ -6,6 +6,7 @@ use Test::Warn;
 use YAML qw/ LoadFile /;
 use DateTime;
 use DateTime::Duration;
+use DateTime::Format::SQLite;
 
 use_ok('WTSI::DNAP::Warehouse::Schema');
 use_ok('WTSI::DNAP::Warehouse::Schema::Query::LibraryDigest');

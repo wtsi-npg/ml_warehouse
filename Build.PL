@@ -53,6 +53,7 @@ my $builder = $class->new(
     'Test::More'            => 0,
     'Test::Perl::Critic'    => 0,
     'Test::Pod'             => 0,
+    'DateTime::Format::SQLite' => 0,
   },
 
   'requires' => {
