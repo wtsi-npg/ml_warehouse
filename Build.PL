@@ -53,13 +53,16 @@ my $builder = $class->new(
     'Test::More'            => 0,
     'Test::Perl::Critic'    => 0,
     'Test::Pod'             => 0,
+    'DateTime::Format::SQLite' => 0,
   },
 
   'requires' => {
     'DBIx::Class::Core'     => 0,
     'DBIx::Class::InflateColumn::DateTime' => 0,
     'DBIx::Class::Schema'   => 0,
+    'List::MoreUtils'       => 0,
     'Moose'                 => 0,
+    'MooseX::StrictConstructor' => 0,
     'Moose::Role'           => 0,
     'MooseX::Aliases'       => 0,
     'MooseX::MarkAsMethods' => 0,
