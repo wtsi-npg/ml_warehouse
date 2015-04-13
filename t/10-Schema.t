@@ -7,11 +7,9 @@ use File::Spec::Functions;
 
 use_ok('WTSI::DNAP::Warehouse::Schema');
 
-my $db = catfile(tempdir(CLEANUP => 1,), 'test.db');
-diag "sqlite test db location: $db";
 my $schema;
-lives_ok { $schema = WTSI::DNAP::Warehouse::Schema->connect('dbi:SQLite:'.$db) }
-  'connected to test database';
+lives_ok { $schema = WTSI::DNAP::Warehouse::Schema->connect('dbi:SQLite:dbname=:memory:') }
+  'connected to test in-memory database';
 isa_ok ($schema, 'WTSI::DNAP::Warehouse::Schema');
 lives_ok { $schema->deploy() } 'schema deployed';
 

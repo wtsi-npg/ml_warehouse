@@ -13,6 +13,7 @@ lib/WTSI/DNAP/Warehouse/Schema/Result/Study.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/StudyUser.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/SchemaMigration.pm
 lib/WTSI/DNAP/Warehouse/Schema/Query/IseqFlowcell.pm
+lib/WTSI/DNAP/Warehouse/Schema/Query/LibraryDigest.pm
 lib/WTSI/DNAP/Warehouse/Schema/Query/LimsFlags.pm
 scripts/make_schema.pl
 t/perlcriticrc
@@ -20,3 +21,12 @@ t/00-critic.t
 t/00-distribution.t
 t/00-pod.t
 t/10-Schema.t
+t/20-Schema-Query-LibraryDigest.t
+t/data/fixtures/00-IseqRunStatusDict.yml
+t/data/fixtures/000-Sample.yml
+t/data/fixtures/000-Study.yml
+t/data/fixtures/100-IseqFlowcell.yml
+t/data/fixtures/100-IseqRunLaneMetric.yml
+t/data/fixtures/100-IseqRunStatus.yml
+t/data/fixtures/100-StudyUser.yml
+t/data/fixtures/200-IseqProductMetric.yml

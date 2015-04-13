@@ -357,6 +357,23 @@ __PACKAGE__->has_many(
   { join_type => 'INNER',cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 iseq_run_status
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatus>
+
+=cut
+
+__PACKAGE__->has_many(
+  'iseq_run_status',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatus',
+  {
+    'foreign.id_run'   => 'self.id_run',
+  },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 ##no critic (ProhibitStringyEval ProhibitPostfixControls ProhibitInterpolationOfLiterals)
 with 'npg_qc::autoqc::role::rpt_key' if eval "require npg_qc::autoqc::role::rpt_key";
 ##use critic
@@ -408,7 +425,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2014 Genome Research Limited
+Copyright (C) 2015 Genome Research Limited
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
