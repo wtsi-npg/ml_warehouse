@@ -1,12 +1,12 @@
 
-package WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatus;
+package WTSI::DNAP::Warehouse::Schema::Result::CgapLineIdentifier;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatus
+WTSI::DNAP::Warehouse::Schema::Result::CgapLineIdentifier
 
 =cut
 
@@ -30,113 +30,123 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components('InflateColumn::DateTime');
 
-=head1 TABLE: C<iseq_run_status>
+=head1 TABLE: C<cgap_line_identifier>
 
 =cut
 
-__PACKAGE__->table('iseq_run_status');
+__PACKAGE__->table('cgap_line_identifier');
 
 =head1 ACCESSORS
 
-=head2 id_run_status
+=head2 cgap_line_identifier_tmp
 
   data_type: 'integer'
   extra: {unsigned => 1}
+  is_auto_increment: 1
   is_nullable: 0
 
-=head2 id_run
+Internal to this database id. Value can change.
 
-  data_type: 'integer'
-  extra: {unsigned => 1}
+=head2 line_uuid
+
+  data_type: 'varchar'
   is_nullable: 0
+  size: 38
 
-NPG run identifier
+=head2 friendly_name
 
-=head2 date
-
-  data_type: 'datetime'
-  datetime_undef_if_invalid: 1
+  data_type: 'varchar'
   is_nullable: 0
+  size: 16
 
-Status timestamp
+=head2 accession_number
 
-=head2 id_run_status_dict
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 38
 
-  data_type: 'integer'
-  extra: {unsigned => 1}
-  is_foreign_key: 1
+=head2 direct_parent_uuid
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 38
+
+=head2 biomaterial_uuid
+
+  data_type: 'varchar'
   is_nullable: 0
-
-Status identifier, see iseq_run_status_dict.id_run_status_dict
-
-=head2 iscurrent
-
-  data_type: 'tinyint'
-  is_nullable: 0
-
-Boolean flag, 1 is the status is current, 0 otherwise
+  size: 38
 
 =cut
 
 __PACKAGE__->add_columns(
-  'id_run_status',
-  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 0 },
-  'id_run',
-  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 0 },
-  'date',
-  {
-    data_type => 'datetime',
-    datetime_undef_if_invalid => 1,
-    is_nullable => 0,
-  },
-  'id_run_status_dict',
+  'cgap_line_identifier_tmp',
   {
     data_type => 'integer',
     extra => { unsigned => 1 },
-    is_foreign_key => 1,
+    is_auto_increment => 1,
     is_nullable => 0,
   },
-  'iscurrent',
-  { data_type => 'tinyint', is_nullable => 0 },
+  'line_uuid',
+  { data_type => 'varchar', is_nullable => 0, size => 38 },
+  'friendly_name',
+  { data_type => 'varchar', is_nullable => 0, size => 16 },
+  'accession_number',
+  { data_type => 'varchar', is_nullable => 1, size => 38 },
+  'direct_parent_uuid',
+  { data_type => 'varchar', is_nullable => 1, size => 38 },
+  'biomaterial_uuid',
+  { data_type => 'varchar', is_nullable => 0, size => 38 },
 );
 
 =head1 PRIMARY KEY
 
 =over 4
 
-=item * L</id_run_status>
+=item * L</cgap_line_identifier_tmp>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key('id_run_status');
+__PACKAGE__->set_primary_key('cgap_line_identifier_tmp');
 
-=head1 RELATIONS
+=head1 UNIQUE CONSTRAINTS
 
-=head2 run_status_dict
+=head2 C<friendly_name>
 
-Type: belongs_to
+=over 4
 
-Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatusDict>
+=item * L</friendly_name>
+
+=back
 
 =cut
 
-__PACKAGE__->belongs_to(
-  'run_status_dict',
-  'WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatusDict',
-  { id_run_status_dict => 'id_run_status_dict' },
-  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
-);
+__PACKAGE__->add_unique_constraint('friendly_name', ['friendly_name']);
+
+=head2 C<line_uuid>
+
+=over 4
+
+=item * L</line_uuid>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint('line_uuid', ['line_uuid']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-29 11:55:17
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:V+5Wt0FmO7gsFYyZ6NKKOQ
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-04-14 14:56:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:iSgkyzXfLcgs4EIWpCGmBw
+
+
+# You can replace this text with custom code or comments, and it will be preserved on regeneration
 
 our $VERSION = '0';
 
 __PACKAGE__->meta->make_immutable;
-
 1;
 __END__
 
@@ -200,4 +210,3 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 =cut
-
