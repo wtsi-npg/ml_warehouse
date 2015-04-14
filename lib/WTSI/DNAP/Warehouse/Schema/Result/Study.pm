@@ -162,15 +162,17 @@ Timestamp of study creation
 
 =head2 contains_human_dna
 
-  data_type: 'varchar'
+  data_type: 'tinyint'
   is_nullable: 1
-  size: 255
+
+Lane may contain human DNA
 
 =head2 contaminated_human_dna
 
-  data_type: 'varchar'
+  data_type: 'tinyint'
   is_nullable: 1
-  size: 255
+
+Human DNA in the lane is a contaminant and should be removed
 
 =head2 data_release_strategy
 
@@ -323,9 +325,9 @@ __PACKAGE__->add_columns(
   'description',
   { data_type => 'text', is_nullable => 1 },
   'contains_human_dna',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  { data_type => 'tinyint', is_nullable => 1 },
   'contaminated_human_dna',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  { data_type => 'tinyint', is_nullable => 1 },
   'data_release_strategy',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'data_release_sort_of_study',
@@ -449,39 +451,12 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-01-19 16:35:18
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+1dGza0LHwnfC8vMaat5XQ
-
-use Carp;
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-04-14 14:56:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ttMrIGAJDDJP1GZFDBNotQ
 
 with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
 
 our $VERSION = '0';
-
-# ensure contains_human_dna and contaminated_human_dna behave in a boolean manner
-# even whilst they are derived from columns contains strings "Yes" and "No"
-foreach my $col (qw(contains_human_dna contaminated_human_dna)) {
-  my $datatype  = __PACKAGE__->column_info($col)->{'data_type'} or croak "cannot determine datatype for column '$col'";
-  if ('varchar' eq $datatype){
-    __PACKAGE__->inflate_column( $col, {
-       inflate => sub {
-         my $data = shift;
-         my $result;
-         if (defined $data) {
-           $result = $data !~ m{No|0}simx;
-         }
-         return $result;
-       },
-       deflate => sub {
-         my $data = shift;
-         $data ? 'Yes' : 'No';
-       },
-    });
-  }else{
-    carp "Column $col has had its dataype changed from varchar to $datatype: inflator and deflator can be removed";
-  }
-}
-
 
 __PACKAGE__->meta->make_immutable;
 
@@ -530,7 +505,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2014 Genome Research Limited
+Copyright (C) 2015 Genome Research Limited
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
