@@ -1,6 +1,11 @@
 LIST OF CHANGES
 ---------------
 
+release 1.0
+ - DBIx schema update following database schema changes
+ - contains_human_dna and contaminated_human_dna columns have been converted
+   from varchar to tinyint, inflators/deflators for these columns dropped
+
 release 0.7
  - new module - library digest - retrieves information about libraries,
      groups it either by library or by sample

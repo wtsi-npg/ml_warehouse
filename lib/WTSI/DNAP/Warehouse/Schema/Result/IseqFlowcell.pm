@@ -279,6 +279,14 @@ Legacy library_id for backwards compatibility.
 
 Earliest LIMs identifier associated with library creation
 
+=head2 team
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+The team responsible for creating the flowcell
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -370,6 +378,8 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', is_nullable => 1 },
   'id_library_lims',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'team',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -437,8 +447,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-01-19 16:35:18
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:t0uoThc2jOH+I+BNhftTtA
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-04-14 14:56:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:04K7knLMyHm+W65un/0zRQ
 
 use MooseX::Aliases;
 use Readonly;
@@ -704,7 +714,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2014 Genome Research Limited
+Copyright (C) 2015 Genome Research Limited
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
