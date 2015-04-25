@@ -457,7 +457,7 @@ our $VERSION = '0';
 
 with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
 
-Readonly my @USER_ROLES = qw/manager follower owner/;
+Readonly my @USER_ROLES => qw/manager follower owner/;
 
 Readonly my %DELEGATION_TO_SAMPLE => {
     'sample_id'                => 'id_sample_lims',
