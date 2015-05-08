@@ -19,7 +19,10 @@ if($EVAL_ERROR) {
                -severity => 1,
                -profile => 't/perlcriticrc',
                -verbose => "%m at %f line %l, policy %p\n",
-			    );
+               -exclude => [
+                 'Miscellanea::RequireRcsKeywords',
+               ],
+  );
 
   all_critic_ok();
 }
