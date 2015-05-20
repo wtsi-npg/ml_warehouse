@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+release 1.1
+ - bug fix in readonly variable declaration
+
 release 1.0
  - DBIx schema update following database schema changes
  - contains_human_dna and contaminated_human_dna columns have been converted
