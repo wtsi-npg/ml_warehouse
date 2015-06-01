@@ -5,7 +5,7 @@ use Readonly;
 
 our $VERSION = '0';
 
-Readonly::Scalar my $CLARITY_GCLP  => q[CLARITY-GCLP];
+Readonly::Scalar my $CLARITY_GCLP  => q[C_GCLP];
 Readonly::Scalar my $SSCAPE        => q[SQSCP];
 
 =head1 NAME
@@ -44,7 +44,7 @@ sub from_sscape {
 
 sub _is_from {
   my ($self, $flag) = @_;
-  return $self->id_lims eq $flag;
+  return $self->id_lims =~ /$flag/smx;
 }
 
 no Moose::Role;

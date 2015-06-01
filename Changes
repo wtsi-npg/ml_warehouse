@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+release 1.2
+ - value of the GCLP data lims flag has changed - reflect this
+
 release 1.1
  - bug fix in readonly variable declaration
 
