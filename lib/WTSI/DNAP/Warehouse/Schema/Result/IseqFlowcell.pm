@@ -470,6 +470,9 @@ Readonly my %DELEGATION_TO_SAMPLE => {
     'organism_taxon_id'        => 'taxon_id',
     'sample_public_name'       => 'public_name',
     'sample_consent_withdrawn' => 'consent_withdrawn',
+    'sample_supplier_name'     => 'supplier_name',
+    'sample_cohort'            => 'cohort',
+    'sample_donor_id'          => 'donor_id',
 };
 
 Readonly my %DELEGATION_TO_STUDY => {
