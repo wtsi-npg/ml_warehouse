@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+release 1.3
+  - mapping for additional lims interface fields for sample data
+
 release 1.2
  - value of the GCLP data lims flag has changed - reflect this
 
