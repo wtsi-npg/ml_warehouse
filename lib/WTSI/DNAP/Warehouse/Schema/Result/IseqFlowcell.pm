@@ -518,14 +518,14 @@ Readonly my %DELEGATION_TO_STUDY => {
     'study_separate_y_chromosome_data'    => 'separate_y_chromosome_data',
 };
 
-alias project_cost_code     => 'cost_code';
-alias default_library_type  => 'pipeline_id_lims';
-alias qc_state              => 'manual_qc';
-alias lane_priority         => 'priority';
-alias lane_id               => 'entity_id_lims';
-alias default_tag_sequence  => 'tag_sequence';
-alias default_tag2_sequence => 'tag2_sequence';
-alias library_name          => 'library_id';
+alias project_cost_code       => 'cost_code';
+alias default_library_type    => 'pipeline_id_lims';
+alias qc_state                => 'manual_qc';
+alias lane_priority           => 'priority';
+alias lane_id                 => 'entity_id_lims';
+alias default_tag_sequence    => 'tag_sequence';
+alias default_tagtwo_sequence => 'tag2_sequence';
+alias library_name            => 'library_id';
 
 foreach my $rel (qw(sample study)) {
 
