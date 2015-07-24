@@ -56,8 +56,30 @@ sub _build_query_resultset {
     $query->{'position'} = $self->position;
   }
 
-  return $self->iseq_flowcell->search(
+  my $rs = $self->iseq_flowcell->search(
     $query, {'order_by' => [qw(position tag_index)]});
+
+  $self->_check_fc($rs);
+
+  return $rs;
+}
+
+sub _check_fc {
+  my ($self, $rs) = @_;
+
+  my $columns = [ qw/id_flowcell_lims flowcell_barcode/ ];
+  my $check_rs = $rs->search({}, {columns => $columns, group_by => $columns});
+  if ($check_rs->count > 1) {
+    my @info = ();
+    push @info, q[Multiple flowcell identifies:];
+    push @info, q[id_flowcell_lims:flowcell_barcode];
+    while (my $row = $check_rs->next) {
+      push @info, (join q[:], q['].$row->id_flowcell_lims.q['] || q[unknown], q['].$row->flowcell_barcode.q['] || q[unknown]);
+    }
+    croak join qq[\n], @info;
+  }
+
+  return;
 }
 
 no Moose::Role;
