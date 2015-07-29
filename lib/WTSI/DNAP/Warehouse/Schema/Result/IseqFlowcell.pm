@@ -287,6 +287,30 @@ Earliest LIMs identifier associated with library creation
 
 The team responsible for creating the flowcell
 
+=head2 tag2_sequence
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 30
+
+Tag sequence for tag 2
+
+=head2 tag2_set_id_lims
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 20
+
+LIMs-specific identifier of the tag set for tag 2
+
+=head2 tag2_set_name
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 100
+
+WTSI-wide tag set name for tag 2
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -380,6 +404,12 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'team',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'tag2_sequence',
+  { data_type => 'varchar', is_nullable => 1, size => 30 },
+  'tag2_set_id_lims',
+  { data_type => 'varchar', is_nullable => 1, size => 20 },
+  'tag2_set_name',
+  { data_type => 'varchar', is_nullable => 1, size => 100 },
 );
 
 =head1 PRIMARY KEY
@@ -447,8 +477,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-04-14 14:56:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:04K7knLMyHm+W65un/0zRQ
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-07-20 11:16:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:J325QSDGZquXg2MeUXd9ZQ
 
 use MooseX::Aliases;
 use Readonly;
@@ -488,13 +518,14 @@ Readonly my %DELEGATION_TO_STUDY => {
     'study_separate_y_chromosome_data'    => 'separate_y_chromosome_data',
 };
 
-alias project_cost_code    => 'cost_code';
-alias default_library_type => 'pipeline_id_lims';
-alias qc_state             => 'manual_qc';
-alias lane_priority        => 'priority';
-alias lane_id              => 'entity_id_lims';
-alias default_tag_sequence => 'tag_sequence';
-alias library_name         => 'library_id';
+alias project_cost_code       => 'cost_code';
+alias default_library_type    => 'pipeline_id_lims';
+alias qc_state                => 'manual_qc';
+alias lane_priority           => 'priority';
+alias lane_id                 => 'entity_id_lims';
+alias default_tag_sequence    => 'tag_sequence';
+alias default_tagtwo_sequence => 'tag2_sequence';
+alias library_name            => 'library_id';
 
 foreach my $rel (qw(sample study)) {
 
