@@ -62,13 +62,13 @@ my $ldclass = 'WTSI::DNAP::Warehouse::Schema::Query::LibraryDigest';
   throws_ok {$ldclass->new(
         iseq_product_metrics => $products,
         group_by => 'study',
-  ) } qr/Cannot group by study, known aggregation leveles: library, sample/,
+  ) } qr/Cannot group by study, known aggregation levels: library, sample/,
   'error for invalid group_by value';
 
   throws_ok {$ldclass->new(
         iseq_product_metrics => $products,
         filter => 'library',
-  ) } qr/Cannot filter by library, known filtres: extrelease, mqc/,
+  ) } qr/Cannot filter by library, known filters: extrelease, mqc/,
   'error for invalid filter value';
 }
 
@@ -194,15 +194,21 @@ while (my $row = $rs->next) {
     'new_library_id'   => 'DN384378S:D11',
     'rpt_key'          => '15440:1:84',
     'sample_name'      => undef,
+    'sample_accession_number' => 'ERS429041',
+    'sample_common_name' => 'Homo Sapien',
+    'manual_qc'         => 1,
     'sample'           => '1877306',
     'study'            => '2967',
+    'study_title'      => 'Lebanon_LowCov-seq',
+    'study_accession_number' => 'ERP005180',
     'reference_genome' => 'Homo_sapiens (1000Genomes_hs37d5)',
+    'aligned'          => '1',
   };
 
   my %e2 = %{$e1};
   $e2{'rpt_key'} = '15440:2:84';
   my $expected = {};
-  $expected->{'HiSeq'}->{'paired'}->{'entities'} = [$e1, \%e2];
+  $expected->{'HiSeq'}->{'paired208'}->{'entities'} = [$e1, \%e2];
 
   is_deeply( $results->{'1877306'}, $expected, 'set of results for one of the samples');
 }

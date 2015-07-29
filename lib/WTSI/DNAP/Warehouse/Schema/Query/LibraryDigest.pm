@@ -90,7 +90,7 @@ has 'group_by'  => ( isa        => 'Str',
 sub _validate_grouping {
   my ($self, $group) = @_;
   if (none {$_ eq $group } @AGGREGATION_LEVEL) {
-    croak "Cannot group by $group, known aggregation leveles: " .
+    croak "Cannot group by $group, known aggregation levels: " .
       join q[, ], @AGGREGATION_LEVEL;
   }
   return 1;
@@ -112,7 +112,7 @@ sub _validate_filter {
   my ($self, $filter) = @_;
   my @filters = sort keys %QUALITY_FILTERS;
   if ( none { $_ eq $filter } @filters ) {
-    croak "Cannot filter by $filter, known filtres: " . join q[, ], @filters;
+    croak "Cannot filter by $filter, known filters: " . join q[, ], @filters;
   }
   return 1;
 }
@@ -207,6 +207,8 @@ has 'earliest_run_status'  =>  ( isa        => 'Str',
                                  is         => 'ro',
                                  required   => 0,
 );
+
+
 
 =head2 id_run
 
@@ -436,7 +438,7 @@ sub _add_entity {
     $entity->{'status'} = $status;
   }
 
-  my ($instrument_model, $flowcell_barcode, $paired_flag) = _get_run_data($prow);
+  my ($instrument_model, $flowcell_barcode, $paired_flag, $cycles) = _get_run_data($prow);
 
   $entity->{'flowcell_barcode'}  = $flowcell_barcode;
   $entity->{'rpt_key'} =
@@ -452,7 +454,7 @@ sub _add_entity {
     $digest->{$key}->{$GROUP_KEY_NAME} = $combined_entity->{'entity_key'};
   }
 
-  push @{$digest->{$key}->{$instrument_model}->{$paired_flag}->{'entities'}},
+  push @{$digest->{$key}->{$instrument_model}->{$paired_flag.$cycles}->{'entities'}},
       $entity;
 
   return;
@@ -476,8 +478,9 @@ sub _get_run_data {
   my $paired_flag     = $lane_row->paired_read ? 'paired' : 'single';
   my $instrument_model = $lane_row->instrument_model;
   my $barcode = $lane_row->flowcell_barcode;
+  my $cycles  = $lane_row->cycles;
 
-  return ($instrument_model, $barcode, $paired_flag);
+  return ($instrument_model, $barcode, $paired_flag, $cycles);
 }
 
 sub _get_product_rs {
@@ -491,14 +494,19 @@ sub _get_product_rs {
 
 sub _create_entity {
   my ($self, $fc_row) = @_;
-
   my $entity = {
     'new_library_id'    => $fc_row->id_library_lims,
     'sample'            => $fc_row->sample_id,
     'sample_name'       => $fc_row->sample_name,
+    'sample_common_name'=> $fc_row->sample_common_name,
+    'sample_accession_number' => $fc_row->sample_accession_number,
     'id_lims'           => $fc_row->id_lims,
+    'manual_qc'         => $fc_row->manual_qc,
   };
-  $entity->{'study'}    = $fc_row->study_id; # safer, since study might be undefined
+  $entity->{'study'}                  = $fc_row->study_id; # safer, since study might be undefined
+  $entity->{'study_accession_number'} = $fc_row->study_accession_number;
+  $entity->{'aligned'}                = $fc_row->study_alignments_in_bam;
+  $entity->{'study_title'}            = $fc_row->study_title;
 
   my $ref = _get_reference($fc_row);
   if ($ref) {
@@ -519,7 +527,6 @@ sub _create_entity {
   $combined_entity->{'entity'}             = $entity;
   $combined_entity->{'flowcell_key_value'} = $fc_row->id_iseq_flowcell_tmp;
   $combined_entity->{'entity_key'}         = $key_hash;
-
   return $combined_entity;
 }
 
