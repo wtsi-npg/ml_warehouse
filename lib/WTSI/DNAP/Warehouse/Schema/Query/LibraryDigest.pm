@@ -507,6 +507,7 @@ sub _create_entity {
   $entity->{'study_accession_number'} = $fc_row->study_accession_number;
   $entity->{'aligned'}                = $fc_row->study_alignments_in_bam;
   $entity->{'study_title'}            = $fc_row->study_title;
+  $entity->{'study_name'}             = $fc_row->study_name;
 
   my $ref = _get_reference($fc_row);
   if ($ref) {
