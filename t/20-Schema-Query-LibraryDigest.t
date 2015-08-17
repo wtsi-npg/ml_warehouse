@@ -200,6 +200,7 @@ while (my $row = $rs->next) {
     'sample'           => '1877306',
     'study'            => '2967',
     'study_title'      => 'Lebanon_LowCov-seq',
+    'study_name'       => 'SEQCAP_Lebanon_LowCov-seq',
     'study_accession_number' => 'ERP005180',
     'reference_genome' => 'Homo_sapiens (1000Genomes_hs37d5)',
     'aligned'          => '1',
