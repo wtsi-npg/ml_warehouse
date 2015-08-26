@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+ - Added extra fields to entity which are needed by library merging script for adding to iRODS meta data.
+   Key changed to included cycle count as well as paired_flag. Corresponding test updated. 
+
 release 1.4
  - update DBIx binding to include second index sequence
  - check that flowcell LIMs id and barcode map 1:1 (RT#481156)
