@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 35;
+use Test::More tests => 42;
 use Test::Exception;
 use Test::Warn;
 use YAML qw/ LoadFile /;
@@ -90,7 +90,43 @@ my $ldclass = 'WTSI::DNAP::Warehouse::Schema::Query::LibraryDigest';
   ok (!@{$d->_valid_run_statuses},
   'valid run statuses are not computed if earliest_run_status is not defined');
   ok (!$d->_time_interval_query, 'time query is undefined');
-  lives_ok { $d->create } 'can create digest with all options set to defaults';
+  my $results;
+  lives_ok { $results = $d->create } 'can create digest with all options set to defaults';
+
+
+  ok (scalar keys %$results == 14, '14 library ids in digest');
+
+  my $d1;
+  lives_ok { $d1 = $ldclass->new(
+            iseq_product_metrics => $products,
+            library_id => [12789790],
+            )->create()
+           } 'digest object restricted to 1 library id created';
+             
+  ok (scalar keys %$d1 == 1, 'Only 1 library id in digest'); 
+
+  my $d2;
+  lives_ok { $d2 = $ldclass->new(
+            iseq_product_metrics => $products,
+            id_run => [15534,15454],
+            library_id => [12789790],
+            )->create()
+     } 'Both id_run and library_id can be specified together';
+
+   ok (scalar keys %$d2 ==  0, 'No results if supplied library_id is not in supplied id_run list');
+
+##TODO Need a library id over multiple runs
+   my $d3;
+  lives_ok { $d3 = $ldclass->new(
+            iseq_product_metrics => $products,
+            id_run => [15440],
+            library_id => [12789790],
+            )->create()
+     } '1 id_run and 1 library_id';
+
+is( join(q[:], map { $_->{rpt_key} } @{$d3->{12789790}{HiSeq}{paired208}{entities}} ), '15440:1:81:15440:2:81',
+    'rpts 15440:1:81:15440:2:81 returned when id_run 15440 library_id 12789790 are specified' );
+
 
   throws_ok {$ldclass->new(
         iseq_product_metrics => $products,

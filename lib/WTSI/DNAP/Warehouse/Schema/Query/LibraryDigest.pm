@@ -210,6 +210,32 @@ has 'earliest_run_status'  =>  ( isa        => 'Str',
 
 
 
+=head2 library_id
+
+An optional legacy_library_id.
+Should be used with the appropriate look back --num_days
+or --id_runs.
+Only 1 of the run ids is required as expand_libs will find the others
+
+=cut
+
+has 'library_id'   => ( isa => 'Maybe[ArrayRef[Int]]',
+                        is         => 'ro',
+                        required   => 0,
+    );
+
+has '_wanted_libraries' => ( isa => 'HashRef[Int]',
+                             is         => 'ro',
+                             required   => 0,
+                             lazy_build => 1,
+);
+sub _build__wanted_libraries {
+    my $self = shift;
+    return {} if ! $self->library_id();
+    my %lib_ids = map { $_ => 1 } @{$self->library_id()} ;
+    return(\%lib_ids);
+}
+
 =head2 id_run
 
 An optional array of run ids.
@@ -337,6 +363,7 @@ sub _find_libs {
   my ($self, $digest) = @_;
 
   my @flowcell_keys = ();
+  my $wanted_libraries = $self->_wanted_libraries();
 
   my $where = {};
   my $with_status = 0;
@@ -366,6 +393,10 @@ sub _find_libs {
         next;
       }
 
+      if (defined $self->library_id() &! exists $wanted_libraries->{$fc_row->legacy_library_id} ){
+          next;
+      }
+
       my $entity = $self->_create_entity($fc_row);
       if (!$entity->{'flowcell_key_value'}) {
         croak 'No flowcell key value';
@@ -387,6 +418,7 @@ sub _expand_libs {
     $digest->{$_}->{$GROUP_KEY_NAME} ?
       $digest->{$_}->{$GROUP_KEY_NAME} : croak 'Group key is not defined';
                         } keys %{$digest};
+
 
   my @keys = uniq map { keys %{$_} } @search_keys;
 
