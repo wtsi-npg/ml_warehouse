@@ -208,33 +208,19 @@ has 'earliest_run_status'  =>  ( isa        => 'Str',
                                  required   => 0,
 );
 
-
-
 =head2 library_id
 
 An optional legacy_library_id.
-Should be used with the appropriate look back --num_days
-or --id_runs.
-Only 1 of the run ids is required as expand_libs will find the others
+Should be used with the appropriate look back --num_days or --id_runs.
+Only one of the run ids is required as expand_libs will find the others
 
 =cut
 
-has 'library_id'   => ( isa => 'Maybe[ArrayRef[Int]]',
+has 'library_id'   => ( isa        => 'ArrayRef[Int]',
                         is         => 'ro',
                         required   => 0,
-    );
-
-has '_wanted_libraries' => ( isa => 'HashRef[Int]',
-                             is         => 'ro',
-                             required   => 0,
-                             lazy_build => 1,
+                        predicate  => '_has_library_id',
 );
-sub _build__wanted_libraries {
-    my $self = shift;
-    return {} if ! $self->library_id();
-    my %lib_ids = map { $_ => 1 } @{$self->library_id()} ;
-    return(\%lib_ids);
-}
 
 =head2 id_run
 
@@ -363,7 +349,6 @@ sub _find_libs {
   my ($self, $digest) = @_;
 
   my @flowcell_keys = ();
-  my $wanted_libraries = $self->_wanted_libraries();
 
   my $where = {};
   my $with_status = 0;
@@ -392,9 +377,8 @@ sub _find_libs {
       if ( !$self->include_control && $fc_row->entity_type =~ /control|spike/smx ) {
         next;
       }
-
-      if (defined $self->library_id() &! exists $wanted_libraries->{$fc_row->legacy_library_id} ){
-          next;
+      if ( $self->_has_library_id() && none {$_ == $fc_row->legacy_library_id} @{$self->library_id()} ) {
+        next;
       }
 
       my $entity = $self->_create_entity($fc_row);
