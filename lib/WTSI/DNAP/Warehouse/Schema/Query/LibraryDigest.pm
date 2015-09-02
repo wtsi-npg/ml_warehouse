@@ -208,7 +208,19 @@ has 'earliest_run_status'  =>  ( isa        => 'Str',
                                  required   => 0,
 );
 
+=head2 library_id
 
+An optional legacy_library_id.
+Should be used with the appropriate look back --num_days or --id_runs.
+Only one of the run ids is required as expand_libs will find the others
+
+=cut
+
+has 'library_id'   => ( isa        => 'ArrayRef[Int]',
+                        is         => 'ro',
+                        required   => 0,
+                        predicate  => '_has_library_id',
+);
 
 =head2 id_run
 
@@ -365,6 +377,9 @@ sub _find_libs {
       if ( !$self->include_control && $fc_row->entity_type =~ /control|spike/smx ) {
         next;
       }
+      if ( $self->_has_library_id() && none {$_ == $fc_row->legacy_library_id} @{$self->library_id()} ) {
+        next;
+      }
 
       my $entity = $self->_create_entity($fc_row);
       if (!$entity->{'flowcell_key_value'}) {
@@ -387,6 +402,7 @@ sub _expand_libs {
     $digest->{$_}->{$GROUP_KEY_NAME} ?
       $digest->{$_}->{$GROUP_KEY_NAME} : croak 'Group key is not defined';
                         } keys %{$digest};
+
 
   my @keys = uniq map { keys %{$_} } @search_keys;
 
