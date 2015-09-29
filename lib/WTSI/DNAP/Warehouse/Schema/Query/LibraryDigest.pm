@@ -222,6 +222,19 @@ has 'library_id'   => ( isa        => 'ArrayRef[Int]',
                         predicate  => '_has_library_id',
 );
 
+
+=head2 id_study_lims
+
+An option id_study_lims
+
+=cut
+
+has 'id_study_lims'               =>  ( isa        => 'Int',
+                                        is         => 'ro',
+                                        required   => 0,
+                                        predicate  => '_has_id_study_lims',
+);
+
 =head2 id_run
 
 An optional array of run ids.
@@ -316,7 +329,7 @@ sub create {
     if ( !@{$flowcell_keys} ) {
       croak 'flowcell_keys array is empty';
     }
-    $self->_expand_libs($digest, $flowcell_keys);
+    if (! $self->_has_id_study_lims) { $self->_expand_libs($digest, $flowcell_keys); }
 
     foreach my $key (keys %{$digest}) {
       delete $digest->{$key}->{$GROUP_KEY_NAME};
@@ -347,12 +360,17 @@ sub _time_interval_query {
 
 sub _find_libs {
   my ($self, $digest) = @_;
-
   my @flowcell_keys = ();
-
   my $where = {};
   my $with_status = 0;
-  if ($self->_has_id_run || $self->earliest_run_status) {
+  if ($self->_has_id_study_lims) {
+     if (!$self->earliest_run_status) {
+         croak 'Should have earliest run status';
+     }
+     my $study_rs = $self->_get_study_rs({'id_study_lims' => $self->id_study_lims});
+    $where->{'iseq_flowcell.id_study_tmp'} = $study_rs->[0]->id_study_tmp;
+    $with_status = 1;
+ } elsif ($self->_has_id_run || $self->earliest_run_status) {
     $where->{'me.id_run'} = {'-in', $self->id_run};
     $with_status = 1;
   } else {
@@ -361,13 +379,15 @@ sub _find_libs {
       $where->{'iseq_run_lane_metric.run_complete'} = $time_expression;
     }
   }
+
+
   my $rs = $self->_get_product_rs($where);
+
 
   while (my $prow = $rs->next()) {
 
     my $fc_row = $prow->iseq_flowcell;
     if ($fc_row) {
-
       if (!$self->_accept($fc_row)) {
         next;
       }
@@ -508,6 +528,13 @@ sub _get_product_rs {
   return $rs;
 }
 
+sub  _get_study_rs {
+    my ($self,$where) = @_;
+    my $schema = $self->iseq_product_metrics->result_source->schema;
+    my @rs = $schema->resultset('Study')->search($where);
+    return(\@rs);
+}
+
 sub _create_entity {
   my ($self, $fc_row) = @_;
   my $entity = {
@@ -550,7 +577,7 @@ sub _create_entity {
 sub _get_reference {
   my $fc_row = shift;
   my $ref = $fc_row->sample_reference_genome;
-  $ref =~ s/^\s+//xms;
+  if ($ref){ $ref =~ s/^\s+//xms }
   $ref ||= $fc_row->study_reference_genome;
   $ref =~ s/^\s+//xms;
   return $ref;
