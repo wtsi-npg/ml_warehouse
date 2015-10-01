@@ -1,5 +1,6 @@
 LIST OF CHANGES
 ---------------
+ - Added new fields to iseq_product_metric and iseq_run_lane_metric tables
  - Ability to restrict by (legacy) library id
  - Added extra fields to entity which are needed by library merging script for adding to iRODS meta data.
    Key changed to included cycle count as well as paired_flag. Corresponding test updated. 

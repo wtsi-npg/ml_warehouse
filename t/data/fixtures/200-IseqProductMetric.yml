@@ -45,6 +45,7 @@
   verify_bam_id_average_depth: 2.27
   verify_bam_id_score: 0.00000
   verify_bam_id_snp_count: 1351960
+  chimeric_reads_percent: 0
 - actual_forward_read_length: ~
   actual_reverse_read_length: ~
   adapters_percent_forward_read: 0.02
@@ -91,6 +92,7 @@
   verify_bam_id_average_depth: 2.36
   verify_bam_id_score: 0.00000
   verify_bam_id_snp_count: 1351960
+  chimeric_reads_percent: 46.64
 - actual_forward_read_length: ~
   actual_reverse_read_length: ~
   adapters_percent_forward_read: 0.02
@@ -183,6 +185,7 @@
   verify_bam_id_average_depth: 2.22
   verify_bam_id_score: 0.00000
   verify_bam_id_snp_count: 1351960
+  chimeric_reads_percent: 100.00
 - actual_forward_read_length: ~
   actual_reverse_read_length: ~
   adapters_percent_forward_read: 0.01
@@ -229,6 +232,7 @@
   verify_bam_id_average_depth: ~
   verify_bam_id_score: ~
   verify_bam_id_snp_count: ~
+  chimeric_reads_percent: 12
 - actual_forward_read_length: ~
   actual_reverse_read_length: ~
   adapters_percent_forward_read: 0.02
@@ -413,6 +417,7 @@
   verify_bam_id_average_depth: ~
   verify_bam_id_score: ~
   verify_bam_id_snp_count: ~
+  chimeric_reads_percent: 46.64
 - actual_forward_read_length: ~
   actual_reverse_read_length: ~
   adapters_percent_forward_read: 0.02
