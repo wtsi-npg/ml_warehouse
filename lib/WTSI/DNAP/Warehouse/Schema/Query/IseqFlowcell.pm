@@ -44,20 +44,24 @@ has 'query_resultset'  => ( isa        => 'DBIx::Class::ResultSet',
 sub _build_query_resultset {
   my $self = shift;
 
-  if (!$self->id_flowcell_lims && !$self->flowcell_barcode) {
-    croak q[Either id_flowcell_lims or flowcell_barcode should be defined];
+  my $id_run = $self->can(q(has_id_run)) && $self->has_id_run && $self->id_run;
+  if (!$self->id_flowcell_lims && !$self->flowcell_barcode && !$id_run) {
+    croak q[Either id_flowcell_lims, flowcell_barcode or id_run should be defined];
   }
 
-  my $query = $self->id_flowcell_lims ?
-    {'id_flowcell_lims' => $self->id_flowcell_lims} :
-    {'flowcell_barcode' => $self->flowcell_barcode};
+  my %query;
+  if ( $self->id_flowcell_lims) { $query{'me.id_flowcell_lims'} = $self->id_flowcell_lims; }
+  elsif ( $id_run ) { $query{'iseq_product_metrics.id_run'} = $id_run; }
+  elsif (0 or $self->flowcell_barcode) { $query{'me.flowcell_barcode'} = $self->flowcell_barcode; }
 
   if ($self->can('position') && $self->position) {
-    $query->{'position'} = $self->position;
+    $query{'me.position'} = $self->position;
   }
 
-  my $rs = $self->iseq_flowcell->search(
-    $query, {'order_by' => [qw(position tag_index)]});
+  my $rs = $self->iseq_flowcell->search( \%query, {
+    'order_by' => [qw(me.position me.tag_index)],
+    ($id_run ? ( 'join' => 'iseq_product_metrics') :())
+  });
 
   $self->_check_fc($rs);
 
