@@ -202,6 +202,15 @@ Timestamp of qc complete status
   is_nullable: 1
   size: [6,2]
 
+=head2 unexpected_tags_percent
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+  size: [5,2]
+
+tag0_perfect_match_reads as a percentage of total_tag0_perfect_matches_reads
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -295,6 +304,13 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => [6, 2],
   },
+  'unexpected_tags_percent',
+  {
+    data_type => 'float',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+    size => [5, 2],
+  },
 );
 
 =head1 PRIMARY KEY
@@ -332,8 +348,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-11-20 09:54:29
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:rEb5hLgAPxeFBbl+RGM/fw
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-09-10 10:35:21
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:IY2D1vMdApqokGQjH+qgMA
 
 our $VERSION = '0';
 

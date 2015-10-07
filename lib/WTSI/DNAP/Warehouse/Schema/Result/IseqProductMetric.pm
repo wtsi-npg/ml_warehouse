@@ -349,6 +349,15 @@ Indexing read length, bp
   extra: {unsigned => 1}
   is_nullable: 1
 
+=head2 chimeric_reads_percent
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+  size: [5,2]
+
+mate_mapped_defferent_chr_5 as percentage of all
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -529,6 +538,13 @@ __PACKAGE__->add_columns(
   },
   'verify_bam_id_snp_count',
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'chimeric_reads_percent',
+  {
+    data_type => 'float',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+    size => [5, 2],
+  },
 );
 
 =head1 PRIMARY KEY
@@ -581,8 +597,11 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-12-02 12:11:18
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:6m1T2SrRa8dEfSN8LxwocQ
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-09-22 11:11:38
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+W1nODtnVbCnXmqSS1U+HQ
+
+
+# You can replace this text with custom code or comments, and it will be preserved on regeneration
 
 our $VERSION = '0';
 
@@ -624,7 +643,6 @@ with 'npg_qc::autoqc::role::rpt_key' if eval "require npg_qc::autoqc::role::rpt_
 ##use critic
 
 __PACKAGE__->meta->make_immutable;
-
 1;
 __END__
 

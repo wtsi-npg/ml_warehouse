@@ -23,6 +23,7 @@
   run_pending: 2015-02-04 11:39:20
   tags_decode_cv: 2.80
   tags_decode_percent: 97.14
+  unexpected_tags_percent: 12.50
 - cancelled: 0
   cycles: 208
   flowcell_barcode: HBF2DADXX
@@ -47,6 +48,7 @@
   run_pending: 2015-02-04 11:39:20
   tags_decode_cv: 2.83
   tags_decode_percent: 97.13
+  unexpected_tags_percent: 12.51
 - cancelled: 0
   cycles: 168
   flowcell_barcode: MS2785487-300V2
@@ -71,6 +73,7 @@
   run_pending: 2015-02-05 14:08:06
   tags_decode_cv: 7.21
   tags_decode_percent: 96.46
+  unexpected_tags_percent: 12.52
 - cancelled: 0
   cycles: 158
   flowcell_barcode: HBFGUADXX
@@ -95,6 +98,7 @@
   run_pending: 2015-02-14 12:23:01
   tags_decode_cv: 16.80
   tags_decode_percent: 99.34
+  unexpected_tags_percent: 12.53
 - cancelled: 0
   cycles: 158
   flowcell_barcode: HBFGUADXX
@@ -119,4 +123,5 @@
   run_pending: 2015-02-14 12:23:01
   tags_decode_cv: 16.86
   tags_decode_percent: 99.35
+  unexpected_tags_percent: 12.54
 

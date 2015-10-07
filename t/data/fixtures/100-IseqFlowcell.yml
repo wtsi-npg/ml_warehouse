@@ -45,7 +45,7 @@
   is_spiked: 1
   last_updated: 2015-02-04 11:16:10
   legacy_library_id: 6759268
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: ~
   position: 1
   priority: 0
@@ -75,7 +75,7 @@
   is_spiked: 1
   last_updated: 2015-02-04 11:16:10
   legacy_library_id: 12789790
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Standard
   position: 1
   priority: 0
@@ -105,7 +105,7 @@
   is_spiked: 1
   last_updated: 2015-02-04 11:16:10
   legacy_library_id: 12789802
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Standard
   position: 1
   priority: 0
@@ -135,7 +135,7 @@
   is_spiked: 1
   last_updated: 2015-02-04 11:16:10
   legacy_library_id: 12789814
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Standard
   position: 1
   priority: 0
@@ -165,7 +165,7 @@
   is_spiked: 1
   last_updated: 2015-02-04 11:16:10
   legacy_library_id: 12789826
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Standard
   position: 1
   priority: 0
@@ -195,7 +195,7 @@
   is_spiked: 1
   last_updated: 2015-02-04 11:16:10
   legacy_library_id: 6759268
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: ~
   position: 2
   priority: 0
@@ -225,7 +225,7 @@
   is_spiked: 1
   last_updated: 2015-02-04 11:16:10
   legacy_library_id: 12789790
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Standard
   position: 2
   priority: 0
@@ -255,7 +255,7 @@
   is_spiked: 1
   last_updated: 2015-02-04 11:16:10
   legacy_library_id: 12789802
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Standard
   position: 2
   priority: 0
@@ -285,7 +285,7 @@
   is_spiked: 1
   last_updated: 2015-02-04 11:16:10
   legacy_library_id: 12789814
-  manual_qc: ~
+  manual_qc: 1 
   pipeline_id_lims: Standard
   position: 2
   priority: 0
@@ -315,7 +315,7 @@
   is_spiked: 1
   last_updated: 2015-02-04 11:16:10
   legacy_library_id: 12789826
-  manual_qc: ~
+  manual_qc: 1 
   pipeline_id_lims: Standard
   position: 2
   priority: 0
@@ -345,7 +345,7 @@
   is_spiked: 0
   last_updated: 2015-02-05 14:05:40
   legacy_library_id: 12977046
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Custom
   position: 1
   priority: 0
@@ -375,7 +375,7 @@
   is_spiked: 0
   last_updated: 2015-02-05 14:05:40
   legacy_library_id: 12977047
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Custom
   position: 1
   priority: 0
@@ -405,7 +405,7 @@
   is_spiked: 0
   last_updated: 2015-02-05 14:05:40
   legacy_library_id: 12977048
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Custom
   position: 1
   priority: 0
@@ -435,7 +435,7 @@
   is_spiked: 0
   last_updated: 2015-02-05 14:05:40
   legacy_library_id: 12977049
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Custom
   position: 1
   priority: 0
@@ -465,7 +465,7 @@
   is_spiked: 0
   last_updated: 2015-02-05 14:05:40
   legacy_library_id: 12977050
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Custom
   position: 1
   priority: 0
@@ -495,7 +495,7 @@
   is_spiked: 0
   last_updated: 2015-02-05 14:05:40
   legacy_library_id: 12977051
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Custom
   position: 1
   priority: 0
@@ -525,7 +525,7 @@
   is_spiked: 0
   last_updated: 2015-02-05 14:05:40
   legacy_library_id: 12977052
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Custom
   position: 1
   priority: 0
@@ -555,7 +555,7 @@
   is_spiked: 0
   last_updated: 2015-02-05 14:05:40
   legacy_library_id: 12977053
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Custom
   position: 1
   priority: 0
@@ -585,7 +585,7 @@
   is_spiked: 0
   last_updated: 2015-02-05 14:05:40
   legacy_library_id: 12977054
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Custom
   position: 1
   priority: 0
@@ -615,7 +615,7 @@
   is_spiked: 0
   last_updated: 2015-02-05 14:05:40
   legacy_library_id: 12977055
-  manual_qc: ~
+  manual_qc: 1
   pipeline_id_lims: Custom
   position: 1
   priority: 0

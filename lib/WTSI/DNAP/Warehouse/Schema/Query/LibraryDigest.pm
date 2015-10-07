@@ -90,7 +90,7 @@ has 'group_by'  => ( isa        => 'Str',
 sub _validate_grouping {
   my ($self, $group) = @_;
   if (none {$_ eq $group } @AGGREGATION_LEVEL) {
-    croak "Cannot group by $group, known aggregation leveles: " .
+    croak "Cannot group by $group, known aggregation levels: " .
       join q[, ], @AGGREGATION_LEVEL;
   }
   return 1;
@@ -112,7 +112,7 @@ sub _validate_filter {
   my ($self, $filter) = @_;
   my @filters = sort keys %QUALITY_FILTERS;
   if ( none { $_ eq $filter } @filters ) {
-    croak "Cannot filter by $filter, known filtres: " . join q[, ], @filters;
+    croak "Cannot filter by $filter, known filters: " . join q[, ], @filters;
   }
   return 1;
 }
@@ -206,6 +206,33 @@ Earliest run status.
 has 'earliest_run_status'  =>  ( isa        => 'Str',
                                  is         => 'ro',
                                  required   => 0,
+);
+
+=head2 library_id
+
+An optional legacy_library_id.
+Should be used with the appropriate look back --num_days or --id_runs.
+Only one of the run ids is required as expand_libs will find the others
+
+=cut
+
+has 'library_id'   => ( isa        => 'ArrayRef[Int]',
+                        is         => 'ro',
+                        required   => 0,
+                        predicate  => '_has_library_id',
+);
+
+
+=head2 id_study_lims
+
+An option id_study_lims
+
+=cut
+
+has 'id_study_lims'               =>  ( isa        => 'Int',
+                                        is         => 'ro',
+                                        required   => 0,
+                                        predicate  => '_has_id_study_lims',
 );
 
 =head2 id_run
@@ -302,7 +329,7 @@ sub create {
     if ( !@{$flowcell_keys} ) {
       croak 'flowcell_keys array is empty';
     }
-    $self->_expand_libs($digest, $flowcell_keys);
+    if (! $self->_has_id_study_lims) { $self->_expand_libs($digest, $flowcell_keys); }
 
     foreach my $key (keys %{$digest}) {
       delete $digest->{$key}->{$GROUP_KEY_NAME};
@@ -333,12 +360,17 @@ sub _time_interval_query {
 
 sub _find_libs {
   my ($self, $digest) = @_;
-
   my @flowcell_keys = ();
-
   my $where = {};
   my $with_status = 0;
-  if ($self->_has_id_run || $self->earliest_run_status) {
+  if ($self->_has_id_study_lims) {
+     if (!$self->earliest_run_status) {
+         croak 'Should have earliest run status';
+     }
+     my $study_rs = $self->_get_study_rs({'id_study_lims' => $self->id_study_lims});
+    $where->{'iseq_flowcell.id_study_tmp'} = $study_rs->[0]->id_study_tmp;
+    $with_status = 1;
+ } elsif ($self->_has_id_run || $self->earliest_run_status) {
     $where->{'me.id_run'} = {'-in', $self->id_run};
     $with_status = 1;
   } else {
@@ -347,13 +379,15 @@ sub _find_libs {
       $where->{'iseq_run_lane_metric.run_complete'} = $time_expression;
     }
   }
+
+
   my $rs = $self->_get_product_rs($where);
+
 
   while (my $prow = $rs->next()) {
 
     my $fc_row = $prow->iseq_flowcell;
     if ($fc_row) {
-
       if (!$self->_accept($fc_row)) {
         next;
       }
@@ -361,6 +395,9 @@ sub _find_libs {
         next;
       }
       if ( !$self->include_control && $fc_row->entity_type =~ /control|spike/smx ) {
+        next;
+      }
+      if ( $self->_has_library_id() && none {$_ == $fc_row->legacy_library_id} @{$self->library_id()} ) {
         next;
       }
 
@@ -385,6 +422,7 @@ sub _expand_libs {
     $digest->{$_}->{$GROUP_KEY_NAME} ?
       $digest->{$_}->{$GROUP_KEY_NAME} : croak 'Group key is not defined';
                         } keys %{$digest};
+
 
   my @keys = uniq map { keys %{$_} } @search_keys;
 
@@ -436,7 +474,7 @@ sub _add_entity {
     $entity->{'status'} = $status;
   }
 
-  my ($instrument_model, $flowcell_barcode, $paired_flag) = _get_run_data($prow);
+  my ($instrument_model, $flowcell_barcode, $paired_flag, $cycles) = _get_run_data($prow);
 
   $entity->{'flowcell_barcode'}  = $flowcell_barcode;
   $entity->{'rpt_key'} =
@@ -452,7 +490,7 @@ sub _add_entity {
     $digest->{$key}->{$GROUP_KEY_NAME} = $combined_entity->{'entity_key'};
   }
 
-  push @{$digest->{$key}->{$instrument_model}->{$paired_flag}->{'entities'}},
+  push @{$digest->{$key}->{$instrument_model}->{$paired_flag.$cycles}->{'entities'}},
       $entity;
 
   return;
@@ -476,8 +514,9 @@ sub _get_run_data {
   my $paired_flag     = $lane_row->paired_read ? 'paired' : 'single';
   my $instrument_model = $lane_row->instrument_model;
   my $barcode = $lane_row->flowcell_barcode;
+  my $cycles  = $lane_row->cycles;
 
-  return ($instrument_model, $barcode, $paired_flag);
+  return ($instrument_model, $barcode, $paired_flag, $cycles);
 }
 
 sub _get_product_rs {
@@ -489,16 +528,29 @@ sub _get_product_rs {
   return $rs;
 }
 
+sub  _get_study_rs {
+    my ($self,$where) = @_;
+    my $schema = $self->iseq_product_metrics->result_source->schema;
+    my @rs = $schema->resultset('Study')->search($where);
+    return(\@rs);
+}
+
 sub _create_entity {
   my ($self, $fc_row) = @_;
-
   my $entity = {
     'new_library_id'    => $fc_row->id_library_lims,
     'sample'            => $fc_row->sample_id,
     'sample_name'       => $fc_row->sample_name,
+    'sample_common_name'=> $fc_row->sample_common_name,
+    'sample_accession_number' => $fc_row->sample_accession_number,
     'id_lims'           => $fc_row->id_lims,
+    'manual_qc'         => $fc_row->manual_qc,
   };
-  $entity->{'study'}    = $fc_row->study_id; # safer, since study might be undefined
+  $entity->{'study'}                  = $fc_row->study_id; # safer, since study might be undefined
+  $entity->{'study_accession_number'} = $fc_row->study_accession_number;
+  $entity->{'aligned'}                = $fc_row->study_alignments_in_bam;
+  $entity->{'study_title'}            = $fc_row->study_title;
+  $entity->{'study_name'}             = $fc_row->study_name;
 
   my $ref = _get_reference($fc_row);
   if ($ref) {
@@ -519,14 +571,13 @@ sub _create_entity {
   $combined_entity->{'entity'}             = $entity;
   $combined_entity->{'flowcell_key_value'} = $fc_row->id_iseq_flowcell_tmp;
   $combined_entity->{'entity_key'}         = $key_hash;
-
   return $combined_entity;
 }
 
 sub _get_reference {
   my $fc_row = shift;
   my $ref = $fc_row->sample_reference_genome;
-  $ref =~ s/^\s+//xms;
+  if ($ref){ $ref =~ s/^\s+//xms }
   $ref ||= $fc_row->study_reference_genome;
   $ref =~ s/^\s+//xms;
   return $ref;
