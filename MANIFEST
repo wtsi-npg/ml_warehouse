@@ -11,6 +11,7 @@ lib/WTSI/DNAP/Warehouse/Schema/Result/IseqProductMetric.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunLaneMetric.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunStatus.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunStatusDict.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/PacBioRun.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/Sample.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/Study.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/StudyUser.pm

@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - added DBIx class for the new pacbio LIMs data table
+
 release 1.5
  - Ability to query by id_study_lims in LibraryDigest
  - Added unexpected tag and chimeric fields to iseq_product_metric and iseq_run_lane_metric tables
