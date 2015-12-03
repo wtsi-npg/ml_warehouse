@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - change the comment on iseq_run_lane_metrics.unexpected_tags_percent
+
 release 1.5
  - Ability to query by id_study_lims in LibraryDigest
  - Added unexpected tag and chimeric fields to iseq_product_metric and iseq_run_lane_metric tables
