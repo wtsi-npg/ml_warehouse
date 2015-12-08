@@ -209,7 +209,7 @@ Timestamp of qc complete status
   is_nullable: 1
   size: [5,2]
 
-tag0_perfect_match_reads as a percentage of total_tag0_perfect_matches_reads
+tag0_perfect_match_reads as a percentage of total_lane_reads
 
 =cut
 
@@ -348,8 +348,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-09-10 10:35:21
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:IY2D1vMdApqokGQjH+qgMA
+# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-12-08 10:12:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aHUaXOfZ6bI2XNSbBjX5xg
 
 our $VERSION = '0';
 
