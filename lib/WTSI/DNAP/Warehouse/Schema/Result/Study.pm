@@ -264,6 +264,14 @@ Human DNA in the lane is a contaminant and should be removed
   is_nullable: 1
   size: 255
 
+=head2 prelim_id
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 20
+
+The preliminary study id prior to entry into the LIMS
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -358,6 +366,8 @@ __PACKAGE__->add_columns(
   { data_type => 'tinyint', default_value => 0, is_nullable => 0 },
   'data_access_group',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'prelim_id',
+  { data_type => 'varchar', is_nullable => 1, size => 20 },
 );
 
 =head1 PRIMARY KEY
@@ -451,8 +461,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-04-14 14:56:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ttMrIGAJDDJP1GZFDBNotQ
+# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-12-08 10:12:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vuApUg/87EtXGMmEyaFcfQ
 
 with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
 
