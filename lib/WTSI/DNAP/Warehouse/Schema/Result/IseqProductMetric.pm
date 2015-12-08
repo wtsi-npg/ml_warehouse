@@ -278,6 +278,15 @@ Indexing read length, bp
   is_nullable: 1
   size: [5,2]
 
+=head2 chimeric_reads_percent
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+  size: [5,2]
+
+mate_mapped_defferent_chr_5 as percentage of all
+
 =head2 human_percent_mapped
 
   data_type: 'float'
@@ -348,15 +357,6 @@ Indexing read length, bp
   data_type: 'integer'
   extra: {unsigned => 1}
   is_nullable: 1
-
-=head2 chimeric_reads_percent
-
-  data_type: 'float'
-  extra: {unsigned => 1}
-  is_nullable: 1
-  size: [5,2]
-
-mate_mapped_defferent_chr_5 as percentage of all
 
 =cut
 
@@ -491,6 +491,13 @@ __PACKAGE__->add_columns(
   { data_type => 'float', is_nullable => 1, size => [5, 2] },
   'percent_duplicate',
   { data_type => 'float', is_nullable => 1, size => [5, 2] },
+  'chimeric_reads_percent',
+  {
+    data_type => 'float',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+    size => [5, 2],
+  },
   'human_percent_mapped',
   { data_type => 'float', is_nullable => 1, size => [5, 2] },
   'human_percent_duplicate',
@@ -538,13 +545,6 @@ __PACKAGE__->add_columns(
   },
   'verify_bam_id_snp_count',
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
-  'chimeric_reads_percent',
-  {
-    data_type => 'float',
-    extra => { unsigned => 1 },
-    is_nullable => 1,
-    size => [5, 2],
-  },
 );
 
 =head1 PRIMARY KEY
@@ -597,8 +597,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-09-22 11:11:38
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+W1nODtnVbCnXmqSS1U+HQ
+# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-12-08 10:12:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:g49UrkPpckOeBiCPEsQ+JQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

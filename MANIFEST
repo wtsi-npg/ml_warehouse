@@ -5,6 +5,7 @@ lib/WTSI/DNAP/Warehouse/Schema.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapAnalyte.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapBiomaterial.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapLineIdentifier.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/CgapSupplierBarcode.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/FlgenPlate.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqFlowcell.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqProductMetric.pm
