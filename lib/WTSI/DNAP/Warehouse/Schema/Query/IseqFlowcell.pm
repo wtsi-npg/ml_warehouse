@@ -75,25 +75,44 @@ DBIx resultset returned by the query.
       ($id_run ? ( 'join' => 'iseq_product_metrics') :())
     });
 
-    $self->_check_fc($rs);
+    $self->_check_fc($rs, $id_run);
 
     return $rs;
   };
 
   sub _check_fc {
-    my ($self, $rs) = @_;
+    my ($self, $rs, $id_run) = @_;
 
-    my $columns = [ qw/id_flowcell_lims flowcell_barcode/ ];
-    my $check_rs = $rs->search({}, {columns => $columns, group_by => $columns});
-    if ($check_rs->count > 1) {
+    my @columns = qw/id_flowcell_lims flowcell_barcode/ ;
+    if ($id_run){
+      push @columns, 'iseq_product_metrics.id_run';
+    }
+    my $check_rs = $rs->search({}, {columns => \@columns, group_by => \@columns, order_by =>[]});
+    my $count = $check_rs->count;
+    if ($count > 1) {
       my @info = ();
       push @info, q[Multiple flowcell identifies:];
-      push @info, q[id_flowcell_lims:flowcell_barcode];
+      push @info, q[id_flowcell_lims:flowcell_barcode].($id_run ? 'iseq_product_metrics.id_run' :q());
       while (my $row = $check_rs->next) {
-        push @info, (join q[:], q['].$row->id_flowcell_lims.q['] || q[unknown], q['].$row->flowcell_barcode.q['] || q[unknown]);
+        push @info, (join q[:], q['].$row->id_flowcell_lims.q['] || q[unknown],
+                                q['].$row->flowcell_barcode.q['] || q[unknown],
+                                ($id_run ? $row->get_column('iseq_product_metrics.id_run') || q[unknown] : q() )
+        );
       }
       croak join qq[\n], @info;
     }
+    if ( $count ) {
+      if ( $id_run ) {
+        my $w_id_run = $check_rs->get_column('iseq_product_metrics.id_run')->first;
+        if( $id_run != $w_id_run ) {
+          croak "Declared id_run $id_run differs from that found: $w_id_run";
+        }
+      }
+      for my$c (qw/id_flowcell_lims flowcell_barcode/){
+        my $w =  $check_rs->get_column($c)->first;
+        croak "Declared $c ".($self->$c)." differs from that found: $w" if ($self->$c and ($self->$c ne $w));
+      }
+    };
 
     return;
   }

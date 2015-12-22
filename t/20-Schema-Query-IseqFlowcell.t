@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 12;
+use Test::More tests => 14;
 use Test::Exception;
 use Test::Warn;
 use YAML qw/ LoadFile /;
@@ -70,6 +70,7 @@ my $flowcells = $schema->resultset('IseqFlowcell');
   my $obj;
   lives_ok { $obj = $anonclass->new_object(iseq_flowcell=>$schema->resultset('IseqFlowcell'), flowcell_barcode=>'HBF2DADXX'); } 'generate object from flowcell barcode';
   is($obj->query_resultset->count, 10, 'result count');
+  throws_ok { $anonclass->new_object(iseq_flowcell=>$schema->resultset('IseqFlowcell'), flowcell_barcode=>'HBF2DADXX_wrong', id_flowcell_lims=>34769 )->query_resultset; } qr/\QDeclared flowcell_barcode HBF2DADXX_wrong differs from that found: HBF2DADXX\E/sm, 'bail on conflicting info';
 
   throws_ok {
     $anonclass = Moose::Meta::Class->create_anon_class();
@@ -89,6 +90,7 @@ my $flowcells = $schema->resultset('IseqFlowcell');
   } 'Create anonymous class with Query::IseqFlowcell role autonomous option on';
   lives_ok { $obj = $anonclass->new_object(iseq_flowcell=>$schema->resultset('IseqFlowcell'), id_run=>15440,); } 'generate object from id_run';
   is($obj->query_resultset->count, 10, 'result count');
+  throws_ok { $anonclass->new_object(iseq_flowcell=>$schema->resultset('IseqFlowcell'), flowcell_barcode=>'HBF2DADXX_wrong', id_run=>15440)->query_resultset; } qr/\QDeclared flowcell_barcode HBF2DADXX_wrong differs from that found: HBF2DADXX\E/sm, 'bail on conflicting info';
 
 };
 
