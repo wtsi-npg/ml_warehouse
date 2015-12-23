@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+release 1.7
  - extend field size for mean_bait_coverage RT#495558, Change request No6
 
 release 1.6
