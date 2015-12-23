@@ -343,7 +343,7 @@ mate_mapped_defferent_chr_5 as percentage of all
   data_type: 'float'
   extra: {unsigned => 1}
   is_nullable: 1
-  size: [6,2]
+  size: [8,2]
 
 =head2 on_bait_percent
 
@@ -540,7 +540,7 @@ __PACKAGE__->add_columns(
     data_type => 'float',
     extra => { unsigned => 1 },
     is_nullable => 1,
-    size => [6, 2],
+    size => [8, 2],
   },
   'on_bait_percent',
   {
@@ -624,8 +624,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-11-17 14:03:49
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GMsQ4lFPiryIASbKMNScvA
+# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-12-23 12:44:57
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Ei2UmdMMcwfz3dqepOH5zA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

@@ -200,6 +200,46 @@ LIMs-specific identifier of the tag set
 
 WTSI-wide tag set name
 
+=head2 tag_identifier
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 30
+
+The position of tag within the tag group
+
+=head2 tag2_sequence
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 30
+
+Tag sequence for tag 2
+
+=head2 tag2_set_id_lims
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 20
+
+LIMs-specific identifier of the tag set for tag 2
+
+=head2 tag2_set_name
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 100
+
+WTSI-wide tag set name for tag 2
+
+=head2 tag2_identifier
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 30
+
+The position of tag2 within the tag group
+
 =head2 is_spiked
 
   data_type: 'tinyint'
@@ -287,29 +327,13 @@ Earliest LIMs identifier associated with library creation
 
 The team responsible for creating the flowcell
 
-=head2 tag2_sequence
+=head2 purpose
 
   data_type: 'varchar'
   is_nullable: 1
   size: 30
 
-Tag sequence for tag 2
-
-=head2 tag2_set_id_lims
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 20
-
-LIMs-specific identifier of the tag set for tag 2
-
-=head2 tag2_set_name
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 100
-
-WTSI-wide tag set name for tag 2
+Describes the reason the sequencing was conducted. Eg. Standard, QC, Control
 
 =cut
 
@@ -382,6 +406,16 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 20 },
   'tag_set_name',
   { data_type => 'varchar', is_nullable => 1, size => 100 },
+  'tag_identifier',
+  { data_type => 'varchar', is_nullable => 1, size => 30 },
+  'tag2_sequence',
+  { data_type => 'varchar', is_nullable => 1, size => 30 },
+  'tag2_set_id_lims',
+  { data_type => 'varchar', is_nullable => 1, size => 20 },
+  'tag2_set_name',
+  { data_type => 'varchar', is_nullable => 1, size => 100 },
+  'tag2_identifier',
+  { data_type => 'varchar', is_nullable => 1, size => 30 },
   'is_spiked',
   { data_type => 'tinyint', default_value => 0, is_nullable => 0 },
   'pipeline_id_lims',
@@ -404,12 +438,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'team',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'tag2_sequence',
+  'purpose',
   { data_type => 'varchar', is_nullable => 1, size => 30 },
-  'tag2_set_id_lims',
-  { data_type => 'varchar', is_nullable => 1, size => 20 },
-  'tag2_set_name',
-  { data_type => 'varchar', is_nullable => 1, size => 100 },
 );
 
 =head1 PRIMARY KEY
@@ -477,8 +507,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-07-20 11:16:48
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:J325QSDGZquXg2MeUXd9ZQ
+# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-12-08 10:12:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:elVRHSNY/zTS50jaYHpAbQ
 
 use MooseX::Aliases;
 use Readonly;
