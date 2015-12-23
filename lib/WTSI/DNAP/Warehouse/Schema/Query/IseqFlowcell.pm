@@ -100,7 +100,7 @@ DBIx resultset returned by the query.
     if ( @check_rs ) {
       for my$c ( @colnames ) {
         my $w =  $check_rs[0]->get_column($c);
-        croak "Declared $c ".($self->$c)." differs from that found: $w" if ($self->$c and ($self->$c ne $w));
+        carp "Declared $c ".($self->$c)." differs from that found: $w" if ($self->$c and ($self->$c ne $w));
       }
     };
 
