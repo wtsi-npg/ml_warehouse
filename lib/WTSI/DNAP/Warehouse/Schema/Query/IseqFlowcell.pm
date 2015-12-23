@@ -100,7 +100,8 @@ DBIx resultset returned by the query.
     if ( @check_rs ) {
       for my$c ( @colnames ) {
         my $w =  $check_rs[0]->get_column($c);
-        carp "Declared $c ".($self->$c)." differs from that found: $w" if ($self->$c and ($self->$c ne $w));
+        my $wq = defined $w ? "'$w'" : 'undefined';
+        carp "Declared $c '".($self->$c)."' differs from that found: $wq" if ($self->$c and defined $w and ($self->$c ne $w));
       }
     };
 
