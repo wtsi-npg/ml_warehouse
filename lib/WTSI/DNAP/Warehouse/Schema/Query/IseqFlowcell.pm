@@ -71,13 +71,12 @@ DBIx resultset returned by the query.
     }
 
     my $rs = $self->iseq_flowcell->search( \%query, {
-      'order_by' => [qw(me.position me.tag_index)],
       ($id_run ? ( 'join' => 'iseq_product_metrics') :())
     });
 
     $self->_check_fc($rs, $id_run);
 
-    return $rs;
+    return $rs->search({}, {'order_by' => [qw(me.position me.tag_index)]});
   };
 
   sub _check_fc {
@@ -85,31 +84,22 @@ DBIx resultset returned by the query.
 
     my @columns = qw/id_flowcell_lims flowcell_barcode/ ;
     if ($id_run){
-      push @columns, 'iseq_product_metrics.id_run';
+      push @columns, {'id_run' => 'iseq_product_metrics.id_run'};
     }
-    my $check_rs = $rs->search({}, {columns => \@columns, group_by => \@columns, order_by =>[]});
-    my $count = $check_rs->count;
-    if ($count > 1) {
+    my @colnames = map {ref $_ ? keys %{$_} : $_} @columns;
+    my @check_rs = $rs->search({}, {'columns'=>\@columns, 'group_by'=>\@colnames, 'order_by'=>\@colnames});
+    if (@check_rs > 1) {
       my @info = ();
       push @info, q[Multiple flowcell identifies:];
-      push @info, q[id_flowcell_lims:flowcell_barcode].($id_run ? 'iseq_product_metrics.id_run' :q());
-      while (my $row = $check_rs->next) {
-        push @info, (join q[:], q['].$row->id_flowcell_lims.q['] || q[unknown],
-                                q['].$row->flowcell_barcode.q['] || q[unknown],
-                                ($id_run ? $row->get_column('iseq_product_metrics.id_run') || q[unknown] : q() )
-        );
+      push @info, join q[:], @colnames;
+      foreach my$row(@check_rs){
+        push @info, join q[:], map { q['].$row->get_column($_).q['] || q[unknown] } @colnames;
       }
       croak join qq[\n], @info;
     }
-    if ( $count ) {
-      if ( $id_run ) {
-        my $w_id_run = $check_rs->get_column('iseq_product_metrics.id_run')->first;
-        if( $id_run != $w_id_run ) {
-          croak "Declared id_run $id_run differs from that found: $w_id_run";
-        }
-      }
-      for my$c (qw/id_flowcell_lims flowcell_barcode/){
-        my $w =  $check_rs->get_column($c)->first;
+    if ( @check_rs ) {
+      for my$c ( @colnames ) {
+        my $w =  $check_rs[0]->get_column($c);
         croak "Declared $c ".($self->$c)." differs from that found: $w" if ($self->$c and ($self->$c ne $w));
       }
     };
