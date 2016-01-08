@@ -82,6 +82,27 @@ Flowcell lane number
 
 Tag index, NULL if lane is not a pool
 
+=head2 qc_seq
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+Sequencing lane level QC outcome, a result of either manual or automatic assessment by core
+
+=head2 qc_lib
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+Library QC outcome, a result of either manual or automatic assessment by core
+
+=head2 qc
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+Overall QC assessment outcome, a logical product (conjunction) of qc_seq and qc_lib values, defaults to the qc_seq value when qc_lib is not defined
+
 =head2 tag_sequence4deplexing
 
   data_type: 'varchar'
@@ -391,6 +412,12 @@ __PACKAGE__->add_columns(
   },
   'tag_index',
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'qc_seq',
+  { data_type => 'tinyint', is_nullable => 1 },
+  'qc_lib',
+  { data_type => 'tinyint', is_nullable => 1 },
+  'qc',
+  { data_type => 'tinyint', is_nullable => 1 },
   'tag_sequence4deplexing',
   { data_type => 'varchar', is_nullable => 1, size => 30 },
   'actual_forward_read_length',
@@ -597,8 +624,9 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-11-10 17:05:52
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:pLROLDucDaJIUKyYjfXV0Q
+# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-12-23 12:44:57
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Ei2UmdMMcwfz3dqepOH5zA
+
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
