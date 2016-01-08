@@ -1,6 +1,11 @@
 LIST OF CHANGES
 ---------------
 
+ - iseq_product_metrics table: add columns to store in-house qc values
+
+release 1.7
+ - extend field size for mean_bait_coverage RT#495558, Change request No6
+
 release 1.6
  - change the comment on iseq_run_lane_metrics.unexpected_tags_percent
  - update DBIx schema to reflect this change and propagate any changes
