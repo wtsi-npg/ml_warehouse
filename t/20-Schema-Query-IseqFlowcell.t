@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 14;
+use Test::More tests => 19;
 use Test::Exception;
 use Test::Warn;
 use YAML qw/ LoadFile /;
@@ -72,6 +72,22 @@ my $flowcells = $schema->resultset('IseqFlowcell');
   is($obj->query_resultset->count, 10, 'result count');
   warning_like { $anonclass->new_object(iseq_flowcell=>$schema->resultset('IseqFlowcell'), flowcell_barcode=>'HBF2DADXX_wrong', id_flowcell_lims=>34769 )->query_resultset; } qr/\QDeclared flowcell_barcode 'HBF2DADXX_wrong' differs from that found: 'HBF2DADXX'\E/sm, 'warn on conflicting info';
 
+  $flowcells->search({flowcell_barcode=>'HBF2DADXX', position=>1, tag_index=>81})->update({flowcell_barcode=>'invalid'});
+  lives_ok { $anonclass->new_object(iseq_flowcell=>$schema->resultset('IseqFlowcell'), flowcell_barcode=>'HBF2DADXX')->query_resultset; }
+    'query by the barcode does not detect a mismatch';
+  throws_ok { $anonclass->new_object(iseq_flowcell=>$schema->resultset('IseqFlowcell'), id_flowcell_lims=>34769)->query_resultset; }
+    qr/Multiple flowcell identifies:\s.*\s'34769':'HBF2DADXX'\s'34769':'invalid'/,
+    'error when flowcell identifies mismatch';
+  $flowcells->search({flowcell_barcode=>'invalid', position=>1, tag_index=>81})->update({flowcell_barcode=>'HBF2DADXX'});
+
+  $flowcells->search({flowcell_barcode=>'HBF2DADXX', position=>1, tag_index=>81})->update({id_flowcell_lims=>34756});
+  lives_ok { $anonclass->new_object(iseq_flowcell=>$schema->resultset('IseqFlowcell'), id_flowcell_lims=>34769)->query_resultset; }
+   'query by the flowcell id not detect a mismatch';
+  throws_ok { $anonclass->new_object(iseq_flowcell=>$schema->resultset('IseqFlowcell'), flowcell_barcode=>'HBF2DADXX')->query_resultset; }
+    qr/Multiple flowcell identifies:\s.*\s'34756':'HBF2DADXX'\s'34769':'HBF2DADXX'/,
+    'error when flowcell identifies mismatch';
+  $flowcells->search({flowcell_barcode=>'HBF2DADXX', position=>1, tag_index=>81})->update({id_flowcell_lims=>34769});
+
   throws_ok {
     $anonclass = Moose::Meta::Class->create_anon_class();
     $anonclass->add_attribute('iseq_flowcell' => {is => 'ro', isa => 'DBIx::Class::ResultSet'});
@@ -92,6 +108,10 @@ my $flowcells = $schema->resultset('IseqFlowcell');
   is($obj->query_resultset->count, 10, 'result count');
   warning_like { $anonclass->new_object(iseq_flowcell=>$schema->resultset('IseqFlowcell'), flowcell_barcode=>'HBF2DADXX_wrong', id_run=>15440)->query_resultset; } qr/\QDeclared flowcell_barcode 'HBF2DADXX_wrong' differs from that found: 'HBF2DADXX'\E/sm, 'warn on conflicting info';
 
+  $flowcells->search({flowcell_barcode=>'HBF2DADXX', position=>1, tag_index=>81})->update({flowcell_barcode=>'invalid'});
+  throws_ok { $anonclass->new_object(iseq_flowcell=>$schema->resultset('IseqFlowcell'), id_run=>15440)->query_resultset; }
+    qr/Multiple flowcell identifies:\s.*\s'34769':'HBF2DADXX':'15440'\s'34769':'invalid':'15440'/,
+    'error when flowcell identifies mismatch';
 };
 
 1;
