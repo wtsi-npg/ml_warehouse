@@ -1,6 +1,8 @@
+sudo: false
 language: perl
 perl:
   - "5.16"
+  - "5.22"
 env:
   global:
     - TEST_AUTHOR=1
