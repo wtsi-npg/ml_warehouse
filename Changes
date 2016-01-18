@@ -1,6 +1,10 @@
 LIST OF CHANGES
 ---------------
 
+ - parameterized WTSI::DNAP::Warehouse::Schema::Query::IseqFlowcell role
+   to allow for query on run id
+ - iseq_product_metrics table: add columns to store in-house qc values
+
 release 1.7
  - extend field size for mean_bait_coverage RT#495558, Change request No6
 
