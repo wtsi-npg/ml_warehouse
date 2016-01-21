@@ -70,6 +70,8 @@ DBIx resultset returned by the query.
       $query{'me.position'} = $self->position;
     }
 
+    #Note we do not filter on tag_index here as we'll need the phiX spike record even when not asking for it
+
     my $rs = $self->iseq_flowcell->search( \%query, {
       ($id_run ? ( 'join' => 'iseq_product_metrics') :())
     });
