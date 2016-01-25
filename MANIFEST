@@ -5,6 +5,7 @@ lib/WTSI/DNAP/Warehouse/Schema.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapAnalyte.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapBiomaterial.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapLineIdentifier.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/CgapSupplierBarcode.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/FlgenPlate.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqFlowcell.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqProductMetric.pm
@@ -25,6 +26,7 @@ t/00-critic.t
 t/00-distribution.t
 t/00-pod.t
 t/10-Schema.t
+t/20-Schema-Query-IseqFlowcell.t
 t/20-Schema-Query-LibraryDigest.t
 t/data/fixtures/00-IseqRunStatusDict.yml
 t/data/fixtures/000-Sample.yml

@@ -341,21 +341,21 @@ __PACKAGE__->set_primary_key('id_sample_tmp');
 
 =head1 UNIQUE CONSTRAINTS
 
-=head2 C<sample_id_lims_id_sample_lims_index>
+=head2 C<index_sample_on_id_sample_lims_and_id_lims>
 
 =over 4
 
-=item * L</id_lims>
-
 =item * L</id_sample_lims>
+
+=item * L</id_lims>
 
 =back
 
 =cut
 
 __PACKAGE__->add_unique_constraint(
-  'sample_id_lims_id_sample_lims_index',
-  ['id_lims', 'id_sample_lims'],
+  'index_sample_on_id_sample_lims_and_id_lims',
+  ['id_sample_lims', 'id_lims'],
 );
 
 =head2 C<sample_uuid_sample_lims_index>
@@ -402,9 +402,24 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 pac_bio_runs
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-01-19 16:35:18
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:37TviPcogvi5EUB+Oe6V3w
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::PacBioRun>
+
+=cut
+
+__PACKAGE__->has_many(
+  'pac_bio_runs',
+  'WTSI::DNAP::Warehouse::Schema::Result::PacBioRun',
+  { 'foreign.id_sample_tmp' => 'self.id_sample_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07043 @ 2016-01-25 14:58:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:R3kVhfDKX/dE0+rn/ALdGg
 
 our $VERSION = '0';
 

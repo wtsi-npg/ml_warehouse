@@ -57,7 +57,7 @@ Internal to this database id. Value can change.
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 16
+  size: 32
 
 =head2 accession_number
 
@@ -90,7 +90,7 @@ __PACKAGE__->add_columns(
   'line_uuid',
   { data_type => 'varchar', is_nullable => 0, size => 38 },
   'friendly_name',
-  { data_type => 'varchar', is_nullable => 0, size => 16 },
+  { data_type => 'varchar', is_nullable => 0, size => 32 },
   'accession_number',
   { data_type => 'varchar', is_nullable => 1, size => 38 },
   'direct_parent_uuid',
@@ -138,8 +138,8 @@ __PACKAGE__->add_unique_constraint('friendly_name', ['friendly_name']);
 __PACKAGE__->add_unique_constraint('line_uuid', ['line_uuid']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-04-14 14:56:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:iSgkyzXfLcgs4EIWpCGmBw
+# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-12-08 10:12:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8JxFXfNIrVFxkOWwhUUTlg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
