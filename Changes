@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+release 1.8
  - parameterized WTSI::DNAP::Warehouse::Schema::Query::IseqFlowcell role
    to allow for query on run id
  - iseq_product_metrics table: add columns to store in-house qc values
