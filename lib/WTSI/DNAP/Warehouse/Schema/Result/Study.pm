@@ -272,6 +272,14 @@ Human DNA in the lane is a contaminant and should be removed
 
 The preliminary study id prior to entry into the LIMS
 
+=head2 hmdmc_number
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+The Human Materials and Data Management Committee approval number(s) for the study.
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -368,6 +376,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'prelim_id',
   { data_type => 'varchar', is_nullable => 1, size => 20 },
+  'hmdmc_number',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -445,6 +455,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 pac_bio_runs
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::PacBioRun>
+
+=cut
+
+__PACKAGE__->has_many(
+  'pac_bio_runs',
+  'WTSI::DNAP::Warehouse::Schema::Result::PacBioRun',
+  { 'foreign.id_study_tmp' => 'self.id_study_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 study_users
 
 Type: has_many
@@ -461,8 +486,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-12-08 10:12:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vuApUg/87EtXGMmEyaFcfQ
+# Created by DBIx::Class::Schema::Loader v0.07043 @ 2016-01-25 14:58:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Rz3jVAcPAkaJuP2I0uGgKw
 
 with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
 

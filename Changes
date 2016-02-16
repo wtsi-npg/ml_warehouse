@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - added DBIx class for the new pacbio LIMs data table
+
 release 1.8
  - parameterized WTSI::DNAP::Warehouse::Schema::Query::IseqFlowcell role
    to allow for query on run id
