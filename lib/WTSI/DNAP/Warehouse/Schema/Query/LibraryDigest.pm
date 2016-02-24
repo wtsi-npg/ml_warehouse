@@ -9,7 +9,7 @@ use List::MoreUtils qw/ none uniq /;
 our $VERSION = '0';
 
 Readonly::Hash   my %QUALITY_FILTERS => (
-                              'mqc'        => 'manual_qc',
+                              'mqc'        => 'qc',
                               'extrelease' => 'external_release',
                                         );
 
@@ -388,7 +388,7 @@ sub _find_libs {
 
     my $fc_row = $prow->iseq_flowcell;
     if ($fc_row) {
-      if (!$self->_accept($fc_row)) {
+      if (!$self->_accept($fc_row) | !$self->_accept($prow)) {
         next;
       }
       if (!$self->include_rad && $fc_row->is_r_and_d) {
@@ -399,6 +399,9 @@ sub _find_libs {
       }
       if ( $self->_has_library_id() && none {$_ == $fc_row->legacy_library_id} @{$self->library_id()} ) {
         next;
+      }
+      if ($fc_row->sample_consent_withdrawn){
+	next;
       }
 
       my $entity = $self->_create_entity($fc_row);
@@ -466,7 +469,7 @@ sub _add_entity {
         warn "Skipping entry with status $status\n";
         return;
       }
-      if (!$self->_accept($prow->iseq_flowcell)) {
+      if (!$self->_accept($prow->iseq_flowcell) | !$self->_accept($prow)) {
         warn "Skipping failed entry\n";
         return;
       }
@@ -497,11 +500,19 @@ sub _add_entity {
 }
 
 sub _accept {
-  my ($self, $fc_row) = @_;
+  my ($self, $row) = @_;
 
   my $quality_field = $self->filter ? $QUALITY_FILTERS{$self->filter} : q[];
+
+  ## qc field is in iseq_product_metrics, skip if iseq_flowcell
+  if ($quality_field eq 'qc' && $row->isa('WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell')){
+      return 1;
+  }
+  if ($quality_field ne 'qc' && $row->isa('WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric')){
+      return 1;
+  }
   if ( $quality_field ) {
-    my $value = $fc_row->$quality_field;
+    my $value = $row->$quality_field;  #e.g. 0 1 NULL
     return $value || ($self->accept_undefined && !defined $value);
   }
   return 1;
@@ -544,7 +555,6 @@ sub _create_entity {
     'sample_common_name'=> $fc_row->sample_common_name,
     'sample_accession_number' => $fc_row->sample_accession_number,
     'id_lims'           => $fc_row->id_lims,
-    'manual_qc'         => $fc_row->manual_qc,
   };
   $entity->{'study'}                  = $fc_row->study_id; # safer, since study might be undefined
   $entity->{'study_accession_number'} = $fc_row->study_accession_number;

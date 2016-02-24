@@ -232,7 +232,6 @@ while (my $row = $rs->next) {
     'sample_name'      => undef,
     'sample_accession_number' => 'ERS429041',
     'sample_common_name' => 'Homo Sapien',
-    'manual_qc'         => 1,
     'sample'           => '1877306',
     'study'            => '2967',
     'study_title'      => 'Lebanon_LowCov-seq',
