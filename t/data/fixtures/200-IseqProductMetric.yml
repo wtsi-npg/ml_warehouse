@@ -46,6 +46,9 @@
   verify_bam_id_score: 0.00000
   verify_bam_id_snp_count: 1351960
   chimeric_reads_percent: 0
+  qc_seq: 1
+  qc_lib: 1
+  qc: 1
 - actual_forward_read_length: ~
   actual_reverse_read_length: ~
   adapters_percent_forward_read: 0.02
@@ -93,6 +96,9 @@
   verify_bam_id_score: 0.00000
   verify_bam_id_snp_count: 1351960
   chimeric_reads_percent: 46.64
+  qc_seq: 1
+  qc_lib: 0
+  qc: 0
 - actual_forward_read_length: ~
   actual_reverse_read_length: ~
   adapters_percent_forward_read: 0.02

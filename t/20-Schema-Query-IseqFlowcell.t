@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 19;
+use Test::More tests => 22;
 use Test::Exception;
 use Test::Warn;
 use YAML qw/ LoadFile /;
@@ -70,6 +70,9 @@ my $flowcells = $schema->resultset('IseqFlowcell');
   my $obj;
   lives_ok { $obj = $anonclass->new_object(iseq_flowcell=>$schema->resultset('IseqFlowcell'), flowcell_barcode=>'HBF2DADXX'); } 'generate object from flowcell barcode';
   is($obj->query_resultset->count, 10, 'result count');
+  ok($obj->query_resultset->find({position=>1, tag_index=>81})->qc_state, 'Pass QC');
+  ok(!$obj->query_resultset->find({position=>1, tag_index=>84})->qc_state, 'Fail QC');
+  ok(!$obj->query_resultset->find({position=>1, tag_index=>83})->qc_state, 'Negative on no QC');
   warning_like { $anonclass->new_object(iseq_flowcell=>$schema->resultset('IseqFlowcell'), flowcell_barcode=>'HBF2DADXX_wrong', id_flowcell_lims=>34769 )->query_resultset; } qr/\QDeclared flowcell_barcode 'HBF2DADXX_wrong' differs from that found: 'HBF2DADXX'\E/sm, 'warn on conflicting info';
 
   $flowcells->search({flowcell_barcode=>'HBF2DADXX', position=>1, tag_index=>81})->update({flowcell_barcode=>'invalid'});
