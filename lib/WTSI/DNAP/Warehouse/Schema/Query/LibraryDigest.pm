@@ -388,7 +388,7 @@ sub _find_libs {
 
     my $fc_row = $prow->iseq_flowcell;
     if ($fc_row) {
-      if (!$self->_accept($fc_row) | !$self->_accept($prow)) {
+      if (!$self->_accept($prow)) {
         next;
       }
       if (!$self->include_rad && $fc_row->is_r_and_d) {
@@ -404,7 +404,7 @@ sub _find_libs {
 	next;
       }
 
-      my $entity = $self->_create_entity($fc_row);
+       my $entity = $self->_create_entity($fc_row);
       if (!$entity->{'flowcell_key_value'}) {
         croak 'No flowcell key value';
       }
@@ -469,7 +469,7 @@ sub _add_entity {
         warn "Skipping entry with status $status\n";
         return;
       }
-      if (!$self->_accept($prow->iseq_flowcell) | !$self->_accept($prow)) {
+      if (!$self->_accept($prow)){
         warn "Skipping failed entry\n";
         return;
       }
@@ -499,19 +499,17 @@ sub _add_entity {
   return;
 }
 
+
 sub _accept {
   my ($self, $row) = @_;
 
   my $quality_field = $self->filter ? $QUALITY_FILTERS{$self->filter} : q[];
 
-  ## qc field is in iseq_product_metrics, skip if iseq_flowcell
-  if ($quality_field eq 'qc' && $row->isa('WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell')){
-      return 1;
-  }
-  if ($quality_field ne 'qc' && $row->isa('WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric')){
-      return 1;
-  }
   if ( $quality_field ) {
+
+    ##extrelease is in the iseq_flowcell table
+    if ($quality_field ne 'qc') {$row=$row->iseq_flowcell}
+
     my $value = $row->$quality_field;  #e.g. 0 1 NULL
     return $value || ($self->accept_undefined && !defined $value);
   }
@@ -548,6 +546,7 @@ sub  _get_study_rs {
 
 sub _create_entity {
   my ($self, $fc_row) = @_;
+
   my $entity = {
     'new_library_id'    => $fc_row->id_library_lims,
     'sample'            => $fc_row->sample_id,
