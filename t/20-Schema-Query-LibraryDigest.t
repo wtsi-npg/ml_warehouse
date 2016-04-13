@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 42;
+use Test::More tests => 49;
 use Test::Exception;
 use Test::Warn;
 use YAML qw/ LoadFile /;
@@ -142,6 +142,35 @@ is( join(q[:], map { $_->{rpt_key} } @{$d3->{12789790}{HiSeq}{paired208}{entitie
              )->create()
   } qr/Invalid run status: 'some status'/,
   'error when earliest_run_status is an invalid status';
+
+
+  my $study_mqc;   #qc is in table iseq_product_metrics
+  lives_ok { $study_mqc = $ldclass->new(
+            iseq_product_metrics => $products,
+            earliest_run_status => 'qc complete',
+            filter              => 'mqc', 
+            id_study_lims       => '2967',
+       )->create()
+     } 'id_study_lims and filter mqc';
+
+  is (scalar(keys %$study_mqc),'1', '1 library returned');
+  is (scalar(@{$study_mqc->{12789790}{HiSeq}{paired208}{entities}}),'1', '1 entity returned for library 12789790');
+  is ($study_mqc->{12789790}{HiSeq}{paired208}{entities}[0]->{'rpt_key'},'15440:1:81',
+    'rpt_key 15440:1:81 returned when querying by earliest_run_status qc complete, filter mqc and id_study_lims 2967');
+
+
+  my $extr;
+  lives_ok { $extr = $ldclass->new(
+            iseq_product_metrics => $products,
+            earliest_run_status => 'qc complete',
+            filter              => 'extrelease', #external_release is in table iseq_flowcell
+            id_study_lims       => '2967',
+       )->create()
+     } 'filter on external_release';
+
+
+   is (scalar(keys %$extr),'3', '3 libraries returned');
+   is (scalar(@{$extr->{12789814}{HiSeq}{paired208}{entities}}),'2', '2 entities returned for library 12789814');
 }
 
 {
@@ -232,7 +261,6 @@ while (my $row = $rs->next) {
     'sample_name'      => undef,
     'sample_accession_number' => 'ERS429041',
     'sample_common_name' => 'Homo Sapien',
-    'manual_qc'         => 1,
     'sample'           => '1877306',
     'study'            => '2967',
     'study_title'      => 'Lebanon_LowCov-seq',

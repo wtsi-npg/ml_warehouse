@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
+ - update to test script and data for filters in LibraryDigest
+ - added DBIx class for the new pacbio LIMs data table
 
+release 1.8
  - parameterized WTSI::DNAP::Warehouse::Schema::Query::IseqFlowcell role
    to allow for query on run id
  - iseq_product_metrics table: add columns to store in-house qc values

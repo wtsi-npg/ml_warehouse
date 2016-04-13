@@ -26,6 +26,9 @@
   percent_duplicate: 1.22
   percent_mapped: 99.21
   position: 1
+  qc_seq: 1 
+  qc_lib: 1 
+  qc: 1 
   q20_yield_kb_forward_read: 3488082
   q20_yield_kb_reverse_read: 3360079
   q30_yield_kb_forward_read: 3313855
@@ -46,6 +49,9 @@
   verify_bam_id_score: 0.00000
   verify_bam_id_snp_count: 1351960
   chimeric_reads_percent: 0
+  qc_seq: 1
+  qc_lib: 1
+  qc: 1
 - actual_forward_read_length: ~
   actual_reverse_read_length: ~
   adapters_percent_forward_read: 0.02
@@ -73,6 +79,9 @@
   percent_duplicate: 2.18
   percent_mapped: 99.20
   position: 1
+  qc_seq: 1
+  qc_lib: 0 
+  qc: 0 
   q20_yield_kb_forward_read: 3756648
   q20_yield_kb_reverse_read: 3645016
   q30_yield_kb_forward_read: 3588668
@@ -93,6 +102,9 @@
   verify_bam_id_score: 0.00000
   verify_bam_id_snp_count: 1351960
   chimeric_reads_percent: 46.64
+  qc_seq: 1
+  qc_lib: 0
+  qc: 0
 - actual_forward_read_length: ~
   actual_reverse_read_length: ~
   adapters_percent_forward_read: 0.02

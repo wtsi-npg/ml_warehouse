@@ -31,7 +31,7 @@
   cost_code: ~
   entity_id_lims: 12459448
   entity_type: library_indexed_spike
-  external_release: ~
+  external_release: 1 
   flowcell_barcode: HBF2DADXX
   forward_read_length: 100
   id_flowcell_lims: 34769
@@ -61,7 +61,7 @@
   cost_code: S0969
   entity_id_lims: 13538644
   entity_type: library_indexed
-  external_release: ~
+  external_release: 1
   flowcell_barcode: HBF2DADXX
   forward_read_length: 100
   id_flowcell_lims: 34769
@@ -91,7 +91,7 @@
   cost_code: S0969
   entity_id_lims: 13538645
   entity_type: library_indexed
-  external_release: ~
+  external_release: 1 
   flowcell_barcode: HBF2DADXX
   forward_read_length: 100
   id_flowcell_lims: 34769
@@ -121,7 +121,7 @@
   cost_code: S0969
   entity_id_lims: 13538646
   entity_type: library_indexed
-  external_release: ~
+  external_release: 1 
   flowcell_barcode: HBF2DADXX
   forward_read_length: 100
   id_flowcell_lims: 34769
@@ -271,7 +271,7 @@
   cost_code: S0969
   entity_id_lims: 13538650
   entity_type: library_indexed
-  external_release: ~
+  external_release: 1 
   flowcell_barcode: HBF2DADXX
   forward_read_length: 100
   id_flowcell_lims: 34769
