@@ -1,5 +1,7 @@
 LIST OF CHANGES
 ---------------
+
+release 2.0
  - update to test script and data for filters in LibraryDigest
  - added DBIx class for the new pacbio LIMs data table
 
