@@ -1,3 +1,10 @@
 language: perl
 perl:
   - "5.16"
+env:
+  global:
+    - TEST_AUTHOR=1
+    - DNAP_UTILITIES_VERSION="0.5.1"
+before_install:
+  - cpanm --no-lwp --notest https://github.com/wtsi-npg/perl-dnap-utilities/releases/download/${DNAP_UTILITIES_VERSION}/WTSI-DNAP-Utilities-${DNAP_UTILITIES_VERSION}.tar.gz
+  - cpanm --installdeps --notest .
