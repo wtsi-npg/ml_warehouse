@@ -1,6 +1,7 @@
 Build.PL
 Changes
 MANIFEST
+README
 lib/WTSI/DNAP/Warehouse/Schema.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapAnalyte.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapBiomaterial.pm
@@ -36,3 +37,6 @@ t/data/fixtures/100-IseqRunLaneMetric.yml
 t/data/fixtures/100-IseqRunStatus.yml
 t/data/fixtures/100-StudyUser.yml
 t/data/fixtures/200-IseqProductMetric.yml
+
+META.yml
+META.json
