@@ -20,6 +20,8 @@ Readonly::Array  my @AGGREGATION_LEVEL => qw/
 
 Readonly::Scalar my $GROUP_KEY_NAME => 'group_key';
 
+Readonly::Scalar my $SSCAPE         => q[SQSCP];
+
 
 =head1 NAME
 
@@ -572,7 +574,7 @@ sub _create_entity {
     }
   }
 
-  my $library_field = $fc_row->id_lims eq 'SQSCP' ? 'legacy_library_id' : 'id_library_lims';
+  my $library_field = $fc_row->id_lims eq $SSCAPE ? 'legacy_library_id' : 'id_library_lims';
   $entity->{'library'} = $fc_row->$library_field;
   my $key = $self->group_by eq 'library' ? $library_field : 'id_sample_tmp';
   my $key_hash = {$key => $fc_row->$key};
