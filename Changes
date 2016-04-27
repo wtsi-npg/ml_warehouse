@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+- small change to LibraryDigest to support non SS tracked libraries.
+
 release 2.0
  - update to test script and data for filters in LibraryDigest
  - added DBIx class for the new pacbio LIMs data table

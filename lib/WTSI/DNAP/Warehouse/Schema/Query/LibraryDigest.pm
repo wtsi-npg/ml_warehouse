@@ -20,6 +20,8 @@ Readonly::Array  my @AGGREGATION_LEVEL => qw/
 
 Readonly::Scalar my $GROUP_KEY_NAME => 'group_key';
 
+Readonly::Scalar my $SSCAPE         => q[SQSCP];
+
 
 =head1 NAME
 
@@ -210,7 +212,8 @@ has 'earliest_run_status'  =>  ( isa        => 'Str',
 
 =head2 library_id
 
-An optional legacy_library_id.
+An optional legacy_library_id. Only libraries with a legacy_library_id
+are supported with this option.
 Should be used with the appropriate look back --num_days or --id_runs.
 Only one of the run ids is required as expand_libs will find the others
 
@@ -229,7 +232,7 @@ An option id_study_lims
 
 =cut
 
-has 'id_study_lims'               =>  ( isa        => 'Int',
+has 'id_study_lims'               =>  ( isa        => 'Str',
                                         is         => 'ro',
                                         required   => 0,
                                         predicate  => '_has_id_study_lims',
@@ -571,7 +574,7 @@ sub _create_entity {
     }
   }
 
-  my $library_field = 'legacy_library_id';
+  my $library_field = $fc_row->id_lims eq $SSCAPE ? 'legacy_library_id' : 'id_library_lims';
   $entity->{'library'} = $fc_row->$library_field;
   my $key = $self->group_by eq 'library' ? $library_field : 'id_sample_tmp';
   my $key_hash = {$key => $fc_row->$key};
