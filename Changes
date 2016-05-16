@@ -1,6 +1,13 @@
 LIST OF CHANGES
 ---------------
 
+release 2.1
+ - small change to LibraryDigest to support non SS tracked libraries.
+ - use custom build base class to get correct version in a distribution
+ - Travis tweaks
+   + add deployment to GitHub Releases
+   + add newer 5.22 Perl to travis build matrix and allow container builds (sudo false)
+
 release 2.0
  - update to test script and data for filters in LibraryDigest
  - added DBIx class for the new pacbio LIMs data table
