@@ -51,7 +51,7 @@ Internal to this database id. Value can change.
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 38
+  size: 36
 
 =head2 destination
 
@@ -69,7 +69,7 @@ Internal to this database id. Value can change.
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 38
+  size: 36
 
 =head2 release_date
 
@@ -106,13 +106,13 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
   },
   'cell_line_uuid',
-  { data_type => 'varchar', is_nullable => 0, size => 38 },
+  { data_type => 'varchar', is_nullable => 0, size => 36 },
   'destination',
   { data_type => 'varchar', is_nullable => 0, size => 32 },
   'jobs',
   { data_type => 'varchar', is_nullable => 1, size => 64 },
   'slot_uuid',
-  { data_type => 'varchar', is_nullable => 0, size => 38 },
+  { data_type => 'varchar', is_nullable => 0, size => 36 },
   'release_date',
   {
     data_type => 'timestamp',
@@ -140,9 +140,23 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key('cgap_analyte_tmp');
 
+=head1 UNIQUE CONSTRAINTS
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-04-14 14:56:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Z6uHQC1FmkeXRdcXEfLCBw
+=head2 C<slot_uuid>
+
+=over 4
+
+=item * L</slot_uuid>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint('slot_uuid', ['slot_uuid']);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07045 @ 2016-08-19 13:42:13
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:xOuyyF2ChjH49HR6pZgvnA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

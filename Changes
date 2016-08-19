@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - DBIx schema update
+
 release 2.1
  - small change to LibraryDigest to support non SS tracked libraries.
  - use custom build base class to get correct version in a distribution
