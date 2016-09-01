@@ -51,7 +51,7 @@ Internal to this database id. Value can change.
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 38
+  size: 36
 
 =head2 donor_accession_number
 
@@ -59,17 +59,17 @@ Internal to this database id. Value can change.
   is_nullable: 1
   size: 38
 
-=head2 donor_sanger_sample
+=head2 donor_name
 
   data_type: 'varchar'
   is_nullable: 1
-  size: 16
+  size: 64
 
 =head2 biomaterial_uuid
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 38
+  size: 36
 
 =cut
 
@@ -82,13 +82,13 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
   },
   'donor_uuid',
-  { data_type => 'varchar', is_nullable => 0, size => 38 },
+  { data_type => 'varchar', is_nullable => 0, size => 36 },
   'donor_accession_number',
   { data_type => 'varchar', is_nullable => 1, size => 38 },
-  'donor_sanger_sample',
-  { data_type => 'varchar', is_nullable => 1, size => 16 },
+  'donor_name',
+  { data_type => 'varchar', is_nullable => 1, size => 64 },
   'biomaterial_uuid',
-  { data_type => 'varchar', is_nullable => 0, size => 38 },
+  { data_type => 'varchar', is_nullable => 0, size => 36 },
 );
 
 =head1 PRIMARY KEY
@@ -118,8 +118,8 @@ __PACKAGE__->set_primary_key('cgap_biomaterial_tmp');
 __PACKAGE__->add_unique_constraint('biomaterial_uuid', ['biomaterial_uuid']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-12-08 10:12:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3NhskXQBLdGoKrvSjlx+FQ
+# Created by DBIx::Class::Schema::Loader v0.07045 @ 2016-08-19 13:42:13
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WKpfeiC6T2Ryv16SvVn2sw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
