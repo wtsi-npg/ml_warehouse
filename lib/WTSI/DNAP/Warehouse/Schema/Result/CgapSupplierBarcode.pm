@@ -51,7 +51,7 @@ Internal to this database id. Value can change.
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 38
+  size: 36
 
 =head2 supplier_barcode
 
@@ -63,7 +63,7 @@ Internal to this database id. Value can change.
 
   data_type: 'timestamp'
   datetime_undef_if_invalid: 1
-  default_value: current_timestamp
+  default_value: '0000-00-00 00:00:00'
   is_nullable: 0
 
 =cut
@@ -77,14 +77,14 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
   },
   'biomaterial_uuid',
-  { data_type => 'varchar', is_nullable => 0, size => 38 },
+  { data_type => 'varchar', is_nullable => 0, size => 36 },
   'supplier_barcode',
   { data_type => 'varchar', is_nullable => 0, size => 20 },
   'date',
   {
     data_type => 'timestamp',
     datetime_undef_if_invalid => 1,
-    default_value => \'current_timestamp',
+    default_value => '0000-00-00 00:00:00',
     is_nullable => 0,
   },
 );
@@ -116,8 +116,8 @@ __PACKAGE__->set_primary_key('cgap_supplier_barcode_tmp');
 __PACKAGE__->add_unique_constraint('supplier_barcode', ['supplier_barcode']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-12-08 10:12:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Sk4M9HQpvTCh2Lg5psbo/g
+# Created by DBIx::Class::Schema::Loader v0.07045 @ 2016-08-19 13:42:13
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zFC2X6au22qsB3fIGw87Ng
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

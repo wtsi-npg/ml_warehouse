@@ -280,6 +280,14 @@ The preliminary study id prior to entry into the LIMS
 
 The Human Materials and Data Management Committee approval number(s) for the study.
 
+=head2 data_destination
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+The data destination type(s) for the study. It could be 'standard', '14mg' or 'gseq'. This may be extended, if Sanger gains more external customers. It can contain multiply destinations separated by a space.
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -377,6 +385,8 @@ __PACKAGE__->add_columns(
   'prelim_id',
   { data_type => 'varchar', is_nullable => 1, size => 20 },
   'hmdmc_number',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'data_destination',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
@@ -486,8 +496,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07043 @ 2016-01-25 14:58:15
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Rz3jVAcPAkaJuP2I0uGgKw
+# Created by DBIx::Class::Schema::Loader v0.07045 @ 2016-08-19 13:42:13
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5mBhBEJUs4zksjb1qnrNkw
 
 with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
 

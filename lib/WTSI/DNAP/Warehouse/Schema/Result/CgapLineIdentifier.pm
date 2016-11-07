@@ -51,13 +51,13 @@ Internal to this database id. Value can change.
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 38
+  size: 36
 
 =head2 friendly_name
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 32
+  size: 48
 
 =head2 accession_number
 
@@ -69,13 +69,13 @@ Internal to this database id. Value can change.
 
   data_type: 'varchar'
   is_nullable: 1
-  size: 38
+  size: 36
 
 =head2 biomaterial_uuid
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 38
+  size: 36
 
 =cut
 
@@ -88,15 +88,15 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
   },
   'line_uuid',
-  { data_type => 'varchar', is_nullable => 0, size => 38 },
+  { data_type => 'varchar', is_nullable => 0, size => 36 },
   'friendly_name',
-  { data_type => 'varchar', is_nullable => 0, size => 32 },
+  { data_type => 'varchar', is_nullable => 0, size => 48 },
   'accession_number',
   { data_type => 'varchar', is_nullable => 1, size => 38 },
   'direct_parent_uuid',
-  { data_type => 'varchar', is_nullable => 1, size => 38 },
+  { data_type => 'varchar', is_nullable => 1, size => 36 },
   'biomaterial_uuid',
-  { data_type => 'varchar', is_nullable => 0, size => 38 },
+  { data_type => 'varchar', is_nullable => 0, size => 36 },
 );
 
 =head1 PRIMARY KEY
@@ -113,18 +113,6 @@ __PACKAGE__->set_primary_key('cgap_line_identifier_tmp');
 
 =head1 UNIQUE CONSTRAINTS
 
-=head2 C<friendly_name>
-
-=over 4
-
-=item * L</friendly_name>
-
-=back
-
-=cut
-
-__PACKAGE__->add_unique_constraint('friendly_name', ['friendly_name']);
-
 =head2 C<line_uuid>
 
 =over 4
@@ -138,8 +126,8 @@ __PACKAGE__->add_unique_constraint('friendly_name', ['friendly_name']);
 __PACKAGE__->add_unique_constraint('line_uuid', ['line_uuid']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-12-08 10:12:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8JxFXfNIrVFxkOWwhUUTlg
+# Created by DBIx::Class::Schema::Loader v0.07045 @ 2016-08-19 13:42:13
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:41bmKs2K6tvBg1ZbdR8Qeg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
