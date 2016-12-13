@@ -551,18 +551,19 @@ sub _create_entity {
   my ($self, $fc_row) = @_;
 
   my $entity = {
-    'new_library_id'    => $fc_row->id_library_lims,
-    'sample'            => $fc_row->sample_id,
-    'sample_name'       => $fc_row->sample_name,
-    'sample_common_name'=> $fc_row->sample_common_name,
+    'new_library_id'          => $fc_row->id_library_lims,
+    'sample'                  => $fc_row->sample_id,
+    'sample_name'             => $fc_row->sample_name,
+    'sample_common_name'      => $fc_row->sample_common_name,
     'sample_accession_number' => $fc_row->sample_accession_number,
-    'id_lims'           => $fc_row->id_lims,
+    'id_lims'                 => $fc_row->id_lims,
   };
   $entity->{'study'}                  = $fc_row->study_id; # safer, since study might be undefined
   $entity->{'study_accession_number'} = $fc_row->study_accession_number;
   $entity->{'aligned'}                = $fc_row->study_alignments_in_bam;
   $entity->{'study_title'}            = $fc_row->study_title;
   $entity->{'study_name'}             = $fc_row->study_name;
+  $entity->{'library_type'}           = $fc_row->default_library_type; #pipeline_id_lims
 
   my $ref = _get_reference($fc_row);
   if ($ref) {

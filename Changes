@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
+ - library_type added to LibraryDigest entity
 
+release 2.2
  - DBIx schema update
 
 release 2.1

@@ -257,6 +257,7 @@ while (my $row = $rs->next) {
     'library'          => 12789826,
     'id_lims'          => 'SQSCP',
     'new_library_id'   => 'DN384378S:D11',
+    'library_type'     => 'Standard',
     'rpt_key'          => '15440:1:84',
     'sample_name'      => undef,
     'sample_accession_number' => 'ERS429041',
