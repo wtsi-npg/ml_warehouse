@@ -1,5 +1,7 @@
 LIST OF CHANGES
 ---------------
+ - change in use of cycles value; expected_cycles calculated from iseq_flowcell read lengths and length of tag sequence(s).
+
 release 2.3
  - library_type added to LibraryDigest entity
 
