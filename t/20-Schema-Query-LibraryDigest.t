@@ -124,7 +124,7 @@ my $ldclass = 'WTSI::DNAP::Warehouse::Schema::Query::LibraryDigest';
             )->create()
      } '1 id_run and 1 library_id';
 
-is( join(q[:], map { $_->{rpt_key} } @{$d3->{12789790}{HiSeq}{paired208}{entities}} ), '15440:1:81:15440:2:81',
+is( join(q[:], map { $_->{rpt_key} } @{$d3->{12789790}{HiSeq}{paired}{entities}} ), '15440:1:81:15440:2:81',
     'rpts 15440:1:81:15440:2:81 returned when id_run 15440 library_id 12789790 are specified' );
 
 
@@ -154,8 +154,8 @@ is( join(q[:], map { $_->{rpt_key} } @{$d3->{12789790}{HiSeq}{paired208}{entitie
      } 'id_study_lims and filter mqc';
 
   is (scalar(keys %$study_mqc),'1', '1 library returned');
-  is (scalar(@{$study_mqc->{12789790}{HiSeq}{paired208}{entities}}),'1', '1 entity returned for library 12789790');
-  is ($study_mqc->{12789790}{HiSeq}{paired208}{entities}[0]->{'rpt_key'},'15440:1:81',
+  is (scalar(@{$study_mqc->{12789790}{HiSeq}{paired}{entities}}),'1', '1 entity returned for library 12789790');
+  is ($study_mqc->{12789790}{HiSeq}{paired}{entities}[0]->{'rpt_key'},'15440:1:81',
     'rpt_key 15440:1:81 returned when querying by earliest_run_status qc complete, filter mqc and id_study_lims 2967');
 
 
@@ -170,7 +170,7 @@ is( join(q[:], map { $_->{rpt_key} } @{$d3->{12789790}{HiSeq}{paired208}{entitie
 
 
    is (scalar(keys %$extr),'3', '3 libraries returned');
-   is (scalar(@{$extr->{12789814}{HiSeq}{paired208}{entities}}),'2', '2 entities returned for library 12789814');
+   is (scalar(@{$extr->{12789814}{HiSeq}{paired}{entities}}),'2', '2 entities returned for library 12789814');
 }
 
 {
@@ -269,12 +269,14 @@ while (my $row = $rs->next) {
     'study_accession_number' => 'ERP005180',
     'reference_genome' => 'Homo_sapiens (1000Genomes_hs37d5)',
     'aligned'          => '1',
+    'cycles'           => '208',
+    'expected_cycles'  => '208',
   };
 
   my %e2 = %{$e1};
   $e2{'rpt_key'} = '15440:2:84';
   my $expected = {};
-  $expected->{'HiSeq'}->{'paired208'}->{'entities'} = [$e1, \%e2];
+  $expected->{'HiSeq'}->{'paired'}->{'entities'} = [$e1, \%e2];
 
   is_deeply( $results->{'1877306'}, $expected, 'set of results for one of the samples');
 }
