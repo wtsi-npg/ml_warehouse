@@ -574,8 +574,9 @@ sub _create_entity {
     }
   }
 
+  my $tag1_sequence_length = $fc_row->tag_sequence ? (length $fc_row->tag_sequence) : 0;
   my $tag2_sequence_length = $fc_row->tag2_sequence ? (length $fc_row->tag2_sequence) : 0;
-  my $expected_cycles      = (length $fc_row->tag_sequence) + $fc_row->forward_read_length + $fc_row->reverse_read_length + $tag2_sequence_length;
+  my $expected_cycles      = $tag1_sequence_length + ($fc_row->forward_read_length // 0) + ($fc_row->reverse_read_length // 0) + $tag2_sequence_length;
 
   $entity->{'expected_cycles'} = $expected_cycles;
 
