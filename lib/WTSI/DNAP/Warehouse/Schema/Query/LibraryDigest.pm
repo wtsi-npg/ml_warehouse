@@ -483,8 +483,8 @@ sub _add_entity {
   my ($instrument_model, $flowcell_barcode, $paired_flag, $cycles) = _get_run_data($prow);
 
   $entity->{'flowcell_barcode'}  = $flowcell_barcode;
-  $entity->{'rpt_key'} =
-    $prow->can('rpt_key') ? $prow->rpt_key() : _get_rpt_key($prow);
+  $entity->{'cycles'}            = $cycles;
+  $entity->{'rpt_key'}           = $prow->can('rpt_key') ? $prow->rpt_key() : _get_rpt_key($prow);
 
   my $key = $entity->{$self->group_by};
   if (!$key) {
@@ -496,8 +496,7 @@ sub _add_entity {
     $digest->{$key}->{$GROUP_KEY_NAME} = $combined_entity->{'entity_key'};
   }
 
-  push @{$digest->{$key}->{$instrument_model}->{$paired_flag.$cycles}->{'entities'}},
-      $entity;
+  push @{$digest->{$key}->{$instrument_model}->{$paired_flag}->{'entities'}}, $entity;
 
   return;
 }
@@ -574,6 +573,12 @@ sub _create_entity {
       $entity->{'taxon_id'} = $taxon_id;
     }
   }
+
+  my $tag1_sequence_length = $fc_row->tag_sequence ? (length $fc_row->tag_sequence) : 0;
+  my $tag2_sequence_length = $fc_row->tag2_sequence ? (length $fc_row->tag2_sequence) : 0;
+  my $expected_cycles      = $tag1_sequence_length + ($fc_row->forward_read_length // 0) + ($fc_row->reverse_read_length // 0) + $tag2_sequence_length;
+
+  $entity->{'expected_cycles'} = $expected_cycles;
 
   my $library_field = $fc_row->id_lims eq $SSCAPE ? 'legacy_library_id' : 'id_library_lims';
   $entity->{'library'} = $fc_row->$library_field;
