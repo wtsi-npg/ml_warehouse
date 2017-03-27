@@ -239,6 +239,14 @@ Timestamp of sample creation
   is_nullable: 1
   size: 255
 
+=head2 phenotype
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+The phenotype of the sample as described in Sequencescape
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -324,6 +332,8 @@ __PACKAGE__->add_columns(
   'consent_withdrawn',
   { data_type => 'tinyint', default_value => 0, is_nullable => 0 },
   'donor_id',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'phenotype',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
@@ -418,8 +428,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07043 @ 2016-01-25 14:58:15
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:R3kVhfDKX/dE0+rn/ALdGg
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-27 20:27:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:PBr1UID2Xykvz0RaJvt+Bg
 
 our $VERSION = '0';
 
