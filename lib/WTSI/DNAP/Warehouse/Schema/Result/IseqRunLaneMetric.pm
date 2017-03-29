@@ -211,6 +211,13 @@ Timestamp of qc complete status
 
 tag0_perfect_match_reads as a percentage of total_lane_reads
 
+=head2 run_priority
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+Sequencing lane level run priority, a result of either manual or default value set by core
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -311,6 +318,8 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => [5, 2],
   },
+  'run_priority',
+  { data_type => 'tinyint', is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -348,8 +357,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-12-08 10:12:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aHUaXOfZ6bI2XNSbBjX5xg
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-28 09:06:14
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3V7WVQ+YTJ/R4S/UtxTY7w
 
 our $VERSION = '0';
 
