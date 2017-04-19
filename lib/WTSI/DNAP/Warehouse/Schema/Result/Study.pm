@@ -480,6 +480,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 stock_resources
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::StockResource>
+
+=cut
+
+__PACKAGE__->has_many(
+  'stock_resources',
+  'WTSI::DNAP::Warehouse::Schema::Result::StockResource',
+  { 'foreign.id_study_tmp' => 'self.id_study_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 study_users
 
 Type: has_many
@@ -496,8 +511,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07045 @ 2016-08-19 13:42:13
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5mBhBEJUs4zksjb1qnrNkw
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-19 15:22:45
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:U0bjup3j+AQ1dMcB0JKIPQ
 
 with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
 
