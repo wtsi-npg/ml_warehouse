@@ -625,7 +625,10 @@ sub _build__study_users {
   if ($study) {
     my $rs =  $study->study_users();
     while (my $row = $rs->next) {
-      push @{$su->{$row->role}}, $row->email;
+      my $email_address = $row->email;
+      if ($email_address) { # Lots of NULLs in a database
+        push @{$su->{$row->role}}, $row->email;
+      }
     }
   }
   return $su;
