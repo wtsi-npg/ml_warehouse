@@ -1,7 +1,8 @@
 LIST OF CHANGES
 ---------------
 
- - ensure lists of study users email addresses do not contain empty or undefined entries 
+release 2.6
+ - ensure lists of study users email addresses do not contain empty or undefined entries
 
 release 2.5
  - add column run_priority to iseq_run_lane_metrics table
