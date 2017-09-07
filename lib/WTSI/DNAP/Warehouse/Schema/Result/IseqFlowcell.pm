@@ -335,6 +335,13 @@ The team responsible for creating the flowcell
 
 Describes the reason the sequencing was conducted. Eg. Standard, QC, Control
 
+=head2 suboptimal
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+Indicates that a sample has failed a QC step during processing
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -440,6 +447,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'purpose',
   { data_type => 'varchar', is_nullable => 1, size => 30 },
+  'suboptimal',
+  { data_type => 'tinyint', is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -507,8 +516,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-12-08 10:12:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:elVRHSNY/zTS50jaYHpAbQ
+# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-09-07 11:36:23
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9fTz8ru7GgWioOSAHptDxQ
 
 use MooseX::Aliases;
 use Readonly;

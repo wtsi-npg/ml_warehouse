@@ -288,6 +288,18 @@ The Human Materials and Data Management Committee approval number(s) for the stu
 
 The data destination type(s) for the study. It could be 'standard', '14mg' or 'gseq'. This may be extended, if Sanger gains more external customers. It can contain multiply destinations separated by a space.
 
+=head2 s3_email_list
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 data_deletion_period
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -387,6 +399,10 @@ __PACKAGE__->add_columns(
   'hmdmc_number',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'data_destination',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  's3_email_list',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'data_deletion_period',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
@@ -511,8 +527,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-19 15:22:45
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:U0bjup3j+AQ1dMcB0JKIPQ
+# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-09-07 11:36:23
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:mWlES/mEmgQHIo1nuSq3Kg
 
 with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
 
