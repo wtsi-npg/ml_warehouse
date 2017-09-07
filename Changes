@@ -1,5 +1,7 @@
 LIST OF CHANGES
 ---------------
+release 2.7
+ - DBIx binding update
 
 release 2.6
  - ensure lists of study users email addresses do not contain empty or undefined entries
