@@ -481,6 +481,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 oseq_flowcells
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::OseqFlowcell>
+
+=cut
+
+__PACKAGE__->has_many(
+  'oseq_flowcells',
+  'WTSI::DNAP::Warehouse::Schema::Result::OseqFlowcell',
+  { 'foreign.id_study_tmp' => 'self.id_study_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 pac_bio_runs
 
 Type: has_many
@@ -527,8 +542,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-09-07 11:36:23
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:mWlES/mEmgQHIo1nuSq3Kg
+# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-09-18 13:50:11
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:D9uYWqktKz4i9NaQ5j0xuA
 
 with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
 
