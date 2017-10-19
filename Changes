@@ -1,5 +1,9 @@
 LIST OF CHANGES
 ---------------
+release 2.8
+ - added DBIx binding for oseq_flowcell table (describes LIMS info for ONT)
+ - Travis build - for Perl v 5.22 change to interpreter with threaded support
+
 release 2.7
  - DBIx binding update
 
