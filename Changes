@@ -1,5 +1,8 @@
 LIST OF CHANGES
 ---------------
+
+ - superfluous database indexes dropped
+
 release 2.8
  - added DBIx binding for oseq_flowcell table (describes LIMS info for ONT)
  - Travis build - for Perl v 5.22 change to interpreter with threaded support
