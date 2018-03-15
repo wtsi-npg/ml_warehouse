@@ -342,6 +342,14 @@ Describes the reason the sequencing was conducted. Eg. Standard, QC, Control
 
 Indicates that a sample has failed a QC step during processing
 
+=head2 primer_panel
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Primer Panel name
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -449,6 +457,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 30 },
   'suboptimal',
   { data_type => 'tinyint', is_nullable => 1 },
+  'primer_panel',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -516,8 +526,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-09-07 11:36:23
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9fTz8ru7GgWioOSAHptDxQ
+# Created by DBIx::Class::Schema::Loader v0.07048 @ 2018-03-15 11:29:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hBfjV4r+Oj/Mg/mz5BXSpA
 
 use MooseX::Aliases;
 use Readonly;
@@ -564,6 +574,7 @@ alias lane_id                 => 'entity_id_lims';
 alias default_tag_sequence    => 'tag_sequence';
 alias default_tagtwo_sequence => 'tag2_sequence';
 alias library_name            => 'library_id';
+alias gbs_plex_name           => 'primer_panel';
 
 sub qc_state {
   my $self = shift;

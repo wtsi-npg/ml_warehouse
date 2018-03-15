@@ -2,6 +2,7 @@ LIST OF CHANGES
 ---------------
 
  - superfluous database indexes dropped
+ - DBIx schema update for primer_panel
 
 release 2.8
  - added DBIx binding for oseq_flowcell table (describes LIMS info for ONT)
