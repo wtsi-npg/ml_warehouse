@@ -27,7 +27,7 @@ COMMENT 'Intronic rate is the fraction mapping within introns'
 AFTER `rna_norm_5_prime_coverage`,
 ADD COLUMN `rna_transcripts_detected` INT(10) UNSIGNED DEFAULT NULL 
 COMMENT 'Number of transcripts detected with at least 5 reads'
-AFTER `rna_intronic_rate`
+AFTER `rna_intronic_rate`,
 ADD COLUMN `rna_globin_percent_tpm` FLOAT UNSIGNED DEFAULT NULL
 COMMENT 'Percentage of globin genes TPM (transcripts per million) detected'
 AFTER `rna_transcripts_detected`;
