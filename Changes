@@ -1,5 +1,10 @@
 LIST OF CHANGES
 ---------------
+release 2.9
+ - added metrics columns to iseq_product_metrics (for RNA)
+ - superfluous database indexes dropped
+ - DBIx schema update for primer_panel
+
 release 2.8
  - added DBIx binding for oseq_flowcell table (describes LIMS info for ONT)
  - Travis build - for Perl v 5.22 change to interpreter with threaded support
