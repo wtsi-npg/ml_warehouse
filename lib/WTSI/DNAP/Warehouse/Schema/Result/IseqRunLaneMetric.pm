@@ -218,6 +218,14 @@ tag0_perfect_match_reads as a percentage of total_lane_reads
 
 Sequencing lane level run priority, a result of either manual or default value set by core
 
+=head2 tag_hops_percent
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Percentage tag hops for dual index runs
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -320,6 +328,8 @@ __PACKAGE__->add_columns(
   },
   'run_priority',
   { data_type => 'tinyint', is_nullable => 1 },
+  'tag_hops_percent',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -357,8 +367,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-28 09:06:14
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3V7WVQ+YTJ/R4S/UtxTY7w
+# Created by DBIx::Class::Schema::Loader v0.07047 @ 2018-03-07 15:25:50
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:XrBfmpxLNeNd8nkcrXPCyg
 
 our $VERSION = '0';
 

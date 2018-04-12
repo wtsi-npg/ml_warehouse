@@ -31,3 +31,7 @@ AFTER `rna_intronic_rate`,
 ADD COLUMN `rna_globin_percent_tpm` FLOAT UNSIGNED DEFAULT NULL
 COMMENT 'Percentage of globin genes TPM (transcripts per million) detected'
 AFTER `rna_transcripts_detected`;
+
+ALTER TABLE `iseq_run_lane_metrics`
+ADD COLUMN `tag_hops_percent` FLOAT UNSIGNED DEFAULT NULL
+  COMMENT 'Percentage tag hops for dual index runs';
