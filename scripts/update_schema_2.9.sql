@@ -34,4 +34,8 @@ AFTER `rna_transcripts_detected`;
 
 ALTER TABLE `iseq_run_lane_metrics`
 ADD COLUMN `tag_hops_percent` FLOAT UNSIGNED DEFAULT NULL
-  COMMENT 'Percentage tag hops for dual index runs';
+COMMENT 'Percentage tag hops for dual index runs'
+AFTER `unexpected_tags_percent`,
+ADD COLUMN `tag_hops_power` FLOAT UNSIGNED DEFAULT NULL
+COMMENT 'Power to detect tag hops for dual index runs'
+AFTER `tag_hops_percent`;
