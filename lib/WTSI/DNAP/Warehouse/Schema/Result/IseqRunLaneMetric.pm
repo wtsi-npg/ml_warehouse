@@ -211,13 +211,6 @@ Timestamp of qc complete status
 
 tag0_perfect_match_reads as a percentage of total_lane_reads
 
-=head2 run_priority
-
-  data_type: 'tinyint'
-  is_nullable: 1
-
-Sequencing lane level run priority, a result of either manual or default value set by core
-
 =head2 tag_hops_percent
 
   data_type: 'float'
@@ -225,6 +218,21 @@ Sequencing lane level run priority, a result of either manual or default value s
   is_nullable: 1
 
 Percentage tag hops for dual index runs
+
+=head2 tag_hops_power
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Power to detect tag hops for dual index runs
+
+=head2 run_priority
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+Sequencing lane level run priority, a result of either manual or default value set by core
 
 =cut
 
@@ -326,10 +334,12 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => [5, 2],
   },
-  'run_priority',
-  { data_type => 'tinyint', is_nullable => 1 },
   'tag_hops_percent',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'tag_hops_power',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'run_priority',
+  { data_type => 'tinyint', is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -367,8 +377,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07047 @ 2018-03-07 15:25:50
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:XrBfmpxLNeNd8nkcrXPCyg
+# Created by DBIx::Class::Schema::Loader v0.07048 @ 2018-04-13 13:42:06
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:txmWoUENXO0siusSx/61zg
 
 our $VERSION = '0';
 
