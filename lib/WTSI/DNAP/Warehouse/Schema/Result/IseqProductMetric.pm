@@ -379,6 +379,78 @@ mate_mapped_defferent_chr_5 as percentage of all
   extra: {unsigned => 1}
   is_nullable: 1
 
+=head2 rna_exonic_rate
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Exonic Rate is the fraction mapping within exons
+
+=head2 rna_percent_end_2_reads_sense
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Percentage of intragenic End 2 reads that were sequenced in the sense direction.
+
+=head2 rna_rrna_rate
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+rRNA Rate is per total reads
+
+=head2 rna_genes_detected
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Number of genes detected with at least 5 reads.
+
+=head2 rna_norm_3_prime_coverage
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+3 prime n-based normalization: n is the transcript length at that end; norm is the ratio between the coverage at the 3 prime end and the average coverage of the full transcript, averaged over all transcripts
+
+=head2 rna_norm_5_prime_coverage
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+5 prime n-based normalization: n is the transcript length at that end; norm is the ratio between the coverage at the 5 prime end and the average coverage of the full transcript, averaged over all transcripts
+
+=head2 rna_intronic_rate
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Intronic rate is the fraction mapping within introns
+
+=head2 rna_transcripts_detected
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Number of transcripts detected with at least 5 reads
+
+=head2 rna_globin_percent_tpm
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Percentage of globin genes TPM (transcripts per million) detected
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -572,6 +644,24 @@ __PACKAGE__->add_columns(
   },
   'verify_bam_id_snp_count',
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'rna_exonic_rate',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'rna_percent_end_2_reads_sense',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'rna_rrna_rate',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'rna_genes_detected',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'rna_norm_3_prime_coverage',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'rna_norm_5_prime_coverage',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'rna_intronic_rate',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'rna_transcripts_detected',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'rna_globin_percent_tpm',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -624,8 +714,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-12-23 12:44:57
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Ei2UmdMMcwfz3dqepOH5zA
+# Created by DBIx::Class::Schema::Loader v0.07047 @ 2018-02-19 16:35:36
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3G4GtITLncQkOU+IxEu96g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
