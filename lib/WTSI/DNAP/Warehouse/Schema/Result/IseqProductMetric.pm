@@ -451,6 +451,22 @@ Number of transcripts detected with at least 5 reads
 
 Percentage of globin genes TPM (transcripts per million) detected
 
+=head2 gbs_call_rate
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The GbS call rate is the fraction of loci called on the relevant primer panel
+
+=head2 gbs_pass_rate
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The GbS pass rate is the fraction of loci called and passing filters on the relevant primer panel
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -662,6 +678,10 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
   'rna_globin_percent_tpm',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'gbs_call_rate',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'gbs_pass_rate',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -714,8 +734,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07047 @ 2018-02-19 16:35:36
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3G4GtITLncQkOU+IxEu96g
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2018-05-08 15:03:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2kyGR8B8j/ru/ulb1cb50Q
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
