@@ -1,0 +1,19 @@
+---
+- id_pac_bio_run_metrics_tmp: 1
+  id_pac_bio_run_lims: 61539
+  well_label: A1
+  instrument_type: Sequel
+  instrument_name: SQ54097
+  run_started: 2018-05-11 14:11:21
+  run_completed: 2018-05-13 10:13:27
+  estimated_yield_kb: 9811895
+  num_reads: 523329
+  adapter_dimer_percent: 0.00
+  short_insert_percent: 0.01
+  p0_percent: 34.0
+  p1_percent: 52.7
+  p2_percent: 13.3
+  polymerase_read_length_mean: 18749
+  polymerase_read_length_n50: 30750
+  insert_length_mean: 16701
+  insert_length_n50: 26750

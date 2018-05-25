@@ -17,6 +17,7 @@ lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunLaneMetric.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunStatus.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunStatusDict.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/OseqFlowcell.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/PacBioRunMetric.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/PacBioRun.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/Sample.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/SchemaMigration.pm
@@ -35,6 +36,8 @@ scripts/update_schema_1.6.sql
 scripts/update_schema_1.7.sql
 scripts/update_schema_1.8.sql
 scripts/update_schema_1.9.sql
+scripts/update_schema_2.9.sql
+scripts/update_schema_2.10.sql
 t/00-critic.t
 t/00-distribution.t
 t/00-pod.t
@@ -49,4 +52,5 @@ t/data/fixtures/100-IseqRunLaneMetric.yml
 t/data/fixtures/100-IseqRunStatus.yml
 t/data/fixtures/100-StudyUser.yml
 t/data/fixtures/200-IseqProductMetric.yml
+t/data/fixtures/300-PacBioRunMetric.yml
 t/perlcriticrc
