@@ -1,5 +1,8 @@
 LIST OF CHANGES
 ---------------
+
+ - added metrics columns to iseq_product_metrics for GbS
+
 release 2.9
  - added metrics columns to iseq_product_metrics (for RNA)
  - superfluous database indexes dropped
