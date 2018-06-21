@@ -35,6 +35,8 @@ scripts/update_schema_1.6.sql
 scripts/update_schema_1.7.sql
 scripts/update_schema_1.8.sql
 scripts/update_schema_1.9.sql
+scripts/update_schema_2.9.sql
+scripts/update_schema_2.10.sql
 t/00-critic.t
 t/00-distribution.t
 t/00-pod.t
