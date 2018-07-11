@@ -451,6 +451,14 @@ Number of transcripts detected with at least 5 reads
 
 Percentage of globin genes TPM (transcripts per million) detected
 
+=head2 rna_mitochondrial_percent_tpm
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Percentage of mitochondrial genes TPM (transcripts per million) detected
+
 =head2 gbs_call_rate
 
   data_type: 'float'
@@ -678,6 +686,8 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
   'rna_globin_percent_tpm',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'rna_mitochondrial_percent_tpm',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'gbs_call_rate',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'gbs_pass_rate',
@@ -734,8 +744,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2018-05-08 15:03:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2kyGR8B8j/ru/ulb1cb50Q
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2018-07-11 11:03:13
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7zGod5ZZs+FULW5V1R8g1Q
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
