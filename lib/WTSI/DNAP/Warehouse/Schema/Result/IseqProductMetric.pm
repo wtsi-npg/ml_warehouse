@@ -475,6 +475,61 @@ The GbS call rate is the fraction of loci called on the relevant primer panel
 
 The GbS pass rate is the fraction of loci called and passing filters on the relevant primer panel
 
+=head2 target_filter
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 30
+
+Filter used to produce the target stats file
+
+=head2 target_length
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The total length of the target regions
+
+=head2 target_mapped_reads
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of mapped reads passing the target filter
+
+=head2 target_proper_pair_mapped_reads
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of proper pair mapped reads passing the target filter
+
+=head2 target_mapped_bases
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of mapped bases passing the target filter
+
+=head2 target_coverage_threshold
+
+  data_type: 'integer'
+  is_nullable: 1
+
+The coverage threshold used in the target perc target greater than depth calculation
+
+=head2 target_percent_gt_coverage_threshold
+
+  data_type: 'float'
+  is_nullable: 1
+  size: [5,2]
+
+The percentage of the target covered at greater than the depth specified
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -692,6 +747,20 @@ __PACKAGE__->add_columns(
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'gbs_pass_rate',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'target_filter',
+  { data_type => 'varchar', is_nullable => 1, size => 30 },
+  'target_length',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'target_mapped_reads',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'target_proper_pair_mapped_reads',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'target_mapped_bases',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'target_coverage_threshold',
+  { data_type => 'integer', is_nullable => 1 },
+  'target_percent_gt_coverage_threshold',
+  { data_type => 'float', is_nullable => 1, size => [5, 2] },
 );
 
 =head1 PRIMARY KEY
@@ -744,8 +813,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2018-07-11 11:03:13
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7zGod5ZZs+FULW5V1R8g1Q
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2018-10-19 16:50:09
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1X62FfyAIbA0ho6qjxkPSg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

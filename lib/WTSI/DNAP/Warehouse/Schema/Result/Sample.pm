@@ -247,6 +247,14 @@ Timestamp of sample creation
 
 The phenotype of the sample as described in Sequencescape
 
+=head2 developmental_stage
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Developmental Stage
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -334,6 +342,8 @@ __PACKAGE__->add_columns(
   'donor_id',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'phenotype',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'developmental_stage',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
@@ -442,6 +452,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 qc_results
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::QcResult>
+
+=cut
+
+__PACKAGE__->has_many(
+  'qc_results',
+  'WTSI::DNAP::Warehouse::Schema::Result::QcResult',
+  { 'foreign.id_sample_tmp' => 'self.id_sample_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 stock_resources
 
 Type: has_many
@@ -458,8 +483,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-09-18 13:50:10
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7ZimZ5abqdBw6SJXDTiIDg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2018-10-19 16:46:05
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ou2UXXgCpXjyUhqejaWJjg
 
 our $VERSION = '0';
 
