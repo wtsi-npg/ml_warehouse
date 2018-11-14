@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - new columns in iseq_product_metrics to pave way to representing merged data
+
 release 2.11
  - added metric column to iseq_product_metrics for RNA: MT expression in pct of TPM.
  - add target fields to iseq_product_metrics
