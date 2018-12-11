@@ -21,4 +21,10 @@ ADD COLUMN `last_changed` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_T
   AFTER `position`,
 ADD COLUMN `qc_seq` TINYINT(1) DEFAULT NULL \
   COMMENT 'Sequencing lane level QC outcome, a result of either manual or automatic assessment by core' \
-  AFTER `last_changed`;
+  AFTER `last_changed`,
+ADD COLUMN `instrument_side` CHAR(1) DEFAULT NULL \
+  COMMENT 'Illumina instrument side (A or B), if appropriate' \
+  AFTER `instrument_model`,
+ADD COLUMN `workflow_type` VARCHAR(20) DEFAULT NULL \
+  COMMENT 'Illumina instrument workflow type' \
+  AFTER `instrument_side`;

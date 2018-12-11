@@ -90,6 +90,22 @@ Sequencing lane level QC outcome, a result of either manual or automatic assessm
   is_nullable: 1
   size: 64
 
+=head2 instrument_side
+
+  data_type: 'char'
+  is_nullable: 1
+  size: 1
+
+Illumina instrument side (A or B), if appropriate
+
+=head2 workflow_type
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 20
+
+Illumina instrument workflow type
+
 =head2 paired_read
 
   data_type: 'tinyint'
@@ -272,6 +288,10 @@ __PACKAGE__->add_columns(
   { data_type => 'char', is_nullable => 1, size => 32 },
   'instrument_model',
   { data_type => 'char', is_nullable => 1, size => 64 },
+  'instrument_side',
+  { data_type => 'char', is_nullable => 1, size => 1 },
+  'workflow_type',
+  { data_type => 'varchar', is_nullable => 1, size => 20 },
   'paired_read',
   {
     data_type => 'tinyint',
@@ -402,8 +422,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2018-11-29 17:12:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:qLBqL8wEbPwG0XOW+GS6yg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2018-12-11 15:01:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:bks8/zNg4N/AQKBf72TNNw
 
 our $VERSION = '0';
 
