@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+release 3.0
  - 'last_changed' columns added to both 'iseq_product_metrics' and
    'iseq_run_lane_metrics' tables
  - 'workflow_type' and 'instrument_side' columns added to the
