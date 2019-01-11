@@ -1,6 +1,24 @@
 LIST OF CHANGES
 ---------------
 
+release 3.0
+ - 'last_changed' columns added to both 'iseq_product_metrics' and
+   'iseq_run_lane_metrics' tables
+ - 'workflow_type' and 'instrument_side' columns added to the
+   'iseq_run_lane_metrics' table
+ - 'qc_seq' column addedto the 'iseq_run_lane_metrics' table
+ - redundant 'iseq_pm_run_index' indexed dropped from 'iseq_product_metrics'
+   table
+ - changes to enable saving results for merged entities to'iseq_product_metrics':
+     NOT NULL constraint dropped from 'id_run' and 'position' columns;
+     nullable 'id_iseq_product' column added to save composition digest;
+     nullable 'iseq_composition_tmp' added to save a short form of composition
+     JSON, needed because we do not have the linking table yet
+
+release 2.11
+ - added metric column to iseq_product_metrics for RNA: MT expression in pct of TPM.
+ - add target fields to iseq_product_metrics
+
 release 2.10
  - added metrics columns to iseq_product_metrics for GbS
 

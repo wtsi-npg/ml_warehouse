@@ -62,6 +62,22 @@ NPG run identifier
 
 Flowcell lane number
 
+=head2 last_changed
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  default_value: 'CURRENT_TIMESTAMP'
+  is_nullable: 1
+
+Date this record was created or changed
+
+=head2 qc_seq
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+Sequencing lane level QC outcome, a result of either manual or automatic assessment by core
+
 =head2 instrument_name
 
   data_type: 'char'
@@ -73,6 +89,22 @@ Flowcell lane number
   data_type: 'char'
   is_nullable: 1
   size: 64
+
+=head2 instrument_side
+
+  data_type: 'char'
+  is_nullable: 1
+  size: 1
+
+Illumina instrument side (A or B), if appropriate
+
+=head2 workflow_type
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 20
+
+Illumina instrument workflow type
 
 =head2 paired_read
 
@@ -243,10 +275,23 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 0 },
   'position',
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 0 },
+  'last_changed',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    default_value => 'CURRENT_TIMESTAMP',
+    is_nullable => 1,
+  },
+  'qc_seq',
+  { data_type => 'tinyint', is_nullable => 1 },
   'instrument_name',
   { data_type => 'char', is_nullable => 1, size => 32 },
   'instrument_model',
   { data_type => 'char', is_nullable => 1, size => 64 },
+  'instrument_side',
+  { data_type => 'char', is_nullable => 1, size => 1 },
+  'workflow_type',
+  { data_type => 'varchar', is_nullable => 1, size => 20 },
   'paired_read',
   {
     data_type => 'tinyint',
@@ -377,8 +422,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07048 @ 2018-04-13 13:42:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:txmWoUENXO0siusSx/61zg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2018-12-11 15:01:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:bks8/zNg4N/AQKBf72TNNw
 
 our $VERSION = '0';
 
@@ -470,7 +515,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2015 Genome Research Limited
+Copyright (C) 2018 Genome Research Limited
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 

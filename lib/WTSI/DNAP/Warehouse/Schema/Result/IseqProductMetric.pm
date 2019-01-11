@@ -47,6 +47,23 @@ __PACKAGE__->table('iseq_product_metrics');
 
 Internal to this database id, value can change
 
+=head2 id_iseq_product
+
+  data_type: 'char'
+  is_nullable: 1
+  size: 64
+
+Product id
+
+=head2 last_changed
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  default_value: 'CURRENT_TIMESTAMP'
+  is_nullable: 1
+
+Date this record was created or changed
+
 =head2 id_iseq_flowcell_tmp
 
   data_type: 'integer'
@@ -61,7 +78,7 @@ Flowcell id, see 'iseq_flowcell.id_iseq_flowcell_tmp'
   data_type: 'integer'
   extra: {unsigned => 1}
   is_foreign_key: 1
-  is_nullable: 0
+  is_nullable: 1
 
 NPG run identifier
 
@@ -70,7 +87,7 @@ NPG run identifier
   data_type: 'smallint'
   extra: {unsigned => 1}
   is_foreign_key: 1
-  is_nullable: 0
+  is_nullable: 1
 
 Flowcell lane number
 
@@ -81,6 +98,14 @@ Flowcell lane number
   is_nullable: 1
 
 Tag index, NULL if lane is not a pool
+
+=head2 iseq_composition_tmp
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 300
+
+JSON representation of the composition object, the column might be deleted in future
 
 =head2 qc_seq
 
@@ -451,6 +476,14 @@ Number of transcripts detected with at least 5 reads
 
 Percentage of globin genes TPM (transcripts per million) detected
 
+=head2 rna_mitochondrial_percent_tpm
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Percentage of mitochondrial genes TPM (transcripts per million) detected
+
 =head2 gbs_call_rate
 
   data_type: 'float'
@@ -467,6 +500,61 @@ The GbS call rate is the fraction of loci called on the relevant primer panel
 
 The GbS pass rate is the fraction of loci called and passing filters on the relevant primer panel
 
+=head2 target_filter
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 30
+
+Filter used to produce the target stats file
+
+=head2 target_length
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The total length of the target regions
+
+=head2 target_mapped_reads
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of mapped reads passing the target filter
+
+=head2 target_proper_pair_mapped_reads
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of proper pair mapped reads passing the target filter
+
+=head2 target_mapped_bases
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of mapped bases passing the target filter
+
+=head2 target_coverage_threshold
+
+  data_type: 'integer'
+  is_nullable: 1
+
+The coverage threshold used in the target perc target greater than depth calculation
+
+=head2 target_percent_gt_coverage_threshold
+
+  data_type: 'float'
+  is_nullable: 1
+  size: [5,2]
+
+The percentage of the target covered at greater than the depth specified
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -476,6 +564,15 @@ __PACKAGE__->add_columns(
     extra => { unsigned => 1 },
     is_auto_increment => 1,
     is_nullable => 0,
+  },
+  'id_iseq_product',
+  { data_type => 'char', is_nullable => 1, size => 64 },
+  'last_changed',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    default_value => 'CURRENT_TIMESTAMP',
+    is_nullable => 1,
   },
   'id_iseq_flowcell_tmp',
   {
@@ -489,17 +586,19 @@ __PACKAGE__->add_columns(
     data_type => 'integer',
     extra => { unsigned => 1 },
     is_foreign_key => 1,
-    is_nullable => 0,
+    is_nullable => 1,
   },
   'position',
   {
     data_type => 'smallint',
     extra => { unsigned => 1 },
     is_foreign_key => 1,
-    is_nullable => 0,
+    is_nullable => 1,
   },
   'tag_index',
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'iseq_composition_tmp',
+  { data_type => 'varchar', is_nullable => 1, size => 300 },
   'qc_seq',
   { data_type => 'tinyint', is_nullable => 1 },
   'qc_lib',
@@ -678,10 +777,26 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
   'rna_globin_percent_tpm',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'rna_mitochondrial_percent_tpm',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'gbs_call_rate',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'gbs_pass_rate',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'target_filter',
+  { data_type => 'varchar', is_nullable => 1, size => 30 },
+  'target_length',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'target_mapped_reads',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'target_proper_pair_mapped_reads',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'target_mapped_bases',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'target_coverage_threshold',
+  { data_type => 'integer', is_nullable => 1 },
+  'target_percent_gt_coverage_threshold',
+  { data_type => 'float', is_nullable => 1, size => [5, 2] },
 );
 
 =head1 PRIMARY KEY
@@ -730,12 +845,17 @@ __PACKAGE__->belongs_to(
   'iseq_run_lane_metric',
   'WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric',
   { id_run => 'id_run', position => 'position' },
-  { is_deferrable => 1, on_delete => 'CASCADE', on_update => 'NO ACTION' },
+  {
+    is_deferrable => 1,
+    join_type     => 'LEFT',
+    on_delete     => 'CASCADE',
+    on_update     => 'NO ACTION',
+  },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2018-05-08 15:03:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2kyGR8B8j/ru/ulb1cb50Q
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2018-11-29 17:12:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:y9LuxOvyjbw3xqTm1g1O8Q
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
@@ -825,7 +945,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2015 Genome Research Limited
+Copyright (C) 2018 Genome Research Limited
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
