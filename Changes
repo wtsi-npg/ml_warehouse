@@ -1,6 +1,10 @@
 LIST OF CHANGES
 ---------------
 
+release 3.1
+ - add column 'nrd_percent' for non-reference discordance to the
+    'iseq_product_metrics' table
+
 release 3.0
  - 'last_changed' columns added to both 'iseq_product_metrics' and
    'iseq_run_lane_metrics' tables
