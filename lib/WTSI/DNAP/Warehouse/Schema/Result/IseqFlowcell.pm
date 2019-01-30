@@ -350,6 +350,36 @@ Indicates that a sample has failed a QC step during processing
 
 Primer Panel name
 
+=head2 spiked_phix_barcode
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 20
+
+Barcode of the PhiX tube added to the lane
+
+=head2 spiked_phix_percentage
+
+  data_type: 'float'
+  is_nullable: 1
+
+Percentage PhiX tube spiked in the pool in terms of molar concentration
+
+=head2 loading_concentration
+
+  data_type: 'float'
+  is_nullable: 1
+
+Final instrument loading concentration (pM)
+
+=head2 workflow
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 20
+
+Workflow used when processing the flowcell
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -459,6 +489,14 @@ __PACKAGE__->add_columns(
   { data_type => 'tinyint', is_nullable => 1 },
   'primer_panel',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'spiked_phix_barcode',
+  { data_type => 'varchar', is_nullable => 1, size => 20 },
+  'spiked_phix_percentage',
+  { data_type => 'float', is_nullable => 1 },
+  'loading_concentration',
+  { data_type => 'float', is_nullable => 1 },
+  'workflow',
+  { data_type => 'varchar', is_nullable => 1, size => 20 },
 );
 
 =head1 PRIMARY KEY
@@ -526,8 +564,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07048 @ 2018-03-15 11:29:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hBfjV4r+Oj/Mg/mz5BXSpA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-01-29 17:35:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0upnm9UFzRNOl725iGj+eQ
 
 use MooseX::Aliases;
 use Readonly;

@@ -500,6 +500,14 @@ The GbS call rate is the fraction of loci called on the relevant primer panel
 
 The GbS pass rate is the fraction of loci called and passing filters on the relevant primer panel
 
+=head2 nrd_percent
+
+  data_type: 'float'
+  is_nullable: 1
+  size: [5,2]
+
+Percent of non-reference discordance
+
 =head2 target_filter
 
   data_type: 'varchar'
@@ -783,6 +791,8 @@ __PACKAGE__->add_columns(
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'gbs_pass_rate',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'nrd_percent',
+  { data_type => 'float', is_nullable => 1, size => [5, 2] },
   'target_filter',
   { data_type => 'varchar', is_nullable => 1, size => 30 },
   'target_length',
@@ -854,8 +864,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2018-11-29 17:12:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:y9LuxOvyjbw3xqTm1g1O8Q
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-01-29 17:35:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FN3wzhtXUQfMsEpoLU7vBA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
