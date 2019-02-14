@@ -50,7 +50,7 @@ Internal to this database id, value can change
 =head2 id_iseq_product
 
   data_type: 'char'
-  is_nullable: 1
+  is_nullable: 0
   size: 64
 
 Product id
@@ -574,7 +574,7 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
   },
   'id_iseq_product',
-  { data_type => 'char', is_nullable => 1, size => 64 },
+  { data_type => 'char', is_nullable => 0, size => 64 },
   'last_changed',
   {
     data_type => 'datetime',
@@ -821,6 +821,20 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key('id_iseq_pr_metrics_tmp');
 
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<iseq_pr_metrics_product_unique>
+
+=over 4
+
+=item * L</id_iseq_product>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint('iseq_pr_metrics_product_unique', ['id_iseq_product']);
+
 =head1 RELATIONS
 
 =head2 iseq_flowcell
@@ -864,8 +878,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-01-29 17:35:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FN3wzhtXUQfMsEpoLU7vBA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-02-14 14:48:30
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:42LCHmzsaX4VGx8cqwYqfw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
