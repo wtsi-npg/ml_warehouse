@@ -857,6 +857,38 @@ __PACKAGE__->belongs_to(
   },
 );
 
+=head2 iseq_product_components
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductComponent>
+
+=cut
+
+__PACKAGE__->has_many(
+  'iseq_product_components',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqProductComponent',
+  {
+    'foreign.id_iseq_pr_component_tmp' => 'self.id_iseq_pr_metrics_tmp',
+  },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 iseq_products
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductComponent>
+
+=cut
+
+__PACKAGE__->has_many(
+  'iseq_products',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqProductComponent',
+  { 'foreign.id_iseq_pr_tmp' => 'self.id_iseq_pr_metrics_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 iseq_run_lane_metric
 
 Type: belongs_to
@@ -878,15 +910,15 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-02-14 14:48:30
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:42LCHmzsaX4VGx8cqwYqfw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-02-21 13:02:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3RZJz9N6k2y98KvsKf3ZJQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
 our $VERSION = '0';
 
-=head2 iseq_run_lane_metric
+=head2 iseq_run_lane_metriic_right
 
 Type: belongs_to
 
@@ -969,7 +1001,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2018 Genome Research Limited
+Copyright (C) 2019 Genome Research Limited
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
