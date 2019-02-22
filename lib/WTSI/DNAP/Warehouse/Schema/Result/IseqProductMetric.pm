@@ -40,7 +40,7 @@ __PACKAGE__->table('iseq_product_metrics');
 
 =head2 id_iseq_pr_metrics_tmp
 
-  data_type: 'integer'
+  data_type: 'bigint'
   extra: {unsigned => 1}
   is_auto_increment: 1
   is_nullable: 0
@@ -568,7 +568,7 @@ The percentage of the target covered at greater than the depth specified
 __PACKAGE__->add_columns(
   'id_iseq_pr_metrics_tmp',
   {
-    data_type => 'integer',
+    data_type => 'bigint',
     extra => { unsigned => 1 },
     is_auto_increment => 1,
     is_nullable => 0,
@@ -910,8 +910,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-02-21 13:02:34
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3RZJz9N6k2y98KvsKf3ZJQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-02-22 13:56:22
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nSRCld9uDYhwT6y0F+q3QA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

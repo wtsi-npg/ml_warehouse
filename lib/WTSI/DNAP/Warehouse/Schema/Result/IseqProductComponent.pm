@@ -40,7 +40,7 @@ __PACKAGE__->table('iseq_product_components');
 
 =head2 id_iseq_pr_components_tmp
 
-  data_type: 'integer'
+  data_type: 'bigint'
   extra: {unsigned => 1}
   is_auto_increment: 1
   is_nullable: 0
@@ -49,7 +49,7 @@ Internal to this database id, value can change
 
 =head2 id_iseq_pr_tmp
 
-  data_type: 'integer'
+  data_type: 'bigint'
   extra: {unsigned => 1}
   is_foreign_key: 1
   is_nullable: 0
@@ -58,7 +58,7 @@ iseq_product_metrics table row id for the product
 
 =head2 id_iseq_pr_component_tmp
 
-  data_type: 'integer'
+  data_type: 'bigint'
   extra: {unsigned => 1}
   is_foreign_key: 1
   is_nullable: 0
@@ -78,21 +78,21 @@ Number of component products for this product
 __PACKAGE__->add_columns(
   'id_iseq_pr_components_tmp',
   {
-    data_type => 'integer',
+    data_type => 'bigint',
     extra => { unsigned => 1 },
     is_auto_increment => 1,
     is_nullable => 0,
   },
   'id_iseq_pr_tmp',
   {
-    data_type => 'integer',
+    data_type => 'bigint',
     extra => { unsigned => 1 },
     is_foreign_key => 1,
     is_nullable => 0,
   },
   'id_iseq_pr_component_tmp',
   {
-    data_type => 'integer',
+    data_type => 'bigint',
     extra => { unsigned => 1 },
     is_foreign_key => 1,
     is_nullable => 0,
@@ -165,8 +165,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-02-21 12:37:28
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nj3YgBJ1X7NLwXAZYRXWeg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-02-22 13:56:22
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:29cIaQ0qP+yojohFby5+Ew
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
