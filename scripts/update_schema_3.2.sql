@@ -17,6 +17,9 @@ CREATE TABLE iseq_product_components (
     COMMENT "iseq_product_metrics table row id for one of this product's components",
   `num_components` TINYINT(3) UNSIGNED NOT NULL \
     COMMENT 'Number of component products for this product',
+  `component_index` TINYINT(3) UNSIGNED NOT NULL \
+    COMMENT 'Unique component index within all components of this product, \
+a value from 1 to the value of num_components column for this product',
   PRIMARY KEY (`id_iseq_pr_components_tmp`),
   UNIQUE KEY `iseq_pr_comp_unique` (`id_iseq_pr_tmp`, `id_iseq_pr_component_tmp`),
   CONSTRAINT `iseq_pr_comp_pr_fk` FOREIGN KEY (`id_iseq_pr_tmp`) \
@@ -25,9 +28,7 @@ CREATE TABLE iseq_product_components (
   CONSTRAINT `iseq_pr_comp_pr_comp_fk` FOREIGN KEY (`id_iseq_pr_component_tmp`) \
     REFERENCES `iseq_product_metrics` (`id_iseq_pr_metrics_tmp`) \
     ON DELETE NO ACTION ON UPDATE NO ACTION,
-  KEY `iseq_pr_comp_ncomp` (`num_components`,`id_iseq_pr_tmp`)
+  KEY `iseq_pr_comp_ncomp` (`num_components`,`id_iseq_pr_tmp`),
+  KEY `iseq_pr_comp_compi` (`component_index`,`num_components`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
 

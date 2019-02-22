@@ -73,6 +73,15 @@ iseq_product_metrics table row id for one of this product's components
 
 Number of component products for this product
 
+=head2 component_index
+
+  data_type: 'tinyint'
+  extra: {unsigned => 1}
+  is_nullable: 0
+
+Unique component index within all components of this product, 
+a value from 1 to the value of num_components column for this product
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -98,6 +107,8 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
   },
   'num_components',
+  { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 0 },
+  'component_index',
   { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 0 },
 );
 
@@ -165,8 +176,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-02-22 13:56:22
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:29cIaQ0qP+yojohFby5+Ew
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-02-22 16:03:28
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:wsP1sEBK1oRYk5C8X4RRag
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
