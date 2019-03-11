@@ -40,7 +40,7 @@ __PACKAGE__->table('iseq_product_metrics');
 
 =head2 id_iseq_pr_metrics_tmp
 
-  data_type: 'integer'
+  data_type: 'bigint'
   extra: {unsigned => 1}
   is_auto_increment: 1
   is_nullable: 0
@@ -50,7 +50,7 @@ Internal to this database id, value can change
 =head2 id_iseq_product
 
   data_type: 'char'
-  is_nullable: 1
+  is_nullable: 0
   size: 64
 
 Product id
@@ -568,13 +568,13 @@ The percentage of the target covered at greater than the depth specified
 __PACKAGE__->add_columns(
   'id_iseq_pr_metrics_tmp',
   {
-    data_type => 'integer',
+    data_type => 'bigint',
     extra => { unsigned => 1 },
     is_auto_increment => 1,
     is_nullable => 0,
   },
   'id_iseq_product',
-  { data_type => 'char', is_nullable => 1, size => 64 },
+  { data_type => 'char', is_nullable => 0, size => 64 },
   'last_changed',
   {
     data_type => 'datetime',
@@ -821,6 +821,20 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key('id_iseq_pr_metrics_tmp');
 
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<iseq_pr_metrics_product_unique>
+
+=over 4
+
+=item * L</id_iseq_product>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint('iseq_pr_metrics_product_unique', ['id_iseq_product']);
+
 =head1 RELATIONS
 
 =head2 iseq_flowcell
@@ -841,6 +855,38 @@ __PACKAGE__->belongs_to(
     on_delete     => 'SET NULL',
     on_update     => 'NO ACTION',
   },
+);
+
+=head2 iseq_product_components
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductComponent>
+
+=cut
+
+__PACKAGE__->has_many(
+  'iseq_product_components',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqProductComponent',
+  {
+    'foreign.id_iseq_pr_component_tmp' => 'self.id_iseq_pr_metrics_tmp',
+  },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 iseq_products
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductComponent>
+
+=cut
+
+__PACKAGE__->has_many(
+  'iseq_products',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqProductComponent',
+  { 'foreign.id_iseq_pr_tmp' => 'self.id_iseq_pr_metrics_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
 );
 
 =head2 iseq_run_lane_metric
@@ -864,15 +910,15 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-01-29 17:35:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FN3wzhtXUQfMsEpoLU7vBA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-02-22 13:56:22
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nSRCld9uDYhwT6y0F+q3QA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
 our $VERSION = '0';
 
-=head2 iseq_run_lane_metric
+=head2 iseq_run_lane_metriic_right
 
 Type: belongs_to
 
@@ -955,7 +1001,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2018 Genome Research Limited
+Copyright (C) 2019 Genome Research Limited
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 

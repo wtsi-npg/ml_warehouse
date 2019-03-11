@@ -35,6 +35,10 @@ make_schema_at(
           my $name=$h{'name'};
           $name=~s/^id_//;
           $name=~s/_tmp$//;
+          $name=~s/_tmps$/s/;
+          $name=~s/_tmps$/s/;
+          $name=~s/^iseq_product_components_id_//;
+          if ($name !~ /product/) {$name =~ s/iseq_pr/iseq_product/};
           return $name;
     },
     filter_generated_code => sub {
