@@ -1,6 +1,12 @@
 LIST OF CHANGES
 ---------------
 
+release 4.0
+ - iseq_product_metrics table: make id_iseq_product column not nullable,
+     set unique constraint on it
+ - a new table iseq_product_components - linking table for product records
+     in iseq_product_metrics
+
 release 3.1
  - add column 'nrd_percent' for non-reference discordance to the
     'iseq_product_metrics' table
