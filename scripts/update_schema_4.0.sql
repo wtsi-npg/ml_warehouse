@@ -32,3 +32,28 @@ a value from 1 to the value of num_components column for this product',
   KEY `iseq_pr_comp_compi` (`component_index`,`num_components`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*
+Prod database preparation
+mysql> select distinct id_run from iseq_product_metrics where id_iseq_product is null;
++--------+
+| id_run |
++--------+
+|  25671 |
+|  25723 |
+|  25806 |
+|  25845 |
+|  26475 |
+|  26378 |
+|  26398 |
+|  26396 |
+|  26397 |
+|  25752 |
++--------+
+10 rows in set (0.00 sec)
+
+mysql> select id_iseq_product from iseq_product_metrics where id_iseq_product is not null and id_run in (25671, 25723, 25806, 25845, 26475, 26378, 26398, 26396, 26397, 25752);
+Empty set (0.01 sec)
+
+mysql> delete from iseq_product_metrics where id_iseq_product is null;                                                                               
+Query OK, 968 rows affected (0.03 sec)
+*/
