@@ -563,6 +563,21 @@ The coverage threshold used in the target perc target greater than depth calcula
 
 The percentage of the target covered at greater than the depth specified
 
+=head2 target_autosome_coverage_threshold
+
+  data_type: 'integer'
+  is_nullable: 1
+
+The coverage threshold used in the perc target autosome greater than depth calculation
+
+=head2 target_autosome_percent_gt_coverage_threshold
+
+  data_type: 'float'
+  is_nullable: 1
+  size: [5,2]
+
+The percentage of the target autosome covered at greater than the depth specified
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -807,6 +822,10 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', is_nullable => 1 },
   'target_percent_gt_coverage_threshold',
   { data_type => 'float', is_nullable => 1, size => [5, 2] },
+  'target_autosome_coverage_threshold',
+  { data_type => 'integer', is_nullable => 1 },
+  'target_autosome_percent_gt_coverage_threshold',
+  { data_type => 'float', is_nullable => 1, size => [5, 2] },
 );
 
 =head1 PRIMARY KEY
@@ -910,8 +929,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-02-22 13:56:22
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nSRCld9uDYhwT6y0F+q3QA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-17 18:06:08
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:x04DCiqqi9uPMstFBGG1FA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

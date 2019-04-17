@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - add target autosome fields to iseq_product_metrics
+
 release 4.0
  - iseq_product_metrics table: make id_iseq_product column not nullable,
      set unique constraint on it
