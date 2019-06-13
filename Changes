@@ -1,7 +1,10 @@
 LIST OF CHANGES
 ---------------
 
- - add target autosome fields to iseq_product_metrics
+release 5.0
+ - added target autosome fields to iseq_product_metrics
+ - added DBIx binding for the bmap_flowcell table for the
+   BioNano Saphyr instrument
 
 release 4.0
  - iseq_product_metrics table: make id_iseq_product column not nullable,
