@@ -451,6 +451,21 @@ __PACKAGE__->add_unique_constraint('study_uuid_study_lims_index', ['uuid_study_l
 
 =head1 RELATIONS
 
+=head2 bmap_flowcells
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::BmapFlowcell>
+
+=cut
+
+__PACKAGE__->has_many(
+  'bmap_flowcells',
+  'WTSI::DNAP::Warehouse::Schema::Result::BmapFlowcell',
+  { 'foreign.id_study_tmp' => 'self.id_study_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 flgen_plates
 
 Type: has_many
@@ -542,8 +557,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-09-18 13:50:11
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:D9uYWqktKz4i9NaQ5j0xuA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-06-03 13:17:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ZUb0NzmfNR9Gxza74GVPFw
 
 with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
 
