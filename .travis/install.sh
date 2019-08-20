@@ -2,6 +2,8 @@
 
 set -e -x
 
+cpanm --quiet --notest Module::Build
+
 # Git branch to merge to or custom branch
 WTSI_NPG_BUILD_BRANCH=${WTSI_NPG_BUILD_BRANCH:=$TRAVIS_BRANCH}
 # WTSI NPG Perl repo dependencies
