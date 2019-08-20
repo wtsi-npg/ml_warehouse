@@ -1,16 +1,14 @@
 sudo: false
 language: perl
 perl:
-  - "5.16"
   - "5.22-shrplib"
 env:
   global:
     - secure: "NroWmwo87rKc5VoqNCzySJjNiEeBl/Ryv9d/IZ4swEzxbLVmzGPJgqbw7TmhHLS7X+r3WcAVHnO3ERaxPVFSUu/yclls4IGnwoocYV/tLjF5vMCqdF0MtLF/GTPtNyv9JyzKx9fkBNlwxYgtv9c25JKfv4I1MvXdMEVRe9f4e8U="
     - TEST_AUTHOR=1
-    - DNAP_UTILITIES_VERSION="0.5.1"
-before_install:
-  - cpanm --no-lwp --notest https://github.com/wtsi-npg/perl-dnap-utilities/releases/download/${DNAP_UTILITIES_VERSION}/WTSI-DNAP-Utilities-${DNAP_UTILITIES_VERSION}.tar.gz
-  - cpanm --installdeps --notest .
+    - WTSI_NPG_GITHUB_URL=https://github.com/wtsi-npg
+install:
+  - ./.travis/install.sh
 after_success:
   - ./Build dist
   - export DIST_FILE=$(ls ml_warehouse-*.tar.gz)
