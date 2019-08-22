@@ -1,6 +1,10 @@
 LIST OF CHANGES
 ---------------
 
+releaes 5.1
+ - allow to store longer composition JSON strings in the iseq_product_metrics
+   table
+
 release 5.0
  - added target autosome fields to iseq_product_metrics
  - added DBIx binding for the bmap_flowcell table for the
