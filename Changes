@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+releaes 5.1
  - allow to store longer composition JSON strings in the iseq_product_metrics
    table
 
