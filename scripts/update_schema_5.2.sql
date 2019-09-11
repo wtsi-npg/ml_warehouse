@@ -17,7 +17,7 @@ CREATE TABLE `iseq_external_product_metrics` (
     COMMENT 'WSI validation hex MD5, not set for multiple source files',
   `manifest_upload_status` char(15) DEFAULT NULL \
     COMMENT 'One of "IN PROGRESS", "DONE", "FAILED", not set for multiple source files',
-  `manifest_upload_date` datetime DEFAULT CURRENT_TIMESTAMP \
+  `manifest_upload_date` datetime DEFAULT NULL \
     COMMENT 'Date the manifest uploaded by WSI',
 
   `id_iseq_product` char(64) DEFAULT NULL COMMENT 'product id',

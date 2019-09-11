@@ -113,7 +113,6 @@ One of 'IN PROGRESS', 'DONE', 'FAILED', not set for multiple source files
 
   data_type: 'datetime'
   datetime_undef_if_invalid: 1
-  default_value: 'CURRENT_TIMESTAMP'
   is_nullable: 1
 
 Date the manifest uploaded by WSI
@@ -605,7 +604,6 @@ __PACKAGE__->add_columns(
   {
     data_type => 'datetime',
     datetime_undef_if_invalid => 1,
-    default_value => 'CURRENT_TIMESTAMP',
     is_nullable => 1,
   },
   'id_iseq_product',
@@ -812,8 +810,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-09-11 11:32:45
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:kNpUBc21GVXHrAKJTurTRA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-09-11 11:38:00
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CV+8Boi5Z2/Pnz4R+PPHuQ
 
 our $VERSION = '0';
 
