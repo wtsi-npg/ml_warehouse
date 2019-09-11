@@ -88,7 +88,7 @@ CREATE TABLE `iseq_external_product_metrics` (
   `adapter_contamination` float unsigned DEFAULT NULL \
     COMMENT 'The maximum over adapters and cycles in reads/fragments as a fraction',
   `adapter_contamination_assessment` char(10) DEFAULT NULL \
-    COMMENT '"PASS", "WARN", "FAIL" per read pair, e.g. “PASS/PASS” if both read pairs do not have any adapter sequence present in more than 10% reads',
+    COMMENT '"PASS", "WARN", "FAIL" per read pair, e.g. "PASS/PASS" if both read pairs do not have any adapter sequence present in more than 10% reads',
   `pre_adapter_min_total_qscore` tinyint(3) unsigned DEFAULT NULL \
     COMMENT 'Minimum of TOTAL_QSCORE values in PreAdapter report from CollectSequencingArtifactMetrics',
   `ref_bias_min_total_qscore` tinyint(3) unsigned DEFAULT NULL \
