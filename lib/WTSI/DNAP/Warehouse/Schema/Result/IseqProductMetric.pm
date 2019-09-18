@@ -103,7 +103,7 @@ Tag index, NULL if lane is not a pool
 
   data_type: 'varchar'
   is_nullable: 1
-  size: 300
+  size: 600
 
 JSON representation of the composition object, the column might be deleted in future
 
@@ -621,7 +621,7 @@ __PACKAGE__->add_columns(
   'tag_index',
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
   'iseq_composition_tmp',
-  { data_type => 'varchar', is_nullable => 1, size => 300 },
+  { data_type => 'varchar', is_nullable => 1, size => 600 },
   'qc_seq',
   { data_type => 'tinyint', is_nullable => 1 },
   'qc_lib',
@@ -856,6 +856,40 @@ __PACKAGE__->add_unique_constraint('iseq_pr_metrics_product_unique', ['id_iseq_p
 
 =head1 RELATIONS
 
+=head2 iseq_external_product_components
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductComponent>
+
+=cut
+
+__PACKAGE__->has_many(
+  'iseq_external_product_components',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductComponent',
+  {
+    'foreign.id_iseq_pr_component_tmp' => 'self.id_iseq_pr_metrics_tmp',
+  },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 iseq_external_product_metrics
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductMetric>
+
+=cut
+
+__PACKAGE__->has_many(
+  'iseq_external_product_metrics',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductMetric',
+  {
+    'foreign.id_iseq_pr_metrics_tmp' => 'self.id_iseq_pr_metrics_tmp',
+  },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 iseq_flowcell
 
 Type: belongs_to
@@ -929,8 +963,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-17 18:06:08
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:x04DCiqqi9uPMstFBGG1FA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-09-10 13:39:25
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:TsZuHu02YVdEtzTbL6IQ2A
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
