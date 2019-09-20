@@ -13,6 +13,9 @@ lib/WTSI/DNAP/Warehouse/Schema/Result/CgapSupplierBarcode.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/FlgenPlate.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqFlowcell.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqProductMetric.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/IseqExternalProductMetric.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/IseqExternalProductComponent.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/IseqProductComponent.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunLaneMetric.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunStatus.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunStatusDict.pm
