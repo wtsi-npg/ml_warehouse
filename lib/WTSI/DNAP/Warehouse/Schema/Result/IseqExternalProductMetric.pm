@@ -65,17 +65,22 @@ Datetime this record was created
 
 Datetime this record was created or changed
 
-=head2 supplier_sample_name_wsi
+=head2 sample_id_wsi
 
   data_type: 'varchar'
-  is_nullable: 0
+  is_nullable: 1
   size: 255
 
 =head2 plate_id_wsi
 
   data_type: 'varchar'
-  is_nullable: 0
-  size: 20
+  is_nullable: 1
+  size: 255
+
+=head2 library_id_wsi
+
+  data_type: 'integer'
+  is_nullable: 1
 
 =head2 file_name_wsi
 
@@ -96,8 +101,8 @@ Comma-delimitered alphabetically sorted list of full file paths for the files in
 =head2 md5_wsi
 
   data_type: 'char'
-  is_nullable: 0
-  size: 24
+  is_nullable: 1
+  size: 32
 
 WSI validation hex MD5, not set for multiple source files
 
@@ -107,15 +112,15 @@ WSI validation hex MD5, not set for multiple source files
   is_nullable: 1
   size: 15
 
-One of 'IN PROGRESS', 'DONE', 'FAILED', not set for multiple source files
+One of 'IN PROGRESS', 'DONE', 'FAIL', not set for multiple source files
 
-=head2 manifest_upload_date
+=head2 manifest_upload_status_change_date
 
   data_type: 'datetime'
   datetime_undef_if_invalid: 1
   is_nullable: 1
 
-Date the manifest uploaded by WSI
+Date the status of manifest upload is changed
 
 =head2 id_iseq_product
 
@@ -230,7 +235,7 @@ Date of confirmation of integrity of data products by archive service
 
   data_type: 'char'
   is_nullable: 1
-  size: 24
+  size: 32
 
 External validation hex MD5, not set for multiple source files
 
@@ -588,19 +593,21 @@ __PACKAGE__->add_columns(
     default_value => 'CURRENT_TIMESTAMP',
     is_nullable => 1,
   },
-  'supplier_sample_name_wsi',
-  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'sample_id_wsi',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'plate_id_wsi',
-  { data_type => 'varchar', is_nullable => 0, size => 20 },
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'library_id_wsi',
+  { data_type => 'integer', is_nullable => 1 },
   'file_name_wsi',
   { data_type => 'varchar', is_nullable => 0, size => 300 },
   'file_path_wsi',
   { data_type => 'varchar', is_nullable => 0, size => 760 },
   'md5_wsi',
-  { data_type => 'char', is_nullable => 0, size => 24 },
+  { data_type => 'char', is_nullable => 1, size => 32 },
   'manifest_upload_status',
   { data_type => 'char', is_nullable => 1, size => 15 },
-  'manifest_upload_date',
+  'manifest_upload_status_change_date',
   {
     data_type => 'datetime',
     datetime_undef_if_invalid => 1,
@@ -640,7 +647,7 @@ __PACKAGE__->add_columns(
   'archive_conformation_date',
   { data_type => 'date', datetime_undef_if_invalid => 1, is_nullable => 1 },
   'md5',
-  { data_type => 'char', is_nullable => 1, size => 24 },
+  { data_type => 'char', is_nullable => 1, size => 32 },
   'md5_validation',
   { data_type => 'char', is_nullable => 1, size => 4 },
   'format_validation',
@@ -748,18 +755,6 @@ __PACKAGE__->set_primary_key('id_iseq_ext_pr_metrics_tmp');
 
 =head1 UNIQUE CONSTRAINTS
 
-=head2 C<iseq_ext_pr_metrics_pr_file_name>
-
-=over 4
-
-=item * L</file_name_wsi>
-
-=back
-
-=cut
-
-__PACKAGE__->add_unique_constraint('iseq_ext_pr_metrics_pr_file_name', ['file_name_wsi']);
-
 =head2 C<iseq_ext_pr_metrics_pr_file_path>
 
 =over 4
@@ -810,8 +805,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-09-11 11:38:00
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CV+8Boi5Z2/Pnz4R+PPHuQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-09-27 11:05:25
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:if5zN5/t8/basEUnVFndjA
 
 our $VERSION = '0';
 
