@@ -2,7 +2,8 @@ LIST OF CHANGES
 ---------------
 
 release 6.1
- -  update definition of iseq_external_product_metric table
+ - update DBIx classes from prod database
+ - update definition of iseq_external_product_metric table
 
 release 6.0
  - add new tables for externally processed data
