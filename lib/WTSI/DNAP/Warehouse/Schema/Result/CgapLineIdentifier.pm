@@ -77,6 +77,12 @@ Internal to this database id. Value can change.
   is_nullable: 0
   size: 36
 
+=head2 project
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 50
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -97,6 +103,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 36 },
   'biomaterial_uuid',
   { data_type => 'varchar', is_nullable => 0, size => 36 },
+  'project',
+  { data_type => 'varchar', is_nullable => 1, size => 50 },
 );
 
 =head1 PRIMARY KEY
@@ -126,8 +134,8 @@ __PACKAGE__->set_primary_key('cgap_line_identifier_tmp');
 __PACKAGE__->add_unique_constraint('line_uuid', ['line_uuid']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07045 @ 2016-08-19 13:42:13
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:41bmKs2K6tvBg1ZbdR8Qeg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-09-30 14:19:43
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:szLIuSZIqYQeyCUYJPMvYg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

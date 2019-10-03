@@ -511,6 +511,29 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key('id_iseq_flowcell_tmp');
 
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<index_iseq_flowcell_id_flowcell_lims_position_tag_index_id_lims>
+
+=over 4
+
+=item * L</id_flowcell_lims>
+
+=item * L</position>
+
+=item * L</tag_index>
+
+=item * L</id_lims>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint(
+  'index_iseq_flowcell_id_flowcell_lims_position_tag_index_id_lims',
+  ['id_flowcell_lims', 'position', 'tag_index', 'id_lims'],
+);
+
 =head1 RELATIONS
 
 =head2 iseq_product_metrics
@@ -564,8 +587,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-01-29 17:35:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0upnm9UFzRNOl725iGj+eQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-09-30 14:19:43
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+McuTujNbSlRkMs2by27Jg
 
 use MooseX::Aliases;
 use Readonly;
