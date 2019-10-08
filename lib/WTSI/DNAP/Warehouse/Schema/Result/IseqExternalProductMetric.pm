@@ -567,7 +567,7 @@ Sample discordance levels at non-reference genotypes as a fraction
 
 'PASS' based on nrd_persent < 2% or 'FAIL'
 
-=head2 sex_supplier
+=head2 sex_reported
 
   data_type: 'char'
   is_nullable: 1
@@ -751,7 +751,7 @@ __PACKAGE__->add_columns(
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'nrd_assessment',
   { data_type => 'char', is_nullable => 1, size => 4 },
-  'sex_supplier',
+  'sex_reported',
   { data_type => 'char', is_nullable => 1, size => 6 },
   'sex_computed',
   { data_type => 'char', is_nullable => 1, size => 6 },
@@ -821,8 +821,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-08 16:47:30
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8COla7RCTAPZqUAGqTq7kw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-08 16:58:00
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ql9axuXIqAP+v3nv33UQgQ
 
 our $VERSION = '0';
 
