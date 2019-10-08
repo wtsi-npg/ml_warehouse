@@ -169,13 +169,21 @@ Archive ID for data product
 
 One of 'PASS', 'HOLD', 'INSUFFICIENT', 'FAIL'
 
-=head2 qc
+=head2 qc_overall_assessment
 
   data_type: 'char'
   is_nullable: 1
   size: 4
 
 Final data product criteria evaluation outcome as 'PASS' or 'FAIL'
+
+=head2 qc_status
+
+  data_type: 'char'
+  is_nullable: 1
+  size: 15
+
+One of 'PASS', 'HOLD', 'INSUFFICIENT', 'FAIL'
 
 =head2 sequencing_start_date
 
@@ -399,19 +407,19 @@ Number of reads
 
 =head2 adapter_contamination
 
-  data_type: 'float'
-  extra: {unsigned => 1}
+  data_type: 'varchar'
   is_nullable: 1
+  size: 255
 
-The maximum over adapters and cycles in reads/fragments as a fraction
+The maximum over adapters and cycles in reads/fragments as a fraction per file and RG. Values for first and second reads separated with ',', and values for individual files separated with '/'. e.g. '0.1/0.1/0.1/0.1,0.1/0.1/0.1/0.1'
 
 =head2 adapter_contamination_assessment
 
-  data_type: 'char'
+  data_type: 'varchar'
   is_nullable: 1
-  size: 10
+  size: 255
 
-'PASS', 'WARN', 'FAIL' per read pair, e.g. 'PASS/PASS' if both read pairs do not have any adapter sequence present in more than 10% reads
+'PASS', 'WARN', 'FAIL' per read and file. Multiple values are represented as forward slash-separated array of strings with a comma separating entries for paired-end 1 and 2 reads e.g. 'PASS/PASS/WARN/PASS,PASS/PASS/WARN/PASS'
 
 =head2 pre_adapter_min_total_qscore
 
@@ -465,75 +473,75 @@ Reported by samtools, as a fraction
 
 =head2 basic_statistics_assessement
 
-  data_type: 'char'
+  data_type: 'varchar'
   is_nullable: 1
-  size: 4
+  size: 255
 
-FastQC 'PASS', 'WARN', 'FAIL' per read pair separated by '/'
+FastQC 'PASS', 'WARN', 'FAIL' per input file. Array of strings separated by '/', with a ',' separating entries for paired-end 1 and 2 reads. e.g. Four RG 'PASS/PASS/WARN/PASS,PASS/PASS/WARN/PASS'
 
 =head2 overrepresented_sequences_assessement
 
-  data_type: 'char'
+  data_type: 'varchar'
   is_nullable: 1
-  size: 4
+  size: 255
 
-FastQC 'PASS', 'WARN', 'FAIL' per read pair separated by '/'
+FastQC 'PASS', 'WARN', 'FAIL' per input file. Array of strings separated by '/', with a ',' separating entries for paired-end 1 and 2 reads. e.g. Four RG 'PASS/PASS/WARN/PASS,PASS/PASS/WARN/PASS'
 
 =head2 n_content_per_base_assessement
 
-  data_type: 'char'
+  data_type: 'varchar'
   is_nullable: 1
-  size: 4
+  size: 255
 
-FastQC 'PASS', 'WARN', 'FAIL' per read pair separated by '/'
+FastQC 'PASS', 'WARN', 'FAIL' per input file. Array of strings separated by '/', with a ',' separating entries for paired-end 1 and 2 reads. e.g. Four RG 'PASS/PASS/WARN/PASS,PASS/PASS/WARN/PASS'
 
 =head2 sequence_content_per_base_assessement
 
-  data_type: 'char'
+  data_type: 'varchar'
   is_nullable: 1
-  size: 4
+  size: 255
 
-FastQC 'PASS', 'WARN', 'FAIL' per read pair separated by '/'
+FastQC 'PASS', 'WARN', 'FAIL' per input file. Array of strings separated by '/', with a ',' separating entries for paired-end 1 and 2 reads. e.g. Four RG 'PASS/PASS/WARN/PASS,PASS/PASS/WARN/PASS'
 
 =head2 sequence_quality_per_base_assessement
 
-  data_type: 'char'
+  data_type: 'varchar'
   is_nullable: 1
-  size: 4
+  size: 255
 
-FastQC 'PASS', 'WARN', 'FAIL' per read pair separated by '/'
+FastQC 'PASS', 'WARN', 'FAIL' per input file. Array of strings separated by '/', with a ',' separating entries for paired-end 1 and 2 reads. e.g. Four RG 'PASS/PASS/WARN/PASS,PASS/PASS/WARN/PASS'
 
 =head2 gc_content_per_sequence_assessement
 
-  data_type: 'char'
+  data_type: 'varchar'
   is_nullable: 1
-  size: 4
+  size: 255
 
-FastQC 'PASS', 'WARN', 'FAIL' per read pair separated by '/'
+FastQC 'PASS', 'WARN', 'FAIL' per input file. Array of strings separated by '/', with a ',' separating entries for paired-end 1 and 2 reads. e.g. Four RG 'PASS/PASS/WARN/PASS,PASS/PASS/WARN/PASS'
 
 =head2 quality_scores_per_sequence_assessement
 
-  data_type: 'char'
+  data_type: 'varchar'
   is_nullable: 1
-  size: 4
+  size: 255
 
-FastQC 'PASS', 'WARN', 'FAIL' per read pair separated by '/'
+FastQC 'PASS', 'WARN', 'FAIL' per input file. Array of strings separated by '/', with a ',' separating entries for paired-end 1 and 2 reads. e.g. Four RG 'PASS/PASS/WARN/PASS,PASS/PASS/WARN/PASS'
 
 =head2 sequence_duplication_levels_assessement
 
-  data_type: 'char'
+  data_type: 'varchar'
   is_nullable: 1
-  size: 4
+  size: 255
 
-FastQC 'PASS', 'WARN', 'FAIL' per read pair separated by '/'
+FastQC 'PASS', 'WARN', 'FAIL' per input file. Array of strings separated by '/', with a ',' separating entries for paired-end 1 and 2 reads. e.g. Four RG 'PASS/PASS/WARN/PASS,PASS/PASS/WARN/PASS'
 
 =head2 sequence_length_distribution_assessement
 
-  data_type: 'char'
+  data_type: 'varchar'
   is_nullable: 1
-  size: 4
+  size: 255
 
-FastQC 'PASS', 'WARN', 'FAIL' per read pair separated by '/'
+FastQC 'PASS', 'WARN', 'FAIL' per input file. Array of strings separated by '/', with a ',' separating entries for paired-end 1 and 2 reads. e.g. Four RG 'PASS/PASS/WARN/PASS,PASS/PASS/WARN/PASS'
 
 =head2 fastqc_overall_assessment
 
@@ -541,7 +549,7 @@ FastQC 'PASS', 'WARN', 'FAIL' per read pair separated by '/'
   is_nullable: 1
   size: 4
 
-'PASS' or 'FAIL'
+FastQC 'PASS' or 'FAIL'
 
 =head2 nrd
 
@@ -634,8 +642,10 @@ __PACKAGE__->add_columns(
   { data_type => 'char', is_nullable => 1, size => 64 },
   'processing_status',
   { data_type => 'char', is_nullable => 1, size => 15 },
-  'qc',
+  'qc_overall_assessment',
   { data_type => 'char', is_nullable => 1, size => 4 },
+  'qc_status',
+  { data_type => 'char', is_nullable => 1, size => 15 },
   'sequencing_start_date',
   { data_type => 'date', datetime_undef_if_invalid => 1, is_nullable => 1 },
   'upload_date',
@@ -700,9 +710,9 @@ __PACKAGE__->add_columns(
   'gc_fraction_reverse_read',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'adapter_contamination',
-  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'adapter_contamination_assessment',
-  { data_type => 'char', is_nullable => 1, size => 10 },
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'pre_adapter_min_total_qscore',
   { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 1 },
   'ref_bias_min_total_qscore',
@@ -718,23 +728,23 @@ __PACKAGE__->add_columns(
   'sequence_error_rate',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'basic_statistics_assessement',
-  { data_type => 'char', is_nullable => 1, size => 4 },
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'overrepresented_sequences_assessement',
-  { data_type => 'char', is_nullable => 1, size => 4 },
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'n_content_per_base_assessement',
-  { data_type => 'char', is_nullable => 1, size => 4 },
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'sequence_content_per_base_assessement',
-  { data_type => 'char', is_nullable => 1, size => 4 },
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'sequence_quality_per_base_assessement',
-  { data_type => 'char', is_nullable => 1, size => 4 },
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'gc_content_per_sequence_assessement',
-  { data_type => 'char', is_nullable => 1, size => 4 },
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'quality_scores_per_sequence_assessement',
-  { data_type => 'char', is_nullable => 1, size => 4 },
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'sequence_duplication_levels_assessement',
-  { data_type => 'char', is_nullable => 1, size => 4 },
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'sequence_length_distribution_assessement',
-  { data_type => 'char', is_nullable => 1, size => 4 },
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'fastqc_overall_assessment',
   { data_type => 'char', is_nullable => 1, size => 4 },
   'nrd',
@@ -811,8 +821,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-09-27 12:49:23
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:fxS/fUz+yDo83wX1X2NKvw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-08 16:47:30
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8COla7RCTAPZqUAGqTq7kw
 
 our $VERSION = '0';
 
