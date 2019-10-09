@@ -1,6 +1,12 @@
 LIST OF CHANGES
 ---------------
 
+ - update definition of iseq_external_product_metric table
+   - fastqc columns become varchars
+   - rename column qc to qc_overall_assessment
+   - new column qc_status
+ - update DBIx classes to match new table definition
+
 release 6.1
  - update DBIx classes from prod database
  - update definition of iseq_external_product_metric table
