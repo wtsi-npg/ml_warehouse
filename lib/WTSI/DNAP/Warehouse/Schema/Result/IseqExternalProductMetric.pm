@@ -367,7 +367,7 @@ Fraction of marker pairs with two read pairs evidencing parity and non-parity, m
 
 =head2 yield
 
-  data_type: 'tinyint'
+  data_type: 'smallint'
   extra: {unsigned => 1}
   is_nullable: 1
 
@@ -375,13 +375,13 @@ sequence data quantity (Gb)
 
 =head2 yield_q20
 
-  data_type: 'integer'
+  data_type: 'bigint'
   extra: {unsigned => 1}
   is_nullable: 1
 
 =head2 yield_q30
 
-  data_type: 'integer'
+  data_type: 'bigint'
   extra: {unsigned => 1}
   is_nullable: 1
 
@@ -453,13 +453,13 @@ Minimum of TOTAL_QSCORE values in BaitBias report from CollectSequencingArtifact
 
 =head2 insert_size_mean
 
-  data_type: 'tinyint'
+  data_type: 'float'
   extra: {unsigned => 1}
   is_nullable: 1
 
 =head2 insert_size_std
 
-  data_type: 'tinyint'
+  data_type: 'float'
   extra: {unsigned => 1}
   is_nullable: 1
 
@@ -698,11 +698,11 @@ __PACKAGE__->add_columns(
   'contamination_assessment',
   { data_type => 'char', is_nullable => 1, size => 4 },
   'yield',
-  { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 1 },
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
   'yield_q20',
-  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
   'yield_q30',
-  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
   'num_reads',
   { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
   'gc_fraction_forward_read',
@@ -722,9 +722,9 @@ __PACKAGE__->add_columns(
   'target_proper_pair_mapped_reads_assessment',
   { data_type => 'char', is_nullable => 1, size => 4 },
   'insert_size_mean',
-  { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 1 },
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'insert_size_std',
-  { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 1 },
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'sequence_error_rate',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'basic_statistics_assessement',
@@ -821,8 +821,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-08 16:58:00
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ql9axuXIqAP+v3nv33UQgQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-10 12:41:17
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MXo8G7Qne+j9jNznYToyZg
 
 our $VERSION = '0';
 

@@ -18,6 +18,9 @@ MODIFY COLUMN `sequence_length_distribution_assessement` VARCHAR(255) NULL DEFAU
 MODIFY COLUMN `FastQC_overall_assessment` CHAR(4) NULL DEFAULT NULL COMMENT 'FastQC \"PASS\" or \"FAIL\"' ,
 MODIFY COLUMN `insert_size_mean` FLOAT UNSIGNED NULL DEFAULT NULL ,
 MODIFY COLUMN `insert_size_std` FLOAT UNSIGNED NULL DEFAULT NULL ,
+MODIFY COLUMN `yield` SMALLINT(5) UNSIGNED NULL DEFAULT NULL COMMENT 'sequence data quantity (Gb)' ,
+MODIFY COLUMN `yield_q20` BIGINT(20) UNSIGNED NULL DEFAULT NULL ,
+MODIFY COLUMN `yield_q30` BIGINT(20) UNSIGNED NULL DEFAULT NULL ,
 CHANGE COLUMN `qc` `qc_overall_assessment` CHAR(4) NULL DEFAULT NULL COMMENT 'Final data product criteria evaluation outcome as \"PASS\" or \"FAIL\"' ,
 CHANGE COLUMN `sex_supplier` `sex_reported` CHAR(6) NULL DEFAULT NULL COMMENT 'Sex as reported by sample supplier' ,
 ADD COLUMN `qc_status` CHAR(15) NULL DEFAULT NULL COMMENT 'One of \"PASS\", \"HOLD\", \"INSUFFICIENT\", \"FAIL\"' AFTER `qc_overall_assessment`;
