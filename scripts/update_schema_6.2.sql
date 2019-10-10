@@ -16,6 +16,8 @@ MODIFY COLUMN `quality_scores_per_sequence_assessement` VARCHAR(255) NULL DEFAUL
 MODIFY COLUMN `sequence_duplication_levels_assessement` VARCHAR(255) NULL DEFAULT NULL COMMENT 'FastQC \"PASS\", \"WARN\", \"FAIL\" per input file. Array of strings separated by \"/\", with a \",\" separating entries for paired-end 1 and 2 reads. e.g. Four RG \"PASS/PASS/WARN/PASS,PASS/PASS/WARN/PASS\"' ,
 MODIFY COLUMN `sequence_length_distribution_assessement` VARCHAR(255) NULL DEFAULT NULL COMMENT 'FastQC \"PASS\", \"WARN\", \"FAIL\" per input file. Array of strings separated by \"/\", with a \",\" separating entries for paired-end 1 and 2 reads. e.g. Four RG \"PASS/PASS/WARN/PASS,PASS/PASS/WARN/PASS\"' ,
 MODIFY COLUMN `FastQC_overall_assessment` CHAR(4) NULL DEFAULT NULL COMMENT 'FastQC \"PASS\" or \"FAIL\"' ,
+MODIFY COLUMN `insert_size_mean` FLOAT UNSIGNED NULL DEFAULT NULL ,
+MODIFY COLUMN `insert_size_std` FLOAT UNSIGNED NULL DEFAULT NULL ,
 CHANGE COLUMN `qc` `qc_overall_assessment` CHAR(4) NULL DEFAULT NULL COMMENT 'Final data product criteria evaluation outcome as \"PASS\" or \"FAIL\"' ,
 CHANGE COLUMN `sex_supplier` `sex_reported` CHAR(6) NULL DEFAULT NULL COMMENT 'Sex as reported by sample supplier' ,
 ADD COLUMN `qc_status` CHAR(15) NULL DEFAULT NULL COMMENT 'One of \"PASS\", \"HOLD\", \"INSUFFICIENT\", \"FAIL\"' AFTER `qc_overall_assessment`;
