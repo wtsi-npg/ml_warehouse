@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+release 6.2.1
+ - nrd_assessment column comment update: include 'NA' as a valid value
+
 release 6.2
  - update definition of iseq_external_product_metric table
    - fastqc columns become varchars

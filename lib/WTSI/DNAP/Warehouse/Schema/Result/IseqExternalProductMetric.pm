@@ -565,7 +565,7 @@ Sample discordance levels at non-reference genotypes as a fraction
   is_nullable: 1
   size: 4
 
-'PASS' based on nrd_persent < 2% or 'FAIL'
+'PASS' based on nrd_persent < 2% or 'FAIL' or 'NA' if genotyping data not available for this sample
 
 =head2 sex_reported
 
@@ -821,8 +821,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-10 12:41:17
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MXo8G7Qne+j9jNznYToyZg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-11 15:05:45
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FV5Sel1KH2d5Bra0wTmLTw
 
 our $VERSION = '0';
 
