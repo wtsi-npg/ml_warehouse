@@ -30,6 +30,8 @@ my $builder = WTSI::DNAP::Utilities::Build->new(
   },
 
   'requires' => {
+    'Carp'                                 => 0,
+    'Class::Load'                          => 0,
     'DBIx::Class::Core'                    => 0,
     'DBIx::Class::InflateColumn::DateTime' => 0,
     'DBIx::Class::Schema'                  => 0,
@@ -41,18 +43,20 @@ my $builder = WTSI::DNAP::Utilities::Build->new(
     'MooseX::MarkAsMethods'                => 0,
     'MooseX::NonMoose'                     => 0,
     'MooseX::Role::Parameterized'          => 0,
+    'Readonly'                             => 0,
     'strict'                               => 0,
+    'Try::Tiny'                            => 0,
     'warnings'                             => 0,
   },
 
   'recommends' => {
-    'Carp'                        => 0,
     'Config::Auto'                => 0,
     'DBIx::Class::Schema::Loader' => 0,
-    'Readonly'                    => 0,
-
     'npg_tracking::util::db_connect' => 0,
     'npg_qc::autoqc::role::rpt_key'  => 0,
+    'npg_tracking::glossary::composition' => 0,
+    'npg_tracking::glossary::composition::factory' => 0,
+    'npg_tracking::glossary::composition::component::illumina' => 0
   },
 );
 
