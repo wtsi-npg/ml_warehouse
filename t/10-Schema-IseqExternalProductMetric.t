@@ -3,9 +3,7 @@ use warnings;
 use Test::More tests => 7;
 use Test::Exception;
 use Test::Warn;
-
-use npg_tracking::glossary::composition;
-use npg_tracking::glossary::composition::component::illumina;
+use English qw(-no_match_vars);
 
 use_ok('WTSI::DNAP::Warehouse::Schema');
 
@@ -21,6 +19,14 @@ my $rspc = $schema->resultset('IseqProductComponent');
 ($rs->search({})->count() == 0) or die 'external product table is not empty';
 ($rsp->search({id_run => 4950})->count() == 0) or die
   'product table should not contain rows for run 4950';
+
+my $composition_modules_available = 0;
+
+eval {
+  require npg_tracking::glossary::composition;
+  require npg_tracking::glossary::composition::component::illumina;
+  $composition_modules_available = 1;
+};
 
 sub _create_product {
   my ($data, $positions) = @_;
@@ -58,6 +64,10 @@ sub _create_product {
 
   return;
 }
+
+SKIP: {
+      skip 'npg_tracking::glossary::composition module not available',
+           4 unless $composition_modules_available;
 
 subtest 'insert, single file name' => sub {
   plan tests => 14;
@@ -196,8 +206,9 @@ subtest 'update, multiple file names' => sub {
   is ($row->id_iseq_product,
     '0a0250691b5a601b8b36b892d81c84b9e93691ee6fec08822e5d2bf6e40fb5ac', 'product id is set');
   is ($row->iseq_composition_tmp, $json, 'product JSON is set');
-}
-;
+};
+
+}; # END of SKIP for  ($composition_modules_available == 0)
 
 1;
 
