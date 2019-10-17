@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 7;
+use Test::More tests => 8;
 use Test::Exception;
 use Test::Warn;
 use English qw(-no_match_vars);
@@ -209,6 +209,28 @@ subtest 'update, multiple file names' => sub {
 };
 
 }; # END of SKIP for  ($composition_modules_available == 0)
+
+SKIP: {
+      skip 'npg_tracking::glossary::composition module is available',
+           1 unless (not $composition_modules_available);
+
+subtest 'default behaviour when compositions modules not available' => sub {
+  plan tests => 6;
+
+  my $row;
+  warning_like { $row = $rs->create({file_name => '4950#1.cram',
+                                     file_path => 'some/4950#1.cram'}) }
+    [qr/Can't locate/], 'can insert, error captured';
+  ok ($row, 'row created');
+  is ($row->file_name, '4950#1.cram', 'file name for the row');
+
+  ok (!$row->manifest_upload_status, 'status not set');
+  warning_like { $row->update({manifest_upload_status => 'SUCCESS'}) }
+    [qr/Can't locate/], 'can update, error captured';
+  is ($row->manifest_upload_status, 'SUCCESS', 'row updated');
+};
+
+}; # END of SKIP for  ($composition_modules_available == 1);
 
 1;
 
