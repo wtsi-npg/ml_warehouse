@@ -1,6 +1,17 @@
 LIST OF CHANGES
 ---------------
 
+release 6.3.0
+ - table update for iseq_external_product_metrics:
+   drops id_iseq_pr_metrics_tmp and a foreign key based on it
+     since maintenence will be difficult,
+   adds index on id_iseq_product to enable using this column
+     in joining to iseq_product_metrics table on a similar column,
+   adds an indexed id_run column in case stats by run is needed
+ - insert and update DBIx IseqExternalProductMetric class
+   customisation to ensure that composition data and id_run
+   columns are filled in
+
 release 6.2.1
  - nrd_assessment column comment update: include 'NA' as a valid value
 
