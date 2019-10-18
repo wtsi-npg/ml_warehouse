@@ -873,23 +873,6 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-=head2 iseq_external_product_metrics
-
-Type: has_many
-
-Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductMetric>
-
-=cut
-
-__PACKAGE__->has_many(
-  'iseq_external_product_metrics',
-  'WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductMetric',
-  {
-    'foreign.id_iseq_pr_metrics_tmp' => 'self.id_iseq_pr_metrics_tmp',
-  },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
 =head2 iseq_flowcell
 
 Type: belongs_to
@@ -963,8 +946,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-09-10 13:39:25
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:TsZuHu02YVdEtzTbL6IQ2A
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-15 12:38:19
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:svHGCjqdjs1rjA/0A8+P4g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

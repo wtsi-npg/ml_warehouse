@@ -128,6 +128,14 @@ WSI manifest upload status, one of 'IN PROGRESS', 'DONE', 'FAIL', not set for mu
 
 Date the status of manifest upload is changed by WSI
 
+=head2 id_run
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+NPG run identifier, defined where the product corresponds to a single line
+
 =head2 id_iseq_product
 
   data_type: 'char'
@@ -143,15 +151,6 @@ product id
   size: 600
 
 JSON representation of the composition object, the column might be deleted in future
-
-=head2 id_iseq_pr_metrics_tmp
-
-  data_type: 'bigint'
-  extra: {unsigned => 1}
-  is_foreign_key: 1
-  is_nullable: 1
-
-An optional foreign key for a record in iseq_product_metrics if this row and the row in the product table is for the same product
 
 =head2 id_archive_product
 
@@ -627,17 +626,12 @@ __PACKAGE__->add_columns(
     datetime_undef_if_invalid => 1,
     is_nullable => 1,
   },
+  'id_run',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
   'id_iseq_product',
   { data_type => 'char', is_nullable => 1, size => 64 },
   'iseq_composition_tmp',
   { data_type => 'varchar', is_nullable => 1, size => 600 },
-  'id_iseq_pr_metrics_tmp',
-  {
-    data_type => 'bigint',
-    extra => { unsigned => 1 },
-    is_foreign_key => 1,
-    is_nullable => 1,
-  },
   'id_archive_product',
   { data_type => 'char', is_nullable => 1, size => 64 },
   'processing_status',
@@ -800,31 +794,110 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-=head2 iseq_product_metrics
 
-Type: belongs_to
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-15 12:49:23
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:tw/Esr1WGdB82BXF24C2Fg
 
-Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric>
+use Readonly;
+use Try::Tiny;
+use Carp;
+use Class::Load qw/load_class/;
 
-=cut
-
-__PACKAGE__->belongs_to(
-  'iseq_product_metrics',
-  'WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric',
-  { id_iseq_pr_metrics_tmp => 'id_iseq_pr_metrics_tmp' },
-  {
-    is_deferrable => 1,
-    join_type     => 'LEFT',
-    on_delete     => 'SET NULL',
-    on_update     => 'NO ACTION',
-  },
-);
-
-
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-11 15:05:45
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FV5Sel1KH2d5Bra0wTmLTw
+Readonly::Array my @ADDITIONAL_CLASSES => qw/
+  npg_tracking::glossary::composition
+  npg_tracking::glossary::composition::factory
+  npg_tracking::glossary::composition::component::illumina
+                                           /;
+##no critic (RegularExpressions::RequireExtendedFormatting RegularExpressions::RequireDotMatchAnything RegularExpressions::RequireLineBoundaryMatching)
+Readonly::Scalar my $FILENAME_REGEXP => qr/\A(\d+)(?:_(\d))?#(\d+)[.]cram\Z/;
+##use critic
+Readonly::Scalar my $FILENAME_DELIM   => q[,];
 
 our $VERSION = '0';
+
+around [qw/update insert/] => sub {
+  my $orig = shift;
+  my $self = shift;
+  if (not $self->in_storage # this is an insert
+      or not $self->id_iseq_product) {
+    try {
+      my %meta = %{$self->file_name2meta()};
+      while (my ($column_name, $value) = each %meta) {
+        $self->$column_name($value);
+      }
+    } catch {
+      carp $_;
+    };
+  }
+  return $self->$orig(@_);
+};
+
+sub file_name2composition {
+  my ($self, @file_name) = @_;
+
+  # Dynamically load classes from npg_tracking::glossary::composition
+  # namespace since this package should not have hard dependency on
+  # other non-CPAN packages.
+  for (@ADDITIONAL_CLASSES) {load_class($_)};
+
+  my $factory = npg_tracking::glossary::composition::factory->new();
+
+  foreach my $name (@file_name) {
+    ##no critic (RegularExpressions::RequireExtendedFormatting)
+    my ($id_run, $position, $tag_index) = $name =~ /$FILENAME_REGEXP/sm;
+    ##use critic
+    ($id_run and $tag_index) or croak "Not a recognised file name - '$name'";
+
+    if ($position) {
+      my $component = npg_tracking::glossary::composition::component::illumina->new(
+        id_run => $id_run, position => $position, tag_index => $tag_index
+      );
+      $factory->add_component($component);
+    } else {
+      # File name for a merged product. We need to find out what lanes went
+      # into the merge.
+      my @composition_jsons =
+	map { $_->iseq_composition_tmp }
+        $self->result_source->schema->resultset('IseqProductMetric')->search (
+          { id_run    => $id_run,
+            position  => undef,
+            tag_index => $tag_index },
+          { columns => 'iseq_composition_tmp'}
+        )->all();
+
+      @composition_jsons or croak
+        "No existing merged product found for '$name'";
+      @composition_jsons == 1 or croak
+        "Multiple merged products found for '$name'";
+
+      foreach my $component (npg_tracking::glossary::composition->thaw(
+        $composition_jsons[0],
+        component_class => 'npg_tracking::glossary::composition::component::illumina'
+      )->components_list) {
+        $factory->add_component($component);
+      }
+    }
+  }
+
+  return $factory->create_composition();
+}
+
+sub file_name2meta {
+  my $self = shift;
+
+  my @file_names = split $FILENAME_DELIM, $self->file_name;
+
+  my $composition = $self->file_name2composition(@file_names);
+  my $meta = {
+    id_iseq_product      => $composition->digest,
+    iseq_composition_tmp => $composition->freeze
+  };
+  if (@file_names == 1) {
+    $meta->{'id_run'} = $composition->get_component(0)->id_run;
+  }
+
+  return $meta;
+}
 
 __PACKAGE__->meta->make_immutable;
 
@@ -845,6 +918,36 @@ for data sequenced at WSI.
 
 =head1 SUBROUTINES/METHODS
 
+=head2 insert
+
+The default insert method changed so that for each new record we
+will fill in id_run (for products from a single run only),
+iseq_composition_tmp (composition JSON) and id_iseq_product
+(composition digest) columns.
+
+Failure to compute these values does not result in an error.
+
+=head2 update
+
+The default update method changes so so that for any row that
+does not have id_iseq_product column value defined, the same
+additional action happens as in the insert method.
+
+This action is added to the update method so that existing
+rows that initially did not have these columns filled in either
+as a result of a previous run time error or for historical
+reasons, get propely populated.
+
+=head2 file_name2composition
+
+Given a list of file names, returns a composition object for
+a product that is a result of the merge of these file.
+
+=head2 file_name2meta
+
+Returns a hash with metadata (run id, composition JSON and
+composition digest) appropriate for this row.
+
 =head1 DEPENDENCIES
 
 =over
@@ -858,6 +961,14 @@ for data sequenced at WSI.
 =item DBIx::Class::Core
 
 =item DBIx::Class::InflateColumn::DateTime
+
+=item Readonly
+
+=item Try::Tiny
+
+=item Carp
+
+=item Class::Load
 
 =back
 
