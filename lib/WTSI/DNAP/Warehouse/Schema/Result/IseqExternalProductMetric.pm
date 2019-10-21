@@ -790,13 +790,13 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductComp
 __PACKAGE__->has_many(
   'iseq_external_product_components',
   'WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductComponent',
-  { 'foreign.id_iseq_pr_tmp' => 'self.id_iseq_ext_pr_metrics_tmp' },
+  { 'foreign.id_iseq_product_ext' => 'self.id_iseq_product' },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-15 12:49:23
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:tw/Esr1WGdB82BXF24C2Fg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-21 12:33:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Yzj1nIIwcevluJcgq0Hz9A
 
 use Readonly;
 use Try::Tiny;

@@ -10,7 +10,7 @@ WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductComponent
 
 =head1 DESCRIPTION
 
-Table linking iseq_external_product_metrics table data to components in the iseq_product_metrics table
+Table linking iseq_external_product_metrics table products to components in the iseq_product_metrics table
 
 =cut
 
@@ -51,23 +51,22 @@ __PACKAGE__->table('iseq_external_product_components');
 
 Internal to this database id, value can change
 
-=head2 id_iseq_pr_tmp
+=head2 id_iseq_product_ext
 
-  data_type: 'bigint'
-  extra: {unsigned => 1}
+  data_type: 'char'
   is_foreign_key: 1
   is_nullable: 0
+  size: 64
 
-iseq_external_product_metrics table row id for the product
+id (digest) for the external product composition
 
-=head2 id_iseq_pr_component_tmp
+=head2 id_iseq_product
 
-  data_type: 'bigint'
-  extra: {unsigned => 1}
-  is_foreign_key: 1
-  is_nullable: 1
+  data_type: 'char'
+  is_nullable: 0
+  size: 64
 
-iseq_product_metrics table row id for one of this product's components
+id (digest) for one of the products components
 
 =head2 num_components
 
@@ -95,20 +94,10 @@ __PACKAGE__->add_columns(
     is_auto_increment => 1,
     is_nullable => 0,
   },
-  'id_iseq_pr_tmp',
-  {
-    data_type => 'bigint',
-    extra => { unsigned => 1 },
-    is_foreign_key => 1,
-    is_nullable => 0,
-  },
-  'id_iseq_pr_component_tmp',
-  {
-    data_type => 'bigint',
-    extra => { unsigned => 1 },
-    is_foreign_key => 1,
-    is_nullable => 1,
-  },
+  'id_iseq_product_ext',
+  { data_type => 'char', is_foreign_key => 1, is_nullable => 0, size => 64 },
+  'id_iseq_product',
+  { data_type => 'char', is_nullable => 0, size => 64 },
   'num_components',
   { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 0 },
   'component_index',
@@ -133,9 +122,9 @@ __PACKAGE__->set_primary_key('id_iseq_ext_pr_components_tmp');
 
 =over 4
 
-=item * L</id_iseq_pr_tmp>
+=item * L</id_iseq_product>
 
-=item * L</id_iseq_pr_component_tmp>
+=item * L</id_iseq_product_ext>
 
 =back
 
@@ -143,12 +132,12 @@ __PACKAGE__->set_primary_key('id_iseq_ext_pr_components_tmp');
 
 __PACKAGE__->add_unique_constraint(
   'iseq_ext_pr_comp_unique',
-  ['id_iseq_pr_tmp', 'id_iseq_pr_component_tmp'],
+  ['id_iseq_product', 'id_iseq_product_ext'],
 );
 
 =head1 RELATIONS
 
-=head2 iseq_product
+=head2 iseq_product_ext
 
 Type: belongs_to
 
@@ -157,13 +146,19 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductMetr
 =cut
 
 __PACKAGE__->belongs_to(
-  'iseq_product',
+  'iseq_product_ext',
   'WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductMetric',
-  { id_iseq_ext_pr_metrics_tmp => 'id_iseq_pr_tmp' },
-  { is_deferrable => 1, on_delete => 'CASCADE', on_update => 'NO ACTION' },
+  { id_iseq_product => 'id_iseq_product_ext' },
+  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
 );
 
-=head2 iseq_product_component
+
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-18 16:31:06
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MZF9h1iwW2028nqp+S3KRA
+
+our $VERSION = '0';
+
+=head2 iseq_product
 
 Type: belongs_to
 
@@ -172,22 +167,11 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric>
 =cut
 
 __PACKAGE__->belongs_to(
-  'iseq_product_component',
+  'iseq_product',
   'WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric',
-  { id_iseq_pr_metrics_tmp => 'id_iseq_pr_component_tmp' },
-  {
-    is_deferrable => 1,
-    join_type     => 'LEFT',
-    on_delete     => 'SET NULL',
-    on_update     => 'NO ACTION',
-  },
+  { id_iseq_product => 'id_iseq_product' },
+  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
 );
-
-
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-09-10 13:54:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zj/Db+JD6MS1y/fGCLjDcA
-
-our $VERSION = '0';
 
 __PACKAGE__->meta->make_immutable;
 

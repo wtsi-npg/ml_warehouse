@@ -856,23 +856,6 @@ __PACKAGE__->add_unique_constraint('iseq_pr_metrics_product_unique', ['id_iseq_p
 
 =head1 RELATIONS
 
-=head2 iseq_external_product_components
-
-Type: has_many
-
-Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductComponent>
-
-=cut
-
-__PACKAGE__->has_many(
-  'iseq_external_product_components',
-  'WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductComponent',
-  {
-    'foreign.id_iseq_pr_component_tmp' => 'self.id_iseq_pr_metrics_tmp',
-  },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
 =head2 iseq_flowcell
 
 Type: belongs_to
@@ -946,15 +929,15 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-15 12:38:19
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:svHGCjqdjs1rjA/0A8+P4g
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-18 16:31:06
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:NEXBbcq4o7GX7du5U58h1w
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
 our $VERSION = '0';
 
-=head2 iseq_run_lane_metriic_right
+=head2 iseq_run_lane_metric_right
 
 Type: belongs_to
 
@@ -987,11 +970,29 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 iseq_external_product_components
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductComponent>
+
+=cut
+
+__PACKAGE__->has_many(
+  'iseq_external_product_components',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductComponent',
+  {
+    'foreign.id_iseq_product' => 'self.id_iseq_product',
+  },
+  { is_deferrable => 1, cascade_copy => 0, cascade_delete => 0 },
+);
+
 ##no critic (ProhibitStringyEval ProhibitPostfixControls ProhibitInterpolationOfLiterals)
 with 'npg_qc::autoqc::role::rpt_key' if eval "require npg_qc::autoqc::role::rpt_key";
 ##use critic
 
 __PACKAGE__->meta->make_immutable;
+
 1;
 __END__
 
