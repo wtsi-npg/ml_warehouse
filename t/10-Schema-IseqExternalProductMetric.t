@@ -12,11 +12,13 @@ lives_ok { $schema = WTSI::DNAP::Warehouse::Schema->connect('dbi:SQLite:dbname=:
   'connected to test in-memory database';
 lives_ok { $schema->deploy() } 'schema deployed';
 
-my $rs   = $schema->resultset('IseqExternalProductMetric');
-my $rsp  = $schema->resultset('IseqProductMetric');
-my $rspc = $schema->resultset('IseqProductComponent');
+my $rs    = $schema->resultset('IseqExternalProductMetric');
+my $rsp   = $schema->resultset('IseqProductMetric');
+my $rspc  = $schema->resultset('IseqProductComponent');
+my $rsepc = $schema->resultset('IseqExternalProductComponent');
 
 ($rs->search({})->count() == 0) or die 'external product table is not empty';
+($rsepc->search({})->count() == 0) or die 'external product component table is not empty';
 ($rsp->search({id_run => 4950})->count() == 0) or die
   'product table should not contain rows for run 4950';
 
@@ -82,13 +84,13 @@ subtest 'insert, single file name' => sub {
 
   $row = $rs->create({file_name => '4950_5#6.cram',
                       file_path => 'some/4950_5#6.cram'});
-  is ($row->id_run, 4950, '4950_5#6.cram id_run not set');
+  is ($row->id_run, 4950, '4950_5#6.cram id_run is set');
   is ($row->id_iseq_product,
     '616e4f2191c5c80c7f94b3e58a980c5e6118fa132da1d05f400da2bdd4bfff48',
-    '4950_5#6.cram product id not set');
+    '4950_5#6.cram product id is set');
   is ($row->iseq_composition_tmp,
     '{"components":[{"id_run":4950,"position":5,"tag_index":6}]}',
-    '4950_5#6.cram product JSON not set');
+    '4950_5#6.cram product JSON is set');
 
   warning_like { $row = $rs->create({file_name => '4950#7.cram',
                                      file_path => 'some/4950#7.cram'}) }
@@ -186,7 +188,7 @@ subtest 'update, multiple file names' => sub {
     [qr/No existing merged product found/], 'error captured';
   ok (!$row->id_run, 'run id is not set');
   ok (!$row->id_iseq_product, 'product id is not set');
-  ok (!$row->iseq_composition_tmp, 'product JSON is set');
+  ok (!$row->iseq_composition_tmp, 'product JSON is not set');
 
   my $json = '{"components":[{"id_run":4950,"position":1,"tag_index":5},{"id_run":4950,"position":2,"tag_index":5}]}';
   my $id = npg_tracking::glossary::composition->thaw(
