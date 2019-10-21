@@ -22,6 +22,7 @@ my $builder = WTSI::DNAP::Utilities::Build->new(
     'SQL::Translator'          => 0,
     'Test::Distribution'       => 0,
     'Test::Exception'          => 0,
+    'Test::Warn'               => 0,
     'Test::More'               => 0,
     'Test::Perl::Critic'       => 0,
     'Test::Pod'                => 0,
