@@ -1,12 +1,14 @@
 -- Convert columns that can potentially be used in linking this table to other
 -- tables to character set and collation used in other tables
 ALTER TABLE `iseq_external_product_metrics` \
-  MODIFY supplier_sample_name varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL \
+  MODIFY `supplier_sample_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL \
   COMMENT 'Sample name given by the supplier, as recorded by WSI',
   MODIFY `plate_barcode` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL \
   COMMENT 'Stock plate barcode, as recorded by WSI',
   MODIFY `id_iseq_product` char(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL \
-  COMMENT 'product id';
+  COMMENT 'product id',
+  MODIFY `yield` float unsigned DEFAULT NULL \
+  COMMENT 'sequence data quantity (Gb), autosome';
 
 -- Drop empty table, we need a different schema
 DROP TABLE `iseq_external_product_components`;

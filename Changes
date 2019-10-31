@@ -5,6 +5,8 @@ release 6.4.0
  - iseq_external_product_component table redesign to allow for
    rows on iseq_product_metrics table to be deleted and recreated
    without making data in the linking table invalid
+ - yield column in the iseq_external_product_component table changed
+   from integer to float to correctly accommodate source data
  - code to creating rows in the iseq_external_product_component table,
    which will be run on row creation the and sometimes on row update
    for rows of the iseq_external_product_metrics table; this code will
