@@ -1,6 +1,16 @@
 LIST OF CHANGES
 ---------------
 
+release 6.4.0
+ - iseq_external_product_component table redesign to allow for
+   rows on iseq_product_metrics table to be deleted and recreated
+   without making data in the linking table invalid
+ - code to creating rows in the iseq_external_product_component table,
+   which will be run on row creation the and sometimes on row update
+   for rows of the iseq_external_product_metrics table; this code will
+   also be used to create a backlog of linking rows for existing
+   iseq_external_product_metrics table rows
+
 release 6.3.0
  - table update for iseq_external_product_metrics:
    drops id_iseq_pr_metrics_tmp and a foreign key based on it

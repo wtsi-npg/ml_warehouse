@@ -790,13 +790,13 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductComp
 __PACKAGE__->has_many(
   'iseq_external_product_components',
   'WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductComponent',
-  { 'foreign.id_iseq_pr_tmp' => 'self.id_iseq_ext_pr_metrics_tmp' },
+  { 'foreign.id_iseq_product_ext' => 'self.id_iseq_product' },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-15 12:49:23
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:tw/Esr1WGdB82BXF24C2Fg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-18 16:31:06
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:uZ0odT0ZDzVMJtjcz/CR3Q
 
 use Readonly;
 use Try::Tiny;
@@ -818,18 +818,31 @@ our $VERSION = '0';
 around [qw/update insert/] => sub {
   my $orig = shift;
   my $self = shift;
+
+  my $composition;
   if (not $self->in_storage # this is an insert
       or not $self->id_iseq_product) {
     try {
       my %meta = %{$self->file_name2meta()};
+      $composition = delete $meta{'composition'};
       while (my ($column_name, $value) = each %meta) {
         $self->$column_name($value);
       }
     } catch {
-      carp $_;
+      carp 'Warning updating or creating a row: ' . $_;
     };
   }
-  return $self->$orig(@_);
+  my $row = $self->$orig(@_); # create or update row
+
+  if ($composition) {
+    try {
+      $self->create_component_linking_rows($composition);
+    } catch {
+      carp 'Warning updating or creating a linking row: ' . $_;
+    };
+  }
+
+  return $row;
 };
 
 sub file_name2composition {
@@ -870,10 +883,8 @@ sub file_name2composition {
       @composition_jsons == 1 or croak
         "Multiple merged products found for '$name'";
 
-      foreach my $component (npg_tracking::glossary::composition->thaw(
-        $composition_jsons[0],
-        component_class => 'npg_tracking::glossary::composition::component::illumina'
-      )->components_list) {
+      foreach my $component (_json2composition(
+          $composition_jsons[0])->components_list) {
         $factory->add_component($component);
       }
     }
@@ -890,13 +901,63 @@ sub file_name2meta {
   my $composition = $self->file_name2composition(@file_names);
   my $meta = {
     id_iseq_product      => $composition->digest,
-    iseq_composition_tmp => $composition->freeze
+    iseq_composition_tmp => $composition->freeze,
+    composition          => $composition
   };
   if (@file_names == 1) {
     $meta->{'id_run'} = $composition->get_component(0)->id_run;
   }
 
   return $meta;
+}
+
+sub create_component_linking_rows {
+  my ($self, $composition) = @_;
+
+  # Dynamically load classes from npg_tracking::glossary::composition
+  # namespace since this package should not have hard dependency on
+  # other non-CPAN packages.
+  for (grep { not m{factory}smx } @ADDITIONAL_CLASSES) {
+    load_class($_)
+  };
+
+  # The code in this class always suplies the composition
+  # object to this method. This method will also be used to
+  # create missing linking rows, then it's reasonable to
+  # compute the composition object.
+  $composition ||= _json2composition($self->iseq_composition_tmp);
+
+  my $digest         = $self->id_iseq_product;
+  my $num_components = $composition->num_components;
+  my $index          = 1;
+
+  my $lcomponent_rs = $self->result_source->schema
+                           ->resultset('IseqExternalProductComponent');
+
+  foreach my $component ($composition->components_list()) {
+    my $linking_ref = {
+      id_iseq_product_ext => $digest,
+      num_components      => $num_components,
+      component_index     => $index++,
+      id_iseq_product     => ($num_components == 1) ? $digest :
+        npg_tracking::glossary::composition->new(
+          components => [$component])->digest
+    };
+    # There is a chance that the row already exists.
+    # We do not want to error bacause of this, neither we want
+    # to update the record.
+    $lcomponent_rs->find_or_create($linking_ref);
+  }
+
+  return;
+}
+
+sub _json2composition {
+  my $cjson = shift;
+  return npg_tracking::glossary::composition->thaw(
+    $cjson,
+    component_class => 'npg_tracking::glossary::composition::component::illumina'
+  );
 }
 
 __PACKAGE__->meta->make_immutable;
@@ -947,6 +1008,12 @@ a product that is a result of the merge of these file.
 
 Returns a hash with metadata (run id, composition JSON and
 composition digest) appropriate for this row.
+
+=head2 create_component_linking_rows
+
+For this row, creates missing linking records in the
+iseq_external_product_component table. Takes a a composition
+object corresponding to this row as an optional argument.
 
 =head1 DEPENDENCIES
 
