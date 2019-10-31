@@ -366,11 +366,11 @@ Fraction of marker pairs with two read pairs evidencing parity and non-parity, m
 
 =head2 yield
 
-  data_type: 'smallint'
+  data_type: 'float'
   extra: {unsigned => 1}
   is_nullable: 1
 
-sequence data quantity (Gb)
+sequence data quantity (Gb), autosome
 
 =head2 yield_q20
 
@@ -692,7 +692,7 @@ __PACKAGE__->add_columns(
   'contamination_assessment',
   { data_type => 'char', is_nullable => 1, size => 4 },
   'yield',
-  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'yield_q20',
   { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
   'yield_q30',
@@ -795,8 +795,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-18 16:31:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:uZ0odT0ZDzVMJtjcz/CR3Q
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-31 15:09:17
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:bZN6W3/2xfdBmBWBAS2Ybw
 
 use Readonly;
 use Try::Tiny;
