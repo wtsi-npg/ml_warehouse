@@ -1,6 +1,14 @@
 LIST OF CHANGES
 ---------------
 
+release 6.5.0
+ - more detailed comments for some columns.
+ - 'annotation' column reduced to 15 chars since it's not free text
+ - added columns for whole genome yield and end of phase2 analysis
+   date
+ - fixed spelling in one of the columns, ie changed column name
+   from archive_conformation_date to archive_confirmation_date
+
 release 6.4.0
  - iseq_external_product_component table redesign to allow for
    rows on iseq_product_metrics table to be deleted and recreated
