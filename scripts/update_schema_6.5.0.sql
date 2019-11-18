@@ -5,13 +5,13 @@
 -- Fixed spelling for one column name
 ALTER TABLE `iseq_external_product_metrics` \
   MODIFY `qc_status` char(15) DEFAULT NULL \
-  COMMENT 'State of the sample after phase 2 of processing, one of "PASS", "HOLD", "INSUFFICIENT", "FAIL"',
+  COMMENT 'State of the product after phase 2 of processing, one of "PASS", "HOLD", "INSUFFICIENT", "FAIL"',
   MODIFY `qc_overall_assessment` char(4) DEFAULT NULL \
-  COMMENT 'State of the sample after phase 3 of processing, one of "PASS" or "FAIL"',
+  COMMENT 'State of the product after phase 3 of processing, one of "PASS" or "FAIL"',
   MODIFY `processing_status` char(15) DEFAULT NULL \
-  COMMENT 'Overall status of the sample, one of "PASS", "HOLD", "INSUFFICIENT", "FAIL"',
+  COMMENT 'Overall status of the product, one of "PASS", "HOLD", "INSUFFICIENT", "FAIL"',
   MODIFY `yield` float unsigned DEFAULT NULL \
-  COMMENT 'Sequence data quantity (Gb) excluding duplicate reads, adaptors, overlapping bases from reads on the same fragment, soft-clipped bases, autosome only',
+  COMMENT 'Sequence data quantity (Gb) excluding duplicate reads, adaptors, overlapping bases from reads on the same fragment, soft-clipped bases, non-N autosome only',
   MODIFY `yield_q20` bigint(20) unsigned DEFAULT NULL \
   COMMENT 'Yield in bases at or above Q20 filtered in the same way as the yield column values',
   MODIFY `yield_q30` bigint(20) unsigned DEFAULT NULL \
@@ -24,11 +24,11 @@ ALTER TABLE `iseq_external_product_metrics` \
   COMMENT 'Annotation regarding data provenance, i.e. is sequence data from first pass, re-run, top-up, etc.',
   CHANGE COLUMN `archive_conformation_date` `archive_confirmation_date` \
   date DEFAULT NULL \
-  COMMENT 'Date of confirmation of integrity of data products by archive service'
+  COMMENT 'Date of confirmation of integrity of data product by archive service'
   AFTER `archival_date`,
   ADD COLUMN `yield_whole_genome` float unsigned DEFAULT NULL \
   COMMENT 'Sequence data quantity (Gb) excluding duplicate reads, adaptors, overlapping bases from reads on the same fragment, soft-clipped bases' \
   AFTER `contamination_assessment`,
   ADD COLUMN `phase2_end_date` datetime DEFAULT NULL \
-  COMMENT 'Date the phase 2 analysis finished' \
+  COMMENT 'Date the phase 2 analysis finished for this product' \
   AFTER `analysis_start_date`;

@@ -166,7 +166,7 @@ Archive ID for data product
   is_nullable: 1
   size: 15
 
-Overall status of the sample, one of 'PASS', 'HOLD', 'INSUFFICIENT', 'FAIL'
+Overall status of the product, one of 'PASS', 'HOLD', 'INSUFFICIENT', 'FAIL'
 
 =head2 qc_overall_assessment
 
@@ -174,7 +174,7 @@ Overall status of the sample, one of 'PASS', 'HOLD', 'INSUFFICIENT', 'FAIL'
   is_nullable: 1
   size: 4
 
-State of the sample after phase 3 of processing, one of 'PASS' or 'FAIL'
+State of the product after phase 3 of processing, one of 'PASS' or 'FAIL'
 
 =head2 qc_status
 
@@ -182,7 +182,7 @@ State of the sample after phase 3 of processing, one of 'PASS' or 'FAIL'
   is_nullable: 1
   size: 15
 
-State of the sample after phase 2 of processing, one of 'PASS', 'HOLD', 'INSUFFICIENT', 'FAIL'
+State of the product after phase 2 of processing, one of 'PASS', 'HOLD', 'INSUFFICIENT', 'FAIL'
 
 =head2 sequencing_start_date
 
@@ -228,7 +228,7 @@ Processing start date
   datetime_undef_if_invalid: 1
   is_nullable: 1
 
-Date the phase 2 analysis finished
+Date the phase 2 analysis finished for this product
 
 =head2 analysis_end_date
 
@@ -250,7 +250,7 @@ Date made available or pushed to archive service
   datetime_undef_if_invalid: 1
   is_nullable: 1
 
-Date of confirmation of integrity of data products by archive service
+Date of confirmation of integrity of data product by archive service
 
 =head2 md5
 
@@ -386,7 +386,7 @@ Sequence data quantity (Gb) excluding duplicate reads, adaptors, overlapping bas
   extra: {unsigned => 1}
   is_nullable: 1
 
-Sequence data quantity (Gb) excluding duplicate reads, adaptors, overlapping bases from reads on the same fragment, soft-clipped bases, autosome only
+Sequence data quantity (Gb) excluding duplicate reads, adaptors, overlapping bases from reads on the same fragment, soft-clipped bases, non-N autosome only
 
 =head2 yield_q20
 
@@ -825,8 +825,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-11-15 15:02:22
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3uQAWoCGGVyGXCxylfCL6Q
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-11-18 12:17:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nMWf/wxpcml/vgyJp3FC0A
 
 use Readonly;
 use Try::Tiny;
