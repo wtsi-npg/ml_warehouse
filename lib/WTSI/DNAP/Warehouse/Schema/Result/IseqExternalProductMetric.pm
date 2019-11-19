@@ -166,7 +166,7 @@ Archive ID for data product
   is_nullable: 1
   size: 15
 
-One of 'PASS', 'HOLD', 'INSUFFICIENT', 'FAIL'
+Overall status of the product, one of 'PASS', 'HOLD', 'INSUFFICIENT', 'FAIL'
 
 =head2 qc_overall_assessment
 
@@ -174,7 +174,7 @@ One of 'PASS', 'HOLD', 'INSUFFICIENT', 'FAIL'
   is_nullable: 1
   size: 4
 
-Final data product criteria evaluation outcome as 'PASS' or 'FAIL'
+State of the product after phase 3 of processing, one of 'PASS' or 'FAIL'
 
 =head2 qc_status
 
@@ -182,7 +182,7 @@ Final data product criteria evaluation outcome as 'PASS' or 'FAIL'
   is_nullable: 1
   size: 15
 
-One of 'PASS', 'HOLD', 'INSUFFICIENT', 'FAIL'
+State of the product after phase 2 of processing, one of 'PASS', 'HOLD', 'INSUFFICIENT', 'FAIL'
 
 =head2 sequencing_start_date
 
@@ -222,6 +222,14 @@ Processing start date
   datetime_undef_if_invalid: 1
   is_nullable: 1
 
+=head2 phase2_end_date
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 1
+
+Date the phase 2 analysis finished for this product
+
 =head2 analysis_end_date
 
   data_type: 'date'
@@ -236,13 +244,13 @@ Processing start date
 
 Date made available or pushed to archive service
 
-=head2 archive_conformation_date
+=head2 archive_confirmation_date
 
   data_type: 'date'
   datetime_undef_if_invalid: 1
   is_nullable: 1
 
-Date of confirmation of integrity of data products by archive service
+Date of confirmation of integrity of data product by archive service
 
 =head2 md5
 
@@ -296,9 +304,9 @@ Comma separated sorted list of flowcell IDs obtained from the CRAM file header(s
 
   data_type: 'varchar'
   is_nullable: 1
-  size: 256
+  size: 15
 
-annotation regarding data provenance, i.e. is sequence data from first pass, re-run, top-up etc.
+Annotation regarding data provenance, i.e. is sequence data from first pass, re-run, top-up, etc.
 
 =head2 min_read_length
 
@@ -364,13 +372,21 @@ Fraction of marker pairs with two read pairs evidencing parity and non-parity, m
 
 'PASS' or 'FAIL' based on verify_bam_id_score_assessment and double_error_fraction < 0.2%
 
+=head2 yield_whole_genome
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Sequence data quantity (Gb) excluding duplicate reads, adaptors, overlapping bases from reads on the same fragment, soft-clipped bases
+
 =head2 yield
 
   data_type: 'float'
   extra: {unsigned => 1}
   is_nullable: 1
 
-sequence data quantity (Gb), autosome
+Sequence data quantity (Gb) excluding duplicate reads, adaptors, overlapping bases from reads on the same fragment, soft-clipped bases, non-N autosome only
 
 =head2 yield_q20
 
@@ -378,11 +394,15 @@ sequence data quantity (Gb), autosome
   extra: {unsigned => 1}
   is_nullable: 1
 
+Yield in bases at or above Q20 filtered in the same way as the yield column values
+
 =head2 yield_q30
 
   data_type: 'bigint'
   extra: {unsigned => 1}
   is_nullable: 1
+
+Yield in bases at or above Q30 filtered in the same way as the yield column values
 
 =head2 num_reads
 
@@ -390,7 +410,7 @@ sequence data quantity (Gb), autosome
   extra: {unsigned => 1}
   is_nullable: 1
 
-Number of reads
+Number of reads filtered in the same way as the yield column values
 
 =head2 gc_fraction_forward_read
 
@@ -441,6 +461,8 @@ Minimum of TOTAL_QSCORE values in BaitBias report from CollectSequencingArtifact
   data_type: 'float'
   extra: {unsigned => 1}
   is_nullable: 1
+
+Fraction of properly paired mapped reads filtered in the same way as the yield column values
 
 =head2 target_proper_pair_mapped_reads_assessment
 
@@ -650,11 +672,17 @@ __PACKAGE__->add_columns(
   { data_type => 'date', datetime_undef_if_invalid => 1, is_nullable => 1 },
   'analysis_start_date',
   { data_type => 'date', datetime_undef_if_invalid => 1, is_nullable => 1 },
+  'phase2_end_date',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    is_nullable => 1,
+  },
   'analysis_end_date',
   { data_type => 'date', datetime_undef_if_invalid => 1, is_nullable => 1 },
   'archival_date',
   { data_type => 'date', datetime_undef_if_invalid => 1, is_nullable => 1 },
-  'archive_conformation_date',
+  'archive_confirmation_date',
   { data_type => 'date', datetime_undef_if_invalid => 1, is_nullable => 1 },
   'md5',
   { data_type => 'char', is_nullable => 1, size => 32 },
@@ -669,7 +697,7 @@ __PACKAGE__->add_columns(
   'flowcell_id',
   { data_type => 'varchar', is_nullable => 1, size => 256 },
   'annotation',
-  { data_type => 'varchar', is_nullable => 1, size => 256 },
+  { data_type => 'varchar', is_nullable => 1, size => 15 },
   'min_read_length',
   { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 1 },
   'target_autosome_coverage_threshold',
@@ -691,6 +719,8 @@ __PACKAGE__->add_columns(
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'contamination_assessment',
   { data_type => 'char', is_nullable => 1, size => 4 },
+  'yield_whole_genome',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'yield',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'yield_q20',
@@ -795,8 +825,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-31 15:09:17
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:bZN6W3/2xfdBmBWBAS2Ybw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-11-18 12:17:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nMWf/wxpcml/vgyJp3FC0A
 
 use Readonly;
 use Try::Tiny;
