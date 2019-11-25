@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+ - add instrument_external_name column to the iseq_run_lane_metrics
+   table
+
 release 6.5.0
  - more detailed comments for some columns.
  - 'annotation' column reduced to 15 chars since it's not free text
