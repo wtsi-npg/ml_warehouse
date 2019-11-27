@@ -84,6 +84,14 @@ Sequencing lane level QC outcome, a result of either manual or automatic assessm
   is_nullable: 1
   size: 32
 
+=head2 instrument_external_name
+
+  data_type: 'char'
+  is_nullable: 1
+  size: 10
+
+Name assigned to the instrument by the manufacturer
+
 =head2 instrument_model
 
   data_type: 'char'
@@ -286,6 +294,8 @@ __PACKAGE__->add_columns(
   { data_type => 'tinyint', is_nullable => 1 },
   'instrument_name',
   { data_type => 'char', is_nullable => 1, size => 32 },
+  'instrument_external_name',
+  { data_type => 'char', is_nullable => 1, size => 10 },
   'instrument_model',
   { data_type => 'char', is_nullable => 1, size => 64 },
   'instrument_side',
@@ -422,8 +432,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2018-12-11 15:01:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:bks8/zNg4N/AQKBf72TNNw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-11-26 11:54:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:D+Aibmddc0msHqDxNtzrow
 
 our $VERSION = '0';
 
