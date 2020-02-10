@@ -213,6 +213,14 @@ Legacy library_id for backwards compatibility.
 
 Timestamp of library creation
 
+=head2 pac_bio_run_name
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Name of the run
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -282,6 +290,8 @@ __PACKAGE__->add_columns(
     datetime_undef_if_invalid => 1,
     is_nullable => 1,
   },
+  'pac_bio_run_name',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -329,8 +339,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-27 20:27:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vtIxsQ5xuY4hLpyp1/5p4Q
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-02-10 15:05:13
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:dkAFMFOOZ7+MTrEn5sI6nQ
 
 our $VERSION = '0';
 

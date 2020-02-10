@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+ - PSD added  pac_bio_run_name field to pac_bio_run table to support
+   runs being created in traction as well as SequenceScape LIMs
+
 release 6.6.0
  - add instrument_external_name column to the iseq_run_lane_metrics
    table
