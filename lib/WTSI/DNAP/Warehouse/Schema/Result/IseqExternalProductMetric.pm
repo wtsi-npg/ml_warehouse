@@ -160,6 +160,15 @@ JSON representation of the composition object, the column might be deleted in fu
 
 Archive ID for data product
 
+=head2 destination
+
+  data_type: 'varchar'
+  default_value: 'UKBMP'
+  is_nullable: 1
+  size: 15
+
+Data destination, defaults to 'UKBMP'
+
 =head2 processing_status
 
   data_type: 'char'
@@ -656,6 +665,13 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 600 },
   'id_archive_product',
   { data_type => 'char', is_nullable => 1, size => 64 },
+  'destination',
+  {
+    data_type => 'varchar',
+    default_value => 'UKBMP',
+    is_nullable => 1,
+    size => 15,
+  },
   'processing_status',
   { data_type => 'char', is_nullable => 1, size => 15 },
   'qc_overall_assessment',
@@ -825,8 +841,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-11-18 12:17:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nMWf/wxpcml/vgyJp3FC0A
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-02-27 12:08:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:xq40xLM2QKZfaA7ttPWD3w
 
 use Readonly;
 use Try::Tiny;

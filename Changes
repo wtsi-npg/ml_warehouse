@@ -3,7 +3,10 @@ LIST OF CHANGES
 
  - PSD added  pac_bio_run_name field to pac_bio_run table to support
    runs being created in traction as well as SequenceScape LIMs
- - added a column to store the outcome of product uqc
+ - iseq_product_metrics table - a new column to store the outcome
+   of product uqc
+ - iseq_external_product_metrics - a new column to store product
+   destination
 
 release 6.6.0
  - add instrument_external_name column to the iseq_run_lane_metrics
