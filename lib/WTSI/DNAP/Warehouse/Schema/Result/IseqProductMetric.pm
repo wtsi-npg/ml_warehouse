@@ -121,6 +121,13 @@ Sequencing lane level QC outcome, a result of either manual or automatic assessm
 
 Library QC outcome, a result of either manual or automatic assessment by core
 
+=head2 qc_user
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+Library QC outcome according to the data user criteria, a result of either manual or automatic assessment
+
 =head2 qc
 
   data_type: 'tinyint'
@@ -626,6 +633,8 @@ __PACKAGE__->add_columns(
   { data_type => 'tinyint', is_nullable => 1 },
   'qc_lib',
   { data_type => 'tinyint', is_nullable => 1 },
+  'qc_user',
+  { data_type => 'tinyint', is_nullable => 1 },
   'qc',
   { data_type => 'tinyint', is_nullable => 1 },
   'tag_sequence4deplexing',
@@ -929,8 +938,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-18 16:31:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:NEXBbcq4o7GX7du5U58h1w
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-02-10 17:40:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GOG2Vlxnj78PZ0Qi+bkLvA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
