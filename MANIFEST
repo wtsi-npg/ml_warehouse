@@ -7,7 +7,9 @@ lib/WTSI/DNAP/Warehouse/Schema/Query/LibraryDigest.pm
 lib/WTSI/DNAP/Warehouse/Schema/Query/LimsFlags.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapAnalyte.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapBiomaterial.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/CgapHeron.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapLineIdentifier.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/CgapOrganoidsConjuredLabware.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapSupplierBarcode.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/FlgenPlate.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqFlowcell.pm

@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - capture latest changes/additions in ml warehouse database
+
 release 6.7.0
  - PSD added  pac_bio_run_name field to pac_bio_run table to support
    runs being created in traction as well as SequenceScape LIMs
