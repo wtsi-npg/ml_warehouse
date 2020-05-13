@@ -167,7 +167,7 @@ Archive ID for data product
   is_nullable: 1
   size: 15
 
-Data destination, defaults to 'UKBMP'
+Data destination, from 20200323 defaults to 'UKBMP'
 
 =head2 processing_status
 
@@ -841,8 +841,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-02-27 12:08:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:xq40xLM2QKZfaA7ttPWD3w
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-05-07 09:14:50
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:YJFAUcFuKNfXxexy5Y/sdw
 
 use Readonly;
 use Try::Tiny;
