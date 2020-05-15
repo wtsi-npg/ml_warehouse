@@ -255,6 +255,12 @@ The phenotype of the sample as described in Sequencescape
 
 Developmental Stage
 
+=head2 control_type
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -344,6 +350,8 @@ __PACKAGE__->add_columns(
   'phenotype',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'developmental_stage',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'control_type',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
@@ -498,8 +506,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-06-03 13:17:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BbEDN1DywviYTdj7Nc8fVw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-05-14 16:32:55
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aG+hC9t1dzP7ySzyJr6nDA
 
 our $VERSION = '0';
 
