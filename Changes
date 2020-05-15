@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+ - ml warehouse LIMS drivers - define additional delegated
+   to sample objects methods 
+
 release 6.8.0
  - capture latest changes/additions in ml warehouse database
 
