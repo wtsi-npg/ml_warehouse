@@ -613,6 +613,8 @@ Readonly my %DELEGATION_TO_SAMPLE => {
     'sample_supplier_name'     => 'supplier_name',
     'sample_cohort'            => 'cohort',
     'sample_donor_id'          => 'donor_id',
+    'sample_is_control'        => 'control',
+    'sample_control_type'      => 'control_type',
 };
 
 Readonly my %DELEGATION_TO_STUDY => {
@@ -866,7 +868,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2015 Genome Research Limited
+Copyright (C) 2014,2015,2016,2017,2018,2019,2020 Genome Research Ltd.
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
