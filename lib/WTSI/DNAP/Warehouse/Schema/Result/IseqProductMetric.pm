@@ -885,6 +885,21 @@ __PACKAGE__->belongs_to(
   },
 );
 
+=head2 iseq_heron_product_metric
+
+Type: might_have
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqHeronProductMetric>
+
+=cut
+
+__PACKAGE__->might_have(
+  'iseq_heron_product_metric',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqHeronProductMetric',
+  { 'foreign.id_iseq_product' => 'self.id_iseq_product' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 iseq_product_components
 
 Type: has_many
@@ -938,8 +953,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-02-10 17:40:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GOG2Vlxnj78PZ0Qi+bkLvA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-06-11 17:00:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WmrUdOLNhyMKAhrgNZCLzw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
@@ -1047,7 +1062,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2019 Genome Research Limited
+Copyright (C) 2019,2020 Genome Research Ltd.
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
