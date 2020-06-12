@@ -113,7 +113,7 @@ The numeric identifier of the slot on which the sample was run
 =head2 pipeline_id_lims
 
   data_type: 'varchar'
-  is_nullable: 0
+  is_nullable: 1
   size: 255
 
 LIMs-specific pipeline identifier that unambiguously defines library type
@@ -121,10 +121,10 @@ LIMs-specific pipeline identifier that unambiguously defines library type
 =head2 requested_data_type
 
   data_type: 'varchar'
-  is_nullable: 0
+  is_nullable: 1
   size: 255
 
-The type of data produces by sequencing, eg. basecalls only
+The type of data produced by sequencing, eg. basecalls only
 
 =head2 deleted_at
 
@@ -141,6 +141,70 @@ Timestamp of any flowcell destruction
   size: 10
 
 LIM system identifier
+
+=head2 tag_identifier
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Position of the first tag within the tag group
+
+=head2 tag_sequence
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Sequence of the first tag
+
+=head2 tag_set_id_lims
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+LIMs-specific identifier of the tag set for the first tag
+
+=head2 tag_set_name
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+WTSI-wide tag set name for the first tag
+
+=head2 tag2_identifier
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Position of the second tag within the tag group
+
+=head2 tag2_sequence
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Sequence of the second tag
+
+=head2 tag2_set_id_lims
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+LIMs-specific identifier of the tag set for the second tag
+
+=head2 tag2_set_name
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+WTSI-wide tag set name for the second tag
 
 =cut
 
@@ -187,9 +251,9 @@ __PACKAGE__->add_columns(
   'instrument_slot',
   { data_type => 'integer', is_nullable => 0 },
   'pipeline_id_lims',
-  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'requested_data_type',
-  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'deleted_at',
   {
     data_type => 'datetime',
@@ -198,6 +262,22 @@ __PACKAGE__->add_columns(
   },
   'id_lims',
   { data_type => 'varchar', is_nullable => 0, size => 10 },
+  'tag_identifier',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'tag_sequence',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'tag_set_id_lims',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'tag_set_name',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'tag2_identifier',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'tag2_sequence',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'tag2_set_id_lims',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'tag2_set_name',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -245,8 +325,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-09-18 13:50:10
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Tq493WzBXMADcF5zYOBPfQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-06-11 17:00:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Q6JR0VvdNRVIV7eIW8OHzw
 
 our $VERSION = '0';
 

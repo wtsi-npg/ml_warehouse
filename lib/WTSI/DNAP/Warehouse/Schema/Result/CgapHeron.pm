@@ -47,7 +47,7 @@ __PACKAGE__->table('cgap_heron');
 
 Internal to this database id. Value can change.
 
-=head2 tube_rack_barcode
+=head2 container_barcode
 
   data_type: 'varchar'
   is_nullable: 0
@@ -56,7 +56,7 @@ Internal to this database id. Value can change.
 =head2 tube_barcode
 
   data_type: 'varchar'
-  is_nullable: 0
+  is_nullable: 1
   size: 32
 
 =head2 supplier_sample_id
@@ -90,6 +90,24 @@ Internal to this database id. Value can change.
   is_nullable: 0
   size: 32
 
+=head2 destination
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 32
+
+=head2 wrangled
+
+  data_type: 'timestamp'
+  datetime_undef_if_invalid: 1
+  is_nullable: 1
+
+=head2 sample_state
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 32
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -100,10 +118,10 @@ __PACKAGE__->add_columns(
     is_auto_increment => 1,
     is_nullable => 0,
   },
-  'tube_rack_barcode',
+  'container_barcode',
   { data_type => 'varchar', is_nullable => 0, size => 32 },
   'tube_barcode',
-  { data_type => 'varchar', is_nullable => 0, size => 32 },
+  { data_type => 'varchar', is_nullable => 1, size => 32 },
   'supplier_sample_id',
   { data_type => 'varchar', is_nullable => 0, size => 64 },
   'position',
@@ -118,6 +136,16 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
   },
   'study',
+  { data_type => 'varchar', is_nullable => 0, size => 32 },
+  'destination',
+  { data_type => 'varchar', is_nullable => 0, size => 32 },
+  'wrangled',
+  {
+    data_type => 'timestamp',
+    datetime_undef_if_invalid => 1,
+    is_nullable => 1,
+  },
+  'sample_state',
   { data_type => 'varchar', is_nullable => 0, size => 32 },
 );
 
@@ -139,7 +167,7 @@ __PACKAGE__->set_primary_key('cgap_heron_tmp');
 
 =over 4
 
-=item * L</tube_rack_barcode>
+=item * L</container_barcode>
 
 =item * L</position>
 
@@ -149,7 +177,7 @@ __PACKAGE__->set_primary_key('cgap_heron_tmp');
 
 __PACKAGE__->add_unique_constraint(
   'cgap_heron_rack_and_position',
-  ['tube_rack_barcode', 'position'],
+  ['container_barcode', 'position'],
 );
 
 =head2 C<tube_barcode>
@@ -165,8 +193,8 @@ __PACKAGE__->add_unique_constraint(
 __PACKAGE__->add_unique_constraint('tube_barcode', ['tube_barcode']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-05-13 12:19:14
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:gaWAXpLadewCkZC4kW+MBA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-06-11 17:00:43
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:w4fgEfecKEbXiTnwlD55lA
 
 our $VERSION = '0';
 
