@@ -106,13 +106,13 @@ Datetime files for this sample were uploaded to CLIMB
 
 A Boolean flag to mark sample metadata upload to COG
 
-=head2 file_name_root
+=head2 path_root
 
-  data_type: 'char'
+  data_type: 'varchar'
   is_nullable: 1
-  size: 15
+  size: 255
 
-The file name root for teh entity
+The uploaded files path root for the entity
 
 =head2 pct_n_bases
 
@@ -182,8 +182,8 @@ __PACKAGE__->add_columns(
   },
   'cog_sample_meta',
   { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 1 },
-  'file_name_root',
-  { data_type => 'char', is_nullable => 1, size => 15 },
+  'path_root',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'pct_n_bases',
   { data_type => 'float', is_nullable => 1 },
   'pct_covered_bases',
@@ -220,18 +220,6 @@ __PACKAGE__->set_primary_key('id_iseq_hrpr_metrics_tmp');
 
 __PACKAGE__->add_unique_constraint('iseq_hrm_digest_unq', ['id_iseq_product']);
 
-=head2 C<iseq_hrm_fnr_unq>
-
-=over 4
-
-=item * L</file_name_root>
-
-=back
-
-=cut
-
-__PACKAGE__->add_unique_constraint('iseq_hrm_fnr_unq', ['file_name_root']);
-
 =head1 RELATIONS
 
 =head2 iseq_product
@@ -250,8 +238,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-06-11 17:00:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:6r9rJg+rDztTUZetUs9iCg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-06-12 13:02:59
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:91MLDFF3YTvYM61798/5Ng
 
 our $VERSION = '0';
 
