@@ -1,6 +1,14 @@
 LIST OF CHANGES
 ---------------
 
+release 6.10.0
+ - add id_run column to the iseq_heron_product_metrics table
+ - to allow for deletion of iseq_product_metrica rows, drop
+   the foreign key constraint on the id_iseq_product column in
+   the iseq_heron_product_metrics table, keep the relation
+   definition in the DBIx class
+ - update the DBIx class for the cgap_heron table
+ 
 release 6.9.0
  - ml warehouse LIMS drivers - define additional delegated
    to sample objects methods 

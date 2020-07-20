@@ -108,6 +108,17 @@ Internal to this database id. Value can change.
   is_nullable: 0
   size: 32
 
+=head2 lysis_buffer
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 64
+
+=head2 priority
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -147,6 +158,10 @@ __PACKAGE__->add_columns(
   },
   'sample_state',
   { data_type => 'varchar', is_nullable => 0, size => 32 },
+  'lysis_buffer',
+  { data_type => 'varchar', is_nullable => 1, size => 64 },
+  'priority',
+  { data_type => 'tinyint', is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -193,8 +208,8 @@ __PACKAGE__->add_unique_constraint(
 __PACKAGE__->add_unique_constraint('tube_barcode', ['tube_barcode']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-06-11 17:00:43
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:w4fgEfecKEbXiTnwlD55lA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-07-16 16:20:22
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:A6iXAAlelMAfco73oMW1Bw
 
 our $VERSION = '0';
 

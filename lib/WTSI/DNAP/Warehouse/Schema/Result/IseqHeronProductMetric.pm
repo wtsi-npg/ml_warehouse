@@ -65,10 +65,17 @@ Datetime this record was created
 
 Datetime this record was created or changed
 
+=head2 id_run
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Run id
+
 =head2 id_iseq_product
 
   data_type: 'char'
-  is_foreign_key: 1
   is_nullable: 0
   size: 64
 
@@ -168,8 +175,10 @@ __PACKAGE__->add_columns(
     default_value => 'CURRENT_TIMESTAMP',
     is_nullable => 1,
   },
+  'id_run',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
   'id_iseq_product',
-  { data_type => 'char', is_foreign_key => 1, is_nullable => 0, size => 64 },
+  { data_type => 'char', is_nullable => 0, size => 64 },
   'supplier_sample_name',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'artic_qc_outcome',
@@ -220,9 +229,15 @@ __PACKAGE__->set_primary_key('id_iseq_hrpr_metrics_tmp');
 
 __PACKAGE__->add_unique_constraint('iseq_hrm_digest_unq', ['id_iseq_product']);
 
+
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-07-16 16:20:22
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BCr7sE1ypWdilE/PkyuRQg
+
+our $VERSION = '0';
+
 =head1 RELATIONS
 
-=head2 iseq_product
+=head2 iseq_product_metric
 
 Type: belongs_to
 
@@ -231,17 +246,11 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric>
 =cut
 
 __PACKAGE__->belongs_to(
-  'iseq_product',
+  'iseq_product_metric',
   'WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric',
   { id_iseq_product => 'id_iseq_product' },
   { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
 );
-
-
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-06-12 13:02:59
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:91MLDFF3YTvYM61798/5Ng
-
-our $VERSION = '0';
 
 __PACKAGE__->meta->make_immutable;
 1;
