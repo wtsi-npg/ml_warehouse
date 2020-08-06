@@ -1,6 +1,11 @@
 LIST OF CHANGES
 ---------------
 
+ - iseq_heron_product_metrics table:
+     set index on the id_run column,
+     add pp_name and pp_version columns to capture info
+     about the pipeline that generated the data
+
 release 6.10.0
  - add id_run column to the iseq_heron_product_metrics table
  - to allow for deletion of iseq_product_metrica rows, drop

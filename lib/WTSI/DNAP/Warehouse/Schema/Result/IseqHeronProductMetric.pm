@@ -89,6 +89,23 @@ Product id, a foreign key into iseq_product_metrics table
 
 Sample name given by the supplier, as recorded by WSI
 
+=head2 pp_name
+
+  data_type: 'varchar'
+  default_value: 'ncov2019-artic-nf'
+  is_nullable: 1
+  size: 40
+
+The name of the pipeline that produced the QC metric
+
+=head2 pp_version
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 40
+
+The version of the pipeline specified in the pp_name column
+
 =head2 artic_qc_outcome
 
   data_type: 'char'
@@ -181,6 +198,15 @@ __PACKAGE__->add_columns(
   { data_type => 'char', is_nullable => 0, size => 64 },
   'supplier_sample_name',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'pp_name',
+  {
+    data_type => 'varchar',
+    default_value => 'ncov2019-artic-nf',
+    is_nullable => 1,
+    size => 40,
+  },
+  'pp_version',
+  { data_type => 'varchar', is_nullable => 1, size => 40 },
   'artic_qc_outcome',
   { data_type => 'char', is_nullable => 1, size => 15 },
   'climb_upload',
@@ -230,8 +256,8 @@ __PACKAGE__->set_primary_key('id_iseq_hrpr_metrics_tmp');
 __PACKAGE__->add_unique_constraint('iseq_hrm_digest_unq', ['id_iseq_product']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-07-16 16:20:22
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BCr7sE1ypWdilE/PkyuRQg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-07-21 15:10:10
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:mS4dZoQbqFVL11aoRMTszQ
 
 our $VERSION = '0';
 
