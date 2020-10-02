@@ -885,6 +885,21 @@ __PACKAGE__->belongs_to(
   },
 );
 
+=head2 iseq_product_ampliconstats
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductAmpliconstat>
+
+=cut
+
+__PACKAGE__->has_many(
+  'iseq_product_ampliconstats',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqProductAmpliconstat',
+  { 'foreign.id_iseq_product' => 'self.id_iseq_product' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 iseq_product_components
 
 Type: has_many
@@ -938,8 +953,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-07-16 16:20:22
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7bfqP9vnlQ7g6s17gXNkrA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-09-29 10:33:58
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+RvmRk17x23bviWalcUgGw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
