@@ -142,6 +142,30 @@ LIMs-specific identifier of the tag set for tag
 
 WTSI-wide tag set name for tag
 
+=head2 tag2_sequence
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 30
+
+=head2 tag2_set_id_lims
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 20
+
+=head2 tag2_set_name
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 100
+
+=head2 tag2_identifier
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 30
+
 =head2 plate_barcode
 
   data_type: 'varchar'
@@ -213,6 +237,14 @@ Legacy library_id for backwards compatibility.
 
 Timestamp of library creation
 
+=head2 pac_bio_run_name
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Name of the run
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -260,6 +292,14 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 20 },
   'tag_set_name',
   { data_type => 'varchar', is_nullable => 1, size => 100 },
+  'tag2_sequence',
+  { data_type => 'varchar', is_nullable => 1, size => 30 },
+  'tag2_set_id_lims',
+  { data_type => 'varchar', is_nullable => 1, size => 20 },
+  'tag2_set_name',
+  { data_type => 'varchar', is_nullable => 1, size => 100 },
+  'tag2_identifier',
+  { data_type => 'varchar', is_nullable => 1, size => 30 },
   'plate_barcode',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
   'plate_uuid_lims',
@@ -282,6 +322,8 @@ __PACKAGE__->add_columns(
     datetime_undef_if_invalid => 1,
     is_nullable => 1,
   },
+  'pac_bio_run_name',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -297,6 +339,21 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key('id_pac_bio_tmp');
 
 =head1 RELATIONS
+
+=head2 pac_bio_product_metrics
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::PacBioProductMetric>
+
+=cut
+
+__PACKAGE__->has_many(
+  'pac_bio_product_metrics',
+  'WTSI::DNAP::Warehouse::Schema::Result::PacBioProductMetric',
+  { 'foreign.id_pac_bio_tmp' => 'self.id_pac_bio_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
 
 =head2 sample
 
@@ -329,8 +386,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-27 20:27:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vtIxsQ5xuY4hLpyp1/5p4Q
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-01-24 15:45:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:eVqS5iL7i47o9VqosVsjTg
 
 our $VERSION = '0';
 

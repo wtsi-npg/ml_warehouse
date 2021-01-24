@@ -1,5 +1,9 @@
 LIST OF CHANGES
 ---------------
+
+ - add tables pac_bio_run_well_metrics and pac_bio_product_metrics to store metrics
+   extracted from PacBio's SMRT Link LIMS + travis tweaks. 
+
 release 2.9
  - added metrics columns to iseq_product_metrics (for RNA)
  - superfluous database indexes dropped

@@ -26,6 +26,7 @@ my $builder = WTSI::DNAP::Utilities::Build->new(
     'Test::Perl::Critic'       => 0,
     'Test::Pod'                => 0,
     'WTSI::DNAP::Utilities'    => '>= 0.5.1',
+    'YAML'                     => 0,
   },
 
   'requires' => {
