@@ -1,0 +1,32 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use YAML qw/LoadFile DumpFile/;
+use Perl6::Slurp;
+use Carp;
+
+use npg_tracking::glossary::rpt;
+use npg_tracking::glossary::composition::factory::rpt_list;
+
+my $file = $ARGV[0];
+$file or croak 'YAML file required as the first argument';
+
+warn "Converting fixtures from file $file\n";
+my $fixtures = LoadFile($file);
+@{$fixtures} or croak "No fixtures are found in $file";
+
+my @updated = ();
+foreach my $obj (@{$fixtures}) {
+  my $rpt = npg_tracking::glossary::rpt->deflate_rpt($obj);
+  my $composition = npg_tracking::glossary::composition::factory::rpt_list
+                    ->new(rpt_list => $rpt)
+                    ->create_composition();
+  $obj->{id_iseq_product} = $composition->digest;
+  $obj->{iseq_composition_tmp} = $composition->freeze;
+  push @updated, $obj;
+}
+
+DumpFile($file, \@updated);
+
+0;

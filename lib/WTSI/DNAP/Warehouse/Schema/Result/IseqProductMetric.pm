@@ -40,12 +40,29 @@ __PACKAGE__->table('iseq_product_metrics');
 
 =head2 id_iseq_pr_metrics_tmp
 
-  data_type: 'integer'
+  data_type: 'bigint'
   extra: {unsigned => 1}
   is_auto_increment: 1
   is_nullable: 0
 
 Internal to this database id, value can change
+
+=head2 id_iseq_product
+
+  data_type: 'char'
+  is_nullable: 0
+  size: 64
+
+Product id
+
+=head2 last_changed
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  default_value: 'CURRENT_TIMESTAMP'
+  is_nullable: 1
+
+Date this record was created or changed
 
 =head2 id_iseq_flowcell_tmp
 
@@ -61,7 +78,7 @@ Flowcell id, see 'iseq_flowcell.id_iseq_flowcell_tmp'
   data_type: 'integer'
   extra: {unsigned => 1}
   is_foreign_key: 1
-  is_nullable: 0
+  is_nullable: 1
 
 NPG run identifier
 
@@ -70,7 +87,7 @@ NPG run identifier
   data_type: 'smallint'
   extra: {unsigned => 1}
   is_foreign_key: 1
-  is_nullable: 0
+  is_nullable: 1
 
 Flowcell lane number
 
@@ -81,6 +98,14 @@ Flowcell lane number
   is_nullable: 1
 
 Tag index, NULL if lane is not a pool
+
+=head2 iseq_composition_tmp
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 600
+
+JSON representation of the composition object, the column might be deleted in future
 
 =head2 qc_seq
 
@@ -95,6 +120,13 @@ Sequencing lane level QC outcome, a result of either manual or automatic assessm
   is_nullable: 1
 
 Library QC outcome, a result of either manual or automatic assessment by core
+
+=head2 qc_user
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+Library QC outcome according to the data user criteria, a result of either manual or automatic assessment
 
 =head2 qc
 
@@ -451,15 +483,126 @@ Number of transcripts detected with at least 5 reads
 
 Percentage of globin genes TPM (transcripts per million) detected
 
+=head2 rna_mitochondrial_percent_tpm
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Percentage of mitochondrial genes TPM (transcripts per million) detected
+
+=head2 gbs_call_rate
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The GbS call rate is the fraction of loci called on the relevant primer panel
+
+=head2 gbs_pass_rate
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The GbS pass rate is the fraction of loci called and passing filters on the relevant primer panel
+
+=head2 nrd_percent
+
+  data_type: 'float'
+  is_nullable: 1
+  size: [5,2]
+
+Percent of non-reference discordance
+
+=head2 target_filter
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 30
+
+Filter used to produce the target stats file
+
+=head2 target_length
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The total length of the target regions
+
+=head2 target_mapped_reads
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of mapped reads passing the target filter
+
+=head2 target_proper_pair_mapped_reads
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of proper pair mapped reads passing the target filter
+
+=head2 target_mapped_bases
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of mapped bases passing the target filter
+
+=head2 target_coverage_threshold
+
+  data_type: 'integer'
+  is_nullable: 1
+
+The coverage threshold used in the target perc target greater than depth calculation
+
+=head2 target_percent_gt_coverage_threshold
+
+  data_type: 'float'
+  is_nullable: 1
+  size: [5,2]
+
+The percentage of the target covered at greater than the depth specified
+
+=head2 target_autosome_coverage_threshold
+
+  data_type: 'integer'
+  is_nullable: 1
+
+The coverage threshold used in the perc target autosome greater than depth calculation
+
+=head2 target_autosome_percent_gt_coverage_threshold
+
+  data_type: 'float'
+  is_nullable: 1
+  size: [5,2]
+
+The percentage of the target autosome covered at greater than the depth specified
+
 =cut
 
 __PACKAGE__->add_columns(
   'id_iseq_pr_metrics_tmp',
   {
-    data_type => 'integer',
+    data_type => 'bigint',
     extra => { unsigned => 1 },
     is_auto_increment => 1,
     is_nullable => 0,
+  },
+  'id_iseq_product',
+  { data_type => 'char', is_nullable => 0, size => 64 },
+  'last_changed',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    default_value => 'CURRENT_TIMESTAMP',
+    is_nullable => 1,
   },
   'id_iseq_flowcell_tmp',
   {
@@ -473,20 +616,24 @@ __PACKAGE__->add_columns(
     data_type => 'integer',
     extra => { unsigned => 1 },
     is_foreign_key => 1,
-    is_nullable => 0,
+    is_nullable => 1,
   },
   'position',
   {
     data_type => 'smallint',
     extra => { unsigned => 1 },
     is_foreign_key => 1,
-    is_nullable => 0,
+    is_nullable => 1,
   },
   'tag_index',
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'iseq_composition_tmp',
+  { data_type => 'varchar', is_nullable => 1, size => 600 },
   'qc_seq',
   { data_type => 'tinyint', is_nullable => 1 },
   'qc_lib',
+  { data_type => 'tinyint', is_nullable => 1 },
+  'qc_user',
   { data_type => 'tinyint', is_nullable => 1 },
   'qc',
   { data_type => 'tinyint', is_nullable => 1 },
@@ -662,6 +809,32 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
   'rna_globin_percent_tpm',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'rna_mitochondrial_percent_tpm',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'gbs_call_rate',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'gbs_pass_rate',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'nrd_percent',
+  { data_type => 'float', is_nullable => 1, size => [5, 2] },
+  'target_filter',
+  { data_type => 'varchar', is_nullable => 1, size => 30 },
+  'target_length',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'target_mapped_reads',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'target_proper_pair_mapped_reads',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'target_mapped_bases',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'target_coverage_threshold',
+  { data_type => 'integer', is_nullable => 1 },
+  'target_percent_gt_coverage_threshold',
+  { data_type => 'float', is_nullable => 1, size => [5, 2] },
+  'target_autosome_coverage_threshold',
+  { data_type => 'integer', is_nullable => 1 },
+  'target_autosome_percent_gt_coverage_threshold',
+  { data_type => 'float', is_nullable => 1, size => [5, 2] },
 );
 
 =head1 PRIMARY KEY
@@ -675,6 +848,20 @@ __PACKAGE__->add_columns(
 =cut
 
 __PACKAGE__->set_primary_key('id_iseq_pr_metrics_tmp');
+
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<iseq_pr_metrics_product_unique>
+
+=over 4
+
+=item * L</id_iseq_product>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint('iseq_pr_metrics_product_unique', ['id_iseq_product']);
 
 =head1 RELATIONS
 
@@ -698,6 +885,53 @@ __PACKAGE__->belongs_to(
   },
 );
 
+=head2 iseq_product_ampliconstats
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductAmpliconstat>
+
+=cut
+
+__PACKAGE__->has_many(
+  'iseq_product_ampliconstats',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqProductAmpliconstat',
+  { 'foreign.id_iseq_product' => 'self.id_iseq_product' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 iseq_product_components
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductComponent>
+
+=cut
+
+__PACKAGE__->has_many(
+  'iseq_product_components',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqProductComponent',
+  {
+    'foreign.id_iseq_pr_component_tmp' => 'self.id_iseq_pr_metrics_tmp',
+  },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 iseq_products
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqProductComponent>
+
+=cut
+
+__PACKAGE__->has_many(
+  'iseq_products',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqProductComponent',
+  { 'foreign.id_iseq_pr_tmp' => 'self.id_iseq_pr_metrics_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 iseq_run_lane_metric
 
 Type: belongs_to
@@ -710,19 +944,26 @@ __PACKAGE__->belongs_to(
   'iseq_run_lane_metric',
   'WTSI::DNAP::Warehouse::Schema::Result::IseqRunLaneMetric',
   { id_run => 'id_run', position => 'position' },
-  { is_deferrable => 1, on_delete => 'CASCADE', on_update => 'NO ACTION' },
+  {
+    is_deferrable => 1,
+    join_type     => 'LEFT',
+    on_delete     => 'CASCADE',
+    on_update     => 'NO ACTION',
+  },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07047 @ 2018-02-19 16:35:36
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3G4GtITLncQkOU+IxEu96g
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-09-29 10:33:58
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+RvmRk17x23bviWalcUgGw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
 our $VERSION = '0';
 
-=head2 iseq_run_lane_metric
+=head1 RELATIONS
+
+=head2 iseq_run_lane_metric_right
 
 Type: belongs_to
 
@@ -755,11 +996,44 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 iseq_external_product_components
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductComponent>
+
+=cut
+
+__PACKAGE__->has_many(
+  'iseq_external_product_components',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductComponent',
+  {
+    'foreign.id_iseq_product' => 'self.id_iseq_product',
+  },
+  { is_deferrable => 1, cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 iseq_heron_product_metric
+
+Type: might_have
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqHeronProductMetric>
+
+=cut
+
+__PACKAGE__->might_have(
+  'iseq_heron_product_metric',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqHeronProductMetric',
+  { 'foreign.id_iseq_product' => 'self.id_iseq_product' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 ##no critic (ProhibitStringyEval ProhibitPostfixControls ProhibitInterpolationOfLiterals)
 with 'npg_qc::autoqc::role::rpt_key' if eval "require npg_qc::autoqc::role::rpt_key";
 ##use critic
 
 __PACKAGE__->meta->make_immutable;
+
 1;
 __END__
 
@@ -805,7 +1079,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2015 Genome Research Limited
+Copyright (C) 2019,2020 Genome Research Ltd.
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 

@@ -1,12 +1,12 @@
 
-package WTSI::DNAP::Warehouse::Schema::Result::OseqFlowcell;
+package WTSI::DNAP::Warehouse::Schema::Result::BmapFlowcell;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-WTSI::DNAP::Warehouse::Schema::Result::OseqFlowcell
+WTSI::DNAP::Warehouse::Schema::Result::BmapFlowcell
 
 =cut
 
@@ -30,28 +30,19 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components('InflateColumn::DateTime');
 
-=head1 TABLE: C<oseq_flowcell>
+=head1 TABLE: C<bmap_flowcell>
 
 =cut
 
-__PACKAGE__->table('oseq_flowcell');
+__PACKAGE__->table('bmap_flowcell');
 
 =head1 ACCESSORS
 
-=head2 id_oseq_flowcell_tmp
+=head2 id_bmap_flowcell_tmp
 
   data_type: 'integer'
-  extra: {unsigned => 1}
   is_auto_increment: 1
   is_nullable: 0
-
-=head2 id_flowcell_lims
-
-  data_type: 'varchar'
-  is_nullable: 0
-  size: 255
-
-LIMs-specific flowcell id
 
 =head2 last_updated
 
@@ -103,36 +94,53 @@ The name of the experiment, eg. The lims generated run id
 
 The name of the instrument on which the sample was run
 
-=head2 instrument_slot
+=head2 enzyme_name
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 255
+
+The name of the recognition enzyme used
+
+=head2 chip_barcode
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 255
+
+Manufacturer chip identifier
+
+=head2 chip_serialnumber
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 16
+
+Manufacturer chip identifier
+
+=head2 position
 
   data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Flowcell position
+
+=head2 id_flowcell_lims
+
+  data_type: 'varchar'
   is_nullable: 0
+  size: 255
 
-The numeric identifier of the slot on which the sample was run
+LIMs-specific flowcell id
 
-=head2 pipeline_id_lims
+=head2 id_library_lims
 
   data_type: 'varchar'
   is_nullable: 1
   size: 255
 
-LIMs-specific pipeline identifier that unambiguously defines library type
-
-=head2 requested_data_type
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-The type of data produced by sequencing, eg. basecalls only
-
-=head2 deleted_at
-
-  data_type: 'datetime'
-  datetime_undef_if_invalid: 1
-  is_nullable: 1
-
-Timestamp of any flowcell destruction
+Earliest LIMs identifier associated with library creation
 
 =head2 id_lims
 
@@ -142,82 +150,11 @@ Timestamp of any flowcell destruction
 
 LIM system identifier
 
-=head2 tag_identifier
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-Position of the first tag within the tag group
-
-=head2 tag_sequence
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-Sequence of the first tag
-
-=head2 tag_set_id_lims
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-LIMs-specific identifier of the tag set for the first tag
-
-=head2 tag_set_name
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-WTSI-wide tag set name for the first tag
-
-=head2 tag2_identifier
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-Position of the second tag within the tag group
-
-=head2 tag2_sequence
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-Sequence of the second tag
-
-=head2 tag2_set_id_lims
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-LIMs-specific identifier of the tag set for the second tag
-
-=head2 tag2_set_name
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-WTSI-wide tag set name for the second tag
-
 =cut
 
 __PACKAGE__->add_columns(
-  'id_oseq_flowcell_tmp',
-  {
-    data_type => 'integer',
-    extra => { unsigned => 1 },
-    is_auto_increment => 1,
-    is_nullable => 0,
-  },
-  'id_flowcell_lims',
-  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'id_bmap_flowcell_tmp',
+  { data_type => 'integer', is_auto_increment => 1, is_nullable => 0 },
   'last_updated',
   {
     data_type => 'datetime',
@@ -248,49 +185,33 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 0, size => 255 },
   'instrument_name',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
-  'instrument_slot',
-  { data_type => 'integer', is_nullable => 0 },
-  'pipeline_id_lims',
+  'enzyme_name',
+  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'chip_barcode',
+  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'chip_serialnumber',
+  { data_type => 'varchar', is_nullable => 1, size => 16 },
+  'position',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'id_flowcell_lims',
+  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'id_library_lims',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'requested_data_type',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'deleted_at',
-  {
-    data_type => 'datetime',
-    datetime_undef_if_invalid => 1,
-    is_nullable => 1,
-  },
   'id_lims',
   { data_type => 'varchar', is_nullable => 0, size => 10 },
-  'tag_identifier',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'tag_sequence',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'tag_set_id_lims',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'tag_set_name',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'tag2_identifier',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'tag2_sequence',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'tag2_set_id_lims',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'tag2_set_name',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
 
 =over 4
 
-=item * L</id_oseq_flowcell_tmp>
+=item * L</id_bmap_flowcell_tmp>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key('id_oseq_flowcell_tmp');
+__PACKAGE__->set_primary_key('id_bmap_flowcell_tmp');
 
 =head1 RELATIONS
 
@@ -325,13 +246,17 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-06-11 17:00:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Q6JR0VvdNRVIV7eIW8OHzw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-06-03 13:17:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zmqIZpa8FZ332Dpr8/dhDw
+
+
+# You can replace this text with custom code or comments, and it will be preserved on regeneration
 
 our $VERSION = '0';
 
 __PACKAGE__->meta->make_immutable;
 1;
+
 __END__
 
 =head1 SYNOPSIS
@@ -372,11 +297,11 @@ Result class definition in DBIx binding for the multi-lims warehouse database.
 
 =head1 AUTHOR
 
-David K. Jackson E<lt>david.jackson@sanger.ac.ukE<gt>
+kdj@sanger.ac.uk
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2015 Genome Research Limited
+Copyright (C) 2019 Genome Research Limited
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
@@ -394,3 +319,4 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 =cut
+

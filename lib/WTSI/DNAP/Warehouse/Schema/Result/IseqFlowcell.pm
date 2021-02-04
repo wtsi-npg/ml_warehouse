@@ -350,6 +350,36 @@ Indicates that a sample has failed a QC step during processing
 
 Primer Panel name
 
+=head2 spiked_phix_barcode
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 20
+
+Barcode of the PhiX tube added to the lane
+
+=head2 spiked_phix_percentage
+
+  data_type: 'float'
+  is_nullable: 1
+
+Percentage PhiX tube spiked in the pool in terms of molar concentration
+
+=head2 loading_concentration
+
+  data_type: 'float'
+  is_nullable: 1
+
+Final instrument loading concentration (pM)
+
+=head2 workflow
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 20
+
+Workflow used when processing the flowcell
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -459,6 +489,14 @@ __PACKAGE__->add_columns(
   { data_type => 'tinyint', is_nullable => 1 },
   'primer_panel',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'spiked_phix_barcode',
+  { data_type => 'varchar', is_nullable => 1, size => 20 },
+  'spiked_phix_percentage',
+  { data_type => 'float', is_nullable => 1 },
+  'loading_concentration',
+  { data_type => 'float', is_nullable => 1 },
+  'workflow',
+  { data_type => 'varchar', is_nullable => 1, size => 20 },
 );
 
 =head1 PRIMARY KEY
@@ -472,6 +510,29 @@ __PACKAGE__->add_columns(
 =cut
 
 __PACKAGE__->set_primary_key('id_iseq_flowcell_tmp');
+
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<index_iseq_flowcell_id_flowcell_lims_position_tag_index_id_lims>
+
+=over 4
+
+=item * L</id_flowcell_lims>
+
+=item * L</position>
+
+=item * L</tag_index>
+
+=item * L</id_lims>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint(
+  'index_iseq_flowcell_id_flowcell_lims_position_tag_index_id_lims',
+  ['id_flowcell_lims', 'position', 'tag_index', 'id_lims'],
+);
 
 =head1 RELATIONS
 
@@ -526,8 +587,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07048 @ 2018-03-15 11:29:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hBfjV4r+Oj/Mg/mz5BXSpA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-05-13 12:22:58
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3gXc9jU/hupU1HmXaQTRQw
 
 use MooseX::Aliases;
 use Readonly;
@@ -552,6 +613,8 @@ Readonly my %DELEGATION_TO_SAMPLE => {
     'sample_supplier_name'     => 'supplier_name',
     'sample_cohort'            => 'cohort',
     'sample_donor_id'          => 'donor_id',
+    'sample_is_control'        => 'control',
+    'sample_control_type'      => 'control_type',
 };
 
 Readonly my %DELEGATION_TO_STUDY => {
@@ -805,7 +868,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2015 Genome Research Limited
+Copyright (C) 2014,2015,2016,2017,2018,2019,2020 Genome Research Ltd.
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 

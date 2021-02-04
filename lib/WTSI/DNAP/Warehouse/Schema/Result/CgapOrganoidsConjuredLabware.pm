@@ -1,12 +1,12 @@
 
-package WTSI::DNAP::Warehouse::Schema::Result::CgapAnalyte;
+package WTSI::DNAP::Warehouse::Schema::Result::CgapOrganoidsConjuredLabware;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-WTSI::DNAP::Warehouse::Schema::Result::CgapAnalyte
+WTSI::DNAP::Warehouse::Schema::Result::CgapOrganoidsConjuredLabware
 
 =cut
 
@@ -30,15 +30,15 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components('InflateColumn::DateTime');
 
-=head1 TABLE: C<cgap_analyte>
+=head1 TABLE: C<cgap_organoids_conjured_labware>
 
 =cut
 
-__PACKAGE__->table('cgap_analyte');
+__PACKAGE__->table('cgap_organoids_conjured_labware');
 
 =head1 ACCESSORS
 
-=head2 cgap_analyte_tmp
+=head2 cgap_organoids_conjured_labware_tmp
 
   data_type: 'integer'
   extra: {unsigned => 1}
@@ -47,132 +47,101 @@ __PACKAGE__->table('cgap_analyte');
 
 Internal to this database id. Value can change.
 
+=head2 barcode
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 20
+
+=head2 cell_line_long_name
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 48
+
 =head2 cell_line_uuid
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 36
+  size: 38
 
-=head2 destination
+=head2 passage_number
 
-  data_type: 'varchar'
+  data_type: 'integer'
   is_nullable: 0
-  size: 32
 
-=head2 jobs
+=head2 fate
 
   data_type: 'varchar'
   is_nullable: 1
-  size: 64
+  size: 40
 
-=head2 slot_uuid
-
-  data_type: 'varchar'
-  is_nullable: 0
-  size: 36
-
-=head2 release_date
+=head2 conjure_date
 
   data_type: 'timestamp'
   datetime_undef_if_invalid: 1
   default_value: '0000-00-00 00:00:00'
   is_nullable: 0
 
-=head2 labware_barcode
+=head2 labware_state
 
   data_type: 'varchar'
   is_nullable: 0
   size: 20
 
-=head2 passage_number
-
-  data_type: 'integer'
-  is_nullable: 1
-
-=head2 cell_state
-
-  data_type: 'varchar'
-  is_nullable: 0
-  size: 40
-
-=head2 project
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 50
-
 =cut
 
 __PACKAGE__->add_columns(
-  'cgap_analyte_tmp',
+  'cgap_organoids_conjured_labware_tmp',
   {
     data_type => 'integer',
     extra => { unsigned => 1 },
     is_auto_increment => 1,
     is_nullable => 0,
   },
+  'barcode',
+  { data_type => 'varchar', is_nullable => 0, size => 20 },
+  'cell_line_long_name',
+  { data_type => 'varchar', is_nullable => 0, size => 48 },
   'cell_line_uuid',
-  { data_type => 'varchar', is_nullable => 0, size => 36 },
-  'destination',
-  { data_type => 'varchar', is_nullable => 0, size => 32 },
-  'jobs',
-  { data_type => 'varchar', is_nullable => 1, size => 64 },
-  'slot_uuid',
-  { data_type => 'varchar', is_nullable => 0, size => 36 },
-  'release_date',
+  { data_type => 'varchar', is_nullable => 0, size => 38 },
+  'passage_number',
+  { data_type => 'integer', is_nullable => 0 },
+  'fate',
+  { data_type => 'varchar', is_nullable => 1, size => 40 },
+  'conjure_date',
   {
     data_type => 'timestamp',
     datetime_undef_if_invalid => 1,
     default_value => '0000-00-00 00:00:00',
     is_nullable => 0,
   },
-  'labware_barcode',
+  'labware_state',
   { data_type => 'varchar', is_nullable => 0, size => 20 },
-  'passage_number',
-  { data_type => 'integer', is_nullable => 1 },
-  'cell_state',
-  { data_type => 'varchar', is_nullable => 0, size => 40 },
-  'project',
-  { data_type => 'varchar', is_nullable => 1, size => 50 },
 );
 
 =head1 PRIMARY KEY
 
 =over 4
 
-=item * L</cgap_analyte_tmp>
+=item * L</cgap_organoids_conjured_labware_tmp>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key('cgap_analyte_tmp');
-
-=head1 UNIQUE CONSTRAINTS
-
-=head2 C<slot_uuid>
-
-=over 4
-
-=item * L</slot_uuid>
-
-=back
-
-=cut
-
-__PACKAGE__->add_unique_constraint('slot_uuid', ['slot_uuid']);
+__PACKAGE__->set_primary_key('cgap_organoids_conjured_labware_tmp');
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-09-30 14:19:43
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7xF9GC+l3iyUjEKY+YTJPw
-
-
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-03-10 13:51:13
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:VDc8Z6n+lJlVYohytJs5JA
 
 our $VERSION = '0';
 
 __PACKAGE__->meta->make_immutable;
+
 1;
+
 __END__
 
 =head1 SYNOPSIS
@@ -190,10 +159,6 @@ Result class definition in DBIx binding for the multi-lims warehouse database.
 =head1 DEPENDENCIES
 
 =over
-
-=item strict
-
-=item warnings
 
 =item Moose
 
@@ -217,7 +182,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2015 Genome Research Limited
+Copyright (C) 2020 Genome Research Ltd
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
@@ -235,4 +200,3 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 =cut
-

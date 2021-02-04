@@ -62,17 +62,57 @@ NPG run identifier
 
 Flowcell lane number
 
+=head2 last_changed
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  default_value: 'CURRENT_TIMESTAMP'
+  is_nullable: 1
+
+Date this record was created or changed
+
+=head2 qc_seq
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+Sequencing lane level QC outcome, a result of either manual or automatic assessment by core
+
 =head2 instrument_name
 
   data_type: 'char'
   is_nullable: 1
   size: 32
 
+=head2 instrument_external_name
+
+  data_type: 'char'
+  is_nullable: 1
+  size: 10
+
+Name assigned to the instrument by the manufacturer
+
 =head2 instrument_model
 
   data_type: 'char'
   is_nullable: 1
   size: 64
+
+=head2 instrument_side
+
+  data_type: 'char'
+  is_nullable: 1
+  size: 1
+
+Illumina instrument side (A or B), if appropriate
+
+=head2 workflow_type
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 20
+
+Illumina instrument workflow type
 
 =head2 paired_read
 
@@ -234,6 +274,122 @@ Power to detect tag hops for dual index runs
 
 Sequencing lane level run priority, a result of either manual or default value set by core
 
+=head2 interop_cluster_count_total
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Total cluster count for this lane (derived from Illumina InterOp files)
+
+=head2 interop_cluster_count_mean
+
+  data_type: 'double precision'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Total cluster count, mean value over tiles of this lane (derived from Illumina InterOp files)
+
+=head2 interop_cluster_count_stdev
+
+  data_type: 'double precision'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Standard deviation value for interop_cluster_count_mean
+
+=head2 interop_cluster_count_pf_total
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Purity-filtered cluster count for this lane (derived from Illumina InterOp files)
+
+=head2 interop_cluster_count_pf_mean
+
+  data_type: 'double precision'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Purity-filtered cluster count, mean value over tiles of this lane (derived from Illumina InterOp files)
+
+=head2 interop_cluster_count_pf_stdev
+
+  data_type: 'double precision'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Standard deviation value for interop_cluster_count_pf_mean
+
+=head2 interop_cluster_density_mean
+
+  data_type: 'double precision'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Cluster density, mean value over tiles of this lane (derived from Illumina InterOp files)
+
+=head2 interop_cluster_density_stdev
+
+  data_type: 'double precision'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Standard deviation value for interop_cluster_density_mean
+
+=head2 interop_cluster_density_pf_mean
+
+  data_type: 'double precision'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Purity-filtered cluster density, mean value over tiles of this lane (derived from Illumina InterOp files)
+
+=head2 interop_cluster_density_pf_stdev
+
+  data_type: 'double precision'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Standard deviation value for interop_cluster_density_pf_mean
+
+=head2 interop_cluster_pf_mean
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+  size: [5,2]
+
+ Percent of purity-filtered clusters, mean value over tiles of this lane (derived from Illumina InterOp files)
+
+=head2 interop_cluster_pf_stdev
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+  size: [5,2]
+
+Standard deviation value for interop_cluster_pf_mean
+
+=head2 interop_occupied_mean
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+  size: [5,2]
+
+Percent of occupied flowcell wells, a mean value over tiles of this lane (derived from Illumina InterOp files)
+
+=head2 interop_occupied_stdev
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+  size: [5,2]
+
+Standard deviation value for interop_occupied_mean
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -243,10 +399,25 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 0 },
   'position',
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 0 },
+  'last_changed',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    default_value => 'CURRENT_TIMESTAMP',
+    is_nullable => 1,
+  },
+  'qc_seq',
+  { data_type => 'tinyint', is_nullable => 1 },
   'instrument_name',
   { data_type => 'char', is_nullable => 1, size => 32 },
+  'instrument_external_name',
+  { data_type => 'char', is_nullable => 1, size => 10 },
   'instrument_model',
   { data_type => 'char', is_nullable => 1, size => 64 },
+  'instrument_side',
+  { data_type => 'char', is_nullable => 1, size => 1 },
+  'workflow_type',
+  { data_type => 'varchar', is_nullable => 1, size => 20 },
   'paired_read',
   {
     data_type => 'tinyint',
@@ -340,6 +511,86 @@ __PACKAGE__->add_columns(
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'run_priority',
   { data_type => 'tinyint', is_nullable => 1 },
+  'interop_cluster_count_total',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'interop_cluster_count_mean',
+  {
+    data_type => 'double precision',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+  },
+  'interop_cluster_count_stdev',
+  {
+    data_type => 'double precision',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+  },
+  'interop_cluster_count_pf_total',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'interop_cluster_count_pf_mean',
+  {
+    data_type => 'double precision',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+  },
+  'interop_cluster_count_pf_stdev',
+  {
+    data_type => 'double precision',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+  },
+  'interop_cluster_density_mean',
+  {
+    data_type => 'double precision',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+  },
+  'interop_cluster_density_stdev',
+  {
+    data_type => 'double precision',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+  },
+  'interop_cluster_density_pf_mean',
+  {
+    data_type => 'double precision',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+  },
+  'interop_cluster_density_pf_stdev',
+  {
+    data_type => 'double precision',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+  },
+  'interop_cluster_pf_mean',
+  {
+    data_type => 'float',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+    size => [5, 2],
+  },
+  'interop_cluster_pf_stdev',
+  {
+    data_type => 'float',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+    size => [5, 2],
+  },
+  'interop_occupied_mean',
+  {
+    data_type => 'float',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+    size => [5, 2],
+  },
+  'interop_occupied_stdev',
+  {
+    data_type => 'float',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+    size => [5, 2],
+  },
 );
 
 =head1 PRIMARY KEY
@@ -377,8 +628,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07048 @ 2018-04-13 13:42:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:txmWoUENXO0siusSx/61zg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-02-10 14:51:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:TPEQ/qjkAkf4MnPre5VDdQ
 
 our $VERSION = '0';
 
@@ -470,7 +721,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2015 Genome Research Limited
+Copyright (C) 2018,2019,2020 Genome Research Ltd.
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 

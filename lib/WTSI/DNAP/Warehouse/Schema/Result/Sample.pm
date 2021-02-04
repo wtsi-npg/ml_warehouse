@@ -247,6 +247,20 @@ Timestamp of sample creation
 
 The phenotype of the sample as described in Sequencescape
 
+=head2 developmental_stage
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Developmental Stage
+
+=head2 control_type
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -335,6 +349,10 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'phenotype',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'developmental_stage',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'control_type',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -381,6 +399,21 @@ __PACKAGE__->add_unique_constraint(
 __PACKAGE__->add_unique_constraint('sample_uuid_sample_lims_index', ['uuid_sample_lims']);
 
 =head1 RELATIONS
+
+=head2 bmap_flowcells
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::BmapFlowcell>
+
+=cut
+
+__PACKAGE__->has_many(
+  'bmap_flowcells',
+  'WTSI::DNAP::Warehouse::Schema::Result::BmapFlowcell',
+  { 'foreign.id_sample_tmp' => 'self.id_sample_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
 
 =head2 flgen_plates
 
@@ -442,6 +475,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 qc_results
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::QcResult>
+
+=cut
+
+__PACKAGE__->has_many(
+  'qc_results',
+  'WTSI::DNAP::Warehouse::Schema::Result::QcResult',
+  { 'foreign.id_sample_tmp' => 'self.id_sample_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 stock_resources
 
 Type: has_many
@@ -458,8 +506,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-09-18 13:50:10
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7ZimZ5abqdBw6SJXDTiIDg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-05-14 16:32:55
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aG+hC9t1dzP7ySzyJr6nDA
 
 our $VERSION = '0';
 

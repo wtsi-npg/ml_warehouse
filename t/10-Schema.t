@@ -17,11 +17,12 @@ lives_ok { $schema->deploy() } 'schema deployed';
   my $rl_rs = $schema->resultset('IseqRunLaneMetric');
   my $p_rs  = $schema->resultset('IseqProductMetric');
   for ((1 ... 8)) {
-    my $h = {id_run => 4, position => $_, };
+    my $h = {id_run => 4, position => $_};
     my %rlrow = %{$h};
     $rlrow{cycles} = 37;
     $rl_rs->create(\%rlrow);
     if ($_ < 5) {
+      $h->{id_iseq_product} = 'digest' . $_;
       $p_rs->create($h);
     } 
   }
