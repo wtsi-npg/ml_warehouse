@@ -133,7 +133,6 @@ release 2.11
 
 release 2.10
  - added metrics columns to iseq_product_metrics for GbS
->>>>>>> upstreamtwo/devel
 
 release 2.9
  - added metrics columns to iseq_product_metrics (for RNA)

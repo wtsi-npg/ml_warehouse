@@ -25,7 +25,7 @@ CREATE TABLE `pac_bio_run_well_metrics` (
   `insert_length_mean` int(10) unsigned DEFAULT NULL COMMENT  'The average subread length, considering only the longest subread from each ZMW',
   `insert_length_n50` int(10) unsigned DEFAULT NULL COMMENT 'Fifty percent of the subreads are longer than this value when considering only the longest subread from each ZMW',
   `unique_molecular_bases` bigint(20) unsigned DEFAULT NULL COMMENT 'The unique molecular yield in bp',
-  `productive_ZMWs_num` int(10) unsigned DEFAULT NULL COMMENT 'Number of productive ZMWs', 
+  `productive_zmws_num` int(10) unsigned DEFAULT NULL COMMENT 'Number of productive ZMWs', 
   `p0_num` int(10) unsigned DEFAULT NULL COMMENT 'Number of empty ZMWs with no high quality read detected',
   `p1_num` int(10) unsigned DEFAULT NULL COMMENT 'Number of ZMWs with a high quality read detected',
   `p2_num` int(10) unsigned DEFAULT NULL COMMENT 'Number of other ZMWs, signal detected but no high quality read',
