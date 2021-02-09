@@ -8,6 +8,10 @@ package WTSI::DNAP::Warehouse::Schema::Result::PacBioRunWellMetric;
 
 WTSI::DNAP::Warehouse::Schema::Result::PacBioRunWellMetric
 
+=head1 DESCRIPTION
+
+Status and run information by well and some basic QC data from SMRT Link
+
 =cut
 
 use strict;
@@ -430,8 +434,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-02-04 15:20:02
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:j7HChPxMza6DOQRXxYnfTQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-02-09 11:33:17
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:JKlma3/ifTMBR3rHhKmq0w
 
 our $VERSION = '0';
 

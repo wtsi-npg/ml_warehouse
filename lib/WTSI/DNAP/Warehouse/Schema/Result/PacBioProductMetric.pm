@@ -8,6 +8,10 @@ package WTSI::DNAP::Warehouse::Schema::Result::PacBioProductMetric;
 
 WTSI::DNAP::Warehouse::Schema::Result::PacBioProductMetric
 
+=head1 DESCRIPTION
+
+A linking table for the pac_bio_run and pac_bio_run_well_metrics tables with a potential for adding per-product QC data
+
 =cut
 
 use strict;
@@ -121,8 +125,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-01-24 15:45:02
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7Sp2QvLTk9YTAoh+6+Yevg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-02-09 11:33:17
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Ea+iVDOfptyUAPyi3Otvyg
 
 our $VERSION = '0';
 
