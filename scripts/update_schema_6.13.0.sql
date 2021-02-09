@@ -33,7 +33,8 @@ CREATE TABLE `pac_bio_run_well_metrics` (
   `short_insert_percent` float(5,2) unsigned DEFAULT NULL COMMENT 'The percentage of pre-filter ZMWs which have observed inserts of 11-100 bp',
   PRIMARY KEY (`id_pac_bio_rw_metrics_tmp`),
   UNIQUE KEY `pac_bio_metrics_run_well` (`pac_bio_run_name`,`well_label`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 \
+  COMMENT='Status and run information by well and some basic QC data from SMRT Link';
 
 DROP TABLE IF EXISTS `pac_bio_product_metrics`;
 CREATE TABLE `pac_bio_product_metrics` (
@@ -45,5 +46,6 @@ CREATE TABLE `pac_bio_product_metrics` (
   KEY `pac_bio_pr_metrics_to_run_fk` (`id_pac_bio_tmp`),
   CONSTRAINT `pac_bio_product_metrics_to_rwm_fk` FOREIGN KEY (`id_pac_bio_rw_metrics_tmp`) REFERENCES `pac_bio_run_well_metrics` (`id_pac_bio_rw_metrics_tmp`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `pac_bio_product_metrics_to_run_fk` FOREIGN KEY (`id_pac_bio_tmp`) REFERENCES `pac_bio_run` (`id_pac_bio_tmp`) ON DELETE SET NULL ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 \
+  COMMENT='A linking table for the pac_bio_run and pac_bio_run_well_metrics tables with a potential for adding per-product QC data';
 
