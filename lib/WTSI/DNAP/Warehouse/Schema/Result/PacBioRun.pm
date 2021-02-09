@@ -142,6 +142,30 @@ LIMs-specific identifier of the tag set for tag
 
 WTSI-wide tag set name for tag
 
+=head2 tag2_sequence
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 30
+
+=head2 tag2_set_id_lims
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 20
+
+=head2 tag2_set_name
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 100
+
+=head2 tag2_identifier
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 30
+
 =head2 plate_barcode
 
   data_type: 'varchar'
@@ -268,6 +292,14 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 20 },
   'tag_set_name',
   { data_type => 'varchar', is_nullable => 1, size => 100 },
+  'tag2_sequence',
+  { data_type => 'varchar', is_nullable => 1, size => 30 },
+  'tag2_set_id_lims',
+  { data_type => 'varchar', is_nullable => 1, size => 20 },
+  'tag2_set_name',
+  { data_type => 'varchar', is_nullable => 1, size => 100 },
+  'tag2_identifier',
+  { data_type => 'varchar', is_nullable => 1, size => 30 },
   'plate_barcode',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
   'plate_uuid_lims',
@@ -308,6 +340,21 @@ __PACKAGE__->set_primary_key('id_pac_bio_tmp');
 
 =head1 RELATIONS
 
+=head2 pac_bio_product_metrics
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::PacBioProductMetric>
+
+=cut
+
+__PACKAGE__->has_many(
+  'pac_bio_product_metrics',
+  'WTSI::DNAP::Warehouse::Schema::Result::PacBioProductMetric',
+  { 'foreign.id_pac_bio_tmp' => 'self.id_pac_bio_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 sample
 
 Type: belongs_to
@@ -339,8 +386,9 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-02-10 15:05:13
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:dkAFMFOOZ7+MTrEn5sI6nQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-01-24 15:45:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:eVqS5iL7i47o9VqosVsjTg
+
 
 our $VERSION = '0';
 
