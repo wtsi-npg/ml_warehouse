@@ -19,6 +19,7 @@ lib/WTSI/DNAP/Warehouse/Schema/Result/IseqHeronProductMetric.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqExternalProductMetric.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqExternalProductComponent.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqProductComponent.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRun.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunLaneMetric.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunStatus.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunStatusDict.pm
