@@ -38,6 +38,7 @@ t/00-distribution.t
 t/00-pod.t
 t/10-Schema.t
 t/10-Schema-IseqExternalProductMetric.t
+t/10-Schema-IseqRun.t
 t/20-Schema-Query-IseqFlowcell.t
 t/20-Schema-Query-LibraryDigest.t
 t/data/fixtures/00-IseqRunStatusDict.yml

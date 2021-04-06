@@ -6,7 +6,11 @@ package WTSI::DNAP::Warehouse::Schema::Result::IseqRun;
 
 =head1 NAME
 
-WTSI::DNAP::Warehouse::Schema::Result::IseqRun - Table linking iseq_flowcell table to iseq_run_status table
+WTSI::DNAP::Warehouse::Schema::Result::IseqRun
+
+=head1 DESCRIPTION
+
+Table linking run and flowcell identities with the run folder name
 
 =cut
 
@@ -73,9 +77,21 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 64 },
 );
 
+=head1 PRIMARY KEY
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-03-30 10:23:33
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:gdIbb8UoN0OHvFRDN+Xkng
+=over 4
+
+=item * L</id_run>
+
+=back
+
+=cut
+
+__PACKAGE__->set_primary_key('id_run');
+
+
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-04-06 11:14:56
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ZXwdsjfvNYCPvDydZNVf5w
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
@@ -128,7 +144,7 @@ Michael Kubiak E<lt>mk35@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2015 Genome Research Limited
+Copyright (C) 2021 Genome Research Limited
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
