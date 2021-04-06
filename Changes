@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - add hifi related columns to pac_bio_run_well_metrics table
+
 release 6.13.0
  - add tables pac_bio_run_well_metrics and pac_bio_product_metrics 
    to store metrics extracted from PacBio's SMRT Link LIMS
