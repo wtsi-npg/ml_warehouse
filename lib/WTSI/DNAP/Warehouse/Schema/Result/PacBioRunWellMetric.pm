@@ -316,7 +316,7 @@ The mean HiFi read length
 
 =head2 hifi_read_quality_median
 
-  data_type: 'integer'
+  data_type: 'smallint'
   extra: {unsigned => 1}
   is_nullable: 1
 
@@ -356,7 +356,7 @@ The mean length of HiFi reads filtered due to low quality (<Q20)
 
 =head2 hifi_low_quality_read_quality_median
 
-  data_type: 'integer'
+  data_type: 'smallint'
   extra: {unsigned => 1}
   is_nullable: 1
 
@@ -460,7 +460,7 @@ __PACKAGE__->add_columns(
   'hifi_read_length_mean',
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
   'hifi_read_quality_median',
-  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
   'hifi_number_passes_mean',
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
   'hifi_low_quality_read_bases',
@@ -470,7 +470,7 @@ __PACKAGE__->add_columns(
   'hifi_low_quality_read_length_mean',
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
   'hifi_low_quality_read_quality_median',
-  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -524,8 +524,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-04-06 18:56:00
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:mPBY0M9RRrsqL5IuFuJWHw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-04-07 10:40:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Y7TFGmU6HzyUN/sRCpre6w
 
 our $VERSION = '0';
 
