@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - add iseq_run table to link run and flowcell identities with the
+  run folder name
  - add hifi related columns to pac_bio_run_well_metrics table
 
 release 6.13.0
