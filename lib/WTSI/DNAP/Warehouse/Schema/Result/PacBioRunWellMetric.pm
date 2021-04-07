@@ -290,6 +290,78 @@ The percentage of pre-filter ZMWs which have observed inserts of 0-10 bp
 
 The percentage of pre-filter ZMWs which have observed inserts of 11-100 bp
 
+=head2 hifi_read_bases
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of HiFi bases
+
+=head2 hifi_num_reads
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of HiFi reads
+
+=head2 hifi_read_length_mean
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The mean HiFi read length
+
+=head2 hifi_read_quality_median
+
+  data_type: 'smallint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The median HiFi base quality
+
+=head2 hifi_number_passes_mean
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The mean number of passes per HiFi read
+
+=head2 hifi_low_quality_read_bases
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of HiFi bases filtered due to low quality (<Q20)
+
+=head2 hifi_low_quality_num_reads
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of HiFi reads filtered due to low quality (<Q20)
+
+=head2 hifi_low_quality_read_length_mean
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The mean length of HiFi reads filtered due to low quality (<Q20)
+
+=head2 hifi_low_quality_read_quality_median
+
+  data_type: 'smallint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The median base quality of HiFi bases filtered due to low quality (<Q20)
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -381,6 +453,24 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => [5, 2],
   },
+  'hifi_read_bases',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'hifi_num_reads',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'hifi_read_length_mean',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'hifi_read_quality_median',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'hifi_number_passes_mean',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'hifi_low_quality_read_bases',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'hifi_low_quality_num_reads',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'hifi_low_quality_read_length_mean',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'hifi_low_quality_read_quality_median',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -434,8 +524,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-02-09 11:33:17
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:JKlma3/ifTMBR3rHhKmq0w
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-04-07 10:40:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Y7TFGmU6HzyUN/sRCpre6w
 
 our $VERSION = '0';
 
