@@ -1,4 +1,4 @@
-.travis.yml
+.github/workflows/testing_and_building_repo.yml
 Build.PL
 Changes
 lib/WTSI/DNAP/Warehouse/Schema.pm
