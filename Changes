@@ -1,6 +1,19 @@
 LIST OF CHANGES
 ---------------
 
+ - If a WHERE clause in a SELECT query for the iseq_flowcell table
+   specifies id_flowcell_lims, the query runs faster if the value
+   is supplied as a string rather than an integer. If the value is
+   supplied as an integer, the query cannot use the search index,
+   resulting in a full table scan, during which the values in the
+   id_flowcell_lims column are converted to doubles. Some of the
+   values in the column are true strings which cannot be converted
+   to doubles. Thousands of such values give thousands of warnings.
+   To make queries more efficient, the id_flowcell_lims value
+   in the WHERE part of the DBIx query is explicitly converted to
+   strings. Clear difference can be seen when running the code
+   with DBI_TRACE enabled.
+
 release 6.14.0
  - add iseq_run table to enable
      a direct join between the iseq_flowcell ad iseq_run_status tables;
