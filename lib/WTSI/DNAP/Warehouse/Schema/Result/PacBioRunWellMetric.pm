@@ -104,6 +104,14 @@ The PacBio run name
 
 The PacBio movie name
 
+=head2 cell_lot_number
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 32
+
+SMRT Cell Lot Number
+
 =head2 ccs_execution_mode
 
   data_type: 'varchar'
@@ -183,6 +191,40 @@ The PacBio instrument software version
   size: 32
 
 The PacBio primary analysis software version
+
+=head2 control_num_reads
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of control reads
+
+=head2 control_concordance_mean
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+  size: [8,6]
+
+The average concordance between the control raw reads and the control reference sequence
+
+=head2 control_read_length_mean
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The mean polymerase read length of the control reads
+
+=head2 local_base_rate
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+  size: [8,6]
+
+The average base incorporation rate, excluding polymerase pausing events
 
 =head2 polymerase_read_bases
 
@@ -381,6 +423,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 32 },
   'movie_name',
   { data_type => 'varchar', is_nullable => 1, size => 32 },
+  'cell_lot_number',
+  { data_type => 'varchar', is_nullable => 1, size => 32 },
   'ccs_execution_mode',
   { data_type => 'varchar', is_nullable => 1, size => 32 },
   'run_start',
@@ -417,6 +461,24 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 32 },
   'primary_analysis_sw_version',
   { data_type => 'varchar', is_nullable => 1, size => 32 },
+  'control_num_reads',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'control_concordance_mean',
+  {
+    data_type => 'float',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+    size => [8, 6],
+  },
+  'control_read_length_mean',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'local_base_rate',
+  {
+    data_type => 'float',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+    size => [8, 6],
+  },
   'polymerase_read_bases',
   { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
   'polymerase_num_reads',
@@ -524,8 +586,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-04-07 10:40:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Y7TFGmU6HzyUN/sRCpre6w
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-06-21 23:24:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:frD6UDOWq8ZHleQSdIZK3Q
 
 our $VERSION = '0';
 
