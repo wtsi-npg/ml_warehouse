@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+release 6.15.0
+ - Move from Travis CI to GitHub Actions.
  - If a WHERE clause in a SELECT query for the iseq_flowcell table
    specifies id_flowcell_lims, the query runs faster if the value
    is supplied as a string rather than an integer. If the value is
