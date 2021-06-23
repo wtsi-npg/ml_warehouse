@@ -55,14 +55,18 @@ DBIx resultset returned by the query.
     my $self = shift;
 
     my $id_run = $p->autonomous && $self->has_id_run && $self->id_run;
-    if (!$self->id_flowcell_lims && !$self->flowcell_barcode && !$id_run) {
+    my $id_flowcell_lims = $self->id_flowcell_lims;
+    if (!$id_flowcell_lims && !$self->flowcell_barcode && !$id_run) {
       croak $p->autonomous ?
         q[Either id_flowcell_lims, flowcell_barcode or id_run should be defined] :
         q[Either id_flowcell_lims or flowcell_barcode should be defined] ;
     }
 
     my %query;
-    if ( $self->id_flowcell_lims) { $query{'me.id_flowcell_lims'} = $self->id_flowcell_lims; }
+    if ( $id_flowcell_lims ) {
+      # Note the explicit conversion of a normally integer value to a string.
+      $query{'me.id_flowcell_lims'} = "$id_flowcell_lims";
+    }
     elsif ( $id_run ) { $query{'iseq_product_metrics.id_run'} = $id_run; }
     elsif (0 or $self->flowcell_barcode) { $query{'me.flowcell_barcode'} = $self->flowcell_barcode; }
 
@@ -143,7 +147,7 @@ Marina Gourtovaia
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2014 Genome Research Limited
+Copyright (C) 2014,2015,2016,2021 Genome Research Ltd.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
