@@ -376,7 +376,7 @@ Keith James E<lt>kdj@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2017 Genome Research Limited
+Copyright (C) 2017 Genome Research Ltd.
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
