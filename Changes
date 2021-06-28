@@ -6,9 +6,13 @@ LIST OF CHANGES
  - Update Copyright statements for all Perl modules according to WSI
    requirements. Retrofit years using dates returned by 'git log' command.
    Example:
-   git log --SOME_MODULE.pm | grep 'Date:' | cut -d ':' -f 4 | \
+   git log -- SOME_MODULE.pm | grep 'Date:' | cut -d ':' -f 4 | \
    cut -d ' ' -f 2 | uniq | sort -g | xargs echo | \
    perl -nle '$_=~s/\ /,/g; print "Copyright (C) $_ Genome Research Ltd."'
+
+ - DBIx classes updated and new classes added by running scripts/make_schema.pl
+   against the production database. cherrypicked_sample view is excluded from
+   the database inspection, DBIx does not like the definition. 
 
 release 6.15.0
  - Move from Travis CI to GitHub Actions.

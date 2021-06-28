@@ -31,6 +31,11 @@ lib/WTSI/DNAP/Warehouse/Schema/Result/SchemaMigration.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/StockResource.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/Study.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/StudyUser.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/ArInternalMetadata.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/CgapConjuredLabware.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/LighthouseSample.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/SamplesExtractionActivity.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/TolSampleBioproject.pm
 MANIFEST
 README
 scripts/install_npg_perl_dependencies.sh

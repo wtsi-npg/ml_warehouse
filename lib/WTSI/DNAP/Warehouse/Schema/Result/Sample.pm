@@ -261,6 +261,179 @@ Developmental Stage
   is_nullable: 1
   size: 255
 
+=head2 sibling
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 is_resubmitted
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+=head2 date_of_sample_collection
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 date_of_sample_extraction
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 extraction_method
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 purified
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 purification_method
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 customer_measured_concentration
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 concentration_determined_by
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 sample_type
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 storage_conditions
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 genotype
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 age
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 cell_type
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 disease_state
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 compound
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 dose
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 immunoprecipitate
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 growth_condition
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 organism_part
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 time_point
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 disease
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 subject
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 treatment
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 date_of_consent_withdrawn
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 1
+
+=head2 marked_as_consent_withdrawn_by
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 customer_measured_volume
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 gc_content
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 dna_source
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -352,6 +525,68 @@ __PACKAGE__->add_columns(
   'developmental_stage',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'control_type',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'sibling',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'is_resubmitted',
+  { data_type => 'tinyint', is_nullable => 1 },
+  'date_of_sample_collection',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'date_of_sample_extraction',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'extraction_method',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'purified',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'purification_method',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'customer_measured_concentration',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'concentration_determined_by',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'sample_type',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'storage_conditions',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'genotype',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'age',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'cell_type',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'disease_state',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'compound',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'dose',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'immunoprecipitate',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'growth_condition',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'organism_part',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'time_point',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'disease',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'subject',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'treatment',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'date_of_consent_withdrawn',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    is_nullable => 1,
+  },
+  'marked_as_consent_withdrawn_by',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'customer_measured_volume',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'gc_content',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'dna_source',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
@@ -490,6 +725,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 samples_extraction_activities
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::SamplesExtractionActivity>
+
+=cut
+
+__PACKAGE__->has_many(
+  'samples_extraction_activities',
+  'WTSI::DNAP::Warehouse::Schema::Result::SamplesExtractionActivity',
+  { 'foreign.id_sample_tmp' => 'self.id_sample_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 stock_resources
 
 Type: has_many
@@ -505,9 +755,24 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 tol_sample_bioprojects
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-05-14 16:32:55
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aG+hC9t1dzP7ySzyJr6nDA
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::TolSampleBioproject>
+
+=cut
+
+__PACKAGE__->has_many(
+  'tol_sample_bioprojects',
+  'WTSI::DNAP::Warehouse::Schema::Result::TolSampleBioproject',
+  { 'foreign.id_sample_tmp' => 'self.id_sample_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-06-28 16:28:20
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:i/ZbSbPN+YJN/KVOkyNMqA
 
 our $VERSION = '0';
 
@@ -560,7 +825,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2014,2015,2016,2017,2018,2019,2020 Genome Research Ltd.
+Copyright (C) 2014,2015,2016,2017,2018,2019,2020,2021 Genome Research Ltd.
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 

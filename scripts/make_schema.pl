@@ -30,6 +30,7 @@ make_schema_at(
     components         => [qw(InflateColumn::DateTime)],
     skip_load_external => 1,
     use_moose          => 1,
+    exclude            => qr/cherrypicked_sample/,
     rel_name_map       => sub {
           my %h=%{shift@_};
           my $name=$h{'name'};
