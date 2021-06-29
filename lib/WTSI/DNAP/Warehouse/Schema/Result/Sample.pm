@@ -778,6 +778,44 @@ our $VERSION = '0';
 
 with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
 
+=head2 lighthouse_sample
+
+Type: belongs_to
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::LighthouseSample>
+
+This method of joining should work for the majority of samples. If you can't
+find a match for a sample using this then you C<lighthouse_sample_sentinel>.
+=cut
+
+__PACKAGE__->belongs_to(
+  'lighthouse_sample',
+  'WTSI::DNAP::Warehouse::Schema::Result::LighthouseSample',
+  { 'lh_sample_uuid' => 'uuid_sample_lims' },
+  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
+);   
+
+=head2 lighthouse_sample_sentinel
+
+Type: belongs_to
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::LighthouseSample>
+
+This only works for samples created using the 'Sentinel' process, which was
+the majority of samples cherrypicked before the Beckman robots came online.
+The reason it doesn't work for the Beckmans is that we don't store the source
+plates in the stock_resource table for these plates.
+
+=cut
+
+__PACKAGE__->belongs_to(
+  'lighthouse_sample_sentinel',
+  'WTSI::DNAP::Warehouse::Schema::Result::LighthouseSample',
+  { 'root_sample_id' => 'description',
+    'result'         => 'phenotype' },
+  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
+); 
+
 __PACKAGE__->meta->make_immutable;
 
 1;
