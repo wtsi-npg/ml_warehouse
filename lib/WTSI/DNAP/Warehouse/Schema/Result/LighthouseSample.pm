@@ -438,6 +438,21 @@ __END__
 
 Result class definition in DBIx binding for the multi-lims warehouse database.
 
+=head2 Ct values
+
+ch1_target, ch1_result, ch1_cq
+ch2_target, ch2_result, ch2_cq
+ch3_target, ch3_result, ch3_cq
+ch4_target, ch4_result, ch4_cq
+
+The 'target' is a gene, something like ORF1ab or E-Gene.
+The 'result' is the result of the test, something like Positive,
+Negative or Void.
+The 'value' is the actual Ct/Cq value.
+
+Not all lighthouse sample have these values defined. One of the genes is an
+extraction control gene MS2
+
 =head1 DIAGNOSTICS
 
 =head1 CONFIGURATION AND ENVIRONMENT

@@ -793,7 +793,7 @@ __PACKAGE__->belongs_to(
   'WTSI::DNAP::Warehouse::Schema::Result::LighthouseSample',
   { 'lh_sample_uuid' => 'uuid_sample_lims' },
   { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
-);   
+);
 
 =head2 lighthouse_sample_sentinel
 
@@ -814,7 +814,7 @@ __PACKAGE__->belongs_to(
   { 'root_sample_id' => 'description',
     'result'         => 'phenotype' },
   { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
-); 
+);
 
 __PACKAGE__->meta->make_immutable;
 
