@@ -3,6 +3,15 @@ LIST OF CHANGES
 
  - add user requested control columns to the pac_bio_run_well_metrics
    table
+ - Update Copyright statements for all Perl modules according to WSI
+   requirements. Retrofit years using dates returned by 'git log' command.
+   Example:
+   git log --SOME_MODULE.pm | grep 'Date:' | cut -d ':' -f 4 | \
+   cut -d ' ' -f 2 | uniq | sort -g | xargs echo | \
+   perl -nle '$_=~s/\ /,/g; print "Copyright (C) $_ Genome Research Ltd."'
+
+release 6.15.0
+ - Move from Travis CI to GitHub Actions.
  - If a WHERE clause in a SELECT query for the iseq_flowcell table
    specifies id_flowcell_lims, the query runs faster if the value
    is supplied as a string rather than an integer. If the value is

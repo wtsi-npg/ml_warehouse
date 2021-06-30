@@ -182,7 +182,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2020 Genome Research Ltd
+Copyright (C) 2020 Genome Research Ltd.
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
