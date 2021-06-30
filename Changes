@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - add user requested control columns to the pac_bio_run_well_metrics
+   table
  - Update Copyright statements for all Perl modules according to WSI
    requirements. Retrofit years using dates returned by 'git log' command.
    Example:
