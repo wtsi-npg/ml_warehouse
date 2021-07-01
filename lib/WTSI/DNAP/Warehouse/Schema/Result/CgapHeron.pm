@@ -119,6 +119,26 @@ Internal to this database id. Value can change.
   data_type: 'tinyint'
   is_nullable: 1
 
+=head2 sample_identifier
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 64
+
+The COG-UK barcode of a sample or the mixtio barcode of a control
+
+=head2 control_type
+
+  data_type: 'enum'
+  extra: {list => ['Positive','Negative']}
+  is_nullable: 1
+
+=head2 control_accession_number
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 32
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -162,6 +182,16 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 64 },
   'priority',
   { data_type => 'tinyint', is_nullable => 1 },
+  'sample_identifier',
+  { data_type => 'varchar', is_nullable => 1, size => 64 },
+  'control_type',
+  {
+    data_type => 'enum',
+    extra => { list => ['Positive', 'Negative'] },
+    is_nullable => 1,
+  },
+  'control_accession_number',
+  { data_type => 'varchar', is_nullable => 1, size => 32 },
 );
 
 =head1 PRIMARY KEY
@@ -208,8 +238,8 @@ __PACKAGE__->add_unique_constraint(
 __PACKAGE__->add_unique_constraint('tube_barcode', ['tube_barcode']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-07-16 16:20:22
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:A6iXAAlelMAfco73oMW1Bw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-06-28 16:28:20
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:UmALILnzaTgcUlpxvJadOw
 
 our $VERSION = '0';
 
@@ -257,7 +287,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2020 Genome Research Ltd.
+Copyright (C) 2020,2021 Genome Research Ltd.
 
 This file is part of NPG software, ml_warehouse package
 L<https://github.com/wtsi-npg/ml_warehouse>.
