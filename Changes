@@ -13,6 +13,10 @@ LIST OF CHANGES
  - DBIx classes updated and new classes added by running scripts/make_schema.pl
    against the production database. cherrypicked_sample view is excluded from
    the database inspection, DBIx does not like the definition. 
+ - Add additional columns to the iseq_heron_product_metrics table to capture
+   the pipeline's URL, ivar_md minimum depth value used with ivar and metrics
+   for the consensus computed with an alternative ivar minimum depth ivar_amd.
+
 
 release 6.15.0
  - Move from Travis CI to GitHub Actions.
