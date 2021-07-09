@@ -1,12 +1,12 @@
 
-package WTSI::DNAP::Warehouse::Schema::Result::QcResult;
+package WTSI::DNAP::Warehouse::Schema::Result::SamplesExtractionActivity;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-WTSI::DNAP::Warehouse::Schema::Result::QcResult
+WTSI::DNAP::Warehouse::Schema::Result::SamplesExtractionActivity
 
 =cut
 
@@ -30,19 +30,27 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components('InflateColumn::DateTime');
 
-=head1 TABLE: C<qc_result>
+=head1 TABLE: C<samples_extraction_activity>
 
 =cut
 
-__PACKAGE__->table('qc_result');
+__PACKAGE__->table('samples_extraction_activity');
 
 =head1 ACCESSORS
 
-=head2 id_qc_result_tmp
+=head2 id_activity_tmp
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
+
+=head2 id_activity_lims
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 255
+
+LIMs-specific activity id
 
 =head2 id_sample_tmp
 
@@ -51,92 +59,63 @@ __PACKAGE__->table('qc_result');
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 id_qc_result_lims
+Sample id, see 'sample.id_sample_tmp'
 
-  data_type: 'varchar'
-  is_nullable: 0
-  size: 20
-
-LIMS-specific qc_result identifier
-
-=head2 id_lims
-
-  data_type: 'varchar'
-  is_nullable: 0
-  size: 10
-
-LIMS system identifier (e.g. SEQUENCESCAPE)
-
-=head2 id_pool_lims
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-Most specific LIMs identifier associated with the pool. (Asset external_identifier in SS)
-
-=head2 id_library_lims
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-Earliest LIMs identifier associated with library creation. (Aliquot external_identifier in SS)
-
-=head2 labware_purpose
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-Labware Purpose name. (e.g. Plate Purpose for a Well)
-
-=head2 assay
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-assay type and version
-
-=head2 value
+=head2 activity_type
 
   data_type: 'varchar'
   is_nullable: 0
   size: 255
 
-Value of the mesurement
+The type of the activity performed
 
-=head2 units
-
-  data_type: 'varchar'
-  is_nullable: 0
-  size: 255
-
-Mesurement unit
-
-=head2 cv
-
-  data_type: 'float'
-  is_nullable: 1
-
-Coefficient of variance
-
-=head2 qc_type
+=head2 instrument
 
   data_type: 'varchar'
   is_nullable: 0
   size: 255
 
-Type of mesurement
+The name of the instrument used to perform the activity
 
-=head2 date_created
+=head2 kit_barcode
 
-  data_type: 'datetime'
-  datetime_undef_if_invalid: 1
+  data_type: 'varchar'
   is_nullable: 0
+  size: 255
 
-The date the qc_result was first created in SS
+The barcode of the kit used to perform the activity
+
+=head2 kit_type
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 255
+
+The type of kit used to perform the activity
+
+=head2 input_barcode
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 255
+
+The barcode of the labware (eg. plate or tube) at the begining of the activity
+
+=head2 output_barcode
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 255
+
+The barcode of the labware (eg. plate or tube)  at the end of the activity
+
+=head2 user
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 255
+
+The name of the user who was most recently associated with the activity
 
 =head2 last_updated
 
@@ -144,7 +123,7 @@ The date the qc_result was first created in SS
   datetime_undef_if_invalid: 1
   is_nullable: 0
 
-The date the qc_result was last updated in SS
+Timestamp of last change to activity
 
 =head2 recorded_at
 
@@ -154,11 +133,37 @@ The date the qc_result was last updated in SS
 
 Timestamp of warehouse update
 
+=head2 completed_at
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 0
+
+Timestamp of activity completion
+
+=head2 deleted_at
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 1
+
+Timestamp of any activity removal
+
+=head2 id_lims
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 10
+
+LIM system identifier
+
 =cut
 
 __PACKAGE__->add_columns(
-  'id_qc_result_tmp',
+  'id_activity_tmp',
   { data_type => 'integer', is_auto_increment => 1, is_nullable => 0 },
+  'id_activity_lims',
+  { data_type => 'varchar', is_nullable => 0, size => 255 },
   'id_sample_tmp',
   {
     data_type => 'integer',
@@ -166,32 +171,20 @@ __PACKAGE__->add_columns(
     is_foreign_key => 1,
     is_nullable => 0,
   },
-  'id_qc_result_lims',
-  { data_type => 'varchar', is_nullable => 0, size => 20 },
-  'id_lims',
-  { data_type => 'varchar', is_nullable => 0, size => 10 },
-  'id_pool_lims',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'id_library_lims',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'labware_purpose',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'assay',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'value',
+  'activity_type',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
-  'units',
+  'instrument',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
-  'cv',
-  { data_type => 'float', is_nullable => 1 },
-  'qc_type',
+  'kit_barcode',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
-  'date_created',
-  {
-    data_type => 'datetime',
-    datetime_undef_if_invalid => 1,
-    is_nullable => 0,
-  },
+  'kit_type',
+  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'input_barcode',
+  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'output_barcode',
+  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'user',
+  { data_type => 'varchar', is_nullable => 0, size => 255 },
   'last_updated',
   {
     data_type => 'datetime',
@@ -204,19 +197,33 @@ __PACKAGE__->add_columns(
     datetime_undef_if_invalid => 1,
     is_nullable => 0,
   },
+  'completed_at',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    is_nullable => 0,
+  },
+  'deleted_at',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    is_nullable => 1,
+  },
+  'id_lims',
+  { data_type => 'varchar', is_nullable => 0, size => 10 },
 );
 
 =head1 PRIMARY KEY
 
 =over 4
 
-=item * L</id_qc_result_tmp>
+=item * L</id_activity_tmp>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key('id_qc_result_tmp');
+__PACKAGE__->set_primary_key('id_activity_tmp');
 
 =head1 RELATIONS
 
@@ -236,16 +243,15 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2018-10-19 16:46:05
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vkIq07tap5c4gyxr+TtPOQ
-
-
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-06-29 10:33:58
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GdxAgnB+5z2/MW2ftwEJkA
 
 our $VERSION = '0';
 
 __PACKAGE__->meta->make_immutable;
+
 1;
+
 __END__
 
 =head1 SYNOPSIS
@@ -286,11 +292,14 @@ Result class definition in DBIx binding for the multi-lims warehouse database.
 
 =head1 AUTHOR
 
+Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
+
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2018 Genome Research Ltd.
+Copyright (C) 2021 Genome Research Ltd.
 
-This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
+This file is part of the ml_warehouse package
+L<https://github.com/wtsi-npg/ml_warehouse>.
 
 NPG is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

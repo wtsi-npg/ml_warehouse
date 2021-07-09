@@ -106,6 +106,14 @@ The name of the pipeline that produced the QC metric
 
 The version of the pipeline specified in the pp_name column
 
+=head2 pp_repo_url
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+URL of the VCS repository for this pipeline
+
 =head2 artic_qc_outcome
 
   data_type: 'char'
@@ -138,6 +146,14 @@ A Boolean flag to mark sample metadata upload to COG
 
 The uploaded files path root for the entity
 
+=head2 ivar_md
+
+  data_type: 'smallint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+ivar minimum depth used in generating the default consensus
+
 =head2 pct_n_bases
 
   data_type: 'float'
@@ -159,6 +175,29 @@ Percent of covered bases
   is_nullable: 1
 
 Longest consensus data stretch without N
+
+=head2 ivar_amd
+
+  data_type: 'smallint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+ivar minimum depth used in generating the additional consensus
+
+=head2 pct_n_bases_amd
+
+  data_type: 'float'
+  is_nullable: 1
+
+Percent of N bases in the additional consensus
+
+=head2 longest_no_n_run_amd
+
+  data_type: 'smallint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Longest data stretch without N in the additional consensus
 
 =head2 num_aligned_reads
 
@@ -207,6 +246,8 @@ __PACKAGE__->add_columns(
   },
   'pp_version',
   { data_type => 'varchar', is_nullable => 1, size => 40 },
+  'pp_repo_url',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'artic_qc_outcome',
   { data_type => 'char', is_nullable => 1, size => 15 },
   'climb_upload',
@@ -219,11 +260,19 @@ __PACKAGE__->add_columns(
   { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 1 },
   'path_root',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'ivar_md',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
   'pct_n_bases',
   { data_type => 'float', is_nullable => 1 },
   'pct_covered_bases',
   { data_type => 'float', is_nullable => 1 },
   'longest_no_n_run',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'ivar_amd',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'pct_n_bases_amd',
+  { data_type => 'float', is_nullable => 1 },
+  'longest_no_n_run_amd',
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
   'num_aligned_reads',
   { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
@@ -256,8 +305,8 @@ __PACKAGE__->set_primary_key('id_iseq_hrpr_metrics_tmp');
 __PACKAGE__->add_unique_constraint('iseq_hrm_digest_unq', ['id_iseq_product']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-07-21 15:10:10
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:mS4dZoQbqFVL11aoRMTszQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-07-05 11:20:11
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:HdHzMv5yVMDp50+HFejiaw
 
 our $VERSION = '0';
 

@@ -1,12 +1,12 @@
 
-package WTSI::DNAP::Warehouse::Schema::Result::CgapRelease;
+package WTSI::DNAP::Warehouse::Schema::Result::CgapConjuredLabware;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-WTSI::DNAP::Warehouse::Schema::Result::CgapRelease
+WTSI::DNAP::Warehouse::Schema::Result::CgapConjuredLabware
 
 =cut
 
@@ -30,15 +30,15 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components('InflateColumn::DateTime');
 
-=head1 TABLE: C<cgap_release>
+=head1 TABLE: C<cgap_conjured_labware>
 
 =cut
 
-__PACKAGE__->table('cgap_release');
+__PACKAGE__->table('cgap_conjured_labware');
 
 =head1 ACCESSORS
 
-=head2 cgap_release_tmp
+=head2 cgap_conjured_labware_tmp
 
   data_type: 'integer'
   extra: {unsigned => 1}
@@ -51,7 +51,7 @@ Internal to this database id. Value can change.
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 20
+  size: 32
 
 =head2 cell_line_long_name
 
@@ -65,42 +65,10 @@ Internal to this database id. Value can change.
   is_nullable: 0
   size: 38
 
-=head2 goal
+=head2 passage_number
 
-  data_type: 'varchar'
+  data_type: 'integer'
   is_nullable: 0
-  size: 64
-
-=head2 jobs
-
-  data_type: 'varchar'
-  is_nullable: 0
-  size: 64
-
-=head2 destination
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 64
-
-=head2 user
-
-  data_type: 'varchar'
-  is_nullable: 0
-  size: 6
-
-=head2 release_date
-
-  data_type: 'timestamp'
-  datetime_undef_if_invalid: 1
-  default_value: '0000-00-00 00:00:00'
-  is_nullable: 0
-
-=head2 cell_state
-
-  data_type: 'varchar'
-  is_nullable: 0
-  size: 40
 
 =head2 fate
 
@@ -108,10 +76,18 @@ Internal to this database id. Value can change.
   is_nullable: 1
   size: 40
 
-=head2 passage_number
+=head2 conjure_date
 
-  data_type: 'integer'
+  data_type: 'timestamp'
+  datetime_undef_if_invalid: 1
+  default_value: '0000-00-00 00:00:00'
   is_nullable: 0
+
+=head2 labware_state
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 20
 
 =head2 project
 
@@ -119,10 +95,16 @@ Internal to this database id. Value can change.
   is_nullable: 1
   size: 50
 
+=head2 slot_uuid
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 36
+
 =cut
 
 __PACKAGE__->add_columns(
-  'cgap_release_tmp',
+  'cgap_conjured_labware_tmp',
   {
     data_type => 'integer',
     extra => { unsigned => 1 },
@@ -130,55 +112,64 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
   },
   'barcode',
-  { data_type => 'varchar', is_nullable => 0, size => 20 },
+  { data_type => 'varchar', is_nullable => 0, size => 32 },
   'cell_line_long_name',
   { data_type => 'varchar', is_nullable => 0, size => 48 },
   'cell_line_uuid',
   { data_type => 'varchar', is_nullable => 0, size => 38 },
-  'goal',
-  { data_type => 'varchar', is_nullable => 0, size => 64 },
-  'jobs',
-  { data_type => 'varchar', is_nullable => 0, size => 64 },
-  'destination',
-  { data_type => 'varchar', is_nullable => 1, size => 64 },
-  'user',
-  { data_type => 'varchar', is_nullable => 0, size => 6 },
-  'release_date',
+  'passage_number',
+  { data_type => 'integer', is_nullable => 0 },
+  'fate',
+  { data_type => 'varchar', is_nullable => 1, size => 40 },
+  'conjure_date',
   {
     data_type => 'timestamp',
     datetime_undef_if_invalid => 1,
     default_value => '0000-00-00 00:00:00',
     is_nullable => 0,
   },
-  'cell_state',
-  { data_type => 'varchar', is_nullable => 0, size => 40 },
-  'fate',
-  { data_type => 'varchar', is_nullable => 1, size => 40 },
-  'passage_number',
-  { data_type => 'integer', is_nullable => 0 },
+  'labware_state',
+  { data_type => 'varchar', is_nullable => 0, size => 20 },
   'project',
   { data_type => 'varchar', is_nullable => 1, size => 50 },
+  'slot_uuid',
+  { data_type => 'varchar', is_nullable => 0, size => 36 },
 );
 
 =head1 PRIMARY KEY
 
 =over 4
 
-=item * L</cgap_release_tmp>
+=item * L</cgap_conjured_labware_tmp>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key('cgap_release_tmp');
+__PACKAGE__->set_primary_key('cgap_conjured_labware_tmp');
+
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<slot_uuid>
+
+=over 4
+
+=item * L</slot_uuid>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint('slot_uuid', ['slot_uuid']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-09-27 10:30:24
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Ll81tS818RsG09XqwJg10w
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-06-29 10:33:58
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:H+3zQNyserxI6a5KOscK1g
 
 our $VERSION = '0';
 
 __PACKAGE__->meta->make_immutable;
+
 1;
 
 __END__
@@ -225,9 +216,10 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2019 Genome Research Ltd.
+Copyright (C) 2021 Genome Research Ltd.
 
-This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
+This file is part of the ml_warehouse package
+L<https://github.com/wtsi-npg/ml_warehouse>.
 
 NPG is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

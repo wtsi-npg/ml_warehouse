@@ -1,12 +1,12 @@
 
-package WTSI::DNAP::Warehouse::Schema::Result::CgapBiomaterial;
+package WTSI::DNAP::Warehouse::Schema::Result::ArInternalMetadata;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-WTSI::DNAP::Warehouse::Schema::Result::CgapBiomaterial
+WTSI::DNAP::Warehouse::Schema::Result::ArInternalMetadata
 
 =cut
 
@@ -30,104 +30,81 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components('InflateColumn::DateTime');
 
-=head1 TABLE: C<cgap_biomaterial>
+=head1 TABLE: C<ar_internal_metadata>
 
 =cut
 
-__PACKAGE__->table('cgap_biomaterial');
+__PACKAGE__->table('ar_internal_metadata');
 
 =head1 ACCESSORS
 
-=head2 cgap_biomaterial_tmp
-
-  data_type: 'integer'
-  extra: {unsigned => 1}
-  is_auto_increment: 1
-  is_nullable: 0
-
-Internal to this database id. Value can change.
-
-=head2 donor_uuid
+=head2 key
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 36
+  size: 255
 
-=head2 donor_accession_number
+=head2 value
 
   data_type: 'varchar'
   is_nullable: 1
-  size: 38
+  size: 255
 
-=head2 donor_name
+=head2 created_at
 
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 64
-
-=head2 biomaterial_uuid
-
-  data_type: 'varchar'
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
   is_nullable: 0
-  size: 36
+
+=head2 updated_at
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 0
 
 =cut
 
 __PACKAGE__->add_columns(
-  'cgap_biomaterial_tmp',
+  'key',
+  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'value',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'created_at',
   {
-    data_type => 'integer',
-    extra => { unsigned => 1 },
-    is_auto_increment => 1,
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
     is_nullable => 0,
   },
-  'donor_uuid',
-  { data_type => 'varchar', is_nullable => 0, size => 36 },
-  'donor_accession_number',
-  { data_type => 'varchar', is_nullable => 1, size => 38 },
-  'donor_name',
-  { data_type => 'varchar', is_nullable => 1, size => 64 },
-  'biomaterial_uuid',
-  { data_type => 'varchar', is_nullable => 0, size => 36 },
+  'updated_at',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    is_nullable => 0,
+  },
 );
 
 =head1 PRIMARY KEY
 
 =over 4
 
-=item * L</cgap_biomaterial_tmp>
+=item * L</key>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key('cgap_biomaterial_tmp');
-
-=head1 UNIQUE CONSTRAINTS
-
-=head2 C<biomaterial_uuid>
-
-=over 4
-
-=item * L</biomaterial_uuid>
-
-=back
-
-=cut
-
-__PACKAGE__->add_unique_constraint('biomaterial_uuid', ['biomaterial_uuid']);
+__PACKAGE__->set_primary_key('key');
 
 
-# Created by DBIx::Class::Schema::Loader v0.07045 @ 2016-08-19 13:42:13
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WKpfeiC6T2Ryv16SvVn2sw
-
-
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-06-28 14:38:08
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:M0SNJLWJy91uWE2p3JvIJQ
 
 our $VERSION = '0';
 
 __PACKAGE__->meta->make_immutable;
+
 1;
+
 __END__
 
 =head1 SYNOPSIS
@@ -172,9 +149,10 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2015,2016 Genome Research Ltd.
+Copyright (C) 2021 Genome Research Ltd.
 
-This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
+This file is part of the ml_warehouse package
+L<https://github.com/wtsi-npg/ml_warehouse>.
 
 NPG is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

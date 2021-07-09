@@ -376,7 +376,7 @@ David K. Jackson E<lt>david.jackson@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2015 Genome Research Limited
+Copyright (C) 2017,2020 Genome Research Ltd.
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 

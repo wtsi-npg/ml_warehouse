@@ -1,6 +1,22 @@
 LIST OF CHANGES
 ---------------
 
+release 6.16.0
+ - add user requested control columns to the pac_bio_run_well_metrics
+   table
+ - Update Copyright statements for all Perl modules according to WSI
+   requirements. Retrofit years using dates returned by 'git log' command.
+   Example:
+     git log -- SOME_MODULE.pm | grep 'Date:' | cut -d ':' -f 4 | \
+     cut -d ' ' -f 2 | uniq | sort -g | xargs echo | \
+     perl -nle '$_=~s/\ /,/g; print "Copyright (C) $_ Genome Research Ltd."'
+ - DBIx classes updated and new classes added by running scripts/make_schema.pl
+   against the production database. cherrypicked_sample view is excluded from
+   the database inspection, DBIx does not like the definition. 
+ - Add additional columns to the iseq_heron_product_metrics table to capture
+   the pipeline's URL, ivar_md minimum depth value used with ivar and metrics
+   for the consensus computed with an alternative ivar minimum depth ivar_amd.
+
 release 6.15.0
  - Move from Travis CI to GitHub Actions.
  - If a WHERE clause in a SELECT query for the iseq_flowcell table
