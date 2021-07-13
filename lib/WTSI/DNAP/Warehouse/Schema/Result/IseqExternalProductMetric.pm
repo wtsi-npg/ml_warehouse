@@ -855,7 +855,10 @@ Readonly::Array my @ADDITIONAL_CLASSES => qw/
   npg_tracking::glossary::composition::component::illumina
                                            /;
 ##no critic (RegularExpressions::RequireExtendedFormatting RegularExpressions::RequireDotMatchAnything RegularExpressions::RequireLineBoundaryMatching)
-Readonly::Scalar my $FILENAME_REGEXP => qr/\A(\d+)(?:_(\d))?#(\d+)[.]cram\Z/;
+Readonly::Scalar my $FILENAME_REGEXP =>
+  qr/\A(\d+)(?:_(\d)(?:-(\d))?(?:-(\d))?)?#(\d+)[.]cram\Z/; # 38421_1#7.cram or
+                                                            # 38421#7.cram or
+                                                            # 38421_1-2-4#7.cram
 ##use critic
 Readonly::Scalar my $FILENAME_DELIM   => q[,];
 
@@ -903,20 +906,28 @@ sub file_name2composition {
 
   foreach my $name (@file_name) {
     ##no critic (RegularExpressions::RequireExtendedFormatting)
-    my ($id_run, $position, $tag_index) = $name =~ /$FILENAME_REGEXP/sm;
+    my ($id_run, $position, $position_a, $position_b, $tag_index) =
+      $name =~ /$FILENAME_REGEXP/sm;
     ##use critic
     ($id_run and $tag_index) or croak "Not a recognised file name - '$name'";
 
     if ($position) {
-      my $component = npg_tracking::glossary::composition::component::illumina->new(
-        id_run => $id_run, position => $position, tag_index => $tag_index
-      );
-      $factory->add_component($component);
+      my @positions = grep { defined } ($position, $position_a, $position_b);
+      # We might have a few positions in cases when we process two or three
+      # lanes out of four. If we processed all four lanes, the position
+      # is not present in the file name.
+      for my $p (@positions) {
+        my $component =
+          npg_tracking::glossary::composition::component::illumina->new(
+            id_run => $id_run, position => $p, tag_index => $tag_index
+          );
+        $factory->add_component($component);
+      }
     } else {
       # File name for a merged product. We need to find out what lanes went
       # into the merge.
       my @composition_jsons =
-	map { $_->iseq_composition_tmp }
+        map { $_->iseq_composition_tmp }
         $self->result_source->schema->resultset('IseqProductMetric')->search (
           { id_run    => $id_run,
             position  => undef,
