@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 8;
+use Test::More tests => 9;
 use Test::Exception;
 use Test::Warn;
 use English qw(-no_match_vars);
@@ -46,7 +46,7 @@ sub _create_product {
     );
     $cdata->{id_iseq_product} = $c->digest;
     $cdata->{iseq_composition_tmp} = $c->freeze;
-    push @single_component_rows, $rsp->create($cdata);
+    push @single_component_rows, $rsp->update_or_create($cdata);
   }
   if (not @single_component_rows) {
     push @single_component_rows, $prow; # will link on itself
@@ -55,7 +55,7 @@ sub _create_product {
   my $num_components = scalar @single_component_rows;
   my $index = 1;
   for my $sc_product (@single_component_rows) {
-    $rspc->create({
+    $rspc->update_or_create({
       num_components           => $num_components,
       component_index          => $index,
       id_iseq_pr_tmp           => $prow->id_iseq_pr_metrics_tmp,
@@ -69,7 +69,7 @@ sub _create_product {
 
 SKIP: {
       skip 'npg_tracking::glossary::composition module not available',
-           4 unless $composition_modules_available;
+           5 unless $composition_modules_available;
 
 subtest 'insert, single file name' => sub {
   plan tests => 33;
@@ -288,6 +288,77 @@ subtest 'update, multiple file names' => sub {
   is ($row->id_iseq_product,
     '0a0250691b5a601b8b36b892d81c84b9e93691ee6fec08822e5d2bf6e40fb5ac', 'product id is set');
   is ($row->iseq_composition_tmp, $json, 'product JSON is set');
+};
+
+subtest 'insert, partial lane merge' => sub {
+  plan tests => 8;
+
+  my $json = '{"components":[{"id_run":49890,"position":1,"tag_index":8},' . 
+            '{"id_run":49890,"position":2,"tag_index":8},' .
+            '{"id_run":49890,"position":3,"tag_index":8},' .
+            '{"id_run":49890,"position":4,"tag_index":8}]}';
+
+  my $digest = npg_tracking::glossary::composition->thaw(
+    $json,
+    component_class =>
+      'npg_tracking::glossary::composition::component::illumina'
+  )->digest;
+  _create_product({
+    id_run               => 49890,
+    tag_index            => 8,
+    id_iseq_product      => $digest,
+    iseq_composition_tmp => $json
+  }, [1,2,3,4]);
+
+  my $json_3m =   '{"components":[' . 
+            '{"id_run":49890,"position":2,"tag_index":8},' .
+            '{"id_run":49890,"position":3,"tag_index":8},' .
+            '{"id_run":49890,"position":4,"tag_index":8}]}';
+  my $digest_3m = npg_tracking::glossary::composition->thaw(
+    $json_3m,
+    component_class =>
+      'npg_tracking::glossary::composition::component::illumina'
+  )->digest;
+  _create_product({
+    id_run               => 49890,
+    tag_index            => 8,
+    id_iseq_product      => $digest_3m,
+    iseq_composition_tmp => $json_3m
+  }, [2,3,4]); # partial merge of three lanes
+
+  my $json_2m =   '{"components":[' . 
+            '{"id_run":49890,"position":1,"tag_index":8},' .
+            '{"id_run":49890,"position":3,"tag_index":8}]}';
+  my $digest_2m = npg_tracking::glossary::composition->thaw(
+    $json_2m,
+    component_class =>
+      'npg_tracking::glossary::composition::component::illumina'
+  )->digest;
+  _create_product({
+    id_run               => 49890,
+    tag_index            => 8,
+    id_iseq_product      => $digest_2m,
+    iseq_composition_tmp => $json_2m
+  }, [1,3]); # partial merge of two lanes
+
+  my $linking_rs = $rsepc->search({});
+  my $lr_count = $linking_rs->count(); # initial count of linking rows
+
+  my $row = $rs->create({file_name => '49890_1-3#8.cram',
+                         file_path => 'some/49890_1-3#8.cram'});
+  is ($row->id_run, 49890, '49890_1-3#8.cram run id is set');
+  is ($row->id_iseq_product, $digest_2m, '49890_1-3#8.cram product id is set');
+  is ($row->iseq_composition_tmp, $json_2m, 'product JSON is set');
+  $linking_rs = $rsepc->search({});
+  is ($linking_rs->count(), $lr_count+2, 'two new linking rows created');
+  
+  $row = $rs->create({file_name => '49890_2-3-4#8.cram',
+                      file_path => 'some/49890_2-3-4#8.cram'});
+  is ($row->id_run, 49890, '49890_2-3-4#8.cram run id is set');
+  is ($row->id_iseq_product, $digest_3m, 'product id is set');
+  is ($row->iseq_composition_tmp, $json_3m, 'product JSON is set');
+  $linking_rs = $rsepc->search({});
+  is ($linking_rs->count(), $lr_count+5, 'three new linking rows created');
 };
 
 }; # END of SKIP for  ($composition_modules_available == 0)
