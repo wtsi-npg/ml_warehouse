@@ -1,6 +1,13 @@
 LIST OF CHANGES
 ---------------
 
+release 6.17.0
+ - Improve record creation for iseq_external_product_metrics.
+   Be able to handle complex file names, which explicitly list
+   merged lanes, for example, 38421_1-2-4#30.cram. Be able to
+   generate correct composition, product id and linking rows for
+   such records.
+
 release 6.16.0
  - add user requested control columns to the pac_bio_run_well_metrics
    table
