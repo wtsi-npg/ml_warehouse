@@ -38,7 +38,7 @@ __PACKAGE__->table('product_irods');
 
 =head1 ACCESSORS
 
-=head2 id_product_irods
+=head2 id_product_irods_tmp
 
   data_type: 'bigint'
   extra: {unsigned => 1}
@@ -49,7 +49,7 @@ ID internal to this database
 
 =head2 id_product
 
-  data_type: 'char'
+  data_type: 'varchar'
   is_nullable: 0
   size: 64
 
@@ -57,32 +57,48 @@ Product id
 
 =head2 platform_name
 
-  data_type: 'varchar'
+  data_type: 'enum'
+  extra: {list => ['illumina','pacbio','ont']}
   is_nullable: 0
-  size: 16
 
-Name of the platform used
+Name of the platform used to produce raw data
 
 =head2 analysis_type
 
-  data_type: 'varchar'
+  data_type: 'enum'
+  extra: {list => ['original','alt_process','10x','artic']}
   is_nullable: 0
-  size: 16
 
-Name of the type of analysis used
+The type of analysis used
 
-=head2 irods_path
+=head2 irods_root
 
   data_type: 'varchar'
   is_nullable: 0
   size: 255
 
-Path to the data in iRODS
+Path to the product root in iRODS
+
+=head2 irods_data
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+The most accessed data path as provided by the customer
+
+=head2 irods_secondary_data
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+A secondary data path as provided by the customer
 
 =cut
 
 __PACKAGE__->add_columns(
-  'id_product_irods',
+  'id_product_irods_tmp',
   {
     data_type => 'bigint',
     extra => { unsigned => 1 },
@@ -90,44 +106,56 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
   },
   'id_product',
-  { data_type => 'char', is_nullable => 0, size => 64 },
+  { data_type => 'varchar', is_nullable => 0, size => 64 },
   'platform_name',
-  { data_type => 'varchar', is_nullable => 0, size => 16 },
+  {
+    data_type => 'enum',
+    extra => { list => ['illumina', 'pacbio', 'ont'] },
+    is_nullable => 0,
+  },
   'analysis_type',
-  { data_type => 'varchar', is_nullable => 0, size => 16 },
-  'irods_path',
+  {
+    data_type => 'enum',
+    extra => { list => ['original', 'alt_process', '10x', 'artic'] },
+    is_nullable => 0,
+  },
+  'irods_root',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'irods_data',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'irods_secondary_data',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
 
 =over 4
 
-=item * L</id_product_irods>
+=item * L</id_product_irods_tmp>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key('id_product_irods');
+__PACKAGE__->set_primary_key('id_product_irods_tmp');
 
 =head1 UNIQUE CONSTRAINTS
 
-=head2 C<irods_path>
+=head2 C<pi_irods_root>
 
 =over 4
 
-=item * L</irods_path>
+=item * L</irods_root>
 
 =back
 
 =cut
 
-__PACKAGE__->add_unique_constraint('irods_path', ['irods_path']);
+__PACKAGE__->add_unique_constraint('pi_irods_root', ['irods_root']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-06-04 15:27:00
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:H5lqsVDaVVYHCX2xZMksgA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-08-13 14:24:52
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vDYuXlnMcHG6f7u5GlOTBg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
@@ -197,3 +225,4 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 =cut
+
