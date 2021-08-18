@@ -1,12 +1,12 @@
 
-package WTSI::DNAP::Warehouse::Schema::Result::ProductIrod;
+package WTSI::DNAP::Warehouse::Schema::Result::SeqProductIrodsLocation;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-WTSI::DNAP::Warehouse::Schema::Result::ProductIrod
+WTSI::DNAP::Warehouse::Schema::Result::SeqProductIrodsLocation - Table relating products to their irods locations
 
 =cut
 
@@ -30,22 +30,40 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components('InflateColumn::DateTime');
 
-=head1 TABLE: C<product_irods>
+=head1 TABLE: C<seq_product_irods_locations>
 
 =cut
 
-__PACKAGE__->table('product_irods');
+__PACKAGE__->table('seq_product_irods_locations');
 
 =head1 ACCESSORS
 
-=head2 id_product_irods_tmp
+=head2 id_seq_product_irods_locations_tmp
 
   data_type: 'bigint'
   extra: {unsigned => 1}
   is_auto_increment: 1
   is_nullable: 0
 
-ID internal to this database
+Internal to this database id, value can change
+
+=head2 created
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  default_value: 'CURRENT_TIMESTAMP'
+  is_nullable: 1
+
+Datetime this record was created
+
+=head2 last_changed
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  default_value: 'CURRENT_TIMESTAMP'
+  is_nullable: 1
+
+Datetime this record was created or changed
 
 =head2 id_product
 
@@ -53,77 +71,87 @@ ID internal to this database
   is_nullable: 0
   size: 64
 
-Product id
+Product id, maps to value in product metrics table, such as id_iseq_product in iseq_product_metrics
 
-=head2 platform_name
-
-  data_type: 'enum'
-  extra: {list => ['illumina','pacbio','ont']}
-  is_nullable: 0
-
-Name of the platform used to produce raw data
-
-=head2 analysis_type
+=head2 seq_platform_name
 
   data_type: 'enum'
-  extra: {list => ['original','alt_process','10x','artic']}
+  extra: {list => ['Illumina','PacBio','ONT']}
   is_nullable: 0
 
-The type of analysis used
+Name of the sequencing platform used to produce raw data
 
-=head2 irods_root
+=head2 pipeline_name
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 16
+
+The name of the pipeline used to produce the data, values are: npg-prod, npg-prod-alt-process, cellranger, spaceranger, ncov2019-artic-nf
+
+=head2 irods_root_collection
 
   data_type: 'varchar'
   is_nullable: 0
   size: 255
 
-Path to the product root in iRODS
+Path to the product root collection in iRODS
 
-=head2 irods_data
+=head2 irods_data_relative_path
 
   data_type: 'varchar'
   is_nullable: 1
   size: 255
 
-The most accessed data path as provided by the customer
+The path, relative to the root collection, to the most used data location
 
-=head2 irods_secondary_data
+=head2 irods_secondary_data_relative_path
 
   data_type: 'varchar'
   is_nullable: 1
   size: 255
 
-A secondary data path as provided by the customer
+The path, relative to the root collection, to a useful data location
 
 =cut
 
 __PACKAGE__->add_columns(
-  'id_product_irods_tmp',
+  'id_seq_product_irods_locations_tmp',
   {
     data_type => 'bigint',
     extra => { unsigned => 1 },
     is_auto_increment => 1,
     is_nullable => 0,
   },
+  'created',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    default_value => 'CURRENT_TIMESTAMP',
+    is_nullable => 1,
+  },
+  'last_changed',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    default_value => 'CURRENT_TIMESTAMP',
+    is_nullable => 1,
+  },
   'id_product',
   { data_type => 'varchar', is_nullable => 0, size => 64 },
-  'platform_name',
+  'seq_platform_name',
   {
     data_type => 'enum',
-    extra => { list => ['illumina', 'pacbio', 'ont'] },
+    extra => { list => ['Illumina', 'PacBio', 'ONT'] },
     is_nullable => 0,
   },
-  'analysis_type',
-  {
-    data_type => 'enum',
-    extra => { list => ['original', 'alt_process', '10x', 'artic'] },
-    is_nullable => 0,
-  },
-  'irods_root',
+  'pipeline_name',
+  { data_type => 'varchar', is_nullable => 0, size => 16 },
+  'irods_root_collection',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
-  'irods_data',
+  'irods_data_relative_path',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'irods_secondary_data',
+  'irods_secondary_data_relative_path',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
@@ -131,31 +159,33 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</id_product_irods_tmp>
+=item * L</id_seq_product_irods_locations_tmp>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key('id_product_irods_tmp');
+__PACKAGE__->set_primary_key('id_seq_product_irods_locations_tmp');
 
 =head1 UNIQUE CONSTRAINTS
 
-=head2 C<pi_irods_root>
+=head2 C<pi_root_product>
 
 =over 4
 
-=item * L</irods_root>
+=item * L</irods_root_collection>
+
+=item * L</id_product>
 
 =back
 
 =cut
 
-__PACKAGE__->add_unique_constraint('pi_irods_root', ['irods_root']);
+__PACKAGE__->add_unique_constraint('pi_root_product', ['irods_root_collection', 'id_product']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-08-13 14:24:52
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vDYuXlnMcHG6f7u5GlOTBg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-08-19 10:59:01
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:UVJyaemHR3fKe1s5WS/TKA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
@@ -225,4 +255,3 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 =cut
-
