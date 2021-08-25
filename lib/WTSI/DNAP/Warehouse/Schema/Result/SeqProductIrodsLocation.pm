@@ -85,7 +85,7 @@ Name of the sequencing platform used to produce raw data
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 16
+  size: 32
 
 The name of the pipeline used to produce the data, values are: npg-prod, npg-prod-alt-process, cellranger, spaceranger, ncov2019-artic-nf
 
@@ -146,7 +146,7 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
   },
   'pipeline_name',
-  { data_type => 'varchar', is_nullable => 0, size => 16 },
+  { data_type => 'varchar', is_nullable => 0, size => 32 },
   'irods_root_collection',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
   'irods_data_relative_path',
@@ -184,8 +184,8 @@ __PACKAGE__->set_primary_key('id_seq_product_irods_locations_tmp');
 __PACKAGE__->add_unique_constraint('pi_root_product', ['irods_root_collection', 'id_product']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-08-19 10:59:01
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:UVJyaemHR3fKe1s5WS/TKA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-08-25 16:46:18
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hcVgom+GpJNV7+hBSlE9Sg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

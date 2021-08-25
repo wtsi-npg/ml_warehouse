@@ -10,7 +10,7 @@ CREATE TABLE `seq_product_irods_locations` (
   COMMENT 'Product id, maps to value in product metrics table, such as id_iseq_product in iseq_product_metrics',
   `seq_platform_name` ENUM('Illumina', 'PacBio', 'ONT') NOT NULL \
   COMMENT 'Name of the sequencing platform used to produce raw data',
-  `pipeline_name` VARCHAR(16) NOT NULL \
+  `pipeline_name` VARCHAR(32) NOT NULL \
   COMMENT 'The name of the pipeline used to produce the data, values are: npg-prod, npg-prod-alt-process, cellranger, spaceranger, ncov2019-artic-nf',
   `irods_root_collection` VARCHAR(255) NOT NULL \
   COMMENT 'Path to the product root collection in iRODS',
