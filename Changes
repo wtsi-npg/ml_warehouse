@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+
+ - add product_irods table to provide irods paths for data
+
 release 6.17.0
  - Improve record creation for iseq_external_product_metrics.
    Be able to handle complex file names, which explicitly list
