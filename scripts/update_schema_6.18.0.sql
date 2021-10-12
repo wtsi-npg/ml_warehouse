@@ -7,7 +7,7 @@ CREATE TABLE `seq_product_irods_locations` (
   `last_changed` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP \
   COMMENT 'Datetime this record was created or changed',
   `id_product` VARCHAR(64) NOT NULL \
-  COMMENT 'Product id, maps to value in product metrics table, such as id_iseq_product in iseq_product_metrics',
+  COMMENT 'A sequencing platform specific product id. For Illumina, data corresponds to the id_iseq_product column in the iseq_product_metrics table',
   `seq_platform_name` ENUM('Illumina', 'PacBio', 'ONT') NOT NULL \
   COMMENT 'Name of the sequencing platform used to produce raw data',
   `pipeline_name` VARCHAR(32) NOT NULL \

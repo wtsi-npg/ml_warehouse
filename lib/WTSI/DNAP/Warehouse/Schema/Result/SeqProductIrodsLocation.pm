@@ -71,7 +71,7 @@ Datetime this record was created or changed
   is_nullable: 0
   size: 64
 
-Product id, maps to value in product metrics table, such as id_iseq_product in iseq_product_metrics
+A sequencing platform specific product id. For Illumina, data corresponds to the id_iseq_product column in the iseq_product_metrics table
 
 =head2 seq_platform_name
 
@@ -184,8 +184,8 @@ __PACKAGE__->set_primary_key('id_seq_product_irods_locations_tmp');
 __PACKAGE__->add_unique_constraint('pi_root_product', ['irods_root_collection', 'id_product']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-08-25 16:46:18
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hcVgom+GpJNV7+hBSlE9Sg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-10-12 16:06:03
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:95PPjKmCX7+8f3ds2CkeLw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
