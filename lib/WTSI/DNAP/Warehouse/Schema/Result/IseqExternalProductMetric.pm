@@ -613,6 +613,54 @@ Sex as reported by sample supplier
 
 Genetic sex as identified by sequence data
 
+=head2 input_files_status
+
+  data_type: 'char'
+  is_nullable: 1
+  size: 10
+
+Status of the input files, either 'USEABLE' or 'DELETED'
+
+=head2 intermediate_files_status
+
+  data_type: 'char'
+  is_nullable: 1
+  size: 10
+
+Status of the intermediate files, either 'USEABLE' or 'DELETED'
+
+=head2 output_files_status
+
+  data_type: 'char'
+  is_nullable: 1
+  size: 10
+
+Status of the output files, either 'ARCHIVED', 'USEABLE' or 'DELETED'
+
+=head2 input_status_override_ref
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Status override reference for the input files
+
+=head2 intermediate_status_override_ref
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Status override reference for the intermediate files
+
+=head2 output_status_override_ref
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Status override reference for the output files
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -795,6 +843,18 @@ __PACKAGE__->add_columns(
   { data_type => 'char', is_nullable => 1, size => 6 },
   'sex_computed',
   { data_type => 'char', is_nullable => 1, size => 6 },
+  'input_files_status',
+  { data_type => 'char', is_nullable => 1, size => 10 },
+  'intermediate_files_status',
+  { data_type => 'char', is_nullable => 1, size => 10 },
+  'output_files_status',
+  { data_type => 'char', is_nullable => 1, size => 10 },
+  'input_status_override_ref',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'intermediate_status_override_ref',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'output_status_override_ref',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -841,8 +901,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-05-07 09:14:50
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:YJFAUcFuKNfXxexy5Y/sdw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-11-30 16:32:28
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Bry4Z7Q+S6bh83aSbzOpoQ
 
 use Readonly;
 use Try::Tiny;
