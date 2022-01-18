@@ -61,7 +61,7 @@ __PACKAGE__->table('tol_sample_bioproject');
 =head2 library_type
 
   data_type: 'enum'
-  extra: {list => ['Chromium genome','Haplotagging','Hi-C','Hi-C - Arima v1','Hi-C - Arima v2','Hi-C - Dovetail','Hi-C - Omni-C','Hi-C - Qiagen','PacBio - CLR','PacBio - HiFi','ONT','RNA PolyA','RNA-seq dUTP eukaryotic','Standard','unknown']}
+  extra: {list => ['Chromium genome','Haplotagging','Hi-C','Hi-C - Arima v1','Hi-C - Arima v2','Hi-C - Dovetail','Hi-C - Omni-C','Hi-C - Qiagen','PacBio - CLR','PacBio - HiFi','ONT','RNA PolyA','RNA-seq dUTP eukaryotic','Standard','unknown','HiSeqX PCR free']}
   is_nullable: 1
 
 =head2 tolid
@@ -141,6 +141,7 @@ __PACKAGE__->add_columns(
         'RNA-seq dUTP eukaryotic',
         'Standard',
         'unknown',
+        'HiSeqX PCR free',
       ],
     },
     is_nullable => 1,
@@ -181,6 +182,20 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key('id_tsb_tmp');
 
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<tol_sample_bioproject_file_index>
+
+=over 4
+
+=item * L</file>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint('tol_sample_bioproject_file_index', ['file']);
+
 =head1 RELATIONS
 
 =head2 sample
@@ -204,8 +219,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-06-28 14:38:08
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:n3rrc05zOIEljhi5BS+2bg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-18 09:43:51
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:wlpBpnZnwrdMZLn1p+0sgA
 
 our $VERSION = '0';
 
@@ -257,7 +272,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2021 Genome Research Ltd.
+Copyright (C) 2021, 2022 Genome Research Ltd.
 
 This file is part of the ml_warehouse package
 L<https://github.com/wtsi-npg/ml_warehouse>.
