@@ -1,3 +1,4 @@
+-- Create a new table to store iRODS locations
 DROP TABLE IF EXISTS `seq_product_irods_locations`;
 CREATE TABLE `seq_product_irods_locations` (
   `id_seq_product_irods_locations_tmp` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT \
@@ -24,3 +25,19 @@ CREATE TABLE `seq_product_irods_locations` (
   KEY `pi_pipeline_name` (`pipeline_name`),
   UNIQUE KEY `pi_root_product` (`irods_root_collection`, `id_product`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Table relating products to their irods locations';
+
+
+-- Add columns for file deletion status in iseq_external_product_metrics
+ALTER TABLE `iseq_external_product_metrics` 
+  ADD COLUMN `input_files_status` CHAR(10) DEFAULT NULL 
+    COMMENT "Status of the input files, either 'USEABLE' or 'DELETED'",
+  ADD COLUMN `intermediate_files_status` CHAR(10) DEFAULT NULL 
+    COMMENT "Status of the intermediate files, either 'USEABLE' or 'DELETED'",
+  ADD COLUMN `output_files_status` CHAR(10) DEFAULT NULL 
+    COMMENT "Status of the output files, either 'ARCHIVED', 'USEABLE' or 'DELETED'",
+  ADD COLUMN `input_status_override_ref` VARCHAR(255) DEFAULT NULL
+    COMMENT "Status override reference for the input files",
+  ADD COLUMN `intermediate_status_override_ref` VARCHAR(255) DEFAULT NULL
+    COMMENT "Status override reference for the intermediate files",
+  ADD COLUMN `output_status_override_ref` VARCHAR(255) DEFAULT NULL
+    COMMENT "Status override reference for the output files";
