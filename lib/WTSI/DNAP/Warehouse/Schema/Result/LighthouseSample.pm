@@ -273,6 +273,20 @@ PAM provided value whether sample is of high importance
 
 PAM provided value whether sample is important
 
+=head2 is_current
+
+  data_type: 'tinyint'
+  default_value: 0
+  is_nullable: 0
+
+Identifies if this sample has the most up to date information for the same rna_id
+
+=head2 current_rna_id
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -358,6 +372,10 @@ __PACKAGE__->add_columns(
   { data_type => 'tinyint', is_nullable => 1 },
   'preferentially_sequence',
   { data_type => 'tinyint', is_nullable => 1 },
+  'is_current',
+  { data_type => 'tinyint', default_value => 0, is_nullable => 0 },
+  'current_rna_id',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -373,6 +391,21 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key('id');
 
 =head1 UNIQUE CONSTRAINTS
+
+=head2 C<index_lighthouse_sample_on_current_rna_id>
+
+=over 4
+
+=item * L</current_rna_id>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint(
+  'index_lighthouse_sample_on_current_rna_id',
+  ['current_rna_id'],
+);
 
 =head2 C<index_lighthouse_sample_on_lh_sample_uuid>
 
@@ -421,8 +454,8 @@ __PACKAGE__->add_unique_constraint(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-06-29 10:33:58
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:tPp21S5F8qGERcEt1ImXcg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-18 09:43:51
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:uhD6uld6GzupoBjlDiQZ5w
 
 our $VERSION = '0';
 
@@ -489,7 +522,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2021 Genome Research Ltd.
+Copyright (C) 2021, 2022 Genome Research Ltd.
 
 This file is part of the ml_warehouse package
 L<https://github.com/wtsi-npg/ml_warehouse>.

@@ -27,7 +27,9 @@ lib/WTSI/DNAP/Warehouse/Schema/Result/OseqFlowcell.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/PacBioRun.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/QcResult.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/Sample.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/PsdSampleCompoundsComponent.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/SchemaMigration.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/SeqProductIrodsLocation.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/StockResource.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/Study.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/StudyUser.pm
