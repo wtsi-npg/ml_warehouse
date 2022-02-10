@@ -245,6 +245,14 @@ Timestamp of library creation
 
 Name of the run
 
+=head2 pipeline_id_lims
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 60
+
+LIMS-specific pipeline identifier that unambiguously defines library type (eg. Sequel-v1, IsoSeq-v1)
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -324,6 +332,8 @@ __PACKAGE__->add_columns(
   },
   'pac_bio_run_name',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'pipeline_id_lims',
+  { data_type => 'varchar', is_nullable => 1, size => 60 },
 );
 
 =head1 PRIMARY KEY
@@ -386,8 +396,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-01-24 15:45:02
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:eVqS5iL7i47o9VqosVsjTg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-02-10 17:59:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:oQm6tpLVh0MkSLiVaINuZA
 
 
 our $VERSION = '0';
