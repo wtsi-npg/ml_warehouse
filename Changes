@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+release 6.19.0
+ - bring DBIx classes up-to-date with the prod. database
+
 release 6.18.0
  - bring DBIx classes up-to-date with the prod. database
  - add product_irods table to provide irods paths for data
