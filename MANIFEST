@@ -20,6 +20,7 @@ lib/WTSI/DNAP/Warehouse/Schema/Result/IseqExternalProductMetric.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqExternalProductComponent.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqProductComponent.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRun.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunInfo.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunLaneMetric.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunStatus.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunStatusDict.pm
@@ -47,6 +48,7 @@ t/00-pod.t
 t/10-Schema.t
 t/10-Schema-IseqExternalProductMetric.t
 t/10-Schema-IseqRun.t
+t/10-Schema-IseqRunInfo.t
 t/20-Schema-Query-IseqFlowcell.t
 t/20-Schema-Query-LibraryDigest.t
 t/data/fixtures/00-IseqRunStatusDict.yml

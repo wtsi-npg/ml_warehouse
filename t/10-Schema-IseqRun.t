@@ -1,9 +1,10 @@
 use strict;
 use warnings;
-use Test::More tests => 4;
+use Test::More tests => 6;
 use Test::Exception;
 
 use_ok('WTSI::DNAP::Warehouse::Schema');
+use_ok('WTSI::DNAP::Warehouse::Schema::Result::IseqRun');
 
 my $schema;
 lives_ok { $schema = WTSI::DNAP::Warehouse::Schema
@@ -57,4 +58,33 @@ subtest 'create a row' => sub {
   is ($row->folder_name, '34726_RUN_FOLDER_8374', 'folder name is updated');
 };
   
+subtest 'create a row' => sub {
+  plan tests => 3;
+
+  my $map = {};
+  $map->{rp} = {
+    FlowCellMode         => 'rp__flow_cell_mode',
+    FlowCellConsumableVersion => 'rp__flow_cell_consumable_version',
+    SbsConsumableVersion => 'rp__sbs_consumable_version',
+    WorkflowType         => 'rp__workflow_type',
+    Read1NumberOfCycles  => 'rp__read1_number_of_cycles',
+    Read2NumberOfCycles  => 'rp__read2_number_of_cycles'
+  };
+
+  my $row = $rs_run->find(80364);
+  is_deeply ($row->get_column_names_map(), $map, 'mapping of names is correct');
+
+  $map = {
+    flowCellMode          => 'rp_flow_cell_mode',
+    Read1NumberOfCycles   => 'rp__read1_number_of_cycles',
+    '2readNumberOfCycles' => 'rp_2read_number_of_cycles',
+  };
+  is_deeply ($row->_generate_map('rp', values %{$map}), $map,
+    'mapping of names is correct');
+
+  my $class = $rs_run->result_class();
+  is_deeply ($class->_generate_map('rp', values %{$map}), $map,
+    'mapping of names is correct - class method');
+};
+
 1;

@@ -1,6 +1,12 @@
 LIST OF CHANGES
 ---------------
 
+ - Added a table for storing one of Illumina's XML files with
+   run information, iseq_run_info.
+   Added collumns to the iseq_run table to capture some values from
+   these Illumina files. The choice of the values is driven by the
+   current financial reporting need.
+
 release 6.19.2
  - additional fields for the pac_bio_run_well_metrics tables and
    bring DBIx classes up-to-date.
