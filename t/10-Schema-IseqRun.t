@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 6;
+use Test::More tests => 7;
 use Test::Exception;
 
 use_ok('WTSI::DNAP::Warehouse::Schema');
@@ -58,7 +58,7 @@ subtest 'create a row' => sub {
   is ($row->folder_name, '34726_RUN_FOLDER_8374', 'folder name is updated');
 };
   
-subtest 'create a row' => sub {
+subtest 'generate mapping' => sub {
   plan tests => 3;
 
   my $map = {};
@@ -85,6 +85,21 @@ subtest 'create a row' => sub {
   my $class = $rs_run->result_class();
   is_deeply ($class->_generate_map('rp', values %{$map}), $map,
     'mapping of names is correct - class method');
+};
+
+subtest 'test relation to iseq_run_info' => sub {
+  plan tests => 4;
+
+  my $row = $rs_run->find(80364);
+  is ($row->iseq_run_info(), undef, 'no related row');
+
+  $schema->resultset('IseqRunInfo')->create(
+    {id_run => 80364, run_parameters_xml => 'flkfjlkfjl'});
+  my $related = $row->iseq_run_info();
+  is (ref $related, 'WTSI::DNAP::Warehouse::Schema::Result::IseqRunInfo',
+   'relation returns a row');
+  is ($related->id_run, 80364, 'correct run id');
+  is ($related->run_parameters_xml, 'flkfjlkfjl', 'file content');
 };
 
 1;

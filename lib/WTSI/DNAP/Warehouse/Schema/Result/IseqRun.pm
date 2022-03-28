@@ -150,13 +150,30 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key('id_run');
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-03-24 15:33:18
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:TrB82lIxVr51no/DD59IQg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-03-28 15:02:21
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:kLdbyGv22cV5H4RTzF/nvQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
 our $VERSION = '0';
+
+=head1 RELATIONS
+
+=head2 iseq_run_info
+
+Type: might_have
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqRunInfo>
+
+=cut
+
+__PACKAGE__->might_have(
+  'iseq_run_info',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqRunInfo',
+  { 'foreign.id_run' => 'self.id_run' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
 
 sub get_column_names_map {
 

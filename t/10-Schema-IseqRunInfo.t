@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 5;
+use Test::More tests => 6;
 use Test::Exception;
 
 use_ok('WTSI::DNAP::Warehouse::Schema');
@@ -35,6 +35,21 @@ subtest 'create a row' => sub {
     'create a row with run params data undefined';
   $row = $rs_run_info->find($data->{id_run});
   is ($row->run_parameters_xml, 'sddsdsd', 'run params data'); 
+};
+
+subtest 'test relation to iseq_run' => sub {
+  plan tests => 4;
+
+  my $row = $rs_run_info->find(45678);
+  is ($row->iseq_run(), undef, 'no related row');
+
+  $schema->resultset('IseqRun')->create(
+    {id_run => 45678, id_flowcell_lims => 3567});
+  my $related = $row->iseq_run();
+  is (ref $related, 'WTSI::DNAP::Warehouse::Schema::Result::IseqRun',
+   'relation returns a row');
+  is ($related->id_run, 45678, 'correct run id');
+  is ($related->id_flowcell_lims, 3567, 'correct batch id');
 };
 
 1;

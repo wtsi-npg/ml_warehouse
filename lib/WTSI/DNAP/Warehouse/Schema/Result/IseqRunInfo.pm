@@ -75,13 +75,30 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key('id_run');
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-03-23 17:07:50
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:127JEeLpanUdVPzxt85twQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-03-28 15:02:21
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:jPpuUoFNTfechlHeyR74sg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
 our $VERSION = '0';
+
+=head1 RELATIONS
+
+=head2 iseq_run
+
+Type: belongs_to
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqRun>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  'iseq_run',
+  'WTSI::DNAP::Warehouse::Schema::Result::IseqRun',
+  { id_run => 'id_run' },
+  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
+);
 
 __PACKAGE__->meta->make_immutable;
 
@@ -147,19 +164,3 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 =cut
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
