@@ -1,7 +1,9 @@
 use strict;
 use warnings;
-use Test::More tests => 7;
+use Test::More tests => 9;
 use Test::Exception;
+use Test::Warn;
+use Perl6::Slurp;
 
 use_ok('WTSI::DNAP::Warehouse::Schema');
 use_ok('WTSI::DNAP::Warehouse::Schema::Result::IseqRun');
@@ -100,6 +102,118 @@ subtest 'test relation to iseq_run_info' => sub {
    'relation returns a row');
   is ($related->id_run, 80364, 'correct run id');
   is ($related->run_parameters_xml, 'flkfjlkfjl', 'file content');
+};
+
+subtest 'parse run params., load the values' => sub {
+  plan tests => 22;
+
+  my $row = $rs_run->find(80364);
+  
+  throws_ok { $row->update_values_from_xml() }
+    qr/No mapping is available for file type 'unknown'/,
+    'no arguments - error';
+  throws_ok { $row->update_values_from_xml('ri') }
+    qr/No mapping is available for file type 'ri'/,
+    'unknown file type - error';
+  
+  my $updated;
+  warning_like { $updated = $row->update_values_from_xml('rp', 'some') }
+    qr/Error extracting or populating values for run parameters/,
+    'parsing error is emitted as a warning';
+  is ($updated, 0, 'row is not updated');
+  
+  my $string = <<'FILE_END'
+<?xml version="1.0"?>
+<RunParameters xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <setup/>
+</RunParameters>
+FILE_END
+;
+
+  lives_ok { $updated = $row->update_values_from_xml('rp', $string) }
+    'XML elements with the names we look for are not preset - no error';
+  is ($updated, 0, 'row is not updated');
+
+  # Test run params. files for different instrument types.
+  # At the moment the elements we look for are present in files for
+  # NovaSeq instruments only.
+  my @file_names = qw/runParameters_HiSeq.xml runParameters_HiSeqX.xml
+                      RunParameters_MiSeq.xml runParameters_HiSeq4000.xml/;
+
+  for my $name (@file_names) {
+    my $contents = slurp "t/data/run_params/$name";
+    lives_ok { $updated = $row->update_values_from_xml('rp', $contents) }
+      "no error for $name";
+    is ($updated, 0, "$name - row is not updated");
+  }
+
+  my $name = 'RunParameters_NovaSeq.xml';
+  my $contents = slurp "t/data/run_params/$name";
+  lives_ok { $updated = $row->update_values_from_xml('rp', $contents) }
+    "no error for $name";
+  is ($updated, 1, "$name - row is updated");
+  is ($row->rp__read1_number_of_cycles, 221, 'read1_number_of_cycles');
+  is ($row->rp__read2_number_of_cycles, 201, 'read2_number_of_cycles');
+  is ($row->rp__flow_cell_mode, 'SP', 'flow_cell_mode');
+  is ($row->rp__workflow_type, 'NovaSeqXp', 'workflow_type');
+  is ($row->rp__flow_cell_consumable_version, '1', 'flow_cell_consumable_version');
+  is ($row->rp__sbs_consumable_version, '3', 'sbs_consumable_version');
+};
+ 
+subtest 'parse run params., load the values - edge cases' => sub {
+  plan tests => 13;
+
+  my $string = <<'FILE_END'
+<?xml version="1.0"?>
+<RunParameters>
+  <Read1NumberOfCycles>some</Read1NumberOfCycles>
+  <Read2NumberOfCycles>0</Read2NumberOfCycles>
+  <FlowCellMode/>
+  <WorkflowType>Standard</WorkflowType>
+  <SbsConsumableVersion>5.8</SbsConsumableVersion>
+</RunParameters>
+FILE_END
+;
+
+  my $row = $rs_run->find(45678);
+  my $updated = $row->update_values_from_xml('rp', $string);
+  is ($updated, 1, 'the row is updated');
+  is ($row->rp__read1_number_of_cycles, undef,
+    'read1_number_of_cycles - float value is not loaded');
+  is ($row->rp__read2_number_of_cycles, 0,
+    'read2_number_of_cycles - zero value is loaded');
+  is ($row->rp__flow_cell_mode, undef,
+    'flow_cell_mode remains undefined since the element contains no value');
+  is ($row->rp__workflow_type, 'Standard', 'workflow_type is loaded');
+  is ($row->rp__sbs_consumable_version, '5.8',
+    'sbs_consumable_version is loaded as a string representing a float value');
+
+  $string = <<'FILE_END'
+<?xml version="1.0"?>
+<RunParameters>
+  <Read1NumberOfCycles>7.9</Read1NumberOfCycles>
+  <Read2NumberOfCycles>0</Read2NumberOfCycles>
+  <FlowCellMode>SP</FlowCellMode>
+  <WorkflowType>Standard</WorkflowType>
+  <SbsConsumableVersion>5.8</SbsConsumableVersion>
+</RunParameters>
+FILE_END
+;
+
+  $updated = $row->update_values_from_xml('rp', $string);
+  is ($updated, 1, 'the row is updated');
+  is ($row->rp__read1_number_of_cycles, 7,
+    'read1_number_of_cycles - float value is truncated to int');
+  is ($row->rp__read2_number_of_cycles, 0,
+    'read2_number_of_cycles - zero value is loaded');
+  is ($row->rp__flow_cell_mode, 'SP',
+    'flow_cell_mode value is loaded');
+  is ($row->rp__workflow_type, 'Standard', 'workflow_type is loaded');
+  is ($row->rp__sbs_consumable_version, '5.8',
+    'sbs_consumable_version is loaded as a string representing a float value');
+  
+  $updated = $row->update_values_from_xml('rp', $string);
+  is ($updated, 1, 'the row is considered as updated');
 };
 
 1;

@@ -59,4 +59,9 @@ t/data/fixtures/100-IseqRunLaneMetric.yml
 t/data/fixtures/100-IseqRunStatus.yml
 t/data/fixtures/100-StudyUser.yml
 t/data/fixtures/200-IseqProductMetric.yml
+t/data/run_params/runParameters_HiSeq4000.xml
+t/data/run_params/runParameters_HiSeq.xml
+t/data/run_params/runParameters_HiSeqX.xml
+t/data/run_params/RunParameters_MiSeq.xml
+t/data/run_params/RunParameters_NovaSeq.xml
 t/perlcriticrc

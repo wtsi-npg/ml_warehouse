@@ -19,6 +19,7 @@ my $builder = WTSI::DNAP::Utilities::Build->new(
     'English'                  => 0,
     'File::Temp'               => 0,
     'File::Spec::Functions'    => 0,
+    'Perl6::Slurp'             => 0,
     'SQL::Translator'          => 0,
     'Test::Distribution'       => 0,
     'Test::Exception'          => 0,
@@ -48,6 +49,7 @@ my $builder = WTSI::DNAP::Utilities::Build->new(
     'strict'                               => 0,
     'Try::Tiny'                            => 0,
     'warnings'                             => 0,
+    'XML::LibXML'                          => 0,
   },
 
   'recommends' => {

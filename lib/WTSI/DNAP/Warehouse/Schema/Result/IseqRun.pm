@@ -156,6 +156,10 @@ __PACKAGE__->set_primary_key('id_run');
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
+use XML::LibXML;
+use Try::Tiny;
+use Carp;
+
 our $VERSION = '0';
 
 =head1 RELATIONS
@@ -183,6 +187,59 @@ sub get_column_names_map {
   $map->{$prefix} = __PACKAGE__->_generate_map($prefix, @rp_column_names);
 
   return $map;
+}
+
+sub update_values_from_xml {
+  my ($self, $file_type, $string_xml) = @_;
+
+  $file_type ||= q[unknown];
+  my $map = $self->get_column_names_map()->{$file_type};
+  if (not $map) {
+    croak "No mapping is available for file type '$file_type'";
+  }
+
+  my $update = 0;
+  if (defined $string_xml) {
+    try {
+      my $doc = XML::LibXML->load_xml(string => $string_xml);
+      my $values = {};
+      while (my ($element_name, $column_name) = each %{$map}) {
+        my $value = $doc->find(qq(//$element_name)); #XPath expression
+        if (defined $value and $value ne q[]) {
+          if ($column_name =~ /number_of_cycles/xms) {
+            # If $value does not represent a number, we will get zero.
+            # Zero is a  legitimate value, so we have to try to figure
+            # out whether in this case it's an artefact of casting.
+            my $original_value = $value;
+            $value = int $value;
+            if ($value == 0 and $original_value ne q[0]) {
+              next; # Casting artefact, will not load.
+            }
+            # If, however, $value does represent a number, but the number
+            # is not an integer, we will use whatever the int() function
+            # returns.
+          }
+          $values->{$column_name} = $value;
+        }
+      }
+      if (keys %{$values}) {
+        $self->result_source->schema->txn_do( sub {
+            $self->update($values);
+            $update = 1;
+          }
+        );
+      }
+    } catch {
+      my $error = shift;
+      if ($error =~ /Rollback failed/xms) {
+        croak 'Rollback failed!';
+      }
+      $update = 0;
+      carp "Error extracting or populating values for run parameters: $error";
+    };
+  }
+
+  return $update;
 }
 
 sub _generate_map {
@@ -249,6 +306,22 @@ instance of a row.
     print "XML element $ename maps to column " . $rp_map->{$ename} . "\n"; 
   }    
 
+=head2 update_values_from_xml
+
+Parses input XML data, extracts the values that can be loaded
+to columns of this table.
+
+  my $updated = $row->update_values_from_xml('rp', $run_param_xml);
+
+The above invocation instructs this method to load columns with names
+starting with C<rp_>. The second argument shoudl be a string representing
+valid XML.
+
+The return value is 1 if some data from the input XML string correspond to
+columns to be loaded, 0 if no eligible data is found. The return value of
+1 does not indicate that the values in the row have been changed. The return
+value of 0 means that the C<update> database operation has not been called.
+
 =head1 DEPENDENCIES
 
 =over
@@ -266,6 +339,12 @@ instance of a row.
 =item DBIx::Class::Core
 
 =item DBIx::Class::InflateColumn::DateTime
+
+=item XML::LibXML
+
+=item Try::Tiny
+
+=item Carp
 
 =back
 
