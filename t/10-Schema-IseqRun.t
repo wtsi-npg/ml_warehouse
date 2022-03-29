@@ -95,13 +95,19 @@ subtest 'test relation to iseq_run_info' => sub {
   my $row = $rs_run->find(80364);
   is ($row->iseq_run_info(), undef, 'no related row');
 
+  my $string = <<'SIMPLE'
+<?xml version="1.0"?>
+<RunParameters/>
+SIMPLE
+;
+
   $schema->resultset('IseqRunInfo')->create(
-    {id_run => 80364, run_parameters_xml => 'flkfjlkfjl'});
+    {id_run => 80364, run_parameters_xml => $string});
   my $related = $row->iseq_run_info();
   is (ref $related, 'WTSI::DNAP::Warehouse::Schema::Result::IseqRunInfo',
    'relation returns a row');
   is ($related->id_run, 80364, 'correct run id');
-  is ($related->run_parameters_xml, 'flkfjlkfjl', 'file content');
+  is ($related->run_parameters_xml, $string, 'file content');
 };
 
 subtest 'parse run params., load the values' => sub {

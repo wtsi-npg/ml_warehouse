@@ -81,6 +81,8 @@ __PACKAGE__->set_primary_key('id_run');
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
+use Carp;
+
 our $VERSION = '0';
 
 =head1 RELATIONS
@@ -100,6 +102,24 @@ __PACKAGE__->belongs_to(
   { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
 );
 
+around [qw/update insert/] => sub {
+  my $orig = shift;
+  my $self = shift;
+  # Insert or update as usual.
+  my $return_super = $self->$orig(@_);
+  # Parse XML and populate individual columns in iseq_run.
+  my $rp_xml = $self->run_parameters_xml();
+  if ($rp_xml) {
+    my $run_params_row = $self->iseq_run();
+    if ($run_params_row) {
+      $run_params_row->update_values_from_xml('rp', $rp_xml);
+    } else {
+      carp 'iseq_run table: no data for run ' . $self->id_run;
+    }
+  }
+  return $return_super;
+};
+
 __PACKAGE__->meta->make_immutable;
 
 1;
@@ -116,6 +136,18 @@ __END__
 
 =head1 SUBROUTINES/METHODS
 
+=head2 update
+
+The parent's method is extended to parse the contents of the 
+C<run_parameters_xml> column and populate relevant columns in
+the C<iseq_run> table.
+
+=head2 insert
+
+The parent's method is extended to parse the contents of the 
+C<run_parameters_xml> column and populate relevant columns in
+the C<iseq_run> table.
+
 =head1 DEPENDENCIES
 
 =over
@@ -123,6 +155,8 @@ __END__
 =item strict
 
 =item warnings
+
+=item Carp
 
 =item Moose
 
