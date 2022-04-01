@@ -111,7 +111,7 @@ SIMPLE
 };
 
 subtest 'parse run params., load the values' => sub {
-  plan tests => 22;
+  plan tests => 21;
 
   my $row = $rs_run->find(80364);
   
@@ -122,11 +122,9 @@ subtest 'parse run params., load the values' => sub {
     qr/No mapping is available for file type 'ri'/,
     'unknown file type - error';
   
-  my $updated;
-  warning_like { $updated = $row->update_values_from_xml('rp', 'some') }
+  throws_ok { $row->update_values_from_xml('rp', 'some') }
     qr/Error extracting or populating values for run parameters/,
-    'parsing error is emitted as a warning';
-  is ($updated, 0, 'row is not updated');
+    'parsing error is emitted';
   
   my $string = <<'FILE_END'
 <?xml version="1.0"?>
@@ -136,6 +134,7 @@ subtest 'parse run params., load the values' => sub {
 FILE_END
 ;
 
+  my $updated;
   lives_ok { $updated = $row->update_values_from_xml('rp', $string) }
     'XML elements with the names we look for are not preset - no error';
   is ($updated, 0, 'row is not updated');

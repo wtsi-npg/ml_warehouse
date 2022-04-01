@@ -149,19 +149,6 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key('id_run');
 
-
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-03-28 15:02:21
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:kLdbyGv22cV5H4RTzF/nvQ
-
-
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
-
-use XML::LibXML;
-use Try::Tiny;
-use Carp;
-
-our $VERSION = '0';
-
 =head1 RELATIONS
 
 =head2 iseq_run_info
@@ -178,6 +165,19 @@ __PACKAGE__->might_have(
   { 'foreign.id_run' => 'self.id_run' },
   { cascade_copy => 0, cascade_delete => 0 },
 );
+
+
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-03-31 11:47:30
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BjszN3SUdgRos/duK+m4Uw
+
+
+# You can replace this text with custom code or comments, and it will be preserved on regeneration
+
+use XML::LibXML;
+use Try::Tiny;
+use Carp;
+
+our $VERSION = '0';
 
 sub get_column_names_map {
 
@@ -223,19 +223,11 @@ sub update_values_from_xml {
         }
       }
       if (keys %{$values}) {
-        $self->result_source->schema->txn_do( sub {
-            $self->update($values);
-            $update = 1;
-          }
-        );
+        $self->update($values);
+        $update = 1;
       }
     } catch {
-      my $error = shift;
-      if ($error =~ /Rollback failed/xms) {
-        croak 'Rollback failed!';
-      }
-      $update = 0;
-      carp "Error extracting or populating values for run parameters: $error";
+      croak "Error extracting or populating values for run parameters: $_";
     };
   }
 

@@ -6,7 +6,7 @@ package WTSI::DNAP::Warehouse::Schema::Result::IseqRunInfo;
 
 =head1 NAME
 
-WTSI::DNAP::Warehouse::Schema::Result::IseqRunInfo - Table storing some text files from the run folder
+WTSI::DNAP::Warehouse::Schema::Result::IseqRunInfo - Table storing selected text files from the run folder
 
 =cut
 
@@ -42,6 +42,7 @@ __PACKAGE__->table('iseq_run_info');
 
   data_type: 'integer'
   extra: {unsigned => 1}
+  is_foreign_key: 1
   is_nullable: 0
 
 NPG run identifier
@@ -57,7 +58,12 @@ The contents of Illumina's {R,r}unParameters.xml file
 
 __PACKAGE__->add_columns(
   'id_run',
-  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 0 },
+  {
+    data_type => 'integer',
+    extra => { unsigned => 1 },
+    is_foreign_key => 1,
+    is_nullable => 0,
+  },
   'run_parameters_xml',
   { data_type => 'text', is_nullable => 1 },
 );
@@ -74,20 +80,9 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key('id_run');
 
-
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-03-28 15:02:21
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:jPpuUoFNTfechlHeyR74sg
-
-
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
-
-use Carp;
-
-our $VERSION = '0';
-
 =head1 RELATIONS
 
-=head2 iseq_run
+=head2 run
 
 Type: belongs_to
 
@@ -96,28 +91,52 @@ Related object: L<WTSI::DNAP::Warehouse::Schema::Result::IseqRun>
 =cut
 
 __PACKAGE__->belongs_to(
-  'iseq_run',
+  'run',
   'WTSI::DNAP::Warehouse::Schema::Result::IseqRun',
   { id_run => 'id_run' },
   { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
 );
 
+
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-04-01 17:33:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:dboQ2bkPkWQ+PRCfjf/+0A
+
+
+# You can replace this text with custom code or comments, and it will be preserved on regeneration
+
+use Carp;
+use Try::Tiny;
+
+our $VERSION = '0';
+
 around [qw/update insert/] => sub {
   my $orig = shift;
   my $self = shift;
-  # Insert or update as usual.
-  my $return_super = $self->$orig(@_);
-  # Parse XML and populate individual columns in iseq_run.
-  my $rp_xml = $self->run_parameters_xml();
-  if ($rp_xml) {
-    my $run_params_row = $self->iseq_run();
-    if ($run_params_row) {
-      $run_params_row->update_values_from_xml('rp', $rp_xml);
-    } else {
-      carp 'iseq_run table: no data for run ' . $self->id_run;
-    }
-  }
-  return $return_super;
+  my @values = @_;
+
+  try {
+    my $rp_xml = $values[0]->{run_parameters_xml} || $self->run_parameters_xml();
+    my $id_run = $values[0]->{id_run} || $self->id_run();
+    $self->result_source->schema->txn_do( sub {
+      my $run_row = $self->run();
+      if (not $run_row) { # Create a rudimentary (id_run only) parent row.
+        carp "iseq_run table: no data for run $id_run, will create a row";
+        $run_row = $self->result_source->resultset
+          ->related_resultset('run')->create({id_run => $id_run});
+      }
+      # Parse XML and populate individual columns in iseq_run.
+      if ($rp_xml) {
+        $run_row->update_values_from_xml('rp', $rp_xml);
+      }
+    });
+  } catch {
+    croak 'update or insert operation will not be performed: ' . $_;
+  };
+
+  # Now sure why, but the original method cannot be invoked within
+  # the above transaction.
+
+  return $self->$orig(@_);
 };
 
 __PACKAGE__->meta->make_immutable;
@@ -140,13 +159,15 @@ __END__
 
 The parent's method is extended to parse the contents of the 
 C<run_parameters_xml> column and populate relevant columns in
-the C<iseq_run> table.
+the C<iseq_run> table. If the parent record in the C<iseq_run>
+does not exist, it will be created.
 
 =head2 insert
 
 The parent's method is extended to parse the contents of the 
 C<run_parameters_xml> column and populate relevant columns in
-the C<iseq_run> table.
+the C<iseq_run> table. If the parent record in the C<iseq_run>
+table does not exist, it will be created.
 
 =head1 DEPENDENCIES
 
@@ -157,6 +178,8 @@ the C<iseq_run> table.
 =item warnings
 
 =item Carp
+
+=item Try::Tiny
 
 =item Moose
 

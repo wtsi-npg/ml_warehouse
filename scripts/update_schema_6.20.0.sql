@@ -2,9 +2,11 @@ CREATE TABLE `iseq_run_info` (
   `id_run` INT(10) UNSIGNED NOT NULL COMMENT 'NPG run identifier',
   `run_parameters_xml` TEXT DEFAULT NULL \
     COMMENT "The contents of Illumina's {R,r}unParameters.xml file",
-  PRIMARY KEY (`id_run`)
+  PRIMARY KEY (`id_run`),
+  FOREIGN KEY (`id_run`) REFERENCES iseq_run(`id_run`) \
+    ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci\
-  COMMENT 'Table storing some text files from the run folder';
+  COMMENT 'Table storing selected text files from the run folder';
  
 ALTER TABLE `iseq_run` \
   ADD COLUMN `rp__read1_number_of_cycles` \
