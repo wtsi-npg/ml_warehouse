@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+release 6.19.1
  - change collation on id_product row of seq_product_irods_locations to
    utf8_unicode_ci to enable JOINs
 
