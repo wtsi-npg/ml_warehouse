@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+ - change collation on id_product row of seq_product_irods_locations to
+   utf8_unicode_ci to enable JOINs
+
 release 6.19.0
  - bring DBIx classes up-to-date with the prod. database
 
