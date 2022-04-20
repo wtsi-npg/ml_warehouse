@@ -88,6 +88,22 @@ The instrument name e.g. SQ54097
 
 The chip type e.g. 8mChip
 
+=head2 sl_hostname
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+SMRT Link server hostname
+
+=head2 sl_run_uuid
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 36
+
+SMRT Link specific run uuid
+
 =head2 ts_run_name
 
   data_type: 'varchar'
@@ -104,6 +120,46 @@ The PacBio run name
 
 The PacBio movie name
 
+=head2 movie_minutes
+
+  data_type: 'smallint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Movie time (collection time) in minutes
+
+=head2 created_by
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 32
+
+Created by user name recorded in SMRT Link
+
+=head2 binding_kit
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Binding kit version
+
+=head2 sequencing_kit
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Sequencing kit version
+
+=head2 sequencing_kit_lot_number
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Sequencing Kit lot number
+
 =head2 cell_lot_number
 
   data_type: 'varchar'
@@ -119,6 +175,22 @@ SMRT Cell Lot Number
   size: 32
 
 The PacBio ccs exection mode e.g. OnInstument, OffInstument or None
+
+=head2 include_kinetics
+
+  data_type: 'tinyint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Include kinetics information where ccs is run
+
+=head2 loading_conc
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+SMRT Cell loading concentration (pM)
 
 =head2 run_start
 
@@ -208,6 +280,14 @@ The number of control reads
   size: [8,6]
 
 The average concordance between the control raw reads and the control reference sequence
+
+=head2 control_concordance_mode
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The modal value from the concordance between the control raw reads and the control reference sequence
 
 =head2 control_read_length_mean
 
@@ -419,14 +499,32 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 32 },
   'chip_type',
   { data_type => 'varchar', is_nullable => 1, size => 32 },
+  'sl_hostname',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'sl_run_uuid',
+  { data_type => 'varchar', is_nullable => 1, size => 36 },
   'ts_run_name',
   { data_type => 'varchar', is_nullable => 1, size => 32 },
   'movie_name',
   { data_type => 'varchar', is_nullable => 1, size => 32 },
+  'movie_minutes',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'created_by',
+  { data_type => 'varchar', is_nullable => 1, size => 32 },
+  'binding_kit',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'sequencing_kit',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'sequencing_kit_lot_number',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'cell_lot_number',
   { data_type => 'varchar', is_nullable => 1, size => 32 },
   'ccs_execution_mode',
   { data_type => 'varchar', is_nullable => 1, size => 32 },
+  'include_kinetics',
+  { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'loading_conc',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'run_start',
   {
     data_type => 'datetime',
@@ -470,6 +568,8 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => [8, 6],
   },
+  'control_concordance_mode',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'control_read_length_mean',
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
   'local_base_rate',
@@ -586,8 +686,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-06-21 23:24:02
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:frD6UDOWq8ZHleQSdIZK3Q
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-04-20 17:52:45
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nNrydSbV+IJ8NIGBvcv39g
 
 our $VERSION = '0';
 

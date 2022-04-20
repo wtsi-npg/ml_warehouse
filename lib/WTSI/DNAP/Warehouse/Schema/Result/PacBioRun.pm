@@ -253,6 +253,18 @@ Name of the run
 
 LIMS-specific pipeline identifier that unambiguously defines library type (eg. Sequel-v1, IsoSeq-v1)
 
+=head2 comparable_tag_identifier
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 comparable_tag2_identifier
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -334,6 +346,10 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'pipeline_id_lims',
   { data_type => 'varchar', is_nullable => 1, size => 60 },
+  'comparable_tag_identifier',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'comparable_tag2_identifier',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -347,6 +363,37 @@ __PACKAGE__->add_columns(
 =cut
 
 __PACKAGE__->set_primary_key('id_pac_bio_tmp');
+
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<unique_pac_bio_entry>
+
+=over 4
+
+=item * L</id_lims>
+
+=item * L</id_pac_bio_run_lims>
+
+=item * L</well_label>
+
+=item * L</comparable_tag_identifier>
+
+=item * L</comparable_tag2_identifier>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint(
+  'unique_pac_bio_entry',
+  [
+    'id_lims',
+    'id_pac_bio_run_lims',
+    'well_label',
+    'comparable_tag_identifier',
+    'comparable_tag2_identifier',
+  ],
+);
 
 =head1 RELATIONS
 
@@ -396,8 +443,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-02-10 17:59:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:oQm6tpLVh0MkSLiVaINuZA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-04-20 13:40:01
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2kTttVGAyCWPl4+7CJmgwg
 
 
 our $VERSION = '0';
