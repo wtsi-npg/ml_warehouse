@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+release 6.19.2
  - additional fields for the pac_bio_run_well_metrics tables and
    bring DBIx classes up-to-date.
 
