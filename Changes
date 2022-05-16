@@ -8,6 +8,7 @@ LIST OF CHANGES
    current financial reporting need.
    Create a trigger to populate these columns when the record in
    the iseq_run_info is created or updated.
+ - Bring DBIx classes up-to-date. 
 
 release 6.19.2
  - additional fields for the pac_bio_run_well_metrics tables and
