@@ -119,7 +119,7 @@ Priority
   data_type: 'tinyint'
   is_nullable: 1
 
-Manual QC decision, NULL for unknown
+Legacy QC decision value set per lane which may be used for per-lane billing: iseq_product_metrics.qc is likely to contain the per product QC summary of use to most downstream users
 
 =head2 external_release
 
@@ -587,8 +587,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-05-13 12:22:58
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3gXc9jU/hupU1HmXaQTRQw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-05-16 15:36:45
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WKXNoBer1TGZJNTUsLE3TA
 
 use MooseX::Aliases;
 use Readonly;

@@ -3,7 +3,7 @@ LIST OF CHANGES
 
  - Add a table for storing one of Illumina's XML files with
    run information, iseq_run_info.
-   Add collumns to the iseq_run table to capture some values from
+   Add columns to the iseq_run table to capture some values from
    these Illumina files. The choice of the values is driven by the
    current financial reporting need.
    Create a trigger to populate these columns when the record in

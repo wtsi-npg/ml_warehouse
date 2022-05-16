@@ -16,7 +16,7 @@ ALTER TABLE `iseq_run` \
   ADD COLUMN `rp__flow_cell_mode` \
     VARCHAR(4) DEFAULT NULL COMMENT 'Flowcell mode',
   ADD COLUMN `rp__workflow_type` \
-    VARCHAR(12) DEFAULT NULL COMMENT 'Workflow type',
+    VARCHAR(16) DEFAULT NULL COMMENT 'Workflow type',
   ADD COLUMN `rp__flow_cell_consumable_version` \
     VARCHAR(4) DEFAULT NULL COMMENT 'Flowcell consumable version', 
   ADD COLUMN `rp__sbs_consumable_version` \

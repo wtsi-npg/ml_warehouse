@@ -94,7 +94,7 @@ Flowcell mode
 
   data_type: 'varchar'
   is_nullable: 1
-  size: 12
+  size: 16
 
 Workflow type
 
@@ -130,7 +130,7 @@ __PACKAGE__->add_columns(
   'rp__flow_cell_mode',
   { data_type => 'varchar', is_nullable => 1, size => 4 },
   'rp__workflow_type',
-  { data_type => 'varchar', is_nullable => 1, size => 12 },
+  { data_type => 'varchar', is_nullable => 1, size => 16 },
   'rp__flow_cell_consumable_version',
   { data_type => 'varchar', is_nullable => 1, size => 4 },
   'rp__sbs_consumable_version',
@@ -167,8 +167,8 @@ __PACKAGE__->might_have(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-03-31 11:47:30
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BjszN3SUdgRos/duK+m4Uw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-05-16 15:36:45
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:/HE2wf6fPrOXQ/JKNetZow
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
