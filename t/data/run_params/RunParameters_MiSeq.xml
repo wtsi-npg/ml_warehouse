@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<RunParameters xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" LineWashRequired="false">
+  <RunParametersVersion>MiSeq_1_2</RunParametersVersion>
+  <CopyManifests>false</CopyManifests>
+  <FlowcellRFIDTag>
+    <SerialNumber>000000000-K5TNP</SerialNumber>
+    <PartNumber>15028382</PartNumber>
+    <ExpirationDate>2022-09-25T00:00:00</ExpirationDate>
+    <LotNumber>20583310</LotNumber>
+  </FlowcellRFIDTag>
+  <PR2BottleRFIDTag>
+    <SerialNumber>MS3130066-00PR2</SerialNumber>
+    <PartNumber>15041807</PartNumber>
+    <ExpirationDate>2022-10-14T00:00:00</ExpirationDate>
+    <LotNumber>20588026</LotNumber>
+  </PR2BottleRFIDTag>
+  <ReagentKitRFIDTag>
+    <SerialNumber>MS3303865-300V2</SerialNumber>
+    <PartNumber>15033572</PartNumber>
+    <ExpirationDate>2022-12-05T00:00:00</ExpirationDate>
+    <LotNumber>20615471</LotNumber>
+  </ReagentKitRFIDTag>
+  <Resumable>true</Resumable>
+  <ManifestFiles />
+  <AfterRunWashMethod>Post-Run Wash</AfterRunWashMethod>
+  <Setup>
+    <SupportMultipleSurfacesInUI>true</SupportMultipleSurfacesInUI>
+    <ApplicationVersion>4.0.0.1769</ApplicationVersion>
+    <NumTilesPerSwath>14</NumTilesPerSwath>
+    <NumSwaths>1</NumSwaths>
+    <NumLanes>1</NumLanes>
+    <ApplicationName>MiSeq Control Software</ApplicationName>
+  </Setup>
+  <RunID>220323_MS5_44363_A_MS3303865-300V2</RunID>
+  <ScannerID>M00642</ScannerID>
+  <RunNumber>979</RunNumber>
+  <FPGAVersion>9.5.12</FPGAVersion>
+  <MCSVersion>4.0.0.1769</MCSVersion>
+  <RTAVersion>1.18.54.4</RTAVersion>
+  <Barcode>000000000-K5TNP</Barcode>
+  <PR2BottleBarcode>MS3130066-00PR2</PR2BottleBarcode>
+  <ReagentKitPartNumberEntered>15033572</ReagentKitPartNumberEntered>
+  <ReagentKitVersion>Version2</ReagentKitVersion>
+  <ReagentKitBarcode>MS3303865-300V2</ReagentKitBarcode>
+  <PreviousPR2BottleBarcode />
+  <PreviousReagentKitBarcode />
+  <ExperimentName>44363</ExperimentName>
+  <RunDescription />
+  <LibraryPrepKit>Custom</LibraryPrepKit>
+  <IndexKit>Custom</IndexKit>
+  <Chemistry>Amplicon</Chemistry>
+  <Username>sbsUser</Username>
+  <EnableAnalysis>false</EnableAnalysis>
+  <Reads>
+    <RunInfoRead Number="1" NumCycles="150" IsIndexedRead="N" />
+    <RunInfoRead Number="2" NumCycles="8" IsIndexedRead="Y" />
+    <RunInfoRead Number="3" NumCycles="8" IsIndexedRead="Y" />
+    <RunInfoRead Number="4" NumCycles="150" IsIndexedRead="N" />
+  </Reads>
+  <TempFolder>D:\Illumina\MiSeqTemp\220323_MS5_44363_A_MS3303865-300V2</TempFolder>
+  <RTATempFolder>D:\Illumina\RTATemp\220323_MS5_44363_A_MS3303865-300V2</RTATempFolder>
+  <AnalysisFolder>D:\Illumina\MiSeqAnalysis\220323_MS5_44363_A_MS3303865-300V2</AnalysisFolder>
+  <RunStartDate>220323</RunStartDate>
+  <MostRecentWashType>MissedPostRunWash</MostRecentWashType>
+  <RecipeFolder>C:\ProgramData\Illumina\MiSeq Control Software\Recipe</RecipeFolder>
+  <ILMNOnlyRecipeFolder>C:\program files\Illumina\MiSeq Control Software\Recipe</ILMNOnlyRecipeFolder>
+  <SampleSheetName>MS3303865-300V2</SampleSheetName>
+  <SampleSheetFolder>\\ms5-esa.dnapipelines.sanger.ac.uk\staging\IL_seq_data\samplesheets</SampleSheetFolder>
+  <SampleSheetFilePath>\\ms5-esa.dnapipelines.sanger.ac.uk\staging\IL_seq_data\samplesheets\MS3303865-300V2.csv</SampleSheetFilePath>
+  <ManifestFolder>D:\Illumina\MiSeq Control Software\Manifests</ManifestFolder>
+  <OutputFolder>\\ms5-esa.dnapipelines.sanger.ac.uk\staging\IL_seq_data\incoming\220323_MS5_44363_A_MS3303865-300V2</OutputFolder>
+  <FocusMethod>AutoFocus</FocusMethod>
+  <SurfaceToScan>Both</SurfaceToScan>
+  <SaveFocusImages>false</SaveFocusImages>
+  <SaveScanImages>true</SaveScanImages>
+  <RunManagementType>SampleSheet</RunManagementType>
+  <BaseSpaceRunId>233123942</BaseSpaceRunId>
+  <CloudRunId>233123942</CloudRunId>
+  <SelectedRun>44363</SelectedRun>
+  <ModuleName>GenerateFastQWorkflow</ModuleName>
+  <ModuleVersion>3.0.1.45</ModuleVersion>
+  <MAPRunId>85085</MAPRunId>
+  <DxUserName />
+  <DxUserLevel />
+  <BaseSpaceMode>IpdRequested</BaseSpaceMode>
+  <ManualFlowcellEntry>false</ManualFlowcellEntry>
+  <ManualReagentEntry>false</ManualReagentEntry>
+  <ManualPR2Entry>false</ManualPR2Entry>
+  <CopyServiceRunId>18EABB92ABB55075</CopyServiceRunId>
+  <LocalRunManagerRunId>85085</LocalRunManagerRunId>
+</RunParameters>
