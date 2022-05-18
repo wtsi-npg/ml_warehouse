@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+release 6.20.0
  - Add a table for storing one of Illumina's XML files with
    run information, iseq_run_info.
    Add columns to the iseq_run table to capture some values from
