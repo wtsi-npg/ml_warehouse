@@ -184,6 +184,22 @@ The PacBio ccs exection mode e.g. OnInstument, OffInstument or None
 
 Include kinetics information where ccs is run
 
+=head2 hifi_only_reads
+
+  data_type: 'tinyint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+CCS was run on the instrument and only HiFi reads were included in the export from the instrument
+
+=head2 heteroduplex_analysis
+
+  data_type: 'tinyint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Analysis has been run on the instrument to detect and resolve heteroduplex reads
+
 =head2 loading_conc
 
   data_type: 'float'
@@ -523,6 +539,10 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 32 },
   'include_kinetics',
   { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'hifi_only_reads',
+  { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'heteroduplex_analysis',
+  { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 1 },
   'loading_conc',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
   'run_start',
@@ -686,8 +706,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-04-20 17:52:45
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nNrydSbV+IJ8NIGBvcv39g
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-22 10:04:21
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GYQ2wohhK5JszwlMIR7x5w
 
 our $VERSION = '0';
 
