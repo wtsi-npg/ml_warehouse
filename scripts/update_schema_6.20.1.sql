@@ -1,3 +1,5 @@
+
+-- Add extra columns to iseq_product_metrics for C2A substitution metrics
 ALTER TABLE iseq_product_metrics
   ADD COLUMN `sub_titv_class` float unsigned DEFAULT NULL COMMENT 'The ratio of transition substitution counts to transvertion'
     AFTER `target_autosome_percent_gt_coverage_threshold`,
@@ -23,3 +25,11 @@ ALTER TABLE iseq_product_metrics
     AFTER `sub_gt_mean_ti`,
   ADD COLUMN `sub_ctoa_art_predicted_level` tinyint(1) unsigned DEFAULT NULL COMMENT 'C2A predicted level - 0 = not present, 1 = low, 2 = medium and 3 = high'
     AFTER `sub_ctoa_oxh`;
+
+
+-- Add extra columns to pac_bio_run_well_metrics for SMRT Link 11 configuaration
+ALTER TABLE pac_bio_run_well_metrics
+  ADD COLUMN `hifi_only_reads` tinyint(1) unsigned DEFAULT NULL COMMENT 'CCS was run on the instrument and only HiFi reads were included in the export from the instrument'
+  AFTER `include_kinetics`,
+  ADD COLUMN `heteroduplex_analysis` tinyint(1) unsigned DEFAULT NULL COMMENT 'Analysis has been run on the instrument to detect and resolve heteroduplex reads'
+  AFTER `hifi_only_reads`;

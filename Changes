@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+ - Add new PacBio conf values to pac_bio_run_well_metrics
  - Add substitution metrics from C2A qc check to the iseq_product_metrics
    table
 
