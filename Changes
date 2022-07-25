@@ -1,6 +1,11 @@
 LIST OF CHANGES
 ---------------
 
+release 6.20.1
+ - Add new PacBio conf values to pac_bio_run_well_metrics
+ - Add substitution metrics from C2A qc check to the iseq_product_metrics
+   table
+
 release 6.20.0
  - Add a table for storing one of Illumina's XML files with
    run information, iseq_run_info.

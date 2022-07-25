@@ -585,6 +585,102 @@ The coverage threshold used in the perc target autosome greater than depth calcu
 
 The percentage of the target autosome covered at greater than the depth specified
 
+=head2 sub_titv_class
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The ratio of transition substitution counts to transvertion
+
+=head2 sub_titv_mean_ca
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+TiTv where count of CA+GT is taken as if it were mean across other transversions
+
+=head2 sub_frac_sub_hq
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Fraction of substitutions which are high quality (>=Q30)
+
+=head2 sub_oxog_bias
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+How similar CA to GT counts are within each read (high quality >=Q30 substitutions only) in order to detect OxoG oxidative artifacts
+
+=head2 sub_sym_gt_ca
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+How symmetrical CA and GT counts are within each read
+
+=head2 sub_sym_ct_ga
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+How symmetrical CT and GA counts are within each read
+
+=head2 sub_sym_ag_tc
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+How symmetrical AG and TC counts are within each read
+
+=head2 sub_cv_ti
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Coefficient of variation across all Ti substitutions = std(Ti)/mean(Ti)
+
+=head2 sub_gt_ti
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Computed as a maximum between (i) ratio of GT counts to TC and (ii) ratio CA to GA
+
+=head2 sub_gt_mean_ti
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Computed as a maximum between (i) ratio of GT counts to mean(Ti) and (ii) ratio CA to mean(Ti)
+
+=head2 sub_ctoa_oxh
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+This metric is used to compute the likelihood of C2A and its predicted level
+
+=head2 sub_ctoa_art_predicted_level
+
+  data_type: 'tinyint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+C2A predicted level - 0 = not present, 1 = low, 2 = medium and 3 = high
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -835,6 +931,30 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', is_nullable => 1 },
   'target_autosome_percent_gt_coverage_threshold',
   { data_type => 'float', is_nullable => 1, size => [5, 2] },
+  'sub_titv_class',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'sub_titv_mean_ca',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'sub_frac_sub_hq',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'sub_oxog_bias',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'sub_sym_gt_ca',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'sub_sym_ct_ga',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'sub_sym_ag_tc',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'sub_cv_ti',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'sub_gt_ti',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'sub_gt_mean_ti',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'sub_ctoa_oxh',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'sub_ctoa_art_predicted_level',
+  { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -953,8 +1073,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-09-29 10:33:58
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+RvmRk17x23bviWalcUgGw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-06-30 16:24:05
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:h1WsGh1UGAW4XYqkn1085Q
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
