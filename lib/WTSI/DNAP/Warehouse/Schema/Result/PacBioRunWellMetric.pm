@@ -224,6 +224,14 @@ Timestamp of run started
 
 Timestamp of run complete
 
+=head2 run_tranfer_complete
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 1
+
+Timestamp of run transfer complete
+
 =head2 run_status
 
   data_type: 'varchar'
@@ -557,6 +565,12 @@ __PACKAGE__->add_columns(
     datetime_undef_if_invalid => 1,
     is_nullable => 1,
   },
+  'run_tranfer_complete',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    is_nullable => 1,
+  },
   'run_status',
   { data_type => 'varchar', is_nullable => 1, size => 32 },
   'well_start',
@@ -706,8 +720,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-07-22 10:04:21
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GYQ2wohhK5JszwlMIR7x5w
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-08-20 21:03:22
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1cBoYBId56Y6kTyrZxlZVw
 
 our $VERSION = '0';
 
