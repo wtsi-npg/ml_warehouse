@@ -224,7 +224,7 @@ Timestamp of run started
 
 Timestamp of run complete
 
-=head2 run_tranfer_complete
+=head2 run_transfer_complete
 
   data_type: 'datetime'
   datetime_undef_if_invalid: 1
@@ -565,7 +565,7 @@ __PACKAGE__->add_columns(
     datetime_undef_if_invalid => 1,
     is_nullable => 1,
   },
-  'run_tranfer_complete',
+  'run_transfer_complete',
   {
     data_type => 'datetime',
     datetime_undef_if_invalid => 1,
@@ -720,8 +720,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-08-20 21:03:22
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1cBoYBId56Y6kTyrZxlZVw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-08-22 22:24:22
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:l2W4M2upZDy0lrOvTxzskg
 
 our $VERSION = '0';
 
