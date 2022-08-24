@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+release 6.21.0
+ - Add run_transfer_complete date to pac_bio_run_well_metrics
+
 release 6.20.1
  - Add new PacBio conf values to pac_bio_run_well_metrics
  - Add substitution metrics from C2A qc check to the iseq_product_metrics
