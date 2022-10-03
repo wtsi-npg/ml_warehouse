@@ -97,6 +97,20 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key('id_pac_bio_pr_metrics_tmp');
 
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<pac_bio_pr_metrics_id_product>
+
+=over 4
+
+=item * L</id_pac_bio_product>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint('pac_bio_pr_metrics_id_product', ['id_pac_bio_product']);
+
 =head1 RELATIONS
 
 =head2 pac_bio
@@ -135,8 +149,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-09-08 11:27:30
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0D6rwrki9e+wKFvmJiknPA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-10-03 14:26:10
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:KGxtLRaFAl0gYUB4mOmlRQ
 
 our $VERSION = '0';
 
