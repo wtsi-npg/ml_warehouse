@@ -48,6 +48,14 @@ __PACKAGE__->table('pac_bio_run_well_metrics');
   is_auto_increment: 1
   is_nullable: 0
 
+=head2 id_pac_bio_product
+
+  data_type: 'char'
+  is_nullable: 1
+  size: 64
+
+Product id
+
 =head2 pac_bio_run_name
 
   data_type: 'varchar'
@@ -513,6 +521,8 @@ The median base quality of HiFi bases filtered due to low quality (<Q20)
 __PACKAGE__->add_columns(
   'id_pac_bio_rw_metrics_tmp',
   { data_type => 'integer', is_auto_increment => 1, is_nullable => 0 },
+  'id_pac_bio_product',
+  { data_type => 'char', is_nullable => 1, size => 64 },
   'pac_bio_run_name',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
   'well_label',
@@ -700,6 +710,18 @@ __PACKAGE__->add_unique_constraint(
   ['pac_bio_run_name', 'well_label'],
 );
 
+=head2 C<pac_bio_rw_metrics_id_product>
+
+=over 4
+
+=item * L</id_pac_bio_product>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint('pac_bio_rw_metrics_id_product', ['id_pac_bio_product']);
+
 =head1 RELATIONS
 
 =head2 pac_bio_product_metrics
@@ -720,8 +742,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-08-22 22:24:22
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:l2W4M2upZDy0lrOvTxzskg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-10-03 16:13:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lBNdwEau/9h4KYlpTM2C5g
 
 our $VERSION = '0';
 
