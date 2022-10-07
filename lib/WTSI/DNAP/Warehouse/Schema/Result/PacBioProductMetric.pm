@@ -64,6 +64,14 @@ PacBio run well metrics id, see 'pac_bio_run_well_metrics.id_pac_bio_rw_metrics_
 
 PacBio run id, see 'pac_bio_run.id_pac_bio_tmp'
 
+=head2 id_pac_bio_product
+
+  data_type: 'char'
+  is_nullable: 1
+  size: 64
+
+Product id
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -73,6 +81,8 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', is_foreign_key => 1, is_nullable => 0 },
   'id_pac_bio_tmp',
   { data_type => 'integer', is_foreign_key => 1, is_nullable => 1 },
+  'id_pac_bio_product',
+  { data_type => 'char', is_nullable => 1, size => 64 },
 );
 
 =head1 PRIMARY KEY
@@ -86,6 +96,20 @@ __PACKAGE__->add_columns(
 =cut
 
 __PACKAGE__->set_primary_key('id_pac_bio_pr_metrics_tmp');
+
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<pac_bio_pr_metrics_id_product>
+
+=over 4
+
+=item * L</id_pac_bio_product>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint('pac_bio_pr_metrics_id_product', ['id_pac_bio_product']);
 
 =head1 RELATIONS
 
@@ -125,8 +149,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-02-09 11:33:17
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Ea+iVDOfptyUAPyi3Otvyg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-10-03 14:26:10
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:KGxtLRaFAl0gYUB4mOmlRQ
 
 our $VERSION = '0';
 
