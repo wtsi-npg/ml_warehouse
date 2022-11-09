@@ -99,6 +99,23 @@ __PACKAGE__->set_primary_key('id_pac_bio_pr_metrics_tmp');
 
 =head1 UNIQUE CONSTRAINTS
 
+=head2 C<pac_bio_metrics_product>
+
+=over 4
+
+=item * L</id_pac_bio_tmp>
+
+=item * L</id_pac_bio_rw_metrics_tmp>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint(
+  'pac_bio_metrics_product',
+  ['id_pac_bio_tmp', 'id_pac_bio_rw_metrics_tmp'],
+);
+
 =head2 C<pac_bio_pr_metrics_id_product>
 
 =over 4
@@ -149,8 +166,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-10-03 14:26:10
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:KGxtLRaFAl0gYUB4mOmlRQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-10-27 15:10:57
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:wlnEeMffO30EXB2BF+zsog
 
 our $VERSION = '0';
 

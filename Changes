@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+ - Add a unique key across pac_bio_product_metrics foreign keys to prevent
+   duplication of rows
+
 release 6.22.0
  - Add id_pac_bio_product to pac_bio_product_metrics
 
