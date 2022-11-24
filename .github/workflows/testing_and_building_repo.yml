@@ -13,7 +13,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/perl5ext  
-        key: ${{ runner.os}}-build-cpanm-external
+        key: ${{ runner.os }}-build-cpanm-external
  
     - name: install cpanm 
       run: |

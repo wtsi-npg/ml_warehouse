@@ -37,8 +37,26 @@ lives_ok { $schema->deploy() } 'schema deployed';
     'inner join from run lane to product via custom relationship');
   is ($p_rs->search({'me.id_run' => 4},  {join => 'iseq_run_lane_metric',},)->count(), 4,
     'inner join is performed from product to run lane by default');
-  is ($p_rs->search({'iseq_run_lane_metric_right.id_run' => 4}, {join => 'iseq_run_lane_metric_right',},)->count(), 8,
-    'right join is performed from product to run lane via custom relationship');
+
+  SKIP: {
+    my $outer_join_supported = 0;
+    my $sqlite_version = q[];
+
+    eval {
+      my $db = DBI->connect("dbi:SQLite:dbname=dummy", "", "");
+      $sqlite_version = $db->{sqlite_version};
+      my ($major, $minor, $patch) = split /./, $sqlite_version;
+      if ($major && int($major) == 3 && $minor && int($minor) >= 39) {
+        $outer_join_supported = 1;
+      }
+    };
+
+    skip "A version of SQLite supporting outer joins is not present: $sqlite_version", 1,
+        if !$outer_join_supported;
+
+    is($p_rs->search({ 'iseq_run_lane_metric_right.id_run' => 4 }, { join => 'iseq_run_lane_metric_right', },)->count(), 8,
+        'right join is performed from product to run lane via custom relationship');
+  };
 }
 
 1;
