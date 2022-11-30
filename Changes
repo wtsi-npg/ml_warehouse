@@ -1,6 +1,11 @@
 LIST OF CHANGES
 ---------------
 
+release 6.23.0
+ - Add a unique key across pac_bio_product_metrics foreign keys to prevent
+   duplication of rows
+ - Change CI runner from Ubuntu 18.04 to ubuntu-latest
+
 release 6.22.0
  - Add id_pac_bio_product to pac_bio_product_metrics
 
