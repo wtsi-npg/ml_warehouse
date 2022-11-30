@@ -37,9 +37,26 @@ lives_ok { $schema->deploy() } 'schema deployed';
     'inner join from run lane to product via custom relationship');
   is ($p_rs->search({'me.id_run' => 4},  {join => 'iseq_run_lane_metric',},)->count(), 4,
     'inner join is performed from product to run lane by default');
-  throws_ok {$p_rs->search({'iseq_run_lane_metric_right.id_run' => 4},  {join => 'iseq_run_lane_metric_right',},)->count()}
-    qr/DBD::SQLite::db prepare_cached failed: RIGHT and FULL OUTER JOINs are not currently supported/,
-    'run time error woth SQLite, but should be bringing the full set in MySQL';
+
+  SKIP: {
+    my $outer_join_supported = 0;
+    my $sqlite_version = q[];
+
+    eval {
+      my $db = DBI->connect("dbi:SQLite:dbname=dummy", "", "");
+      $sqlite_version = $db->{sqlite_version};
+      my ($major, $minor, $patch) = split /./, $sqlite_version;
+      if ($major && int($major) == 3 && $minor && int($minor) >= 39) {
+        $outer_join_supported = 1;
+      }
+    };
+
+    skip "A version of SQLite supporting outer joins is not present: $sqlite_version", 1,
+        if !$outer_join_supported;
+
+    is($p_rs->search({ 'iseq_run_lane_metric_right.id_run' => 4 }, { join => 'iseq_run_lane_metric_right', },)->count(), 8,
+        'right join is performed from product to run lane via custom relationship');
+  };
 }
 
 1;

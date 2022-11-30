@@ -1,13 +1,9 @@
 name: testing_and_building_repo
 on: [push, pull_request]
 jobs:
-  build: 
-    strategy:
-      matrix:
-        os: ['ubuntu-18.04']
-        
-    runs-on: ${{matrix.os}} 
-    name: Distribution Perl on ${{ matrix.os }} 
+  build:
+    runs-on: ubuntu-latest
+    name: Distribution Perl
     steps:
     - uses: actions/checkout@v2 
     
@@ -17,7 +13,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/perl5ext  
-        key: ${{ matrix.os}}-build-cpanm-external
+        key: ${{ runner.os }}-build-cpanm-external
  
     - name: install cpanm 
       run: |
