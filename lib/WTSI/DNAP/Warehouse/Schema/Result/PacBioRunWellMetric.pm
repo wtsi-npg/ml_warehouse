@@ -72,6 +72,36 @@ Lims specific identifier for the pacbio run
 
 The well identifier for the plate, A1-H12
 
+=head2 qc_seq_state
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Current sequencing QC state
+
+=head2 qc_seq_state_is_final
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+A flag marking the sequencing QC state as final (1) or not final (0)
+
+=head2 qc_seq_date
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 1
+
+The date the current sequencing QC state was assigned
+
+=head2 qc_seq
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+The final sequencing QC outcome as 0(failed), 1(passed) or NULL
+
 =head2 instrument_type
 
   data_type: 'varchar'
@@ -527,6 +557,18 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 0, size => 255 },
   'well_label',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'qc_seq_state',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'qc_seq_state_is_final',
+  { data_type => 'tinyint', is_nullable => 1 },
+  'qc_seq_date',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    is_nullable => 1,
+  },
+  'qc_seq',
+  { data_type => 'tinyint', is_nullable => 1 },
   'instrument_type',
   { data_type => 'varchar', is_nullable => 0, size => 32 },
   'instrument_name',
@@ -742,8 +784,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-10-03 16:13:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lBNdwEau/9h4KYlpTM2C5g
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-01-18 17:31:05
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7sZ7xcwCbHMrz5gopGKxlA
 
 our $VERSION = '0';
 

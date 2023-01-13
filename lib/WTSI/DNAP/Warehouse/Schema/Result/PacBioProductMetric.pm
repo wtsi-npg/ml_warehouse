@@ -72,6 +72,13 @@ PacBio run id, see 'pac_bio_run.id_pac_bio_tmp'
 
 Product id
 
+=head2 qc
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+The final QC outcome of the product as 0(failed), 1(passed) or NULL
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -83,6 +90,8 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', is_foreign_key => 1, is_nullable => 1 },
   'id_pac_bio_product',
   { data_type => 'char', is_nullable => 1, size => 64 },
+  'qc',
+  { data_type => 'tinyint', is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -166,8 +175,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-10-27 15:10:57
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:wlnEeMffO30EXB2BF+zsog
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-01-18 17:31:05
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ix20OijwEPnkhHQ4fn8E6A
 
 our $VERSION = '0';
 
