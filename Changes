@@ -1,6 +1,12 @@
 LIST OF CHANGES
 ---------------
 
+release 6.24.0
+ - Updated the DBIx ORM binding
+ - Set up indexes for PacBio tables to support queries from the LangQC
+   web application
+ - Update action versions in CI
+
 release 6.23.0
  - Add a unique key across pac_bio_product_metrics foreign keys to prevent
    duplication of rows
