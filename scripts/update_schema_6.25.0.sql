@@ -20,6 +20,11 @@ ALTER TABLE `pac_bio_product_metrics` \
   ADD COLUMN `qc` TINYINT(1) DEFAULT NULL COMMENT \
     'The final QC outcome of the product as 0(failed), 1(passed) or NULL', \
   ADD INDEX `pb_product_qc_index` (`qc`);
+
+-- Drop redundant index. The id_pac_bio_tmp column is the first-named column
+-- in the unique key named pac_bio_metrics_product.
+ALTER TABLE `pac_bio_product_metrics` \
+  DROP INDEX `pac_bio_pr_metrics_to_run_fk`;
    
  
   
