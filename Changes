@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - Added columns to store QC state for PacBio.
+
 release 6.24.0
  - Updated the DBIx ORM binding
  - Set up indexes for PacBio tables to support queries from the LangQC
