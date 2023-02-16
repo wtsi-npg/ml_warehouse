@@ -1,7 +1,13 @@
 LIST OF CHANGES
 ---------------
 
- - Added columns to store QC state for PacBio.
+release 6.25.0
+ - Add columns to the pac_bio_run_well_metrics and pac_bio_product_metrics
+   to store QC state for PacBio wells and products
+ - Drop redundant index from the pac_bio_product_metrics table
+ - Add a new table - gsu_sample_uploads
+
+added a new table - gsu_sample_uploads
 
 release 6.24.0
  - Updated the DBIx ORM binding
