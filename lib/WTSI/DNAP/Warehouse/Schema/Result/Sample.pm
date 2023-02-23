@@ -665,6 +665,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 gsu_sample_uploads
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::GsuSampleUpload>
+
+=cut
+
+__PACKAGE__->has_many(
+  'gsu_sample_uploads',
+  'WTSI::DNAP::Warehouse::Schema::Result::GsuSampleUpload',
+  { 'foreign.id_sample_tmp' => 'self.id_sample_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 iseq_flowcells
 
 Type: has_many
@@ -771,8 +786,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-06-28 16:28:20
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:i/ZbSbPN+YJN/KVOkyNMqA
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-02-23 11:12:46
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:mDkQ0kpnyj+FNE+gMXM8Pg
 
 our $VERSION = '0';
 

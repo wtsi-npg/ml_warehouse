@@ -51,7 +51,7 @@ __PACKAGE__->table('pac_bio_run_well_metrics');
 =head2 id_pac_bio_product
 
   data_type: 'char'
-  is_nullable: 1
+  is_nullable: 0
   size: 64
 
 Product id
@@ -552,7 +552,7 @@ __PACKAGE__->add_columns(
   'id_pac_bio_rw_metrics_tmp',
   { data_type => 'integer', is_auto_increment => 1, is_nullable => 0 },
   'id_pac_bio_product',
-  { data_type => 'char', is_nullable => 1, size => 64 },
+  { data_type => 'char', is_nullable => 0, size => 64 },
   'pac_bio_run_name',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
   'well_label',
@@ -784,8 +784,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-01-18 17:31:05
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7sZ7xcwCbHMrz5gopGKxlA
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-02-23 11:12:46
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ibpsNGR8Zp+PA0gTvmPUkw
 
 our $VERSION = '0';
 

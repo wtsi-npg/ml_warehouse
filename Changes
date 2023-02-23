@@ -1,6 +1,12 @@
 LIST OF CHANGES
 ---------------
 
+ - PacBio metrics tables:
+     1. make product id columns not nullable since LangQC relies
+        on these ids being available;
+     2 set collation for product ids so that it is possible to easily join
+       these tables to seq_product_irods_locations table.
+
 release 6.25.0
  - Add columns to the pac_bio_run_well_metrics and pac_bio_product_metrics
    to store QC state for PacBio wells and products

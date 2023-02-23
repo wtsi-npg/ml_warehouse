@@ -67,7 +67,7 @@ PacBio run id, see 'pac_bio_run.id_pac_bio_tmp'
 =head2 id_pac_bio_product
 
   data_type: 'char'
-  is_nullable: 1
+  is_nullable: 0
   size: 64
 
 Product id
@@ -89,7 +89,7 @@ __PACKAGE__->add_columns(
   'id_pac_bio_tmp',
   { data_type => 'integer', is_foreign_key => 1, is_nullable => 1 },
   'id_pac_bio_product',
-  { data_type => 'char', is_nullable => 1, size => 64 },
+  { data_type => 'char', is_nullable => 0, size => 64 },
   'qc',
   { data_type => 'tinyint', is_nullable => 1 },
 );
@@ -175,8 +175,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-01-18 17:31:05
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ix20OijwEPnkhHQ4fn8E6A
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-02-23 11:19:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:atOKMZwtqWTqeE7XYU1hlw
 
 our $VERSION = '0';
 
