@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+release 6.26.0
  - PacBio metrics tables:
      1. make product id columns not nullable since LangQC relies
         on these ids being available;
