@@ -1,5 +1,8 @@
 LIST OF CHANGES
 ---------------
+ 
+ - Add column to the pac_bio_run_well_metrics to store the ccs dataset
+   id for a sample well.
 
 release 6.26.0
  - PacBio metrics tables:
