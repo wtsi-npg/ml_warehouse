@@ -142,6 +142,14 @@ SMRT Link server hostname
 
 SMRT Link specific run uuid
 
+=head2 sl_ccs_uuid
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 36
+
+SMRT Link specific ccs dataset uuid
+
 =head2 ts_run_name
 
   data_type: 'varchar'
@@ -579,6 +587,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'sl_run_uuid',
   { data_type => 'varchar', is_nullable => 1, size => 36 },
+  'sl_ccs_uuid',
+  { data_type => 'varchar', is_nullable => 1, size => 36 },
   'ts_run_name',
   { data_type => 'varchar', is_nullable => 1, size => 32 },
   'movie_name',
@@ -784,8 +794,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-02-23 11:12:46
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ibpsNGR8Zp+PA0gTvmPUkw
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-30 17:57:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Q4TMPo06PRka1LDy95QgsQ
 
 our $VERSION = '0';
 
