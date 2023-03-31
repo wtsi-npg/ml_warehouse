@@ -206,6 +206,46 @@ LIMs-specific identifier of the tag set for the second tag
 
 WTSI-wide tag set name for the second tag
 
+=head2 flowcell_id
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+The id of the flowcell. Supplied with the flowcell. Format FAVnnnn
+
+=head2 library_tube_uuid
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 36
+
+The uuid for the originating library tube
+
+=head2 library_tube_barcode
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+The barcode for the originating library tube
+
+=head2 run_uuid
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 36
+
+The uuid of the run
+
+=head2 run_id
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Run identifier assigned by MinKNOW
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -278,6 +318,16 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'tag2_set_name',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'flowcell_id',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'library_tube_uuid',
+  { data_type => 'varchar', is_nullable => 1, size => 36 },
+  'library_tube_barcode',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'run_uuid',
+  { data_type => 'varchar', is_nullable => 1, size => 36 },
+  'run_id',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -325,8 +375,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-06-11 17:00:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Q6JR0VvdNRVIV7eIW8OHzw
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-30 17:57:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:sCzCqwiNhiXHH0eRKlKJUQ
 
 our $VERSION = '0';
 
