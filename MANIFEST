@@ -49,6 +49,7 @@ t/10-Schema.t
 t/10-Schema-IseqExternalProductMetric.t
 t/10-Schema-IseqRun.t
 t/10-Schema-IseqRunInfo.t
+t/10-Schema-PacBioProductMetric.t
 t/20-Schema-Query-IseqFlowcell.t
 t/20-Schema-Query-LibraryDigest.t
 t/data/fixtures/00-IseqRunStatusDict.yml
@@ -57,6 +58,7 @@ t/data/fixtures/000-Study.yml
 t/data/fixtures/100-IseqFlowcell.yml
 t/data/fixtures/100-IseqRunLaneMetric.yml
 t/data/fixtures/100-IseqRunStatus.yml
+t/data/fixtures/100-PacBioRun.yml
 t/data/fixtures/100-StudyUser.yml
 t/data/fixtures/200-IseqProductMetric.yml
 t/data/run_params/runParameters_HiSeq4000.xml

@@ -180,6 +180,37 @@ __PACKAGE__->belongs_to(
 
 our $VERSION = '0';
 
+my $TAG_DELIM = q[,]; # Delimiter chosen to comply with the id generation script
+
+
+=head2 get_tags
+
+  Arg [1]    : Row from pac_bio_run table, DBIx Result. Required.
+  Example    : $tags = WTSI::DNAP::Warehouse::Schema::Result::PacBioProductMetric->get_tags($row);
+  Description: Checks whether there are tag sequences in the row, and
+               returns them as a comma separated list which can be used
+               as part of product id generation
+  Returntype : String
+
+=cut
+
+sub get_tags {
+  my ($class, $row) = @_;
+
+  if (!defined $row){
+    confess('A defined row argument is required');
+  }
+  my $tag1 = $row->tag_sequence;
+  my $tag2 = $row->tag2_sequence;
+  if ($tag1){
+    if ($tag2) {
+      return join $TAG_DELIM, $tag1, $tag2;
+    }
+    return $tag1;
+  }
+  return q[];
+}
+
 __PACKAGE__->meta->make_immutable;
 1;
 
