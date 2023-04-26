@@ -178,7 +178,26 @@ __PACKAGE__->belongs_to(
 # Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-02-23 11:19:02
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:atOKMZwtqWTqeE7XYU1hlw
 
+use Carp;
+
 our $VERSION = '0';
+
+
+=head2 get_tags
+
+Returns an array containing tag_sequence and tag2_sequence values for the
+linked row in pac_bio_run. If no linked row is available, an error is thrown.
+
+=cut
+
+sub get_tags {
+  my $self = shift;
+  if ($self->pac_bio){
+    return $self->pac_bio->get_tags;
+  }else{
+    croak('No linked row in pac_bio_run table');
+  }
+}
 
 __PACKAGE__->meta->make_immutable;
 1;
@@ -223,7 +242,7 @@ Result class definition in DBIx binding for the multi-lims warehouse database.
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2021 Genome Research Ltd.
+Copyright (C) 2021, 2023 Genome Research Ltd.
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
