@@ -1,10 +1,11 @@
 LIST OF CHANGES
 ---------------
- 
-Unreleased
- - Add get_tags function to pac_bio_product_metrics table binding
 
- release 6.27.0
+Unreleased
+ - Add get_tags methods to pac_bio_run and pac_bio_product_metrics table
+   bindings
+
+release 6.27.0
  - Add column to the pac_bio_run_well_metrics to store the ccs dataset
    id for a sample well.
 

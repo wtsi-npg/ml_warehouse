@@ -178,37 +178,25 @@ __PACKAGE__->belongs_to(
 # Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-02-23 11:19:02
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:atOKMZwtqWTqeE7XYU1hlw
 
-our $VERSION = '0';
+use Carp;
 
-my $TAG_DELIM = q[,]; # Delimiter chosen to comply with the id generation script
+our $VERSION = '0';
 
 
 =head2 get_tags
 
-  Arg [1]    : Row from pac_bio_run table, DBIx Result. Required.
-  Example    : $tags = WTSI::DNAP::Warehouse::Schema::Result::PacBioProductMetric->get_tags($row);
-  Description: Checks whether there are tag sequences in the row, and
-               returns them as a comma separated list which can be used
-               as part of product id generation
-  Returntype : String
+Returns an array containing tag_sequence and tag2_sequence values for the
+linked row in pac_bio_run. If no linked row is available, an error is thrown.
 
 =cut
 
 sub get_tags {
-  my ($class, $row) = @_;
-
-  if (!defined $row){
-    confess('A defined row argument is required');
+  my $self = shift;
+  if ($self->pac_bio){
+    return $self->pac_bio->get_tags;
+  }else{
+    croak('No linked row in pac_bio_run table');
   }
-  my $tag1 = $row->tag_sequence;
-  my $tag2 = $row->tag2_sequence;
-  if ($tag1){
-    if ($tag2) {
-      return join $TAG_DELIM, $tag1, $tag2;
-    }
-    return $tag1;
-  }
-  return q[];
 }
 
 __PACKAGE__->meta->make_immutable;
@@ -254,7 +242,7 @@ Result class definition in DBIx binding for the multi-lims warehouse database.
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2021 Genome Research Ltd.
+Copyright (C) 2021, 2023 Genome Research Ltd.
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 

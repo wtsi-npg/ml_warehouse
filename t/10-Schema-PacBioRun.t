@@ -5,7 +5,7 @@ use Test::Exception;
 use YAML qw/ LoadFile /;
 
 use_ok('WTSI::DNAP::Warehouse::Schema');
-use_ok('WTSI::DNAP::Warehouse::Schema::Result::PacBioProductMetric');
+use_ok('WTSI::DNAP::Warehouse::Schema::Result::PacBioRun');
 
 sub _load_fixtures {
     my ($schema, $path) = @_;
@@ -30,7 +30,7 @@ sub _load_fixtures {
     return;
 }
 
-my $RUN_TABLE_NAME = q[PacBioProductMetric];
+my $RUN_TABLE_NAME = q[PacBioRun];
 
 my $schema;
 lives_ok {
@@ -41,19 +41,25 @@ lives_ok {
 
 
 subtest 'test_get_tags' => sub {
-  plan tests => 2;
+  plan tests => 3;
 
   my $rs1 = $schema->resultset($RUN_TABLE_NAME)->search
-    ({id_pac_bio_pr_metrics_tmp => '7879'});
+    ({pac_bio_run_name => 'TRACTION-RUN-157', well_label => 'A1'});
   my $row1 = $rs1->next;
   is(join(q[,], @{$row1->get_tags}), 'ACACTAGATCGCGTGTT,CTATACGTATATCTATT',
-    'Correct tag list for linked product');
+    'Correct tag list for product with two tag sequences');
 
   my $rs2 = $schema->resultset($RUN_TABLE_NAME)->search
-    ({ id_pac_bio_pr_metrics_tmp => '7931'});
+    ({ pac_bio_run_name => '80685', well_label => 'D1'});
   my $row2 = $rs2->next;
-  dies_ok{ $row2->get_tags} ,
-    'Error when no pac_bio_run row is linked';
+  is(join(q[,], @{$row2->get_tags}), 'CGCATGACACGTGTGTT',
+    'Correct tag list for product with one tag sequence');
+
+  my $rs3 = $schema->resultset($RUN_TABLE_NAME)->search
+    ({ pac_bio_run_name => 'TRACTION-RUN-157', well_label => 'D1'});
+  my $row3 = $rs3->next;
+  is(join(q[,], @{$row3->get_tags}), '',
+    'Empty tag list for product with zero tag sequences');
 
 };
 
