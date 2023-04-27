@@ -1,10 +1,13 @@
 LIST OF CHANGES
 ---------------
 
+Unreleased
+ - Add get_tags methods to pac_bio_run and pac_bio_product_metrics table
+   bindings
  - Add 3 columns to the pac_bio_run_well_metrics to store well level
    demultiplexing information.
 
- release 6.27.0
+release 6.27.0
  - Add column to the pac_bio_run_well_metrics to store the ccs dataset
    id for a sample well.
 
