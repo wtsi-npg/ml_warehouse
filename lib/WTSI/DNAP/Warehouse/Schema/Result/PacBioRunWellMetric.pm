@@ -222,6 +222,14 @@ SMRT Cell Lot Number
 
 The PacBio ccs exection mode e.g. OnInstument, OffInstument or None
 
+=head2 demultiplex_mode
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 32
+
+Demultiplexing mode e.g. OnInstument, OffInstument or None
+
 =head2 include_kinetics
 
   data_type: 'tinyint'
@@ -554,6 +562,22 @@ The mean length of HiFi reads filtered due to low quality (<Q20)
 
 The median base quality of HiFi bases filtered due to low quality (<Q20)
 
+=head2 hifi_barcoded_reads
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Number of reads with an expected barcode in demultiplexed HiFi data
+
+=head2 hifi_bases_in_barcoded_reads
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Number of bases in reads with an expected barcode in demultiplexed HiFi data
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -606,6 +630,8 @@ __PACKAGE__->add_columns(
   'cell_lot_number',
   { data_type => 'varchar', is_nullable => 1, size => 32 },
   'ccs_execution_mode',
+  { data_type => 'varchar', is_nullable => 1, size => 32 },
+  'demultiplex_mode',
   { data_type => 'varchar', is_nullable => 1, size => 32 },
   'include_kinetics',
   { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 1 },
@@ -729,6 +755,10 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
   'hifi_low_quality_read_quality_median',
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'hifi_barcoded_reads',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'hifi_bases_in_barcoded_reads',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -794,8 +824,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-30 17:57:34
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Q4TMPo06PRka1LDy95QgsQ
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-04-26 17:50:21
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zY+x/g7kNqf3k2oPlqhkuQ
 
 our $VERSION = '0';
 
