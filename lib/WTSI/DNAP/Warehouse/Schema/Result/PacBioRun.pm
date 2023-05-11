@@ -449,6 +449,24 @@ __PACKAGE__->belongs_to(
 
 our $VERSION = '0';
 
+=head2 get_tags
+
+Returns an array containing tag_sequence and tag2_sequence values in that
+order.  If no tag_sequence is present, but tag2_sequence is present, only
+tag2_sequence will be in the array, this case is not expected to occur
+frequently.
+
+=cut
+
+sub get_tags{
+  my $self = shift;
+  my $tags = [
+    $self->tag_sequence?$self->tag_sequence:(),
+    $self->tag2_sequence?$self->tag2_sequence:()
+  ];
+  return $tags;
+}
+
 __PACKAGE__->meta->make_immutable;
 
 1;
@@ -496,7 +514,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2015,2017,2020,2021 Genome Research Ltd.
+Copyright (C) 2015,2017,2020,2021,2023 Genome Research Ltd.
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
