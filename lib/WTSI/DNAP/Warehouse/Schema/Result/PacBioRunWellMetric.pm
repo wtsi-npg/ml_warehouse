@@ -72,6 +72,13 @@ Lims specific identifier for the pacbio run
 
 The well identifier for the plate, A1-H12
 
+=head2 plate_number
+
+  data_type: 'integer'
+  is_nullable: 1
+
+The number of the plate that goes onto the Revio sequencing machine. Necessary as an identifier for multi-plate support.
+
 =head2 qc_seq_state
 
   data_type: 'varchar'
@@ -589,6 +596,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 0, size => 255 },
   'well_label',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'plate_number',
+  { data_type => 'integer', is_nullable => 1 },
   'qc_seq_state',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'qc_seq_state_is_final',
@@ -824,8 +833,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-04-26 17:50:21
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zY+x/g7kNqf3k2oPlqhkuQ
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-07-21 23:04:20
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:T4e4S5x/QUUhWVIZ2BCdag
 
 our $VERSION = '0';
 

@@ -86,6 +86,13 @@ __PACKAGE__->table('iseq_heron_climb_status');
   is_auto_increment: 1
   is_nullable: 0
 
+=head2 anonymous_sample_id
+
+  data_type: 'varchar'
+  default_value: (empty string)
+  is_nullable: 1
+  size: 15
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -122,6 +129,8 @@ __PACKAGE__->add_columns(
     is_auto_increment => 1,
     is_nullable => 0,
   },
+  'anonymous_sample_id',
+  { data_type => 'varchar', default_value => '', is_nullable => 1, size => 15 },
 );
 
 =head1 PRIMARY KEY
@@ -137,8 +146,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key('id');
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-01-11 17:05:45
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:a7k3o2DtrFmHNZGhbIYkhw
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-07-21 23:04:20
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:jToP8sVQEQTYrsDJMuxwrw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
