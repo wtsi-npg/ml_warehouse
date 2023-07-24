@@ -1,12 +1,12 @@
 
-package WTSI::DNAP::Warehouse::Schema::Result::IseqHeronClimbStatus;
+package WTSI::DNAP::Warehouse::Schema::Result::LabwareLocation;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-WTSI::DNAP::Warehouse::Schema::Result::IseqHeronClimbStatus
+WTSI::DNAP::Warehouse::Schema::Result::LabwareLocation
 
 =cut
 
@@ -30,107 +30,140 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components('InflateColumn::DateTime');
 
-=head1 TABLE: C<iseq_heron_climb_status>
+=head1 TABLE: C<labware_location>
 
 =cut
 
-__PACKAGE__->table('iseq_heron_climb_status');
+__PACKAGE__->table('labware_location');
 
 =head1 ACCESSORS
 
-=head2 id_iseq_product
-
-  data_type: 'char'
-  is_nullable: 1
-  size: 64
-
-=head2 supplier_sample_name
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 255
-
-=head2 climb_upload
-
-  data_type: 'datetime'
-  datetime_undef_if_invalid: 1
-  is_nullable: 1
-
-=head2 folder_name
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 64
-
-=head2 climb_biosample_metadata_upload
-
-  data_type: 'datetime'
-  datetime_undef_if_invalid: 1
-  is_nullable: 1
-
-=head2 cog_sample_meta
-
-  data_type: 'tinyint'
-  is_nullable: 1
-
-=head2 climb_sequence_metadata_upload
-
-  data_type: 'datetime'
-  datetime_undef_if_invalid: 1
-  is_nullable: 1
-
 =head2 id
 
-  data_type: 'integer'
-  extra: {unsigned => 1}
+  data_type: 'bigint'
   is_auto_increment: 1
   is_nullable: 0
 
-=head2 anonymous_sample_id
+=head2 labware_barcode
 
   data_type: 'varchar'
-  default_value: (empty string)
+  is_nullable: 0
+  size: 255
+
+Barcode on the stored labware
+
+=head2 location_barcode
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 255
+
+Barcode associated with storage location
+
+=head2 full_location_address
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 255
+
+Fully qualifed address of the nested location
+
+=head2 coordinate_position
+
+  data_type: 'integer'
   is_nullable: 1
-  size: 15
+
+Coordinate position of labware in storage location
+
+=head2 coordinate_row
+
+  data_type: 'integer'
+  is_nullable: 1
+
+Coordinate row of labware in storage location
+
+=head2 coordinate_column
+
+  data_type: 'integer'
+  is_nullable: 1
+
+Coordinate column of labware in storage location
+
+=head2 lims_id
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 255
+
+ID of the storage system this data comes from
+
+=head2 stored_by
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 255
+
+Username of the person who placed the item there
+
+=head2 stored_at
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 0
+
+Datetime the item was stored at this location
+
+=head2 created_at
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 0
+
+=head2 updated_at
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 0
 
 =cut
 
 __PACKAGE__->add_columns(
-  'id_iseq_product',
-  { data_type => 'char', is_nullable => 1, size => 64 },
-  'supplier_sample_name',
-  { data_type => 'varchar', is_nullable => 1, size => 255 },
-  'climb_upload',
-  {
-    data_type => 'datetime',
-    datetime_undef_if_invalid => 1,
-    is_nullable => 1,
-  },
-  'folder_name',
-  { data_type => 'varchar', is_nullable => 1, size => 64 },
-  'climb_biosample_metadata_upload',
-  {
-    data_type => 'datetime',
-    datetime_undef_if_invalid => 1,
-    is_nullable => 1,
-  },
-  'cog_sample_meta',
-  { data_type => 'tinyint', is_nullable => 1 },
-  'climb_sequence_metadata_upload',
-  {
-    data_type => 'datetime',
-    datetime_undef_if_invalid => 1,
-    is_nullable => 1,
-  },
   'id',
+  { data_type => 'bigint', is_auto_increment => 1, is_nullable => 0 },
+  'labware_barcode',
+  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'location_barcode',
+  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'full_location_address',
+  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'coordinate_position',
+  { data_type => 'integer', is_nullable => 1 },
+  'coordinate_row',
+  { data_type => 'integer', is_nullable => 1 },
+  'coordinate_column',
+  { data_type => 'integer', is_nullable => 1 },
+  'lims_id',
+  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'stored_by',
+  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'stored_at',
   {
-    data_type => 'integer',
-    extra => { unsigned => 1 },
-    is_auto_increment => 1,
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
     is_nullable => 0,
   },
-  'anonymous_sample_id',
-  { data_type => 'varchar', default_value => '', is_nullable => 1, size => 15 },
+  'created_at',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    is_nullable => 0,
+  },
+  'updated_at',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    is_nullable => 0,
+  },
 );
 
 =head1 PRIMARY KEY
@@ -145,9 +178,26 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key('id');
 
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<index_labware_location_on_labware_barcode>
+
+=over 4
+
+=item * L</labware_barcode>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint(
+  'index_labware_location_on_labware_barcode',
+  ['labware_barcode'],
+);
+
 
 # Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-07-21 23:04:20
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:jToP8sVQEQTYrsDJMuxwrw
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CRLExOSkBH1meg87TdA4+g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
@@ -155,9 +205,9 @@ __PACKAGE__->set_primary_key('id');
 our $VERSION = '0';
 
 __PACKAGE__->meta->make_immutable;
-
 1;
 __END__
+
 
 =head1 SYNOPSIS
 
@@ -196,8 +246,6 @@ Result class definition in DBIx binding for the multi-lims warehouse database.
 =head1 BUGS AND LIMITATIONS
 
 =head1 AUTHOR
-
-Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 

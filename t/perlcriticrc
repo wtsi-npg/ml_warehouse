@@ -2,6 +2,7 @@
 [-Documentation::PodSpelling]
 [-Documentation::RequirePodLinksIncludeText]
 [-CodeLayout::RequireTidyCode]
+[-ValuesAndExpressions::ProhibitEmptyQuotes]
 
 [Documentation::RequirePodSections]
 lib_sections    = NAME | SYNOPSIS | DESCRIPTION | SUBROUTINES/METHODS | BUGS AND LIMITATIONS | DEPENDENCIES | CONFIGURATION AND ENVIRONMENT | INCOMPATIBILITIES | AUTHOR | LICENSE AND COPYRIGHT
