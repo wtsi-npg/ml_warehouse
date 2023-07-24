@@ -399,6 +399,8 @@ __PACKAGE__->set_primary_key('id_pac_bio_tmp');
 
 =item * L</comparable_tag2_identifier>
 
+=item * L</plate_number>
+
 =back
 
 =cut
@@ -411,6 +413,7 @@ __PACKAGE__->add_unique_constraint(
     'well_label',
     'comparable_tag_identifier',
     'comparable_tag2_identifier',
+    'plate_number',
   ],
 );
 
@@ -462,8 +465,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-07-21 23:04:20
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Slr+5jxZsZEwSFimCWqqKg
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-07-24 14:58:06
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:W0vDUxFwoJIBi6Zoic3rUg
 
 
 our $VERSION = '0';

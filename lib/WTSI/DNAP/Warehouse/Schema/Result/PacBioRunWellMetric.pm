@@ -792,13 +792,15 @@ __PACKAGE__->set_primary_key('id_pac_bio_rw_metrics_tmp');
 
 =item * L</well_label>
 
+=item * L</plate_number>
+
 =back
 
 =cut
 
 __PACKAGE__->add_unique_constraint(
   'pac_bio_metrics_run_well',
-  ['pac_bio_run_name', 'well_label'],
+  ['pac_bio_run_name', 'well_label', 'plate_number'],
 );
 
 =head2 C<pac_bio_rw_metrics_id_product>
@@ -833,8 +835,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-07-21 23:04:20
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:T4e4S5x/QUUhWVIZ2BCdag
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-07-24 15:07:10
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:N0V6MWbIl8lBRljo07bH/g
 
 our $VERSION = '0';
 
