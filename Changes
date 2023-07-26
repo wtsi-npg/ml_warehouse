@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+release 6.29.0
  - Add plate_number column to the pac_bio_run_well_metrics table and bring
    DBIx classes up to date.
 
