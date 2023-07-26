@@ -15,6 +15,7 @@ lib/WTSI/DNAP/Warehouse/Schema/Result/FlgenPlate.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqFlowcell.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqProductMetric.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqProductAmpliconstat.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/IseqHeronClimbStatus.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqHeronProductMetric.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqExternalProductMetric.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqExternalProductComponent.pm
@@ -24,6 +25,7 @@ lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunInfo.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunLaneMetric.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunStatus.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqRunStatusDict.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/LabwareLocation.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/OseqFlowcell.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/PacBioRun.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/QcResult.pm

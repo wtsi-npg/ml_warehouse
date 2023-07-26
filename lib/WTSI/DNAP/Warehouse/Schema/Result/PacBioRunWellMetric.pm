@@ -72,6 +72,13 @@ Lims specific identifier for the pacbio run
 
 The well identifier for the plate, A1-H12
 
+=head2 plate_number
+
+  data_type: 'integer'
+  is_nullable: 1
+
+The number of the plate that goes onto the Revio sequencing machine. Necessary as an identifier for multi-plate support.
+
 =head2 qc_seq_state
 
   data_type: 'varchar'
@@ -589,6 +596,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 0, size => 255 },
   'well_label',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'plate_number',
+  { data_type => 'integer', is_nullable => 1 },
   'qc_seq_state',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'qc_seq_state_is_final',
@@ -783,13 +792,15 @@ __PACKAGE__->set_primary_key('id_pac_bio_rw_metrics_tmp');
 
 =item * L</well_label>
 
+=item * L</plate_number>
+
 =back
 
 =cut
 
 __PACKAGE__->add_unique_constraint(
   'pac_bio_metrics_run_well',
-  ['pac_bio_run_name', 'well_label'],
+  ['pac_bio_run_name', 'well_label', 'plate_number'],
 );
 
 =head2 C<pac_bio_rw_metrics_id_product>
@@ -824,8 +835,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-04-26 17:50:21
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zY+x/g7kNqf3k2oPlqhkuQ
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-07-24 15:07:10
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:N0V6MWbIl8lBRljo07bH/g
 
 our $VERSION = '0';
 

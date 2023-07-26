@@ -169,7 +169,7 @@ WTSI-wide tag set name for tag
 =head2 plate_barcode
 
   data_type: 'varchar'
-  is_nullable: 0
+  is_nullable: 1
   size: 255
 
 The human readable barcode for the plate loaded onto the machine
@@ -265,6 +265,21 @@ LIMS-specific pipeline identifier that unambiguously defines library type (eg. S
   is_nullable: 1
   size: 255
 
+=head2 plate_number
+
+  data_type: 'integer'
+  is_nullable: 1
+
+The number of the plate that goes onto the sequencing machine. Necessary as an identifier for multi-plate support.
+
+=head2 pac_bio_library_tube_barcode
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+The barcode of the originating library tube
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -321,7 +336,7 @@ __PACKAGE__->add_columns(
   'tag2_identifier',
   { data_type => 'varchar', is_nullable => 1, size => 30 },
   'plate_barcode',
-  { data_type => 'varchar', is_nullable => 0, size => 255 },
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'plate_uuid_lims',
   { data_type => 'varchar', is_nullable => 0, size => 36 },
   'well_label',
@@ -349,6 +364,10 @@ __PACKAGE__->add_columns(
   'comparable_tag_identifier',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'comparable_tag2_identifier',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'plate_number',
+  { data_type => 'integer', is_nullable => 1 },
+  'pac_bio_library_tube_barcode',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
@@ -380,6 +399,8 @@ __PACKAGE__->set_primary_key('id_pac_bio_tmp');
 
 =item * L</comparable_tag2_identifier>
 
+=item * L</plate_number>
+
 =back
 
 =cut
@@ -392,6 +413,7 @@ __PACKAGE__->add_unique_constraint(
     'well_label',
     'comparable_tag_identifier',
     'comparable_tag2_identifier',
+    'plate_number',
   ],
 );
 
@@ -443,8 +465,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-04-20 13:40:01
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2kTttVGAyCWPl4+7CJmgwg
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-07-24 14:58:06
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:W0vDUxFwoJIBi6Zoic3rUg
 
 
 our $VERSION = '0';
