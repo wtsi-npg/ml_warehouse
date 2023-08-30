@@ -1,4 +1,3 @@
-.github/workflows/testing_and_building_repo.yml
 Build.PL
 Changes
 lib/WTSI/DNAP/Warehouse/Schema.pm
@@ -43,7 +42,6 @@ lib/WTSI/DNAP/Warehouse/Schema/Result/SamplesExtractionActivity.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/TolSampleBioproject.pm
 MANIFEST
 README
-scripts/install_npg_perl_dependencies.sh
 t/00-critic.t
 t/00-distribution.t
 t/00-pod.t
