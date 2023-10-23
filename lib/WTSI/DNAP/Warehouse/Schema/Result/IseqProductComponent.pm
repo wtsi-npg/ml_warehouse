@@ -157,7 +157,7 @@ __PACKAGE__->belongs_to(
   'iseq_product',
   'WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric',
   { id_iseq_pr_metrics_tmp => 'id_iseq_pr_tmp' },
-  { is_deferrable => 1, on_delete => 'CASCADE', on_update => 'NO ACTION' },
+  { is_deferrable => 1, on_delete => 'CASCADE', on_update => 'RESTRICT' },
 );
 
 =head2 iseq_product_component
@@ -172,12 +172,12 @@ __PACKAGE__->belongs_to(
   'iseq_product_component',
   'WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric',
   { id_iseq_pr_metrics_tmp => 'id_iseq_pr_component_tmp' },
-  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
+  { is_deferrable => 1, on_delete => 'RESTRICT', on_update => 'RESTRICT' },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-02-22 16:03:28
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:wsP1sEBK1oRYk5C8X4RRag
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:35:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:S3T1/dAm6L5h7cAAumcITw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

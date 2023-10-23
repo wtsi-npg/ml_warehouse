@@ -1001,7 +1001,7 @@ __PACKAGE__->belongs_to(
     is_deferrable => 1,
     join_type     => 'LEFT',
     on_delete     => 'SET NULL',
-    on_update     => 'NO ACTION',
+    on_update     => 'RESTRICT',
   },
 );
 
@@ -1068,13 +1068,13 @@ __PACKAGE__->belongs_to(
     is_deferrable => 1,
     join_type     => 'LEFT',
     on_delete     => 'CASCADE',
-    on_update     => 'NO ACTION',
+    on_update     => 'RESTRICT',
   },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-06-30 16:24:05
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:h1WsGh1UGAW4XYqkn1085Q
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:35:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Rf7TGwVeXRjNW5a9wU8baQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

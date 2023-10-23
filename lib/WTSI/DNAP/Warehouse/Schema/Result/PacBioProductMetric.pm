@@ -155,7 +155,7 @@ __PACKAGE__->belongs_to(
     is_deferrable => 1,
     join_type     => 'LEFT',
     on_delete     => 'SET NULL',
-    on_update     => 'NO ACTION',
+    on_update     => 'RESTRICT',
   },
 );
 
@@ -171,12 +171,12 @@ __PACKAGE__->belongs_to(
   'pac_bio_rw_metrics',
   'WTSI::DNAP::Warehouse::Schema::Result::PacBioRunWellMetric',
   { id_pac_bio_rw_metrics_tmp => 'id_pac_bio_rw_metrics_tmp' },
-  { is_deferrable => 1, on_delete => 'CASCADE', on_update => 'NO ACTION' },
+  { is_deferrable => 1, on_delete => 'CASCADE', on_update => 'RESTRICT' },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-02-23 11:19:02
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:atOKMZwtqWTqeE7XYU1hlw
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:37:17
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FKGzjqdTCukzrRc3pEdwhw
 
 use Carp;
 

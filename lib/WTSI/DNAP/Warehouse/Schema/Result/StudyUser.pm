@@ -147,12 +147,12 @@ __PACKAGE__->belongs_to(
   'study',
   'WTSI::DNAP::Warehouse::Schema::Result::Study',
   { id_study_tmp => 'id_study_tmp' },
-  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
+  { is_deferrable => 1, on_delete => 'RESTRICT', on_update => 'RESTRICT' },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-28 10:26:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:qgtczY6S6fRJ5yYEvVUbRw
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:35:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7LbC6Gs8tMOBhxhr5HwgZQ
 
 our $VERSION = '0';
 

@@ -253,12 +253,12 @@ __PACKAGE__->belongs_to(
   'iseq_product',
   'WTSI::DNAP::Warehouse::Schema::Result::IseqProductMetric',
   { id_iseq_product => 'id_iseq_product' },
-  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
+  { is_deferrable => 1, on_delete => 'RESTRICT', on_update => 'RESTRICT' },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-09-29 13:29:47
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BU6yKQbGElrb3nXbK9ZqIA
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:35:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:U1ZHxtXu3hCdlMfUM81Hsg
 
 our $VERSION = '0';
 
