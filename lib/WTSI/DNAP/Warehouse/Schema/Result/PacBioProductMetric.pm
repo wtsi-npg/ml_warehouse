@@ -79,6 +79,15 @@ Product id
 
 The final QC outcome of the product as 0(failed), 1(passed) or NULL
 
+=head2 last_changed
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  default_value: 'CURRENT_TIMESTAMP'
+  is_nullable: 1
+
+Date this record was created or changed
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -92,6 +101,13 @@ __PACKAGE__->add_columns(
   { data_type => 'char', is_nullable => 0, size => 64 },
   'qc',
   { data_type => 'tinyint', is_nullable => 1 },
+  'last_changed',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    default_value => 'CURRENT_TIMESTAMP',
+    is_nullable => 1,
+  },
 );
 
 =head1 PRIMARY KEY
@@ -175,8 +191,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:37:17
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FKGzjqdTCukzrRc3pEdwhw
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:47:29
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hTT2fzNhcm/86YuT61o2Qw
 
 use Carp;
 

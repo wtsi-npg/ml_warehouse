@@ -1,6 +1,13 @@
 LIST OF CHANGES
 ---------------
 
+release 6.30.0
+ - To help with detecting recent changes, add `last_changed` column
+   to PacBio NPG tables and update relevant DBIx classes.
+ - Updated DBIx classes from the prod database schema. Two types of changes:
+      1. due to a aserver upgrade tp MySQL v.8+
+      2. due to database schema changes.
+
 release 6.29.1
  - Switch to Perlbrew to obtain multiple Perl versions
 

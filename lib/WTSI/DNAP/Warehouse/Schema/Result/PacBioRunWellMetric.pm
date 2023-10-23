@@ -585,6 +585,15 @@ Number of reads with an expected barcode in demultiplexed HiFi data
 
 Number of bases in reads with an expected barcode in demultiplexed HiFi data
 
+=head2 last_changed
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  default_value: 'CURRENT_TIMESTAMP'
+  is_nullable: 1
+
+Date this record was created or changed
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -768,6 +777,13 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
   'hifi_bases_in_barcoded_reads',
   { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'last_changed',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    default_value => 'CURRENT_TIMESTAMP',
+    is_nullable => 1,
+  },
 );
 
 =head1 PRIMARY KEY
@@ -835,8 +851,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:37:17
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:46VbvjwiguEBFKBw/8tVbQ
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:47:29
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ykO1luiH7Tjo7mWW+GGhxg
 
 our $VERSION = '0';
 
