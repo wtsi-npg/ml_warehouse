@@ -78,7 +78,7 @@ Location of data file
   data_type: 'integer'
   extra: {unsigned => 1}
   is_foreign_key: 1
-  is_nullable: 0
+  is_nullable: 1
 
 Study for this item
 
@@ -87,14 +87,14 @@ Study for this item
   data_type: 'integer'
   extra: {unsigned => 1}
   is_foreign_key: 1
-  is_nullable: 0
+  is_nullable: 1
 
 Sample info for this item
 
 =head2 library_name
 
   data_type: 'varchar'
-  is_nullable: 0
+  is_nullable: 1
   size: 40
 
 Supplier library name
@@ -131,6 +131,14 @@ Lab supplying the data
 
 ENA run accession, populated on ENA submission
 
+=head2 ena_upload
+
+  data_type: 'tinyint'
+  default_value: 0
+  is_nullable: 0
+
+Identifies if the sample is eligible for ENA upload
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -162,17 +170,17 @@ __PACKAGE__->add_columns(
     data_type => 'integer',
     extra => { unsigned => 1 },
     is_foreign_key => 1,
-    is_nullable => 0,
+    is_nullable => 1,
   },
   'id_sample_tmp',
   {
     data_type => 'integer',
     extra => { unsigned => 1 },
     is_foreign_key => 1,
-    is_nullable => 0,
+    is_nullable => 1,
   },
   'library_name',
-  { data_type => 'varchar', is_nullable => 0, size => 40 },
+  { data_type => 'varchar', is_nullable => 1, size => 40 },
   'library_type',
   { data_type => 'varchar', is_nullable => 0, size => 40 },
   'instrument_model',
@@ -181,6 +189,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 0, size => 100 },
   'run_accession',
   { data_type => 'varchar', is_nullable => 1, size => 40 },
+  'ena_upload',
+  { data_type => 'tinyint', default_value => 0, is_nullable => 0 },
 );
 
 =head1 PRIMARY KEY
@@ -235,7 +245,12 @@ __PACKAGE__->belongs_to(
   'sample',
   'WTSI::DNAP::Warehouse::Schema::Result::Sample',
   { id_sample_tmp => 'id_sample_tmp' },
-  { is_deferrable => 1, on_delete => 'RESTRICT', on_update => 'RESTRICT' },
+  {
+    is_deferrable => 1,
+    join_type     => 'LEFT',
+    on_delete     => 'RESTRICT',
+    on_update     => 'RESTRICT',
+  },
 );
 
 =head2 study
@@ -250,12 +265,17 @@ __PACKAGE__->belongs_to(
   'study',
   'WTSI::DNAP::Warehouse::Schema::Result::Study',
   { id_study_tmp => 'id_study_tmp' },
-  { is_deferrable => 1, on_delete => 'RESTRICT', on_update => 'RESTRICT' },
+  {
+    is_deferrable => 1,
+    join_type     => 'LEFT',
+    on_delete     => 'RESTRICT',
+    on_update     => 'RESTRICT',
+  },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-02-09 15:29:50
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ooVmo3tgjndSeKcqD6ynHw
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:35:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:kLSRN187cu2gr+3cdSypqw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

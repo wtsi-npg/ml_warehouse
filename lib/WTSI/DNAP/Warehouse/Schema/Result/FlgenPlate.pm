@@ -252,7 +252,7 @@ __PACKAGE__->belongs_to(
   'sample',
   'WTSI::DNAP::Warehouse::Schema::Result::Sample',
   { id_sample_tmp => 'id_sample_tmp' },
-  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
+  { is_deferrable => 1, on_delete => 'RESTRICT', on_update => 'RESTRICT' },
 );
 
 =head2 study
@@ -267,12 +267,12 @@ __PACKAGE__->belongs_to(
   'study',
   'WTSI::DNAP::Warehouse::Schema::Result::Study',
   { id_study_tmp => 'id_study_tmp' },
-  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
+  { is_deferrable => 1, on_delete => 'RESTRICT', on_update => 'RESTRICT' },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2015-01-19 16:35:18
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Df/CLIOB+DW9/6zUgYLM6A
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:35:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lD09a55ctFBQGOiCkQis4Q
 
 our $VERSION = '0';
 

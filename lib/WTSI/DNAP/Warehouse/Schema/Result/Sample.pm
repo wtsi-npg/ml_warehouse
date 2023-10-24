@@ -436,6 +436,14 @@ Developmental Stage
   is_nullable: 1
   size: 255
 
+=head2 priority_level
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Priority level eg Medium, High etc
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -589,6 +597,8 @@ __PACKAGE__->add_columns(
   'gc_content',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'dna_source',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'priority_level',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
@@ -788,8 +798,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-07-21 23:04:20
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:DRS5DAVcJJYnD73XvOGlzA
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:35:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:SBUvcjIuSMo1rqiCwp0AEA
 
 our $VERSION = '0';
 
