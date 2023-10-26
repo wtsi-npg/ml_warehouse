@@ -126,12 +126,12 @@ __PACKAGE__->belongs_to(
   'run_status_dict',
   'WTSI::DNAP::Warehouse::Schema::Result::IseqRunStatusDict',
   { id_run_status_dict => 'id_run_status_dict' },
-  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
+  { is_deferrable => 1, on_delete => 'RESTRICT', on_update => 'RESTRICT' },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-10-29 11:55:17
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:V+5Wt0FmO7gsFYyZ6NKKOQ
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:35:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0YSdRUTGM7gZDMHVT3JCTg
 
 our $VERSION = '0';
 

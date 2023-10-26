@@ -149,12 +149,12 @@ __PACKAGE__->belongs_to(
   'iseq_product_ext',
   'WTSI::DNAP::Warehouse::Schema::Result::IseqExternalProductMetric',
   { id_iseq_product => 'id_iseq_product_ext' },
-  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
+  { is_deferrable => 1, on_delete => 'RESTRICT', on_update => 'RESTRICT' },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-10-18 16:31:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MZF9h1iwW2028nqp+S3KRA
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:35:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:6qZDsJfhvxqvyeZkvdBsnw
 
 our $VERSION = '0';
 

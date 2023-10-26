@@ -563,7 +563,7 @@ __PACKAGE__->belongs_to(
   'sample',
   'WTSI::DNAP::Warehouse::Schema::Result::Sample',
   { id_sample_tmp => 'id_sample_tmp' },
-  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
+  { is_deferrable => 1, on_delete => 'RESTRICT', on_update => 'RESTRICT' },
 );
 
 =head2 study
@@ -581,14 +581,14 @@ __PACKAGE__->belongs_to(
   {
     is_deferrable => 1,
     join_type     => 'LEFT',
-    on_delete     => 'NO ACTION',
-    on_update     => 'NO ACTION',
+    on_delete     => 'RESTRICT',
+    on_update     => 'RESTRICT',
   },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-05-16 15:36:45
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WKXNoBer1TGZJNTUsLE3TA
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:35:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:VjDSKdvECkCYaV1Nypjnzw
 
 use MooseX::Aliases;
 use Readonly;

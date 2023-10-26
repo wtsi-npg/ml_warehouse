@@ -94,12 +94,12 @@ __PACKAGE__->belongs_to(
   'run',
   'WTSI::DNAP::Warehouse::Schema::Result::IseqRun',
   { id_run => 'id_run' },
-  { is_deferrable => 1, on_delete => 'NO ACTION', on_update => 'NO ACTION' },
+  { is_deferrable => 1, on_delete => 'RESTRICT', on_update => 'RESTRICT' },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-04-01 17:33:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:dboQ2bkPkWQ+PRCfjf/+0A
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:35:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:QXTesYz1PmqbMqAWCD7FLQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
