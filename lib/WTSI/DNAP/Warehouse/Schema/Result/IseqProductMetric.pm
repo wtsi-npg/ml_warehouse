@@ -391,6 +391,15 @@ mate_mapped_defferent_chr_5 as percentage of all
   is_nullable: 1
   size: [5,2]
 
+=head2 mean_bait_target_coverage
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+  size: [8,2]
+
+Mean coverage of the design target regions of a bait library (if used and known)
+
 =head2 verify_bam_id_average_depth
 
   data_type: 'float'
@@ -569,6 +578,30 @@ The coverage threshold used in the target perc target greater than depth calcula
   size: [5,2]
 
 The percentage of the target covered at greater than the depth specified
+
+=head2 target_autosome_filter
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 30
+
+Filter used to produce the autosome target stats file
+
+=head2 target_autosome_length
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The total length of the autosomes only target regions
+
+=head2 target_autosome_mapped_bases
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of mapped bases passing the autosome target filters
 
 =head2 target_autosome_coverage_threshold
 
@@ -871,6 +904,13 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => [5, 2],
   },
+  'mean_bait_target_coverage',
+  {
+    data_type => 'float',
+    extra => { unsigned => 1 },
+    is_nullable => 1,
+    size => [8, 2],
+  },
   'verify_bam_id_average_depth',
   {
     data_type => 'float',
@@ -927,6 +967,12 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', is_nullable => 1 },
   'target_percent_gt_coverage_threshold',
   { data_type => 'float', is_nullable => 1, size => [5, 2] },
+  'target_autosome_filter',
+  { data_type => 'varchar', is_nullable => 1, size => 30 },
+  'target_autosome_length',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'target_autosome_mapped_bases',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
   'target_autosome_coverage_threshold',
   { data_type => 'integer', is_nullable => 1 },
   'target_autosome_percent_gt_coverage_threshold',
@@ -1073,8 +1119,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:35:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Rf7TGwVeXRjNW5a9wU8baQ
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-11-28 16:27:58
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:QZcqKPUPRZUvgTiqvx1M1A
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+ - Additional columns added to the iseq_product_metrics table to support
+   BGE library metrics reporting.
+
 release 6.30.0
  - To help with detecting recent changes, add `last_changed` column
    to PacBio NPG tables and update relevant DBIx classes.
