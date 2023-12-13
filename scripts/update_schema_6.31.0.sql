@@ -1,7 +1,7 @@
 -- Add columns for metrics useful for BGE project.
 
 ALTER TABLE `iseq_product_metrics` \
-  ADD COLUMN `mean_bait_target_coverage` FLOAT(8,2) UNSIGNED DEFAULT NULL \
+  ADD COLUMN `mean_bait_target_coverage` float DEFAULT NULL \
     COMMENT 'Mean coverage of the design target regions of a bait library (if used and known)' \
     AFTER `on_or_near_bait_percent`, \
   ADD COLUMN `target_autosome_filter` varchar(30) DEFAULT NULL \

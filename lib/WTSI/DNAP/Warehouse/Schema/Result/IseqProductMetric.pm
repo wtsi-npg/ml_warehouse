@@ -394,9 +394,7 @@ mate_mapped_defferent_chr_5 as percentage of all
 =head2 mean_bait_target_coverage
 
   data_type: 'float'
-  extra: {unsigned => 1}
   is_nullable: 1
-  size: [8,2]
 
 Mean coverage of the design target regions of a bait library (if used and known)
 
@@ -905,12 +903,7 @@ __PACKAGE__->add_columns(
     size => [5, 2],
   },
   'mean_bait_target_coverage',
-  {
-    data_type => 'float',
-    extra => { unsigned => 1 },
-    is_nullable => 1,
-    size => [8, 2],
-  },
+  { data_type => 'float', is_nullable => 1 },
   'verify_bam_id_average_depth',
   {
     data_type => 'float',
@@ -1119,8 +1112,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-11-28 16:27:58
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:QZcqKPUPRZUvgTiqvx1M1A
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-12-13 14:21:19
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:JGzaGF0Y9fdlAH5ZG6PYsA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
