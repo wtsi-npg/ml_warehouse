@@ -13,3 +13,26 @@ ALTER TABLE `iseq_product_metrics` \
   ADD COLUMN `target_autosome_mapped_bases` bigint unsigned DEFAULT NULL \
     COMMENT 'The number of mapped bases passing the autosome target filters' \
     AFTER `target_autosome_length`;
+
+
+-- Add columns to pac_bio_product_metrics to store tag level yield.
+
+ALTER TABLE `pac_bio_product_metrics` \
+  ADD COLUMN  `hifi_read_bases`  bigint unsigned DEFAULT NULL \
+    COMMENT 'The number of HiFi bases' \
+    AFTER `qc`, \
+  ADD COLUMN  `hifi_num_reads` int unsigned DEFAULT NULL \
+    COMMENT 'The number of HiFi reads' \
+    AFTER `hifi_read_bases`, \
+  ADD COLUMN  `hifi_read_length_mean` int unsigned DEFAULT NULL \
+    COMMENT 'The mean HiFi read length' \
+    AFTER `hifi_num_reads`, \
+  ADD COLUMN  `hifi_read_quality_mean` smallint unsigned DEFAULT NULL \
+    COMMENT 'The mean HiFi base quality' \
+    AFTER  `hifi_read_length_mean`, \
+  ADD COLUMN  `hifi_bases_percent` float DEFAULT NULL \
+    COMMENT 'The HiFi bases expressed as a percentage of the total HiFi bases' \
+    AFTER  `hifi_read_quality_mean`, \
+  ADD COLUMN  `barcode_quality_score_mean` smallint unsigned DEFAULT NULL \
+    COMMENT 'The mean barcode HiFi quality score' \
+    AFTER `hifi_read_length_mean`;
