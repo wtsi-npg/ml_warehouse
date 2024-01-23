@@ -68,6 +68,15 @@ Barcode associated with storage location
 
 Fully qualifed address of the nested location
 
+=head2 location_name
+
+  data_type: 'varchar'
+  default_value: (empty string)
+  is_nullable: 0
+  size: 255
+
+Name of location where labware is stored
+
 =head2 coordinate_position
 
   data_type: 'integer'
@@ -136,6 +145,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 0, size => 255 },
   'full_location_address',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
+  'location_name',
+  { data_type => 'varchar', default_value => '', is_nullable => 0, size => 255 },
   'coordinate_position',
   { data_type => 'integer', is_nullable => 1 },
   'coordinate_row',
@@ -196,8 +207,8 @@ __PACKAGE__->add_unique_constraint(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-07-21 23:04:20
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CRLExOSkBH1meg87TdA4+g
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2024-01-19 13:58:19
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MlRPMXGHbVYnpWjeFULpXQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
