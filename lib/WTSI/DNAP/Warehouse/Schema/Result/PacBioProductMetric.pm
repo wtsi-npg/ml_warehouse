@@ -79,6 +79,53 @@ Product id
 
 The final QC outcome of the product as 0(failed), 1(passed) or NULL
 
+=head2 hifi_read_bases
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of HiFi bases
+
+=head2 hifi_num_reads
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of HiFi reads
+
+=head2 hifi_read_length_mean
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The mean HiFi read length
+
+=head2 barcode_quality_score_mean
+
+  data_type: 'smallint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The mean barcode HiFi quality score
+
+=head2 hifi_read_quality_mean
+
+  data_type: 'smallint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The mean HiFi base quality
+
+=head2 hifi_bases_percent
+
+  data_type: 'float'
+  is_nullable: 1
+
+The HiFi bases expressed as a percentage of the total HiFi bases
+
 =head2 last_changed
 
   data_type: 'datetime'
@@ -101,6 +148,18 @@ __PACKAGE__->add_columns(
   { data_type => 'char', is_nullable => 0, size => 64 },
   'qc',
   { data_type => 'tinyint', is_nullable => 1 },
+  'hifi_read_bases',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'hifi_num_reads',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'hifi_read_length_mean',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'barcode_quality_score_mean',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'hifi_read_quality_mean',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'hifi_bases_percent',
+  { data_type => 'float', is_nullable => 1 },
   'last_changed',
   {
     data_type => 'datetime',
@@ -191,8 +250,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:47:29
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hTT2fzNhcm/86YuT61o2Qw
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2024-01-19 13:58:19
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CBgNobCW7fHYVGPcg8ToYQ
 
 use Carp;
 

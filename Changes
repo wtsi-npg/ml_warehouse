@@ -1,6 +1,12 @@
 LIST OF CHANGES
 ---------------
 
+release 6.31.0
+ - Additional columns added to the iseq_product_metrics table to support
+   BGE library metrics reporting.
+ - Add columns to pac_bio_product_metrics to store tag level yield
+   related metrics and bring other tables up to date
+
 release 6.30.0
  - To help with detecting recent changes, add `last_changed` column
    to PacBio NPG tables and update relevant DBIx classes.
