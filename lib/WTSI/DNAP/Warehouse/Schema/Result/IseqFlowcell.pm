@@ -158,7 +158,7 @@ Flowcell lane number
   is_nullable: 0
   size: 30
 
-Lane type: library, pool, library_control, library_indexed, library_indexed_spike
+Lane type: library, library_control, library_indexed, library_indexed_spike
 
 =head2 entity_id_lims
 
@@ -587,8 +587,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:35:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:VjDSKdvECkCYaV1Nypjnzw
+# Created by DBIx::Class::Schema::Loader v0.07052 @ 2024-04-22 16:12:30
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:qrc71Zkdjac/tHo55D3BbQ
 
 use MooseX::Aliases;
 use Readonly;
