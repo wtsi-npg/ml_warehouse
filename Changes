@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - Minor changes to the pac_bio_product_metrics table
+
 release 6.31.0
  - Additional columns added to the iseq_product_metrics table to support
    BGE library metrics reporting.
