@@ -103,6 +103,14 @@ The number of HiFi reads
 
 The mean HiFi read length
 
+=head2 barcode4deplexing
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 62
+
+The barcode recorded in producing deplexed metrics for this product
+
 =head2 barcode_quality_score_mean
 
   data_type: 'smallint'
@@ -110,14 +118,6 @@ The mean HiFi read length
   is_nullable: 1
 
 The mean barcode HiFi quality score
-
-=head2 hifi_read_quality_mean
-
-  data_type: 'smallint'
-  extra: {unsigned => 1}
-  is_nullable: 1
-
-The mean HiFi base quality
 
 =head2 hifi_bases_percent
 
@@ -154,9 +154,9 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
   'hifi_read_length_mean',
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'barcode4deplexing',
+  { data_type => 'varchar', is_nullable => 1, size => 62 },
   'barcode_quality_score_mean',
-  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
-  'hifi_read_quality_mean',
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
   'hifi_bases_percent',
   { data_type => 'float', is_nullable => 1 },
@@ -250,8 +250,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2024-01-19 13:58:19
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CBgNobCW7fHYVGPcg8ToYQ
+# Created by DBIx::Class::Schema::Loader v0.07052 @ 2024-04-22 16:12:30
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2MEtm+C9VmoDlGZbAUSeKA
 
 use Carp;
 
