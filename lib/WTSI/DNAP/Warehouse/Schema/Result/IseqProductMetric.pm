@@ -1187,6 +1187,23 @@ __PACKAGE__->might_have(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 seq_product_irods_locations
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::SeqProductIrodsLocation>
+
+=cut
+
+__PACKAGE__->has_many(
+  'seq_product_irods_locations',
+  'WTSI::DNAP::Warehouse::Schema::Result::SeqProductIrodsLocation',
+  {
+    'foreign.id_product' => 'self.id_iseq_product',
+  },
+  { is_deferrable => 1, cascade_copy => 0, cascade_delete => 0 },
+);
+
 ##no critic (ProhibitStringyEval ProhibitPostfixControls ProhibitInterpolationOfLiterals)
 with 'npg_qc::autoqc::role::rpt_key' if eval "require npg_qc::autoqc::role::rpt_key";
 ##use critic
