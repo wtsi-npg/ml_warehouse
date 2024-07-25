@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+release 6.32.0 (2024-07-25)
+ - add seq_product_irods_locations relationship to IseqProductMetric
+
 release 6.31.1
  - Minor changes to the pac_bio_product_metrics table
 
