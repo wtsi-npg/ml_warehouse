@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+release 6.33.0 (2024-08-30)
  - Study class updated following the addition of the
    contaminated_human_data_access_group column to the study table.
 
