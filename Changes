@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - GitHub CI - updated deprecated v2 runner action to v3
+
 release 6.33.0 (2024-08-30)
  - Study class updated following the addition of the
    contaminated_human_data_access_group column to the study table.
