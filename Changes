@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+release 6.33.1 (2024-10-04)
  - Added .github/dependabot.yml file to auto-update GitHub actions
  - GitHub CI - updated deprecated v2 runner action to v3
  - Following a release on 07/09/2024, see https://metacpan.org/dist/App-perlbrew/changes,
