@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+ - Added new delegated methods to WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell,
+   sample_uuid and sample_lims.
+
 release 6.33.1 (2024-10-04)
  - Added .github/dependabot.yml file to auto-update GitHub actions
  - GitHub CI - updated deprecated v2 runner action to v3
