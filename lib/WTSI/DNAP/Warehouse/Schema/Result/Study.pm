@@ -306,6 +306,12 @@ The data destination type(s) for the study. It could be 'standard', '14mg' or 'g
   is_nullable: 1
   size: 255
 
+=head2 programme
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -411,6 +417,8 @@ __PACKAGE__->add_columns(
   'data_deletion_period',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'contaminated_human_data_access_group',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'programme',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
@@ -580,8 +588,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07052 @ 2024-08-08 13:33:16
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:cSZp6NXki9BI3+HAAlBY9w
+# Created by DBIx::Class::Schema::Loader v0.07052 @ 2024-10-09 15:42:26
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5p/5azacjlWMHTtTSrJtew
 
 with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
 

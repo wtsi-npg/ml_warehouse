@@ -67,7 +67,7 @@ LIMS-specific sample uuid
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 20
+  size: 255
 
 LIMS-specific sample identifier
 
@@ -459,7 +459,7 @@ __PACKAGE__->add_columns(
   'uuid_sample_lims',
   { data_type => 'varchar', is_nullable => 1, size => 36 },
   'id_sample_lims',
-  { data_type => 'varchar', is_nullable => 0, size => 20 },
+  { data_type => 'varchar', is_nullable => 0, size => 255 },
   'last_updated',
   {
     data_type => 'datetime',
@@ -798,8 +798,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:35:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:SBUvcjIuSMo1rqiCwp0AEA
+# Created by DBIx::Class::Schema::Loader v0.07052 @ 2024-10-09 15:42:26
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:S5eGEf8q9fTn5qKSp/Et/g
 
 our $VERSION = '0';
 
