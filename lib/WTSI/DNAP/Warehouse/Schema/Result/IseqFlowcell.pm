@@ -601,7 +601,9 @@ Readonly my @USER_ROLES => qw/manager follower owner/;
 
 Readonly my %DELEGATION_TO_SAMPLE => {
     'sample_id'                => 'id_sample_lims',
+    'sample_uuid'              => 'uuid_sample_lims',
     'sample_name'              => 'name',
+    'sample_lims'              => 'id_lims',
     'sample_reference_genome'  => 'reference_genome',
     'organism'                 => 'organism',
     'sample_accession_number'  => 'accession_number',
