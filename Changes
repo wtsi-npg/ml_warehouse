@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+ - Fix perlbrew installation by installing libdevel-patchperl-perl in
+   GitHub runner.
+
 release 6.34.0 (2024-10-24)
  - Added new delegated methods to WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell,
    sample_uuid and sample_lims.
