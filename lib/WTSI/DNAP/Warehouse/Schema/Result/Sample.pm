@@ -58,7 +58,7 @@ LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE
 =head2 uuid_sample_lims
 
   data_type: 'varchar'
-  is_nullable: 1
+  is_nullable: 0
   size: 36
 
 LIMS-specific sample uuid
@@ -457,7 +457,7 @@ __PACKAGE__->add_columns(
   'id_lims',
   { data_type => 'varchar', is_nullable => 0, size => 10 },
   'uuid_sample_lims',
-  { data_type => 'varchar', is_nullable => 1, size => 36 },
+  { data_type => 'varchar', is_nullable => 0, size => 36 },
   'id_sample_lims',
   { data_type => 'varchar', is_nullable => 0, size => 255 },
   'last_updated',
@@ -615,6 +615,23 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key('id_sample_tmp');
 
 =head1 UNIQUE CONSTRAINTS
+
+=head2 C<index_sample_on_id_lims_and_id_sample_lims>
+
+=over 4
+
+=item * L</id_lims>
+
+=item * L</id_sample_lims>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint(
+  'index_sample_on_id_lims_and_id_sample_lims',
+  ['id_lims', 'id_sample_lims'],
+);
 
 =head2 C<index_sample_on_id_sample_lims_and_id_lims>
 
@@ -798,8 +815,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07052 @ 2024-10-09 15:42:26
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:S5eGEf8q9fTn5qKSp/Et/g
+# Created by DBIx::Class::Schema::Loader v0.07052 @ 2024-12-18 10:40:33
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:T/2l001x2GOs91EGZSjK8A
 
 our $VERSION = '0';
 
