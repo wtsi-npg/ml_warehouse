@@ -1,6 +1,12 @@
 LIST OF CHANGES
 ---------------
 
+release 6.35.0 (2025-01-16)
+ - Fix perlbrew installation by installing libdevel-patchperl-perl in
+   GitHub runner.
+ - Updated ORM classes by ingesting changes for the 'sample' table from the
+   production database. Added a class for the 'aliqoute' table.
+
 release 6.34.0 (2024-10-24)
  - Added new delegated methods to WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell,
    sample_uuid and sample_lims.
