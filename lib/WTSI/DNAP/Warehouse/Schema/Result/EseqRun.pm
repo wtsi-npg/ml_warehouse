@@ -10,7 +10,7 @@ WTSI::DNAP::Warehouse::Schema::Result::EseqRun
 
 =head1 DESCRIPTION
 
-Information about a run performed on an Element Biosciences instrument
+Information about a run performed on an Element Biosciences instrument derived from instrument output
 
 =cut
 
@@ -55,14 +55,46 @@ Internal to this database id, value can change
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 256
+  size: 200
 
 Run folder name created by the Element Biosciences instrument
+
+=head2 run_name
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 100
+
+Run name as recorded in RunParameters.json file
+
+=head2 flowcell_id
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 100
+
+Flowcell ID as recorded in RunParameters.json file
+
+=head2 date_started
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 1
+
+Run date as recorded in RunParameters.json file
+
+=head2 date_completed
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 1
+
+Run completion date from a timestamp of RunUploaded.json file
 
 =head2 run_parameters
 
   data_type: 'json'
-  is_nullable: 1
+  is_nullable: 0
 
 The content of RunParameters.json file in the run folder
 
@@ -72,6 +104,14 @@ The content of RunParameters.json file in the run folder
   is_nullable: 1
 
 The content of AvitiRunStats.json file in the run folder
+
+=head2 outcome
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 256
+
+Run outcome as recorded in RunUploaded.json file
 
 =cut
 
@@ -84,11 +124,29 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
   },
   'folder_name',
-  { data_type => 'varchar', is_nullable => 0, size => 256 },
+  { data_type => 'varchar', is_nullable => 0, size => 200 },
+  'run_name',
+  { data_type => 'varchar', is_nullable => 0, size => 100 },
+  'flowcell_id',
+  { data_type => 'varchar', is_nullable => 0, size => 100 },
+  'date_started',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    is_nullable => 1,
+  },
+  'date_completed',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    is_nullable => 1,
+  },
   'run_parameters',
-  { data_type => 'json', is_nullable => 1 },
+  { data_type => 'json', is_nullable => 0 },
   'run_stats',
   { data_type => 'json', is_nullable => 1 },
+  'outcome',
+  { data_type => 'varchar', is_nullable => 1, size => 256 },
 );
 
 =head1 PRIMARY KEY
@@ -118,8 +176,8 @@ __PACKAGE__->set_primary_key('id_eseq_run_tmp');
 __PACKAGE__->add_unique_constraint('eseq_run_fname_unique', ['folder_name']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07052 @ 2025-02-06 14:45:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:NP1CopQFwRd8+WpwBNKUNg
+# Created by DBIx::Class::Schema::Loader v0.07052 @ 2025-02-13 20:59:01
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:sr8Nr4c63caRfDqSf/9XLw
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
