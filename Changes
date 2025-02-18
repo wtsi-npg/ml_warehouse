@@ -1,6 +1,10 @@
 LIST OF CHANGES
 ---------------
 
+ - Added eseq_run table to ml warehouse database. The table will keep
+   information about a run performed on an Element Biosciences instrument.
+   Generate DBIx class for this table.
+
 release 6.35.0 (2025-01-16)
  - Fix perlbrew installation by installing libdevel-patchperl-perl in
    GitHub runner.
