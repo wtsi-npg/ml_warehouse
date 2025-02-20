@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+release 6.36.0 (2025-02-20)
  - Added eseq_run table to ml warehouse database. The table will keep
    information about a run performed on an Element Biosciences instrument.
    Generate DBIx class for this table.
