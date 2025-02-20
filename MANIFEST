@@ -11,6 +11,7 @@ lib/WTSI/DNAP/Warehouse/Schema/Result/CgapHeron.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapLineIdentifier.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapOrganoidsConjuredLabware.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapSupplierBarcode.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/EseqRun.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/FlgenPlate.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqFlowcell.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/IseqProductMetric.pm
