@@ -152,6 +152,14 @@ Timestamp of run pending status
 
 Timestamp of run complete status
 
+=head2 lane_released
+
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
+  is_nullable: 1
+
+The date the lane was released, ie QC-ed and fully archived
+
 =head2 qc_complete
 
   data_type: 'datetime'
@@ -446,6 +454,12 @@ __PACKAGE__->add_columns(
     datetime_undef_if_invalid => 1,
     is_nullable => 1,
   },
+  'lane_released',
+  {
+    data_type => 'datetime',
+    datetime_undef_if_invalid => 1,
+    is_nullable => 1,
+  },
   'qc_complete',
   {
     data_type => 'datetime',
@@ -628,8 +642,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-02-10 14:51:02
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:TPEQ/qjkAkf4MnPre5VDdQ
+# Created by DBIx::Class::Schema::Loader v0.07052 @ 2025-02-19 15:03:03
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RHIU5xBtahiOOZd+UL844w
 
 our $VERSION = '0';
 
