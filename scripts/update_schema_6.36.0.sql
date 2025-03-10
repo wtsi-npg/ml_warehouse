@@ -20,4 +20,4 @@ CREATE TABLE `eseq_run` (
   PRIMARY KEY (`id_eseq_run_tmp`),
   UNIQUE KEY `eseq_run_fname_unique` (`folder_name`)
 ) DEFAULT CHARSET=utf8 COMMENT \
-  'Information about a run performed on an Element Biosciences instrument derived from instrument output';  
+  'Information about a run performed on an Element Biosciences instrument derived from instrument output';
