@@ -246,6 +246,14 @@ The uuid of the run
 
 Run identifier assigned by MinKNOW
 
+=head2 rebasecalling_process
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 50
+
+Settings required for modified basecalling
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -328,6 +336,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 36 },
   'run_id',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'rebasecalling_process',
+  { data_type => 'varchar', is_nullable => 1, size => 50 },
 );
 
 =head1 PRIMARY KEY
@@ -375,8 +385,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-03-30 17:57:34
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:sCzCqwiNhiXHH0eRKlKJUQ
+# Created by DBIx::Class::Schema::Loader v0.07052 @ 2025-03-31 14:29:19
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:S9Ut1yUfmbbMvaRYAojpWg
 
 our $VERSION = '0';
 
