@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+release 6.38.0 (2025-04-02)
  - Change iseq_product_metrics tag_decode_count from int to bigint to support
    values greater than 4294967295 and bring other tables up to date.
   
