@@ -176,7 +176,7 @@ Indexing read length, bp
 
 =head2 tag_decode_count
 
-  data_type: 'integer'
+  data_type: 'bigint'
   extra: {unsigned => 1}
   is_nullable: 1
 
@@ -780,7 +780,7 @@ __PACKAGE__->add_columns(
     size => [5, 2],
   },
   'tag_decode_count',
-  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
   'insert_size_quartile1',
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
   'insert_size_quartile3',
@@ -1112,8 +1112,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-12-13 14:21:19
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:JGzaGF0Y9fdlAH5ZG6PYsA
+# Created by DBIx::Class::Schema::Loader v0.07052 @ 2025-03-31 14:29:19
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MRWBEnshcWTJ59FELH4KGw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

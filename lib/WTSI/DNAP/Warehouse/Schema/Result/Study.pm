@@ -312,6 +312,24 @@ The data destination type(s) for the study. It could be 'standard', '14mg' or 'g
   is_nullable: 1
   size: 255
 
+=head2 ebi_library_strategy
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 ebi_library_source
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 ebi_library_selection
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -419,6 +437,12 @@ __PACKAGE__->add_columns(
   'contaminated_human_data_access_group',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'programme',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'ebi_library_strategy',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'ebi_library_source',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'ebi_library_selection',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
@@ -588,8 +612,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07052 @ 2024-10-09 15:42:26
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5p/5azacjlWMHTtTSrJtew
+# Created by DBIx::Class::Schema::Loader v0.07052 @ 2025-03-31 14:29:19
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zBqlb6BSFsCwFbHfII5V8A
 
 with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
 
