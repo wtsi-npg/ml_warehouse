@@ -506,6 +506,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 eseq_flowcells
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::EseqFlowcell>
+
+=cut
+
+__PACKAGE__->has_many(
+  'eseq_flowcells',
+  'WTSI::DNAP::Warehouse::Schema::Result::EseqFlowcell',
+  { 'foreign.id_study_tmp' => 'self.id_study_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 flgen_plates
 
 Type: has_many
@@ -612,8 +627,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07052 @ 2025-03-31 14:29:19
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zBqlb6BSFsCwFbHfII5V8A
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-05-28 11:40:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+sTdFkjHMeMUkr7vZ6zulQ
 
 with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
 
@@ -666,7 +681,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2014,2015,2016,2017,2019 Genome Research Ltd.
+Copyright (C) 2014,2015,2016,2017,2019,2021,2023,2024,2025 Genome Research Ltd.
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
