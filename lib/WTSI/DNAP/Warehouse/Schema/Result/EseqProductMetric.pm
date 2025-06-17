@@ -47,14 +47,6 @@ __PACKAGE__->table('eseq_product_metrics');
 
 Internal to this database id, value can change
 
-=head2 id_eseq_product
-
-  data_type: 'char'
-  is_nullable: 0
-  size: 64
-
-Product id
-
 =head2 last_changed
 
   data_type: 'datetime'
@@ -64,6 +56,14 @@ Product id
 
 Date this record was created or changed
 
+=head2 id_eseq_product
+
+  data_type: 'char'
+  is_nullable: 0
+  size: 64
+
+Product id
+
 =head2 id_eseq_flowcell_tmp
 
   data_type: 'integer'
@@ -71,14 +71,14 @@ Date this record was created or changed
   is_foreign_key: 1
   is_nullable: 1
 
-Flowcell id, see 'eseq_flowcell.id_eseq_flowcell_tmp'
+Foreign key, see 'eseq_flowcell.id_eseq_flowcell_tmp'
 
 =head2 id_run
 
   data_type: 'integer'
   extra: {unsigned => 1}
   is_foreign_key: 1
-  is_nullable: 1
+  is_nullable: 0
 
 NPG run identifier
 
@@ -97,6 +97,8 @@ Flowcell lane number
   extra: {unsigned => 1}
   is_nullable: 1
 
+Lane-specific sequential unique index for a set of barcodes used to tag libraries derived from the same sample
+
 =head2 eseq_composition_tmp
 
   data_type: 'varchar'
@@ -105,25 +107,45 @@ Flowcell lane number
 
 JSON representation of the composition object, the column might be deleted in future
 
-=head2 has_seq_data
+=head2 elembio_samplename
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Name the sample is deplexed under by Element Biosciences software, corresponds to elembio:SampleName iRODS metadata
+
+=head2 elembio_project
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 10
+
+Project record for this library in Elembio output files. Ideally should correspond to study.id_study_lims
+
+=head2 is_sequencing_control
 
   data_type: 'tinyint'
   default_value: 0
   is_nullable: 1
 
-=head2 is_control
+A boolean flag. If true, this is PhiX control library
 
-  data_type: 'tinyint'
-  default_value: 0
-  is_nullable: 1
-
-=head2 tag_sequence4deplexing
+=head2 tag_sequence
 
   data_type: 'varchar'
   is_nullable: 1
   size: 30
 
-Tag sequence used for deplexing the lane data
+Tag sequence used for deplexing the lane data, I1 read
+
+=head2 tag2_sequence
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 30
+
+Tag sequence used for deplexing the lane data, I2 read
 
 =head2 qc_seq
 
@@ -146,18 +168,21 @@ Library QC outcome, a result of either manual or automatic assessment by core
 
 Overall QC assessment outcome, a logical product (conjunction) of qc_seq and qc_lib values, defaults to the qc_seq value when qc_lib is not defined
 
-=head2 tag_decode_percent
-
-  data_type: 'float'
-  extra: {unsigned => 1}
-  is_nullable: 1
-  size: [5,2]
-
 =head2 tag_decode_count
 
   data_type: 'bigint'
   extra: {unsigned => 1}
   is_nullable: 1
+
+Number of polonies (reads) assigned to this library after deplexing
+
+=head2 tag_decode_percent
+
+  data_type: 'float'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Percent of polonies (reads) in a lane, which is assigned to this library after deplexing
 
 =cut
 
@@ -169,8 +194,6 @@ __PACKAGE__->add_columns(
     is_auto_increment => 1,
     is_nullable => 0,
   },
-  'id_eseq_product',
-  { data_type => 'char', is_nullable => 0, size => 64 },
   'last_changed',
   {
     data_type => 'datetime',
@@ -178,6 +201,8 @@ __PACKAGE__->add_columns(
     default_value => 'CURRENT_TIMESTAMP',
     is_nullable => 1,
   },
+  'id_eseq_product',
+  { data_type => 'char', is_nullable => 0, size => 64 },
   'id_eseq_flowcell_tmp',
   {
     data_type => 'integer',
@@ -190,7 +215,7 @@ __PACKAGE__->add_columns(
     data_type => 'integer',
     extra => { unsigned => 1 },
     is_foreign_key => 1,
-    is_nullable => 1,
+    is_nullable => 0,
   },
   'lane',
   {
@@ -203,11 +228,15 @@ __PACKAGE__->add_columns(
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
   'eseq_composition_tmp',
   { data_type => 'varchar', is_nullable => 1, size => 600 },
-  'has_seq_data',
+  'elembio_samplename',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'elembio_project',
+  { data_type => 'varchar', is_nullable => 1, size => 10 },
+  'is_sequencing_control',
   { data_type => 'tinyint', default_value => 0, is_nullable => 1 },
-  'is_control',
-  { data_type => 'tinyint', default_value => 0, is_nullable => 1 },
-  'tag_sequence4deplexing',
+  'tag_sequence',
+  { data_type => 'varchar', is_nullable => 1, size => 30 },
+  'tag2_sequence',
   { data_type => 'varchar', is_nullable => 1, size => 30 },
   'qc_seq',
   { data_type => 'tinyint', is_nullable => 1 },
@@ -215,15 +244,10 @@ __PACKAGE__->add_columns(
   { data_type => 'tinyint', is_nullable => 1 },
   'qc',
   { data_type => 'tinyint', is_nullable => 1 },
-  'tag_decode_percent',
-  {
-    data_type => 'float',
-    extra => { unsigned => 1 },
-    is_nullable => 1,
-    size => [5, 2],
-  },
   'tag_decode_count',
   { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'tag_decode_percent',
+  { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -246,7 +270,9 @@ __PACKAGE__->set_primary_key('id_eseq_pr_metrics_tmp');
 
 =item * L</id_eseq_product>
 
-=item * L</tag_sequence4deplexing>
+=item * L</tag_sequence>
+
+=item * L</tag2_sequence>
 
 =back
 
@@ -254,7 +280,7 @@ __PACKAGE__->set_primary_key('id_eseq_pr_metrics_tmp');
 
 __PACKAGE__->add_unique_constraint(
   'eseq_pr_metrics_product_tagseq_unique',
-  ['id_eseq_product', 'tag_sequence4deplexing'],
+  ['id_eseq_product', 'tag_sequence', 'tag2_sequence'],
 );
 
 =head1 RELATIONS
@@ -300,8 +326,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-05-28 11:40:49
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WvvGdSOfPhM8d43/dbwaYA
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-06-20 15:03:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:tsd2HFu8VL69Q5TDkNC5gg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

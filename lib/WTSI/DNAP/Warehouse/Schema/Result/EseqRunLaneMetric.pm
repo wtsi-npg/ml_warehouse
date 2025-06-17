@@ -69,7 +69,7 @@ Flowcell lane number
   is_nullable: 0
   size: 255
 
-Run folder name
+Instrument run folder name
 
 =head2 flowcell_barcode
 
@@ -85,7 +85,7 @@ Manufacturer flowcell barcode
   is_nullable: 0
   size: 32
 
-Tracking instrument name
+Instrument name in NPG tracking system
 
 =head2 instrument_external_name
 
@@ -124,14 +124,6 @@ Instrument side (A or B)
   extra: {unsigned => 1}
   is_nullable: 1
 
-=head2 cycles
-
-  data_type: 'integer'
-  extra: {unsigned => 1}
-  is_nullable: 0
-
-Actual number of cycles excluding index reads
-
 =head2 cancelled
 
   data_type: 'tinyint'
@@ -139,7 +131,7 @@ Actual number of cycles excluding index reads
   extra: {unsigned => 1}
   is_nullable: 0
 
-Boolen flag to indicate whether the run was failed in some way or its data has been discarded
+Boolean flag to indicate whether the run was failed in some way or its data has been discarded
 
 =head2 run_started
 
@@ -180,11 +172,29 @@ The date the run was released, ie QC-ed if applicable and fully archived
 
 Sequencing lane level QC outcome, a result of either manual or automatic assessment by core
 
+=head2 cycles
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 0
+
+Actual number of cycles excluding index reads
+
+=head2 num_polonies
+
+  data_type: 'bigint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+Number of polonies (reads) for this lane
+
 =head2 tags_decode_percent
 
   data_type: 'float'
   extra: {unsigned => 1}
   is_nullable: 1
+
+An overall percent of polonies (reads) assigned to expected barcodes
 
 =cut
 
@@ -221,8 +231,6 @@ __PACKAGE__->add_columns(
   },
   'run_priority',
   { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 1 },
-  'cycles',
-  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 0 },
   'cancelled',
   {
     data_type => 'tinyint',
@@ -256,6 +264,10 @@ __PACKAGE__->add_columns(
   },
   'qc_seq',
   { data_type => 'tinyint', is_nullable => 1 },
+  'cycles',
+  { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 0 },
+  'num_polonies',
+  { data_type => 'bigint', extra => { unsigned => 1 }, is_nullable => 1 },
   'tags_decode_percent',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
 );
@@ -292,8 +304,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-06-03 11:56:53
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:TNOV1AKs2+8b0cycQfqsMQ
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-06-17 11:19:51
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Jryx7d3MPPOB6GnTjX61+Q
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
