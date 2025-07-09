@@ -185,6 +185,14 @@ Earliest LIMs identifier associated with library creation
 
 Primer Panel name
 
+=head2 entity_id_lims
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 20
+
+Most specific LIMs identifier associated with this lane or plex or spike
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -247,6 +255,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'primer_panel',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'entity_id_lims',
+  { data_type => 'varchar', is_nullable => 0, size => 20 },
 );
 
 =head1 PRIMARY KEY
@@ -340,8 +350,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-05-28 11:40:49
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:i2utV14YYkpBwB6wT7zQtQ
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-07-09 15:17:03
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vvf9oJQUIOq8HbHoq4ioOg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

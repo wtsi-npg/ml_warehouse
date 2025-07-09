@@ -330,6 +330,18 @@ The data destination type(s) for the study. It could be 'standard', '14mg' or 'g
   is_nullable: 1
   size: 255
 
+=head2 data_release_timing_publication_comment
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+=head2 data_share_in_preprint
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -443,6 +455,10 @@ __PACKAGE__->add_columns(
   'ebi_library_source',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'ebi_library_selection',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'data_release_timing_publication_comment',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'data_share_in_preprint',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
 );
 
@@ -627,8 +643,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-05-28 11:40:49
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+sTdFkjHMeMUkr7vZ6zulQ
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-07-09 15:17:03
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:000FOHIMqtliu3/dyDN2Kg
 
 with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
 
