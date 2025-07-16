@@ -1,7 +1,10 @@
 LIST OF CHANGES
 ---------------
 
- - Updated DBIx classes to bring them up-to-date with the production database.
+release 6.39.0 (2025-07-15)
+ - Updated DBIx ORM classes to bring them up-to-date with the production database.
+ - Added tables for Elembio data - iseq_run_lane_metrics and iseq_product_metrics.
+   Generated ORM classes for these tables.
 
 release 6.38.0 (2025-04-02)
  - Change iseq_product_metrics tag_decode_count from int to bigint to support
