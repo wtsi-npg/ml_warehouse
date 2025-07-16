@@ -122,7 +122,7 @@ Tag index within tag set, NULL if untagged
 
   data_type: 'varchar'
   is_nullable: 1
-  size: 30
+  size: 50
 
 Tag sequence for tag
 
@@ -146,7 +146,7 @@ WTSI-wide tag set name for tag
 
   data_type: 'varchar'
   is_nullable: 1
-  size: 30
+  size: 50
 
 =head2 tag2_set_id_lims
 
@@ -322,13 +322,13 @@ __PACKAGE__->add_columns(
   'tag_identifier',
   { data_type => 'varchar', is_nullable => 1, size => 30 },
   'tag_sequence',
-  { data_type => 'varchar', is_nullable => 1, size => 30 },
+  { data_type => 'varchar', is_nullable => 1, size => 50 },
   'tag_set_id_lims',
   { data_type => 'varchar', is_nullable => 1, size => 20 },
   'tag_set_name',
   { data_type => 'varchar', is_nullable => 1, size => 100 },
   'tag2_sequence',
-  { data_type => 'varchar', is_nullable => 1, size => 30 },
+  { data_type => 'varchar', is_nullable => 1, size => 50 },
   'tag2_set_id_lims',
   { data_type => 'varchar', is_nullable => 1, size => 20 },
   'tag2_set_name',
@@ -465,8 +465,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-07-24 14:58:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:W0vDUxFwoJIBi6Zoic3rUg
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-07-09 15:17:03
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8m4j5HXVJPZCbKPdPokivA
 
 
 our $VERSION = '0';
