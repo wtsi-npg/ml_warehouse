@@ -1,6 +1,10 @@
 LIST OF CHANGES
 ---------------
 
+ - Renamed scripts/update_schema_7.0.0.sql to scripts/update_schema_6.39.0.sql
+   so that the name of the script corresponds to the release version for the
+   update of the production database.
+
 release 6.39.0 (2025-07-16)
  - Updated DBIx ORM classes to bring them up-to-date with the production database.
  - Added tables for Elembio data - iseq_run_lane_metrics and iseq_product_metrics.
