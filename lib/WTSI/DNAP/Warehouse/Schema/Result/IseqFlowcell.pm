@@ -595,8 +595,6 @@ use Readonly;
 
 our $VERSION = '0';
 
-with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
-
 Readonly my @USER_ROLES => qw/manager follower owner/;
 
 Readonly my %DELEGATION_TO_SAMPLE => {
@@ -870,7 +868,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2014,2015,2016,2017,2018,2019,2020 Genome Research Ltd.
+Copyright (C) 2014,2015,2016,2017,2018,2019,2020,2025 Genome Research Ltd.
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
