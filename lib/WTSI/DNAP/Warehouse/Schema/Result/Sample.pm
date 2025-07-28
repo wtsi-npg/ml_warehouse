@@ -835,8 +835,6 @@ __PACKAGE__->has_many(
 
 our $VERSION = '0';
 
-with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
-
 =head2 lighthouse_sample
 
 Type: belongs_to
