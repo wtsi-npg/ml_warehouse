@@ -310,7 +310,28 @@ __PACKAGE__->has_many(
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
+use MooseX::Aliases;
+
 our $VERSION = '0';
+
+=head1 SUBROUTINES/METHODS
+
+=head2 position
+
+An alias for C<lane>. Provided for compatibility with SeqQC viewer code.
+
+=cut
+
+alias position => 'lane';
+
+####
+# Do not move consuming the npg_qc::autoqc::role::rpt_key role above the
+# 'position' alias.
+# Functionality provided by this role is used in SeqQC viewer code.
+
+##no critic (ProhibitStringyEval ProhibitPostfixControls ProhibitInterpolationOfLiterals)
+with 'npg_qc::autoqc::role::rpt_key' if eval "require npg_qc::autoqc::role::rpt_key";
+##use critic
 
 __PACKAGE__->meta->make_immutable;
 
@@ -320,12 +341,10 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 DESCRIPTION
 
-DBIx model for eseq_run_lane_metricswhich contains run and lane-level data for
+DBIx model for eseq_run_lane_metrics, which contains run and lane-level data for
 runs performed on Element Biosciences instruments.
 
 =head1 CONFIGURATION AND ENVIRONMENT
-
-=head1 SUBROUTINES/METHODS
 
 =head1 DEPENDENCIES
 
@@ -336,6 +355,8 @@ runs performed on Element Biosciences instruments.
 =item MooseX::NonMoose
 
 =item MooseX::MarkAsMethods
+
+=item MooseX::Aliases
 
 =item DBIx::Class::Core
 

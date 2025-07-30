@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+ - Added delegations and aliases to ORM classes for eseq* tables to make
+   the code that fetches LIMS data fro SeqQC work for Elembio.
+
 release 6.40.0 (2025-08-19)
  - Updates for eseq_run table:
    - added run_manifest JSON column,
