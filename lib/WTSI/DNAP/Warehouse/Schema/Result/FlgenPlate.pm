@@ -276,8 +276,6 @@ __PACKAGE__->belongs_to(
 
 our $VERSION = '0';
 
-with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
-
 __PACKAGE__->meta->make_immutable;
 
 1;
@@ -325,7 +323,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2014,2015 Genome Research Ltd.
+Copyright (C) 2014,2015,2025 Genome Research Ltd.
 
 This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 

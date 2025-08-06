@@ -3,7 +3,6 @@ Changes
 lib/WTSI/DNAP/Warehouse/Schema.pm
 lib/WTSI/DNAP/Warehouse/Schema/Query/IseqFlowcell.pm
 lib/WTSI/DNAP/Warehouse/Schema/Query/LibraryDigest.pm
-lib/WTSI/DNAP/Warehouse/Schema/Query/LimsFlags.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/Aliquot.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapAnalyte.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/CgapBiomaterial.pm

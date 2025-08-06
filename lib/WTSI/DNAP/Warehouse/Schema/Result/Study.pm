@@ -646,8 +646,6 @@ __PACKAGE__->has_many(
 # Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-07-09 15:17:03
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:000FOHIMqtliu3/dyDN2Kg
 
-with 'WTSI::DNAP::Warehouse::Schema::Query::LimsFlags';
-
 our $VERSION = '0';
 
 __PACKAGE__->meta->make_immutable;
