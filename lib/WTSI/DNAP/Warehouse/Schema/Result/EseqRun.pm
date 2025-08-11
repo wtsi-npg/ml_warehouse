@@ -113,6 +113,13 @@ The content of AvitiRunStats.json file in the run folder
 
 Run outcome as recorded in RunUploaded.json file
 
+=head2 run_manifest
+
+  data_type: 'json'
+  is_nullable: 1
+
+The content of RunManifest.json file in the run folder
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -147,6 +154,8 @@ __PACKAGE__->add_columns(
   { data_type => 'json', is_nullable => 1 },
   'outcome',
   { data_type => 'varchar', is_nullable => 1, size => 256 },
+  'run_manifest',
+  { data_type => 'json', is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -176,8 +185,8 @@ __PACKAGE__->set_primary_key('id_eseq_run_tmp');
 __PACKAGE__->add_unique_constraint('eseq_run_fname_unique', ['folder_name']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07052 @ 2025-02-13 20:59:01
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:sr8Nr4c63caRfDqSf/9XLw
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-08-11 14:50:32
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+0X7UkG98mA634z5YlBqFg
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
