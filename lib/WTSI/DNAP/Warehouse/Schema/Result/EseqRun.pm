@@ -75,6 +75,14 @@ Run name as recorded in RunParameters.json file
 
 Flowcell ID as recorded in RunParameters.json file
 
+=head2 run_type
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 100
+
+Run type as recorded in RunParameters.json file
+
 =head2 date_started
 
   data_type: 'datetime'
@@ -110,7 +118,7 @@ The content of RunManifest.json file in the run folder
   data_type: 'json'
   is_nullable: 1
 
-The content of AvitiRunStats.json file in the run folder
+The content of RunStats.json file produced by bases2fastq
 
 =head2 outcome
 
@@ -136,6 +144,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 0, size => 100 },
   'flowcell_id',
   { data_type => 'varchar', is_nullable => 0, size => 100 },
+  'run_type',
+  { data_type => 'varchar', is_nullable => 1, size => 100 },
   'date_started',
   {
     data_type => 'datetime',
@@ -185,8 +195,8 @@ __PACKAGE__->set_primary_key('id_eseq_run_tmp');
 __PACKAGE__->add_unique_constraint('eseq_run_fname_unique', ['folder_name']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-08-14 13:05:50
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ehX5weUewr0n/zbRNkGdhg
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-08-15 12:39:51
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:wfeU/Feny4jeA5uXZwylXA
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
