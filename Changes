@@ -1,7 +1,10 @@
 LIST OF CHANGES
 ---------------
 
- - Added run_manifest JSON column to eseq_run table.
+ - Updates for eseq_run table:
+   - added run_manifest JSON column,
+   - added run_type column,
+   - updated a comment for run_stats column.
 
 release 6.39.1 (2025-08-06)
  - Renamed scripts/update_schema_7.0.0.sql to scripts/update_schema_6.39.0.sql
