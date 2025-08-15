@@ -98,6 +98,13 @@ Run completion date from a timestamp of RunUploaded.json file
 
 The content of RunParameters.json file in the run folder
 
+=head2 run_manifest
+
+  data_type: 'json'
+  is_nullable: 1
+
+The content of RunManifest.json file in the run folder
+
 =head2 run_stats
 
   data_type: 'json'
@@ -143,6 +150,8 @@ __PACKAGE__->add_columns(
   },
   'run_parameters',
   { data_type => 'json', is_nullable => 0 },
+  'run_manifest',
+  { data_type => 'json', is_nullable => 1 },
   'run_stats',
   { data_type => 'json', is_nullable => 1 },
   'outcome',
@@ -176,8 +185,8 @@ __PACKAGE__->set_primary_key('id_eseq_run_tmp');
 __PACKAGE__->add_unique_constraint('eseq_run_fname_unique', ['folder_name']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07052 @ 2025-02-13 20:59:01
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:sr8Nr4c63caRfDqSf/9XLw
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-08-14 13:05:50
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ehX5weUewr0n/zbRNkGdhg
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
