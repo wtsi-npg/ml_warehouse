@@ -332,7 +332,47 @@ __PACKAGE__->belongs_to(
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
+use MooseX::Aliases;
+
 our $VERSION = '0';
+
+=head1 SUBROUTINES/METHODS
+
+=head2 position
+
+An alias for C<lane>. Provided for compatibility with SeqQC viewer code.
+
+=cut
+
+alias position => 'lane';
+
+####
+# Do not move consuming the npg_qc::autoqc::role::rpt_key role above the
+# 'position' alias.
+# Functionality provided by this role is used in SeqQC viewer code.
+#
+
+##no critic (ProhibitStringyEval ProhibitPostfixControls ProhibitInterpolationOfLiterals)
+with 'npg_qc::autoqc::role::rpt_key' if eval "require npg_qc::autoqc::role::rpt_key";
+##use critic
+
+=head2 tag_sequence4deplexing
+
+A dash-separated representation of tag sequences. Used in SeqQC viewer code.
+
+=cut
+
+sub tag_sequence4deplexing {
+  my $self = shift;
+  my $ts;
+  if ($self->tag_sequence) {
+    $ts = $self->tag_sequence;
+    if ($self->tag2_sequence) {
+      $ts .= q[-] . $self->tag2_sequence;
+    }
+  }
+  return $ts;
+}
 
 __PACKAGE__->meta->make_immutable;
 
@@ -347,8 +387,6 @@ from sequencing on Element Biosciences instruments.
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
-=head1 SUBROUTINES/METHODS
-
 =head1 DEPENDENCIES
 
 =over
@@ -358,6 +396,8 @@ from sequencing on Element Biosciences instruments.
 =item MooseX::NonMoose
 
 =item MooseX::MarkAsMethods
+
+=item MooseX::Aliases
 
 =item DBIx::Class::Core
 
