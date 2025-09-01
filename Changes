@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
 
+release 6.41.0 (2025-09-01)
  - Added delegations and aliases to ORM classes for eseq* tables to make
    the code that fetches LIMS data fro SeqQC work for Elembio.
 
