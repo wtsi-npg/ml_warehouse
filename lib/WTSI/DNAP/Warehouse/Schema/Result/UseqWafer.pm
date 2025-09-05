@@ -454,9 +454,24 @@ __PACKAGE__->belongs_to(
   { is_deferrable => 1, on_delete => 'RESTRICT', on_update => 'RESTRICT' },
 );
 
+=head2 useq_product_metrics
 
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-11-19 15:07:16
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1hQx5/UPMHFpFl2bBQNZfA
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::UseqProductMetric>
+
+=cut
+
+__PACKAGE__->has_many(
+  'useq_product_metrics',
+  'WTSI::DNAP::Warehouse::Schema::Result::UseqProductMetric',
+  { 'foreign.id_useq_wafer_tmp' => 'self.id_useq_wafer_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-11-19 18:48:13
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5gGqhDHkyaAp38FXImbXXA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
@@ -473,8 +488,8 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 DESCRIPTION
 
-DBIx model for eseq_run_lane_metrics, which contains run and lane-level data for
-runs performed on Element Biosciences instruments.
+DBIx model for useq_wafer, which contains LIMS information for runs performed
+on Ultima Genomics instruments.
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
