@@ -44,6 +44,9 @@ lib/WTSI/DNAP/Warehouse/Schema/Result/CgapConjuredLabware.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/LighthouseSample.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/SamplesExtractionActivity.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/TolSampleBioproject.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/UseqProductMetric.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/UseqRunMetric.pm
+lib/WTSI/DNAP/Warehouse/Schema/Result/UseqWafer.pm
 MANIFEST
 README
 t/00-critic.t
