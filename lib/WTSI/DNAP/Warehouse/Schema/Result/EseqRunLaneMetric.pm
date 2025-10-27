@@ -310,6 +310,31 @@ __PACKAGE__->has_many(
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
+=head2 eseq_run
+
+Type: belongs_to
+
+Related Object: L<WTSI::DNAP::Warehouse::Schema::Result::EseqRun>
+
+Collations do not match between tables so we must supply the JOIN condition
+more precisely
+
+=cut
+
+__PACKAGE__->belongs_to(
+  'eseq_run',
+  'WTSI::DNAP::Warehouse::Schema::Result::EseqRun',
+  sub {
+    my ($args) = @_;
+    my $self_alias    = $args->{self_alias};
+    my $foreign_alias = $args->{foreign_alias};
+
+    return {
+      "$self_alias.run_folder_name COLLATE utf8mb3_general_ci" => {  -ident =>  "$foreign_alias.folder_name" }
+    };
+  }
+);
+
 use MooseX::Aliases;
 
 our $VERSION = '0';
