@@ -1,12 +1,14 @@
 LIST OF CHANGES
 ---------------
 
+release 6.41.1 (2025-11-11)
  - The rule for all mlwh tables is to have character set utf8 and collation
    utf8_unicode_ci. The collation was not set when eseq_run table was created.
    Mismatching collations necessitate setting the collation explicitly when
    joining between eseq_run and eseq_run_lane_metrics on the run folder name. To
    make joining straightforward, the collation on the eseq_run table and on
    all existing VARCHAR columns of this table is set to utf8_unicode_ci.
+ - CI updates
 
 release 6.41.0 (2025-09-01)
  - Added delegations and aliases to ORM classes for eseq* tables to make
