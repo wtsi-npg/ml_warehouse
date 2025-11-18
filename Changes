@@ -1,6 +1,10 @@
 LIST OF CHANGES
 ---------------
 
+ - Following the decision not to load Elembio RunStats.json files to mlwh
+   (see https://github.com/wtsi-npg/npg_ml_warehouse/pull/363), updated the
+   comment for the run_stats column of eseq_run table. 
+
 release 6.41.1 (2025-11-11)
  - The rule for all mlwh tables is to have character set utf8 and collation
    utf8_unicode_ci. The collation was not set when eseq_run table was created.
@@ -28,7 +32,7 @@ release 6.39.1 (2025-08-06)
 
 release 6.39.0 (2025-07-16)
  - Updated DBIx ORM classes to bring them up-to-date with the production database.
- - Added tables for Elembio data - iseq_run_lane_metrics and iseq_product_metrics.
+ - Added tables for Elembio data - eseq_run_lane_metrics and eseq_product_metrics.
    Generated ORM classes for these tables.
 
 release 6.38.0 (2025-04-02)
