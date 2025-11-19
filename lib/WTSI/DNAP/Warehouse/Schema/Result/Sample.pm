@@ -829,9 +829,24 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 useq_wafers
 
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-05-28 11:40:49
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0I541UXLRzJ6XdTPjRYDNg
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::UseqWafer>
+
+=cut
+
+__PACKAGE__->has_many(
+  'useq_wafers',
+  'WTSI::DNAP::Warehouse::Schema::Result::UseqWafer',
+  { 'foreign.id_sample_tmp' => 'self.id_sample_tmp' },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-11-19 15:07:16
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:/P6Hbtm/gHDoTSEjqkLPxg
 
 our $VERSION = '0';
 
