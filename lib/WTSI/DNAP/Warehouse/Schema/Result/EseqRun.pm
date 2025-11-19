@@ -118,7 +118,7 @@ The content of RunManifest.json file in the run folder
   data_type: 'json'
   is_nullable: 1
 
-The content of RunStats.json file produced by bases2fastq
+The content of RunStats.json file produced by bases2fastq, reserved for possible future use.
 
 =head2 outcome
 
@@ -195,8 +195,8 @@ __PACKAGE__->set_primary_key('id_eseq_run_tmp');
 __PACKAGE__->add_unique_constraint('eseq_run_fname_unique', ['folder_name']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-08-15 12:39:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:wfeU/Feny4jeA5uXZwylXA
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-11-18 18:47:59
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CnPkHmdlH4oI+qeudFFHVQ
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 

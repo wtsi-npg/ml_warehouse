@@ -1,0 +1,8 @@
+-- Update a comment in eseq_run table and delete all content from
+-- run_stats column.
+
+ALTER TABLE `eseq_run`
+  MODIFY COLUMN `run_stats` JSON DEFAULT NULL \
+  COMMENT 'The content of RunStats.json file produced by bases2fastq, reserved for possible future use.';
+
+UPDATE `eseq_run` SET run_stats=NULL;
