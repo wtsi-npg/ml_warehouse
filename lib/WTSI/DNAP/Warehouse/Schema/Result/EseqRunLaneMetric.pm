@@ -310,6 +310,21 @@ __PACKAGE__->has_many(
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
+=head2 eseq_run
+
+Type: belongs_to
+
+Related Object: L<WTSI::DNAP::Warehouse::Schema::Result::EseqRun>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  'eseq_run',
+  'WTSI::DNAP::Warehouse::Schema::Result::EseqRun',
+  { 'foreign.folder_name' => 'self.run_folder_name' },
+  { cascade_copy => 0, cascade_delete => 0 }
+);
+
 use MooseX::Aliases;
 
 our $VERSION = '0';
