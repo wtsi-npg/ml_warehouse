@@ -40,9 +40,12 @@ __PACKAGE__->table('useq_wafer');
 
 =head2 id_useq_wafer_tmp
 
-  data_type: 'bigint'
+  data_type: 'integer'
+  extra: {unsigned => 1}
   is_auto_increment: 1
   is_nullable: 0
+
+Internal to this database, id value can change
 
 =head2 last_updated
 
@@ -82,9 +85,17 @@ Study id, see 'study.id_study_tmp'
 
   data_type: 'varchar'
   is_nullable: 0
+  size: 60
+
+LIMs-specific wafer id, a concatenation of batch_for_opentrons, id_pool_lims and request_order
+
+=head2 batch_for_opentrons
+
+  data_type: 'varchar'
+  is_nullable: 0
   size: 20
 
-LIMs-specific wafer id, batch_id for Sequencescape
+LIMs-specific identifier, batch_id for Sequencescape
 
 =head2 id_lims
 
@@ -94,13 +105,13 @@ LIMs-specific wafer id, batch_id for Sequencescape
 
 LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE
 
-=head2 lane
+=head2 request_order
 
   data_type: 'smallint'
   extra: {unsigned => 1}
   is_nullable: 0
 
-Wafer lane number
+LIMs-specific identifier for order in a batch
 
 =head2 entity_type
 
@@ -290,7 +301,12 @@ AMP instrument name
 
 __PACKAGE__->add_columns(
   'id_useq_wafer_tmp',
-  { data_type => 'bigint', is_auto_increment => 1, is_nullable => 0 },
+  {
+    data_type => 'integer',
+    extra => { unsigned => 1 },
+    is_auto_increment => 1,
+    is_nullable => 0,
+  },
   'last_updated',
   {
     data_type => 'datetime',
@@ -318,10 +334,12 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
   },
   'id_wafer_lims',
+  { data_type => 'varchar', is_nullable => 0, size => 60 },
+  'batch_for_opentrons',
   { data_type => 'varchar', is_nullable => 0, size => 20 },
   'id_lims',
   { data_type => 'varchar', is_nullable => 0, size => 10 },
-  'lane',
+  'request_order',
   { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 0 },
   'entity_type',
   { data_type => 'varchar', is_nullable => 0, size => 30 },
@@ -405,9 +423,9 @@ __PACKAGE__->set_primary_key('id_useq_wafer_tmp');
 
 =over 4
 
-=item * L</id_wafer_lims>
+=item * L</batch_for_opentrons>
 
-=item * L</lane>
+=item * L</request_order>
 
 =item * L</tag_sequence>
 
@@ -419,7 +437,12 @@ __PACKAGE__->set_primary_key('id_useq_wafer_tmp');
 
 __PACKAGE__->add_unique_constraint(
   'index_useq_wafer_on_composition_keys',
-  ['id_wafer_lims', 'lane', 'tag_sequence', 'id_lims'],
+  [
+    'batch_for_opentrons',
+    'request_order',
+    'tag_sequence',
+    'id_lims',
+  ],
 );
 
 =head1 RELATIONS
@@ -454,24 +477,9 @@ __PACKAGE__->belongs_to(
   { is_deferrable => 1, on_delete => 'RESTRICT', on_update => 'RESTRICT' },
 );
 
-=head2 useq_product_metrics
 
-Type: has_many
-
-Related object: L<WTSI::DNAP::Warehouse::Schema::Result::UseqProductMetric>
-
-=cut
-
-__PACKAGE__->has_many(
-  'useq_product_metrics',
-  'WTSI::DNAP::Warehouse::Schema::Result::UseqProductMetric',
-  { 'foreign.id_useq_wafer_tmp' => 'self.id_useq_wafer_tmp' },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
-
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-11-19 18:48:13
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5gGqhDHkyaAp38FXImbXXA
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-11-27 12:08:00
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:q9lceYptSP7sUbrOlETLRA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
