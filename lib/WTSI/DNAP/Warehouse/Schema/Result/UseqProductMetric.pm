@@ -58,7 +58,8 @@ Date this record was created or changed
 
 =head2 id_useq_wafer_tmp
 
-  data_type: 'bigint'
+  data_type: 'integer'
+  extra: {unsigned => 1}
   is_foreign_key: 1
   is_nullable: 1
 
@@ -200,7 +201,12 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
   },
   'id_useq_wafer_tmp',
-  { data_type => 'bigint', is_foreign_key => 1, is_nullable => 1 },
+  {
+    data_type => 'integer',
+    extra => { unsigned => 1 },
+    is_foreign_key => 1,
+    is_nullable => 1,
+  },
   'id_run',
   {
     data_type => 'integer',
@@ -302,8 +308,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-11-19 19:16:42
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lpcmKPLzwN7tA7WYIbAiJg
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-12-02 12:22:52
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:R2m8J5N4/v89UvudIaK3qg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

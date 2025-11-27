@@ -42,7 +42,7 @@ CREATE TABLE `useq_product_metrics` (
     COMMENT 'Internal to this database id, value can change',
   `last_changed` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP \
     COMMENT 'Date this record was created or changed',
-  `id_useq_wafer_tmp` BIGINT DEFAULT NULL \
+  `id_useq_wafer_tmp` INT UNSIGNED DEFAULT NULL \
     COMMENT 'Foreign key, see "useq_wafer.id_useq_wafer_tmp"',
   `id_run` INT UNSIGNED NOT NULL COMMENT 'NPG run identifier',
   `tag_index` SMALLINT UNSIGNED DEFAULT NULL COMMENT 'NPG tag index',
