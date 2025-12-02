@@ -11,3 +11,12 @@ ALTER TABLE `eseq_run`
     COMMENT 'Run type as recorded in RunParameters.json file',
   MODIFY `outcome` varchar(256) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL
     COMMENT 'Run outcome as recorded in RunUploaded.json file';
+
+-- Update a comment in eseq_run table and delete all content from
+-- run_stats column.
+
+ALTER TABLE `eseq_run`
+  MODIFY COLUMN `run_stats` JSON DEFAULT NULL \
+  COMMENT 'The content of RunStats.json file produced by bases2fastq, reserved for possible future use.';
+
+UPDATE `eseq_run` SET run_stats=NULL;
