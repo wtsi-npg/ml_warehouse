@@ -1,9 +1,11 @@
 LIST OF CHANGES
 ---------------
 
+release 6.41.2 (2025-12-02)
  - Following the decision not to load Elembio RunStats.json files to mlwh
    (see https://github.com/wtsi-npg/npg_ml_warehouse/pull/363), updated the
-   comment for the run_stats column of eseq_run table. 
+   comment for the run_stats column of eseq_run table.
+ - Fix name of update schema from 6.42.0 to 6.41.2
 
 release 6.41.1 (2025-11-11)
  - The rule for all mlwh tables is to have character set utf8 and collation
