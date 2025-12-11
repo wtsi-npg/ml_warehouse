@@ -1,6 +1,10 @@
 LIST OF CHANGES
 ---------------
 
+ - Generated result class for the new useq_wafer table (LIMS data).
+ - Defined new tables, useq_run_metrics and useq_product_metrics and generated
+   result classes for them.
+
 release 6.41.2 (2025-12-02)
  - Following the decision not to load Elembio RunStats.json files to mlwh
    (see https://github.com/wtsi-npg/npg_ml_warehouse/pull/363), updated the
