@@ -120,7 +120,15 @@ Ultimagen barcode sequence
   is_nullable: 1
   size: 255
 
-Name the sample is deplexed under by Ultimagen Genomics, see also ultima:Sample_ID iRODS metadata
+Sample ID used by Ultimagen Genomics in deplexing, see also ultimagen:Sample_ID iRODS metadata
+
+=head2 ultimagen_library_name
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Library name as given in Ultimagen Genomics manifest, see also ultimagen:Library_name iRODS metadata
 
 =head2 qc_seq
 
@@ -226,6 +234,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'ultimagen_sample_id',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'ultimagen_library_name',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'qc_seq',
   { data_type => 'tinyint', is_nullable => 1 },
   'qc_lib',
@@ -308,8 +318,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-12-02 12:22:52
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:R2m8J5N4/v89UvudIaK3qg
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2026-01-07 14:27:39
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ksN1y2GOt6tA2KC58JLPyQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
