@@ -54,7 +54,9 @@ CREATE TABLE `useq_product_metrics` (
   `ultimagen_Index_Sequence` VARCHAR(255) DEFAULT NULL \
     COMMENT 'Ultimagen barcode sequence',
   `ultimagen_Sample_Id` VARCHAR(255) DEFAULT NULL \
-    COMMENT 'Name the sample is deplexed under by Ultimagen Genomics, see also ultima:Sample_ID iRODS metadata',
+    COMMENT 'Sample ID used by Ultimagen Genomics in deplexing, see also ultimagen:Sample_ID iRODS metadata',
+  `ultimagen_Library_Name` VARCHAR(255) DEFAULT NULL \
+    COMMENT 'Library name as given in Ultimagen Genomics manifest, see also ultimagen:Library_name iRODS metadata',
   `qc_seq` TINYINT(1) DEFAULT NULL \
     COMMENT 'Sequencing lane level QC outcome, a result of either manual or automatic assessment by core',
   `qc_lib` TINYINT(1) DEFAULT NULL \
