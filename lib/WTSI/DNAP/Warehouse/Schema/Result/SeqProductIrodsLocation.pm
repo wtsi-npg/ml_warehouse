@@ -76,7 +76,7 @@ A sequencing platform specific product id. For Illumina, data corresponds to the
 =head2 seq_platform_name
 
   data_type: 'enum'
-  extra: {list => ['Illumina','PacBio','ONT']}
+  extra: {list => ['Illumina','PacBio','ONT','Elembio','Ultimagen']}
   is_nullable: 0
 
 Name of the sequencing platform used to produce raw data
@@ -142,7 +142,7 @@ __PACKAGE__->add_columns(
   'seq_platform_name',
   {
     data_type => 'enum',
-    extra => { list => ['Illumina', 'PacBio', 'ONT'] },
+    extra => { list => ['Illumina', 'PacBio', 'ONT', 'Elembio', 'Ultimagen'] },
     is_nullable => 0,
   },
   'pipeline_name',
