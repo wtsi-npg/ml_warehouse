@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - Added Elembio and Ultimagen as seq_platform_name in seq_product_irods_locations
+
 release 6.42.1 (2026-01-07)
  - Added ultimagen_Library_Name column to useq_product_metrics table definition.
 
