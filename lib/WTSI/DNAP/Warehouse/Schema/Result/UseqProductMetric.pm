@@ -130,6 +130,14 @@ Sample ID used by Ultimagen Genomics in deplexing, see also ultimagen:Sample_ID 
 
 Library name as given in Ultimagen Genomics manifest, see also ultimagen:Library_name iRODS metadata
 
+=head2 ultimagen_application_type
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Pipeline/tool which was used for on-board data processing
+
 =head2 qc_seq
 
   data_type: 'tinyint'
@@ -236,6 +244,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'ultimagen_library_name',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'ultimagen_application_type',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'qc_seq',
   { data_type => 'tinyint', is_nullable => 1 },
   'qc_lib',
@@ -318,8 +328,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2026-01-07 14:27:39
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ksN1y2GOt6tA2KC58JLPyQ
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2026-01-22 16:16:57
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3vay5XC60e3q96s6lqsQTQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
