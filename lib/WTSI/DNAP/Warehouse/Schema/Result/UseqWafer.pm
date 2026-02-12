@@ -500,6 +500,7 @@ __PACKAGE__->has_many(
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
 use Readonly;
+use MooseX::Aliases;
 
 our $VERSION = '0';
 
@@ -516,19 +517,57 @@ our $VERSION = '0';
 =cut
 
 #####
-# Delegations below are provided to ensure compatibility with SeqQC viewer code.
+# Delegations, aliases and methods  below are provided to ensure compatibilityh
+# with SeqQC viewer code and st::api::lims (useq_ml_warehouse driver type).
 #
+
+sub tag2_sequence { return; }
+
+alias default_library_type    => 'pipeline_id_lims';
+alias lane_id                 => 'entity_id_lims';
+alias default_tag_sequence    => 'tag_sequence';
+alias default_tagtwo_sequence => 'tag2_sequence';
+alias gbs_plex_name           => 'primer_panel';
+
+# For Illumina data we map library_id to legacy_library_id, see the code for
+# WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell. The latter is not
+# currently available in this table, so library_id is mapped here to
+# id_library_lims, which is for Illumina data a fallback.
+alias library_id              => 'id_library_lims';
+alias library_name            => 'id_library_lims';
 
 Readonly my %DELEGATION_TO_SAMPLE => {
     'sample_id'                => 'id_sample_lims',
+    'sample_uuid'              => 'uuid_sample_lims',
     'sample_name'              => 'name',
+    'sample_lims'              => 'id_lims',
+    'sample_reference_genome'  => 'reference_genome',
+    'organism'                 => 'organism',
+    'sample_accession_number'  => 'accession_number',
+    'sample_common_name'       => 'common_name',
+    'sample_description'       => 'description',
+    'organism_taxon_id'        => 'taxon_id',
+    'sample_public_name'       => 'public_name',
+    'sample_consent_withdrawn' => 'consent_withdrawn',
     'sample_supplier_name'     => 'supplier_name',
+    'sample_cohort'            => 'cohort',
+    'sample_donor_id'          => 'donor_id',
+    'sample_is_control'        => 'control',
+    'sample_control_type'      => 'control_type',
 };
 
 Readonly my %DELEGATION_TO_STUDY => {
+    'study_id'                            => 'id_study_lims',
     'study_name'                          => 'name',
+    'study_reference_genome'              => 'reference_genome',
+    'study_accession_number'              => 'accession_number',
+    'study_description'                   => 'description',
+    'study_contains_nonconsented_human'   => 'contaminated_human_dna',
+    'study_title'                         => 'study_title',
+    'study_contains_nonconsented_xahuman' => 'remove_x_and_autosomes',
+    'study_alignments_in_bam'             => 'aligned',
+    'study_separate_y_chromosome_data'    => 'separate_y_chromosome_data',
 };
-
 foreach my $rel (qw(sample study)) {
 
   my $attr = q[_] . $rel . q[_row];

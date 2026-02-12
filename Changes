@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
  
+ - Added further aliases and delegations to UseqWafer result class to enable
+   a fully functional driver implementation for st::api::lims.
+
 release 6.43.0 (2026-02-18)
  - Added `ultimagen_application_type` column to `useq_product_metrics` table.
  - In order to provide compatibility with SeqQC code, added supplementary
