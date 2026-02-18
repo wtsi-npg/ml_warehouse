@@ -1,6 +1,7 @@
 LIST OF CHANGES
 ---------------
  
+release 6.43.0 (2026-02-18)
  - Added `ultimagen_application_type` column to `useq_product_metrics` table.
  - In order to provide compatibility with SeqQC code, added supplementary
    attributes and methods to ORM classes for tables for Ultimagen data.
