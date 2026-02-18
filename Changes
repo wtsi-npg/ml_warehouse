@@ -1,5 +1,12 @@
 LIST OF CHANGES
 ---------------
+ 
+release 6.43.0 (2026-02-18)
+ - Added `ultimagen_application_type` column to `useq_product_metrics` table.
+ - In order to provide compatibility with SeqQC code, added supplementary
+   attributes and methods to ORM classes for tables for Ultimagen data.
+ - Added 'Elembio' and 'Ultimagen' to the `seq_platform_name` enumeration in
+  `seq_product_irods_locations` table.
 
 release 6.42.1 (2026-01-07)
  - Added ultimagen_Library_Name column to useq_product_metrics table definition.

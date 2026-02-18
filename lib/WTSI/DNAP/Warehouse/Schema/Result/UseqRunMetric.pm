@@ -258,11 +258,35 @@ __PACKAGE__->has_many(
 
 our $VERSION = '0';
 
+=head1 SUBROUTINES/METHODS
+
+=head2 position
+
+Ultimagen sequencing does not have a concept of position or lane. However, SeqQC
+code needs this value to calculate rpt keys. To be compatible with conventions
+we follow when generating autoqc objects for Ultimagen data this method should
+always return 1 (as an integer). See also
+L<https://github.com/wtsi-npg/npg_qc/blob/master/lib/npg_qc/ultimagen/run_stats.pm>
+
+=cut
+
+sub position {
+  return 1;
+}
+
+####
+# Do not move consuming the npg_qc::autoqc::role::rpt_key role above the
+# 'position' method.
+# Functionality provided by this role is used in SeqQC viewer code.
+#
+
+##no critic (ProhibitStringyEval ProhibitPostfixControls ProhibitInterpolationOfLiterals)
+with 'npg_qc::autoqc::role::rpt_key' if eval "require npg_qc::autoqc::role::rpt_key";
+##use critic
+
 __PACKAGE__->meta->make_immutable;
 
 1;
-
-=head1 SUBROUTINES/METHODS
 
 =head1 SYNOPSIS
 
@@ -299,7 +323,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2025 Genome Research Ltd.
+Copyright (C) 2025, 2026 Genome Research Ltd.
 
 This file is part of NPG.
 

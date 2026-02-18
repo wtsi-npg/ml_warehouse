@@ -499,7 +499,57 @@ __PACKAGE__->has_many(
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
+use Readonly;
+
 our $VERSION = '0';
+
+=head1 SUBROUTINES/METHODS
+
+=head2 sample_id
+
+=head2 sample_name
+
+=head2 sample_supplier_name
+
+=head2 study_name
+
+=cut
+
+#####
+# Delegations below are provided to ensure compatibility with SeqQC viewer code.
+#
+
+Readonly my %DELEGATION_TO_SAMPLE => {
+    'sample_id'                => 'id_sample_lims',
+    'sample_name'              => 'name',
+    'sample_supplier_name'     => 'supplier_name',
+};
+
+Readonly my %DELEGATION_TO_STUDY => {
+    'study_name'                          => 'name',
+};
+
+foreach my $rel (qw(sample study)) {
+
+  my $attr = q[_] . $rel . q[_row];
+  my $del  = $rel eq 'sample' ? \%DELEGATION_TO_SAMPLE : \%DELEGATION_TO_STUDY;
+
+  has $attr => ( isa        => 'Maybe[WTSI::DNAP::Warehouse::Schema::Result::' . ucfirst $rel . ']',
+                 is         => 'ro',
+                 weak_ref   => 1,
+                 lazy_build => 1,
+                 handles    => $del,
+  );
+
+  __PACKAGE__->meta->add_method('_build_' . $attr, sub {my $r = shift; return $r->$rel;} );
+
+  foreach my $method ( keys %{$del} ) {
+    around $method => sub {
+      my ($orig, $self) = @_;
+      return $self->$attr ? $self->$orig() : undef;
+    };
+  }
+}
 
 __PACKAGE__->meta->make_immutable;
 
@@ -530,6 +580,8 @@ on Ultima Genomics instruments.
 
 =item DBIx::Class::Core
 
+=item Readonly
+
 =back
 
 =head1 INCOMPATIBILITIES
@@ -542,7 +594,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2025 Genome Research Ltd.
+Copyright (C) 2025, 2026 Genome Research Ltd.
 
 This file is part of NPG.
 

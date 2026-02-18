@@ -130,6 +130,14 @@ Sample ID used by Ultimagen Genomics in deplexing, see also ultimagen:Sample_ID 
 
 Library name as given in Ultimagen Genomics manifest, see also ultimagen:Library_name iRODS metadata
 
+=head2 ultimagen_application_type
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+Pipeline/tool which was used for on-board data processing
+
 =head2 qc_seq
 
   data_type: 'tinyint'
@@ -236,6 +244,8 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'ultimagen_library_name',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'ultimagen_application_type',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'qc_seq',
   { data_type => 'tinyint', is_nullable => 1 },
   'qc_lib',
@@ -318,19 +328,58 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2026-01-07 14:27:39
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ksN1y2GOt6tA2KC58JLPyQ
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2026-01-22 16:16:57
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3vay5XC60e3q96s6lqsQTQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
 our $VERSION = '0';
 
+=head2 useq_run_metric
+
+Type: belongs_to
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::UseqRunMetric>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  'useq_run_metric',
+  'WTSI::DNAP::Warehouse::Schema::Result::UseqRunMetric',
+  { id_run => 'id_run' },
+  { is_deferrable => 1, on_delete => 'CASCADE', on_update => 'RESTRICT' },
+);
+
+=head1 SUBROUTINES/METHODS
+
+=head2 position
+
+Ultimagen sequencing does not have a concept of position or lane. However, SeqQC
+code needs this value to calculate rpt keys. To be compatible with conventions
+we follow when generating autoqc objects for Ultimagen data this method should
+always return 1 (as an integer). See also
+L<https://github.com/wtsi-npg/npg_qc/blob/master/lib/npg_qc/ultimagen/run_stats.pm>
+
+=cut
+
+sub position {
+  return 1;
+}
+
+####
+# Do not move consuming the npg_qc::autoqc::role::rpt_key role above the
+# 'position' method.
+# Functionality provided by this role is used in SeqQC viewer code.
+#
+
+##no critic (ProhibitStringyEval ProhibitPostfixControls ProhibitInterpolationOfLiterals)
+with 'npg_qc::autoqc::role::rpt_key' if eval "require npg_qc::autoqc::role::rpt_key";
+##use critic
+
 __PACKAGE__->meta->make_immutable;
 
 1;
-
-=head1 SUBROUTINES/METHODS
 
 =head1 SYNOPSIS
 
@@ -367,7 +416,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2025 Genome Research Ltd.
+Copyright (C) 2025, 2026 Genome Research Ltd.
 
 This file is part of NPG.
 
