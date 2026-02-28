@@ -1,6 +1,7 @@
 Build.PL
 Changes
 lib/WTSI/DNAP/Warehouse/Schema.pm
+lib/WTSI/DNAP/Warehouse/Schema/Query/CommonLimsData.pm
 lib/WTSI/DNAP/Warehouse/Schema/Query/IseqFlowcell.pm
 lib/WTSI/DNAP/Warehouse/Schema/Query/LibraryDigest.pm
 lib/WTSI/DNAP/Warehouse/Schema/Result/Aliquot.pm
