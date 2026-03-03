@@ -1,5 +1,12 @@
 LIST OF CHANGES
 ---------------
+
+ - In order to reduce code duplication the code that provides mapping of
+   st::api::lims methods to sample and study column names is moved to a
+   stand-alone role WTSI::DNAP::Warehouse::Schema::Query::CommonLimsData.
+   This role is consumed by both IseqFlowcell and UseqWafer result classes
+   thus ensuring that these classes provide a consistent way of accessing
+   sample and study properties.  
  
 release 6.43.0 (2026-02-18)
  - Added `ultimagen_application_type` column to `useq_product_metrics` table.
