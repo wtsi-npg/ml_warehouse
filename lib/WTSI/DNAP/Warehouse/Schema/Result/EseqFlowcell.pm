@@ -356,57 +356,19 @@ __PACKAGE__->belongs_to(
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
-use Readonly;
+use MooseX::Aliases;
+
+with 'WTSI::DNAP::Warehouse::Schema::Query::CommonLimsData';
 
 our $VERSION = '0';
 
-=head1 SUBROUTINES/METHODS
-
-=head2 sample_id
-
-=head2 sample_name
-
-=head2 sample_supplier_name
-
-=head2 study_name
-
-=cut
-
-#####
-# Delegations below are provided to ensure compatibility with SeqQC viewer code.
-#
-
-Readonly my %DELEGATION_TO_SAMPLE => {
-    'sample_id'                => 'id_sample_lims',
-    'sample_name'              => 'name',
-    'sample_supplier_name'     => 'supplier_name',
-};
-
-Readonly my %DELEGATION_TO_STUDY => {
-    'study_name'                          => 'name',
-};
-
-foreach my $rel (qw(sample study)) {
-
-  my $attr = q[_] . $rel . q[_row];
-  my $del  = $rel eq 'sample' ? \%DELEGATION_TO_SAMPLE : \%DELEGATION_TO_STUDY;
-
-  has $attr => ( isa        => 'Maybe[WTSI::DNAP::Warehouse::Schema::Result::' . ucfirst $rel . ']',
-                 is         => 'ro',
-                 weak_ref   => 1,
-                 lazy_build => 1,
-                 handles    => $del,
-  );
-
-  __PACKAGE__->meta->add_method('_build_' . $attr, sub {my $r = shift; return $r->$rel;} );
-
-  foreach my $method ( keys %{$del} ) {
-    around $method => sub {
-      my ($orig, $self) = @_;
-      return $self->$attr ? $self->$orig() : undef;
-    };
-  }
-}
+alias default_library_type    => 'pipeline_id_lims';
+alias lane_id                 => 'entity_id_lims';
+alias default_tag_sequence    => 'tag_sequence';
+alias default_tagtwo_sequence => 'tag2_sequence';
+alias gbs_plex_name           => 'primer_panel';
+alias library_id              => 'id_library_lims';
+alias library_name            => 'id_library_lims';
 
 __PACKAGE__->meta->make_immutable;
 
@@ -418,6 +380,39 @@ __PACKAGE__->meta->make_immutable;
 
 DBIx model for C<eseq_flowcell> table, which contains LIMS data for
 Element Biosciences flowcells.
+
+=head1 SUBROUTINES/METHODS
+
+=head2 default_library_type
+
+Alias for C<pipeline_id_lims>.
+
+=head2 lane_id
+
+Alias for C<entity_id_lims>
+
+=head2 default_tag_sequence
+
+Alias for C<tag_sequence>
+
+=head2 default_tagtwo_sequence
+
+Alias for C<tag2_sequence>
+
+=head2 gbs_plex_name
+
+Alias for C<primer_panel>
+
+=head2 library_id 
+
+For Illumina data we map C<library_id> to C<legacy_library_id>, see
+WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell. The latter is not
+currently available in this table, so C<library_id> is mapped here to
+C<id_library_lims>, which for Illumina data is a fallback.
+
+=head2 library_name
+
+Alias for C<id_library_lims>
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
@@ -447,7 +442,7 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2025 Genome Research Ltd.
+Copyright (C) 2025, 2026 Genome Research Ltd.
 
 This file is part of NPG.
 

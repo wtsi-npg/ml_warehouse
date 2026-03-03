@@ -554,7 +554,7 @@ Alias for C<primer_panel>
 
 =head2 library_id 
 
-For Illumina data we map C<library_id> to c<legacy_library_id>, see
+For Illumina data we map C<library_id> to C<legacy_library_id>, see
 WTSI::DNAP::Warehouse::Schema::Result::IseqFlowcell. The latter is not
 currently available in this table, so C<library_id> is mapped here to
 C<id_library_lims>, which for Illumina data is a fallback.
