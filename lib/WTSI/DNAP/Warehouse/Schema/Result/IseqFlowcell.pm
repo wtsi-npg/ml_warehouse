@@ -591,44 +591,10 @@ __PACKAGE__->belongs_to(
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:qrc71Zkdjac/tHo55D3BbQ
 
 use MooseX::Aliases;
-use Readonly;
+
+with 'WTSI::DNAP::Warehouse::Schema::Query::CommonLimsData';
 
 our $VERSION = '0';
-
-Readonly my @USER_ROLES => qw/manager follower owner/;
-
-Readonly my %DELEGATION_TO_SAMPLE => {
-    'sample_id'                => 'id_sample_lims',
-    'sample_uuid'              => 'uuid_sample_lims',
-    'sample_name'              => 'name',
-    'sample_lims'              => 'id_lims',
-    'sample_reference_genome'  => 'reference_genome',
-    'organism'                 => 'organism',
-    'sample_accession_number'  => 'accession_number',
-    'sample_common_name'       => 'common_name',
-    'sample_description'       => 'description',
-    'organism_taxon_id'        => 'taxon_id',
-    'sample_public_name'       => 'public_name',
-    'sample_consent_withdrawn' => 'consent_withdrawn',
-    'sample_supplier_name'     => 'supplier_name',
-    'sample_cohort'            => 'cohort',
-    'sample_donor_id'          => 'donor_id',
-    'sample_is_control'        => 'control',
-    'sample_control_type'      => 'control_type',
-};
-
-Readonly my %DELEGATION_TO_STUDY => {
-    'study_id'                            => 'id_study_lims',
-    'study_name'                          => 'name',
-    'study_reference_genome'              => 'reference_genome',
-    'study_accession_number'              => 'accession_number',
-    'study_description'                   => 'description',
-    'study_contains_nonconsented_human'   => 'contaminated_human_dna',
-    'study_title'                         => 'study_title',
-    'study_contains_nonconsented_xahuman' => 'remove_x_and_autosomes',
-    'study_alignments_in_bam'             => 'aligned',
-    'study_separate_y_chromosome_data'    => 'separate_y_chromosome_data',
-};
 
 alias project_cost_code       => 'cost_code';
 alias default_library_type    => 'pipeline_id_lims';
@@ -642,28 +608,6 @@ alias gbs_plex_name           => 'primer_panel';
 sub qc_state {
   my $self = shift;
   return $self->iseq_product_metrics()->get_column(q[qc])->single();
-}
-
-foreach my $rel (qw(sample study)) {
-
-  my $attr = q[_] . $rel . q[_row];
-  my $del  = $rel eq 'sample' ? \%DELEGATION_TO_SAMPLE : \%DELEGATION_TO_STUDY;
-
-  has $attr => ( isa        => 'Maybe[WTSI::DNAP::Warehouse::Schema::Result::' . ucfirst $rel . ']',
-                 is         => 'ro',
-                 weak_ref   => 1,
-                 lazy_build => 1,
-                 handles    => $del,
-  );
-
-  __PACKAGE__->meta->add_method('_build_' . $attr, sub {my $r = shift; return $r->$rel;} );
-
-  foreach my $method ( keys %{$del} ) {
-    around $method => sub {
-      my ($orig, $self) = @_;
-      return $self->$attr ? $self->$orig() : undef;
-    };
-  }
 }
 
 has 'is_control' => ( isa        => 'Bool',
@@ -697,59 +641,15 @@ sub _build_required_insert_size_range {
   return $range;
 }
 
-has '_study_users' => ( isa        => 'HashRef',
-                        is         => 'ro',
-                        lazy_build => 1,
-);
-sub _build__study_users {
-  my $self = shift;
-  my $su = {};
-  my $study = $self->study();
-  if ($study) {
-    my $rs =  $study->study_users();
-    while (my $row = $rs->next) {
-      my $email_address = $row->email;
-      if ($email_address) { # Lots of NULLs in a database
-        push @{$su->{$row->role}}, $row->email;
-      }
-    }
-  }
-  return $su;
-}
-
 sub library_id {
   my $self = shift;
   return $self->legacy_library_id || $self->id_library_lims;
 }
 
-sub email_addresses {
-  my $self = shift;
-  my @emails = ();
-  foreach my $user_type (@USER_ROLES) {
-    if (exists $self->_study_users->{$user_type}) {
-      push @emails, map { $_ => 1 } @{$self->_study_users->{$user_type}};
-    }
-  }
-  my %hashed = @emails;
-  @emails = sort keys %hashed;
-  return \@emails;
-}
-
-foreach my $user_type (@USER_ROLES) {
-  my $method = 'email_addresses_of_' . $user_type . 's';
-  __PACKAGE__->meta->add_method($method, sub {
-    my $self = shift;
-    my @emails = ();
-    if (exists $self->_study_users->{$user_type}) {
-      @emails = sort values @{$self->_study_users->{$user_type}};
-    }
-    return \@emails;
-  });
-}
-
 __PACKAGE__->meta->make_immutable;
 
 1;
+
 __END__
 
 =head1 SYNOPSIS
@@ -786,54 +686,6 @@ change if the underlying values in the database change
 
 =head2 required_insert_size_range
 
-=head2 email_addresses
-
-=head2 email_addresses_of_owners
-
-=head2 email_addresses_of_followers
-
-=head2 email_addresses_of_managers
-
-=head2 sample_id
-
-=head2 sample_name
-
-=head2 sample_reference_genome
-
-=head2 organism
-
-=head2 sample_accession_number
-
-=head2 sample_common_name
-
-=head2 sample_description
-
-=head2 organism_taxon_id
-
-=head2 sample_public_name
-
-=head2 sample_consent_withdrawn
-
-=head2 study_id
-
-=head2 study_name
-
-=head2 study_reference_genome
-
-=head2 study_accession_number
-
-=head2 study_description
-
-=head2 study_contains_nonconsented_human
-
-=head2 study_title
-
-=head2 study_contains_nonconsented_xahuman
-
-=head2 study_alignments_in_bam
-
-=head2 study_separate_y_chromosome_data
-
 =head1 DEPENDENCIES
 
 =over
@@ -854,8 +706,6 @@ change if the underlying values in the database change
 
 =item DBIx::Class::InflateColumn::DateTime
 
-=item Readonly
-
 =back
 
 =head1 INCOMPATIBILITIES
@@ -868,9 +718,9 @@ Marina Gourtovaia E<lt>mg8@sanger.ac.ukE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2014,2015,2016,2017,2018,2019,2020,2025 Genome Research Ltd.
+Copyright (C) 2014,2015,2016,2017,2018,2019,2020,2025,2026 Genome Research Ltd.
 
-This file is part of the ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
+This file is part of NPG  ml_warehouse package L<https://github.com/wtsi-npg/ml_warehouse>.
 
 NPG is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
