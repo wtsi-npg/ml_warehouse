@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+ - Add fields to pac_bio_run_well_metrics to capture multi-use SMRT cell
+   information relating to the new PacBio SPRQ-Nx consumables.
+  
 release 6.44.0 (2026-03-13)
  - In order to reduce code duplication the code that provides mapping of
    st::api::lims methods to sample and study column names is moved to a
