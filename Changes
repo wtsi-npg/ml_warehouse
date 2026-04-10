@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - Add fields to pac_bio_run_well_metrics to capture multi-use SMRT cell
+   information relating to the new PacBio SPRQ-Nx consumables.
  - Update matrix of CI perl versions, remove 5.26.3 and add 5.38.2
 
 release 6.44.0 (2026-03-13)
