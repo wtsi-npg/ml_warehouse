@@ -1,13 +1,18 @@
 LIST OF CHANGES
 ---------------
 
+release 6.45.0 (2026-04-15)
+ - Add fields to pac_bio_run_well_metrics to capture multi-use SMRT cell
+   information relating to the new PacBio SPRQ-Nx consumables.
+ - Update matrix of CI perl versions, remove 5.26.3 and add 5.38.2
+
 release 6.44.0 (2026-03-13)
  - In order to reduce code duplication the code that provides mapping of
    st::api::lims methods to sample and study column names is moved to a
    stand-alone role WTSI::DNAP::Warehouse::Schema::Query::CommonLimsData.
-   This role is consumed by both IseqFlowcell and UseqWafer result classes
-   thus ensuring that these classes provide a consistent way of accessing
-   sample and study properties.  
+   This role is consumed by IseqFlowcell, EseqFlowcell and UseqWafer result
+   classes thus ensuring that these classes provide a consistent way of
+   accessing sample and study properties.  
  - CI updates
  
 release 6.43.0 (2026-02-18)

@@ -269,6 +269,30 @@ Analysis has been run on the instrument to detect and resolve heteroduplex reads
 
 SMRT Cell loading concentration (pM)
 
+=head2 is_cell_multi_use
+
+  data_type: 'tinyint'
+  default_value: 0
+  is_nullable: 0
+
+Is the Revio SMRT Cell a multi-use Cell (available since SMRT Link 25.4).
+
+=head2 cell_use_count
+
+  data_type: 'smallint'
+  extra: {unsigned => 1}
+  is_nullable: 1
+
+The number of times a SMRT Cell has been used (available since SMRT Link 25.4).
+
+=head2 cell_id
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 255
+
+The SMRT Cell unique identifier (available since SMRT Link 25.4).
+
 =head2 run_start
 
   data_type: 'datetime'
@@ -659,6 +683,12 @@ __PACKAGE__->add_columns(
   { data_type => 'tinyint', extra => { unsigned => 1 }, is_nullable => 1 },
   'loading_conc',
   { data_type => 'float', extra => { unsigned => 1 }, is_nullable => 1 },
+  'is_cell_multi_use',
+  { data_type => 'tinyint', default_value => 0, is_nullable => 0 },
+  'cell_use_count',
+  { data_type => 'smallint', extra => { unsigned => 1 }, is_nullable => 1 },
+  'cell_id',
+  { data_type => 'varchar', is_nullable => 1, size => 255 },
   'run_start',
   {
     data_type => 'datetime',
@@ -851,8 +881,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-10-23 16:47:29
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ykO1luiH7Tjo7mWW+GGhxg
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2026-04-10 11:44:21
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7aec5UJ6OkVa6sNZIjzuZA
 
 our $VERSION = '0';
 
