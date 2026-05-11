@@ -351,6 +351,23 @@ __PACKAGE__->belongs_to(
   { is_deferrable => 1, on_delete => 'CASCADE', on_update => 'RESTRICT' },
 );
 
+=head2 seq_product_irods_locations
+
+Type: has_many
+
+Related object: L<WTSI::DNAP::Warehouse::Schema::Result::SeqProductIrodsLocation>
+
+=cut
+
+__PACKAGE__->has_many(
+  'seq_product_irods_locations',
+  'WTSI::DNAP::Warehouse::Schema::Result::SeqProductIrodsLocation',
+  {
+    'foreign.id_product' => 'self.id_useq_product',
+  },
+  { is_deferrable => 1, cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head1 SUBROUTINES/METHODS
 
 =head2 position
