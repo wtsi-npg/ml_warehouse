@@ -100,7 +100,7 @@ Internal to this database id. Value can change.
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 40
+  size: 64
 
 =head2 fate
 
@@ -151,7 +151,7 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
   },
   'cell_state',
-  { data_type => 'varchar', is_nullable => 0, size => 40 },
+  { data_type => 'varchar', is_nullable => 0, size => 64 },
   'fate',
   { data_type => 'varchar', is_nullable => 1, size => 40 },
   'passage_number',
@@ -173,8 +173,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key('cgap_release_tmp');
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-09-27 10:30:24
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Ll81tS818RsG09XqwJg10w
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2026-06-03 13:51:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8qM2zDOCprptkJ/7W7Ej4w
 
 our $VERSION = '0';
 

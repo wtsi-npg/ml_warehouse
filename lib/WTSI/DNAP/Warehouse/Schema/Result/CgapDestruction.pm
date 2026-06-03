@@ -76,7 +76,7 @@ Internal to this database. Value can change.
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 40
+  size: 64
 
 =cut
 
@@ -102,7 +102,7 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
   },
   'cell_state',
-  { data_type => 'varchar', is_nullable => 0, size => 40 },
+  { data_type => 'varchar', is_nullable => 0, size => 64 },
 );
 
 =head1 PRIMARY KEY
@@ -118,8 +118,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key('cgap_destruction_tmp');
 
 
-# Created by DBIx::Class::Schema::Loader v0.07051 @ 2023-01-11 17:05:45
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MGlL7c1Z8eRl94XXbsJC3Q
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2026-06-03 13:51:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:6PyI2ABMO2it5io3nzGfog
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

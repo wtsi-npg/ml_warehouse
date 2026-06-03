@@ -193,6 +193,21 @@ Primer Panel name
 
 Most specific LIMs identifier associated with this lane or plex or spike
 
+=head2 quant_method_used
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 50
+
+Quantification method used for the run
+
+=head2 custom_primer_kit_used
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+Whether a custom primer kit been used for the run: 1 (yes), 0 (no)
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -257,6 +272,10 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'entity_id_lims',
   { data_type => 'varchar', is_nullable => 0, size => 20 },
+  'quant_method_used',
+  { data_type => 'varchar', is_nullable => 1, size => 50 },
+  'custom_primer_kit_used',
+  { data_type => 'tinyint', is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -350,8 +369,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-07-09 15:17:03
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vvf9oJQUIOq8HbHoq4ioOg
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2026-06-03 13:51:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:tXUgO/uIcJJeZ6F1PhrXiQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
