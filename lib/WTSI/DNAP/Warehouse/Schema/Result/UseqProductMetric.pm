@@ -199,6 +199,23 @@ Yield in KBs at and above Q30
 
 Overall sample yield in KBs
 
+=head2 genotype_sample_name_match
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 8
+
+=head2 genotype_sample_name_relaxed_match
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 8
+
+=head2 genotype_mean_depth
+
+  data_type: 'float'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -262,6 +279,12 @@ __PACKAGE__->add_columns(
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
   'total_yield_kb',
   { data_type => 'integer', extra => { unsigned => 1 }, is_nullable => 1 },
+  'genotype_sample_name_match',
+  { data_type => 'varchar', is_nullable => 1, size => 8 },
+  'genotype_sample_name_relaxed_match',
+  { data_type => 'varchar', is_nullable => 1, size => 8 },
+  'genotype_mean_depth',
+  { data_type => 'float', is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -328,8 +351,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2026-01-22 16:16:57
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3vay5XC60e3q96s6lqsQTQ
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2026-06-03 16:16:18
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Ci08A6mIkB521jpA0bBDRg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
