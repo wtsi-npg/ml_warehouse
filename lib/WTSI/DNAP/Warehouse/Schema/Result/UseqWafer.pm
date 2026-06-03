@@ -297,6 +297,22 @@ AMP assign control bead tube barcode
 
 AMP instrument name
 
+=head2 wafer_size
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 10
+
+Used to track UG200 wafer size only, defined in the sequencing request by SSR.
+
+=head2 requested_sequencer_type
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 10
+
+Requested sequencer model, 'UG 100' & 'UG 200'
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -403,6 +419,10 @@ __PACKAGE__->add_columns(
   { data_type => 'varchar', is_nullable => 1, size => 255 },
   'amp_instrument_name',
   { data_type => 'varchar', is_nullable => 1, size => 255 },
+  'wafer_size',
+  { data_type => 'varchar', is_nullable => 1, size => 10 },
+  'requested_sequencer_type',
+  { data_type => 'varchar', is_nullable => 1, size => 10 },
 );
 
 =head1 PRIMARY KEY
@@ -493,8 +513,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07053 @ 2025-12-02 12:22:52
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:EfgWh3xa1c7W/346Bfz2wg
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2026-06-03 13:51:47
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3jCNKC5w8SR313t8ljtujA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

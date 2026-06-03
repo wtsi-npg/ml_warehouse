@@ -61,7 +61,7 @@ __PACKAGE__->table('tol_sample_bioproject');
 =head2 library_type
 
   data_type: 'enum'
-  extra: {list => ['Chromium genome','Haplotagging','Hi-C','Hi-C - Arima v1','Hi-C - Arima v2','Hi-C - Dovetail','Hi-C - Omni-C','Hi-C - Qiagen','PacBio - CLR','PacBio - HiFi','ONT','RNA PolyA','RNA-seq dUTP eukaryotic','Standard','unknown','HiSeqX PCR free','PacBio - HiFi (ULI)','PacBio - IsoSeq','ATAC-seq','PacBio - HiFi (PiMmS)']}
+  extra: {list => ['Chromium genome','Haplotagging','Hi-C','Hi-C - Arima v1','Hi-C - Arima v2','Hi-C - Dovetail','Hi-C - Omni-C','Hi-C - Qiagen','PacBio - CLR','PacBio - HiFi','ONT','RNA PolyA','RNA-seq dUTP eukaryotic','Standard','unknown','HiSeqX PCR free','PacBio - HiFi (ULI)','PacBio - IsoSeq','ATAC-seq','PacBio - HiFi (PiMmS)','PacBio - HiFi (Ampli-Fi)']}
   is_nullable: 1
 
 =head2 tolid
@@ -146,6 +146,7 @@ __PACKAGE__->add_columns(
         'PacBio - IsoSeq',
         'ATAC-seq',
         'PacBio - HiFi (PiMmS)',
+        'PacBio - HiFi (Ampli-Fi)',
       ],
     },
     is_nullable => 1,
@@ -223,8 +224,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07052 @ 2025-03-31 14:29:19
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:f0vkprUgm/IZssygOBfOUw
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2026-06-03 13:51:47
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1rKdu4ZK2u6c9bvwXEIkwQ
 
 our $VERSION = '0';
 

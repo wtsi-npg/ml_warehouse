@@ -1,6 +1,8 @@
 LIST OF CHANGES
 ---------------
 
+ - Updated ORM classes, synch with the prod database.
+
 release 6.46.0 (2026-05-11)
  - Add location table relation in ORM for Ultimagen and Elembio
    product metrics

@@ -93,7 +93,7 @@ Internal to this database id. Value can change.
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 40
+  size: 64
 
 =head2 project
 
@@ -131,7 +131,7 @@ __PACKAGE__->add_columns(
   'passage_number',
   { data_type => 'integer', is_nullable => 1 },
   'cell_state',
-  { data_type => 'varchar', is_nullable => 0, size => 40 },
+  { data_type => 'varchar', is_nullable => 0, size => 64 },
   'project',
   { data_type => 'varchar', is_nullable => 1, size => 50 },
 );
@@ -163,8 +163,8 @@ __PACKAGE__->set_primary_key('cgap_analyte_tmp');
 __PACKAGE__->add_unique_constraint('slot_uuid', ['slot_uuid']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-09-30 14:19:43
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7xF9GC+l3iyUjEKY+YTJPw
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2026-06-03 13:51:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Zkb6E4WPWdtFYSsoEzDb8g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
