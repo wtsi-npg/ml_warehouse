@@ -184,8 +184,8 @@ __PACKAGE__->set_primary_key('id_seq_product_irods_locations_tmp');
 __PACKAGE__->add_unique_constraint('pi_root_product', ['irods_root_collection', 'id_product']);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-10-12 16:06:03
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:95PPjKmCX7+8f3ds2CkeLw
+# Created by DBIx::Class::Schema::Loader v0.07053 @ 2026-06-03 13:51:47
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:6AvwL00dFFdsjhaLxZMe5A
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
@@ -255,3 +255,4 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 =cut
+
