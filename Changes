@@ -1,6 +1,9 @@
 LIST OF CHANGES
 ---------------
 
+release 6.47.1 (2026-07-22)
+ - CI updates
+
 release 6.47.0 (2026-06-16)
  - Updated existing ORM classes, synchronised  with the prod database.
  - Added three columns (genotype_sample_name_match, genotype_mean_depth,
